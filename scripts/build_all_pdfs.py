@@ -305,17 +305,42 @@ def build_ganaches(story):
             g['methode-emulsion']
         ))
 
+    classiques = g.get('classiques', {})
+    montees = g.get('montees', {})
+
+    def _gan_entries(items):
+        return [{'anchor': f'ganache-{k}',
+                 'name': r.get('nom', pretty_ing(k))}
+                for k, r in items.items() if isinstance(r, dict)]
+
+    toc_chapters = [
+        {'number': 1, 'title': 'Ganaches classiques',
+         'anchor': 'chap-classiques', 'entries': _gan_entries(classiques)},
+        {'number': 2, 'title': 'Ganaches montées',
+         'anchor': 'chap-montees', 'entries': _gan_entries(montees)},
+    ]
+    story.extend(toc_page(
+        toc_chapters,
+        title='Sommaire',
+        intro="Clique sur un titre pour accéder directement à la ganache."
+    ))
+
     # Classiques
     story.append(PageBreak())
     story.append(Spacer(1, 10))
     story.extend(section_heading(
         'Ganaches classiques',
-        f"{len(g.get('classiques', {}))} ganaches de fourrage et garnitures — "
-        "textures fermes pour les bonbons chocolat et les pièces de pâtisserie"
+        f"{len(classiques)} ganaches de fourrage et garnitures — "
+        "textures fermes pour les bonbons chocolat et les pièces de pâtisserie",
+        anchor='chap-classiques'
     ))
-    for key, r in g.get('classiques', {}).items():
+    for key, r in classiques.items():
+        if not isinstance(r, dict):
+            continue
+        story.append(PageBreak())
         story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
+            anchor=f'ganache-{key}',
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             preparation=r.get('preparation'),
@@ -328,12 +353,17 @@ def build_ganaches(story):
     story.append(Spacer(1, 10))
     story.extend(section_heading(
         'Ganaches montées',
-        f"{len(g.get('montees', {}))} ganaches aériennes — pour pocher, "
-        "garnir des choux, monter des entremets légers"
+        f"{len(montees)} ganaches aériennes — pour pocher, "
+        "garnir des choux, monter des entremets légers",
+        anchor='chap-montees'
     ))
-    for key, r in g.get('montees', {}).items():
+    for key, r in montees.items():
+        if not isinstance(r, dict):
+            continue
+        story.append(PageBreak())
         story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
+            anchor=f'ganache-{key}',
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             preparation=r.get('preparation'),
@@ -383,13 +413,33 @@ def build_anti_rate(story):
         'glacages', 'enrobages'
     ]
 
+    # TOC entries (one per category, with count)
+    toc_entries = []
+    for cat_key in categories_order:
+        if cat_key not in ar:
+            continue
+        cat = ar[cat_key]
+        title = cat.get('titre', pretty_ing(cat_key))
+        n = len(cat.get('problemes', []))
+        label = f"{title} — {n} problème{'s' if n > 1 else ''}"
+        toc_entries.append({'anchor': f'ar-{cat_key}', 'name': label})
+
+    story.extend(toc_page(
+        [{'title': '10 diagnostics pâtisserie', 'entries': toc_entries}],
+        title='Sommaire',
+        intro="Clique sur une catégorie pour accéder au diagnostic correspondant."
+    ))
+
     for cat_key in categories_order:
         if cat_key not in ar:
             continue
         cat = ar[cat_key]
         story.append(PageBreak())
         story.append(Spacer(1, 10))
-        story.extend(section_heading(cat.get('titre', pretty_ing(cat_key))))
+        story.extend(section_heading(
+            cat.get('titre', pretty_ing(cat_key)),
+            anchor=f'ar-{cat_key}'
+        ))
 
         for p in cat.get('problemes', []):
             story.append(problem_block(

@@ -109,10 +109,11 @@ def gold_line(thick=0.6, before=6, after=6):
     return HRFlowable(width="100%", thickness=thick, color=GOLD,
                       spaceBefore=before, spaceAfter=after)
 
-def section_heading(text, subtitle=None):
+def section_heading(text, subtitle=None, anchor=None):
     s = styles()
     els = []
-    els.append(Paragraph(f'<font color="#C8A04A">§</font> <b>{text}</b>', s['h2']))
+    anchor_tag = f'<a name="{anchor}"/>' if anchor else ''
+    els.append(Paragraph(f'<font color="#C8A04A">§</font> {anchor_tag}<b>{text}</b>', s['h2']))
     if subtitle:
         els.append(Paragraph(subtitle, s['body_italic']))
     els.append(gold_line(0.6, 4, 12))
