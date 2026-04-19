@@ -1580,15 +1580,15 @@
     },
     "cremeux-chocolat-blanc-praline": {
       "nom": "Crémeux Chocolat Blanc et Praliné",
-      "total": 316,
+      "total": 553,
       "ingredients": {
-        "lait": 70,
-        "creme-liquide": 70,
-        "jaunes": 30,
-        "sucre": 15,
-        "chocolat-blanc": 85,
-        "gelatine": 1,
-        "praline": 45
+        "lait": 190,
+        "creme-liquide": 65,
+        "jaunes": 50,
+        "sucre": 35,
+        "chocolat-blanc": 130,
+        "gelatine": 3,
+        "praline": 80
       },
       "preparation": [
         "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
@@ -1602,15 +1602,15 @@
     },
     "cremeux-chocolat-blanc-infuse": {
       "nom": "Crémeux Chocolat Blanc Infusé",
-      "total": 281,
+      "total": 491,
       "ingredients": {
-        "lait": 70,
-        "creme-liquide": 70,
-        "jaunes": 30,
-        "sucre": 15,
-        "chocolat-blanc": 85,
-        "gelatine": 1,
-        "epices-herbes-vanille": 10
+        "lait": 190,
+        "creme-liquide": 65,
+        "jaunes": 50,
+        "sucre": 35,
+        "chocolat-blanc": 130,
+        "gelatine": 3,
+        "epices-herbes-vanille": 18
       },
       "notes": "Infusion 10 à 30 minutes selon intensité souhaitée. Filtrer et repeser.",
       "preparation": [
@@ -1627,14 +1627,14 @@
     },
     "cremeux-chocolat-blanc-fruits": {
       "nom": "Crémeux Chocolat Blanc aux Fruits",
-      "total": 271,
+      "total": 473,
       "ingredients": {
-        "puree-fruit": 70,
-        "creme-liquide": 70,
-        "jaunes": 30,
-        "sucre": 15,
-        "chocolat-blanc": 85,
-        "gelatine": 1
+        "puree-fruit": 190,
+        "creme-liquide": 65,
+        "jaunes": 50,
+        "sucre": 35,
+        "chocolat-blanc": 130,
+        "gelatine": 3
       },
       "notes": "Remplace le lait par la purée de fruit.",
       "preparation": [
