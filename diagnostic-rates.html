@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pourquoi ça a raté ? — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:900px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:600px}
+  .overline{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:12px;display:block}
+  .recipes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:40px}
+  .recipe-btn{background:#fff;border:1px solid rgba(26,20,16,0.15);padding:20px 24px;cursor:pointer;text-align:left;font-family:inherit;border-radius:3px;transition:all 0.25s}
+  .recipe-btn:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,0.06)}
+  .recipe-btn.active{border-color:#C8A04A;background:#1A1410;color:#FDF8F0}
+  .recipe-btn.active .recipe-sub{color:rgba(253,248,240,0.7)}
+  .recipe-name{font-family:Georgia,serif;font-size:18px;margin-bottom:4px}
+  .recipe-sub{font-size:12px;color:rgba(26,20,16,0.6);font-family:'Courier New',monospace;letter-spacing:1px;text-transform:uppercase}
+  .question-card{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);display:none;margin-bottom:20px}
+  .question-card.visible{display:block}
+  .question-card h3{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-bottom:20px;color:#1A1410}
+  .options{display:flex;flex-direction:column;gap:10px}
+  .option{background:#FDF8F0;border:1px solid rgba(26,20,16,0.12);padding:16px 22px;cursor:pointer;font-family:inherit;font-size:15px;text-align:left;border-radius:3px;transition:all 0.2s}
+  .option:hover{border-color:#C8A04A;background:#fff}
+  .diagnosis{background:#1A1410;color:#FDF8F0;padding:clamp(24px,4vw,40px);border-radius:4px;margin-top:24px;display:none;border-left:4px solid #C8A04A}
+  .diagnosis.visible{display:block}
+  .diagnosis h3{font-family:Georgia,serif;font-size:24px;margin-bottom:16px;color:#C8A04A}
+  .diagnosis p{color:rgba(253,248,240,0.9);margin-bottom:16px;line-height:1.7}
+  .diagnosis .fix{background:rgba(200,160,74,0.12);padding:20px;border-radius:3px;margin-top:20px}
+  .diagnosis .fix strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
+  .reset{display:inline-block;margin-top:16px;color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;background:none;padding:0}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Pourquoi ça a raté ?</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <span class="overline">Diagnostic interactif</span>
+  <h1>On trouve <span class="accent">ce qui a bloqué</span></h1>
+  <p class="intro">Choisis ta préparation ratée, réponds aux questions, obtiens un diagnostic précis et la solution</p>
+
+  <div class="recipes" id="recipes"></div>
+
+  <div id="questionContainer"></div>
+  <div id="diagnosisContainer"></div>
+</main>
+
+<script>
+const tree = {
+  ganache: {
+    name: "Ganache tranchée",
+    sub: "Chocolat",
+    start: "q1",
+    questions: {
+      q1: {
+        text: "À quelle température tu as versé ta crème sur le chocolat ?",
+        options: [
+          {text: "Crème à peine tiède", next: "d_tiede"},
+          {text: "Crème bien chaude / frémissante", next: "q2"},
+          {text: "Crème bouillante (je l'ai amenée à ébullition forte)", next: "d_bouillante"},
+          {text: "Je sais pas, j'ai pas mesuré", next: "q2"}
+        ]
+      },
+      q2: {
+        text: "Comment tu as mélangé après avoir versé ?",
+        options: [
+          {text: "Au fouet, rapidement, dès que j'ai versé", next: "d_fouet"},
+          {text: "À la maryse, doucement, du centre vers l'extérieur", next: "q3"},
+          {text: "Au mixeur plongeant direct", next: "d_mixeur"}
+        ]
+      },
+      q3: {
+        text: "Tu as utilisé quel type de chocolat ?",
+        options: [
+          {text: "Du chocolat de couverture en pistoles (Valrhona, Callebaut...)", next: "d_hasard"},
+          {text: "Du chocolat de pâtisserie en tablette (Nestlé, supermarché)", next: "d_chocolatpatissier"},
+          {text: "Du chocolat à manger (tablette dégustation)", next: "d_chocolatdegu"}
+        ]
+      }
+    },
+    diagnoses: {
+      d_tiede: {
+        title: "Ta crème était trop froide",
+        cause: "Si la crème n'est pas assez chaude, le chocolat ne fond pas uniformément. Tu te retrouves avec des morceaux semi-fondus qui cassent l'émulsion",
+        fix: "Porte ta crème à FRÉMISSEMENT (premières bulles au bord, ~85°C). Pas besoin d'ébullition violente mais surtout pas juste tiède. Le chocolat doit pouvoir fondre complètement au contact"
+      },
+      d_bouillante: {
+        title: "Ta crème était trop chaude",
+        cause: "Une ébullition violente peut brûler localement le chocolat (surtout le lait et le blanc qui sont fragiles). Le beurre de cacao se sépare et l'émulsion casse",
+        fix: "Chauffe ta crème jusqu'aux premiers frémissements (85°C), coupe le feu, verse en 3 fois sur ton chocolat haché. Attends 30 sec avant de commencer à mélanger"
+      },
+      d_fouet: {
+        title: "Tu as introduit trop d'air",
+        cause: "Le fouet incorpore de l'air dans ta ganache. L'émulsion chocolat/crème n'aime pas l'air : elle se casse. Résultat = ganache granuleuse, tranchée",
+        fix: "Utilise toujours une MARYSE pour les ganaches. Mélange en petits cercles du centre vers l'extérieur. Le fouet c'est pour fouetter (chantilly, blancs en neige), pas pour émulsionner"
+      },
+      d_mixeur: {
+        title: "Mixeur plongeant : technique incorrecte",
+        cause: "Le mixeur plongeant peut marcher MAIS seulement incliné, sans remonter (il aspire de l'air). Si tu l'as fait de travers, tu as créé une mousse, pas une émulsion",
+        fix: "Pour utiliser le mixeur plongeant : incline-le légèrement, laisse-le au fond, pas de mouvement vertical. Mieux : commence à la maryse, finis au mixeur seulement si vraiment nécessaire"
+      },
+      d_chocolatpatissier: {
+        title: "Ton chocolat manque de beurre de cacao",
+        cause: "Les chocolats de supermarché contiennent beaucoup d'additifs et peu de beurre de cacao (~30-40%). L'émulsion est instable par construction",
+        fix: "Investis dans du VRAI chocolat de couverture : Valrhona, Callebaut, Cacao Barry. Minimum 60% de beurre de cacao. Ça coûte plus cher mais c'est non négociable pour des ganaches pro"
+      },
+      d_chocolatdegu: {
+        title: "Chocolat de dégustation = mauvaise viscosité",
+        cause: "Les tablettes de dégustation sont conçues pour fondre en bouche, pas pour s'émulsionner avec de la crème. Leur fluidité n'est pas adaptée",
+        fix: "Utilise du chocolat de COUVERTURE (pistoles ou tablettes pâtisserie) : Valrhona Caraïbes, Guanaja, Manjari. Ils ont la fluidité pensée pour la transformation"
+      },
+      d_hasard: {
+        title: "Probablement l'émulsion",
+        cause: "Avec du bon chocolat et une bonne technique, tranchage = souvent choc thermique ou mouvement trop brutal. Ou incorporation de l'air par la suite (si tu l'as fouettée pour la monter)",
+        fix: "Pour rattraper : chauffe doucement au bain-marie à 35-40°C et lisse au mixeur plongeant incliné. Préventif : verse en 3 fois, maryse en cercles concentriques, pas de fouet"
+      }
+    }
+  },
+
+  macarons: {
+    name: "Macarons sans collerette",
+    sub: "Pâtisserie fine",
+    start: "q1",
+    questions: {
+      q1: {
+        text: "Comment étaient tes coques AVANT cuisson ?",
+        options: [
+          {text: "Bien lisses, brillantes, bien pochées", next: "q2"},
+          {text: "Mates, la pointe du poché ne disparaissait pas", next: "d_macaronage_insuffisant"},
+          {text: "Très étalées, presque liquides", next: "d_macaronage_excessif"}
+        ]
+      },
+      q2: {
+        text: "Tu as laissé croûter combien de temps ?",
+        options: [
+          {text: "Pas du tout, enfourné direct", next: "d_pascrouter"},
+          {text: "15-30 min, la surface est devenue mate", next: "q3"},
+          {text: "Plus d'1h, la surface était vraiment sèche", next: "d_tropcrouter"}
+        ]
+      },
+      q3: {
+        text: "Ton four était comment ?",
+        options: [
+          {text: "Chaleur tournante à 150°C", next: "d_ventilation"},
+          {text: "Chaleur statique 150°C", next: "d_four_OK"},
+          {text: "Très chaud (170°+) puis baissé", next: "d_troochaud"}
+        ]
+      }
+    },
+    diagnoses: {
+      d_macaronage_insuffisant: {
+        title: "Macaronage insuffisant",
+        cause: "Quand tes coques sont mates et que la pointe reste = l'appareil est trop ferme. L'air des blancs ne sort pas, la pâte ne peut pas gonfler uniformément à la cuisson",
+        fix: "Continue à macaronner jusqu'à ce que l'appareil forme un ruban qui se réabsorbe en 10-15 secondes. Test du V : quand tu soulèves la maryse, la pâte doit retomber en V brillant"
+      },
+      d_macaronage_excessif: {
+        title: "Macaronage excessif",
+        cause: "Tu as trop travaillé la pâte. Les blancs sont complètement cassés, il n'y a plus d'air pour former la collerette. Ta pâte est trop liquide avant cuisson",
+        fix: "Macaronage = juste ce qu'il faut. Dès que la pâte fait un ruban lisse et se réabsorbe en 10-15 sec, ARRÊTE. Mieux vaut un macaronage un poil insuffisant que trop"
+      },
+      d_pascrouter: {
+        title: "Pas de croûtage = pas de collerette",
+        cause: "Le croûtage forme une peau sèche en surface. Sans cette peau, la vapeur s'échappe par le dessus au lieu de pousser les côtés (= la collerette)",
+        fix: "Laisse tes coques croûter 20-30 min minimum jusqu'à ce que le doigt posé dessus ne colle plus. Dans une pièce pas humide. Pas au réfrigérateur (condensation)"
+      },
+      d_tropcrouter: {
+        title: "Croûtage excessif",
+        cause: "Si la surface est trop sèche, la peau est trop rigide, elle craque pendant la cuisson au lieu de soulever uniformément la coque",
+        fix: "20-30 min suffit. Si ta pièce est très sèche ou ventilée, même 15 min peut suffire. Le test : le doigt ne colle plus mais la surface reste légèrement souple"
+      },
+      d_ventilation: {
+        title: "Chaleur tournante = air soufflé",
+        cause: "La chaleur tournante souffle sur les coques avant que la croûte soit bien formée. Résultat : surface qui bouge, collerette asymétrique ou absente",
+        fix: "Utilise la CHALEUR STATIQUE (résistance haute + basse sans ventilateur). Si ton four n'a que la ventilation, pose une plaque supplémentaire au-dessus pour couper le flux"
+      },
+      d_troochaud: {
+        title: "Four trop chaud au départ",
+        cause: "Une cuisson trop chaude fait éclater les coques avant que l'air intérieur ait le temps de soulever les côtés. Elles craquent ou ne forment pas de collerette",
+        fix: "Cuis à 150°C chaleur statique CONSTANT pendant 14-16 min. Pas de choc thermique, pas de préchauffe à 180° puis baisse. La régularité, c'est tout"
+      },
+      d_four_OK: {
+        title: "Four correct, cherche ailleurs",
+        cause: "Si macaronage + croûtage + four sont bons, regarde du côté de la meringue (pas assez serrée ?) ou du tant pour tant (poudre amande mal tamisée, trop humide)",
+        fix: "Test ta meringue : doit faire un bec d'oiseau rigide, brillante. Tamise sucre glace + poudre amande 2 fois. Sèche ta poudre d'amande 30 min à 100°C si elle est humide"
+      }
+    }
+  },
+
+  cremepat: {
+    name: "Crème pâtissière grumeleuse",
+    sub: "Crèmes de base",
+    start: "q1",
+    questions: {
+      q1: {
+        text: "Les grumeaux sont apparus QUAND ?",
+        options: [
+          {text: "Dès que j'ai versé le lait chaud sur les jaunes", next: "d_choc_thermique"},
+          {text: "Pendant la cuisson sur le feu", next: "q2"},
+          {text: "Après refroidissement seulement", next: "d_froid"}
+        ]
+      },
+      q2: {
+        text: "Tu as remué comment pendant la cuisson ?",
+        options: [
+          {text: "En continu au fouet, sans arrêt, partout dans la casserole", next: "d_OK"},
+          {text: "De temps en temps, j'ai laissé cuire tranquillement", next: "d_paslaisser"},
+          {text: "À la maryse ou cuillère en bois", next: "d_mauvaisoutil"}
+        ]
+      }
+    },
+    diagnoses: {
+      d_choc_thermique: {
+        title: "Tes jaunes ont coagulé au contact du lait chaud",
+        cause: "Tu as versé tout le lait bouillant d'un coup sur les jaunes. Les jaunes coagulent à 65°C. Résultat : des petits morceaux d'œuf cuit",
+        fix: "Verse le lait chaud en FILET sur les jaunes/sucre/maïzena, en FOUETTANT en même temps. Commence par un peu de lait pour tempérer avant de tout verser. Reverse tout dans la casserole"
+      },
+      d_paslaisser: {
+        title: "Cuisson non homogène",
+        cause: "La crème a cuit plus vite au fond et sur les bords. Si tu ne remues pas constamment, ces zones surcuisent pendant que le centre reste liquide = grumeaux de cuisson",
+        fix: "FOUET EN CONTINU pendant TOUTE la cuisson. Raclage des coins et du fond. Sans arrêt jusqu'à 2 minutes APRÈS le début de l'ébullition (temps que la maïzena cuise vraiment)"
+      },
+      d_mauvaisoutil: {
+        title: "Maryse ou cuillère = mauvais outil",
+        cause: "La maryse et la cuillère en bois ne permettent pas de remuer assez vite et partout. Il reste des zones mal mélangées = grumeaux",
+        fix: "FOUET OBLIGATOIRE pour la crème pâtissière. La maryse c'est pour les mélanges délicats (incorporer des blancs), pas pour les crèmes cuites. Fouet en continu = texture lisse"
+      },
+      d_froid: {
+        title: "Grumeaux de refroidissement",
+        cause: "Si ta crème pâtissière a pris en grumeaux en refroidissant, c'est que tu ne l'as pas filmée AU CONTACT. Une peau s'est formée et en mélangeant après, ça fait des morceaux",
+        fix: "Dès que ta crème est cuite, verse dans un plat large, filme AU CONTACT (le film doit toucher la surface, pas au-dessus) et refroidis vite au frigo. Rebat au fouet avant utilisation"
+      },
+      d_OK: {
+        title: "Probablement un défaut de farine/maïzena",
+        cause: "Si ta technique est bonne, les grumeaux peuvent venir d'une maïzena mal incorporée au départ (pas tamisée ou mal mélangée aux jaunes avant le lait)",
+        fix: "Toujours mélanger SUCRE + MAÏZENA AU FOUET avant d'ajouter les jaunes. Le sucre évite que la maïzena ne fasse des paquets. Puis les jaunes au fouet. Puis le lait chaud en filet"
+      }
+    }
+  },
+
+  pateachoux: {
+    name: "Pâte à choux ratée",
+    sub: "Pâte à choux",
+    start: "q1",
+    questions: {
+      q1: {
+        text: "Le problème principal c'est quoi ?",
+        options: [
+          {text: "Mes choux ne gonflent pas (restent plats)", next: "q2a"},
+          {text: "Mes choux gonflent mais retombent à la sortie du four", next: "q2b"},
+          {text: "Mes choux sont creux et secs", next: "d_trop_cuits"},
+          {text: "Ma pâte est trop liquide / s'étale", next: "d_tropoeufs"}
+        ]
+      },
+      q2a: {
+        text: "Tu as fait le test du V avec les œufs ?",
+        options: [
+          {text: "Oui, ma pâte formait un V au fouet avant pochage", next: "d_four_ouvert"},
+          {text: "Non, j'ai mis les 4 œufs d'un coup direct", next: "d_mauvais_oeufs"},
+          {text: "Ma pâte était trop épaisse, pas de V", next: "d_pasassezoeufs"}
+        ]
+      },
+      q2b: {
+        text: "Tu as ouvert le four pendant la cuisson ?",
+        options: [
+          {text: "Oui, pour vérifier la couleur", next: "d_four_ouvert"},
+          {text: "Non, je n'ai pas ouvert", next: "d_soussuit"}
+        ]
+      }
+    },
+    diagnoses: {
+      d_mauvais_oeufs: {
+        title: "Incorporation des œufs non maîtrisée",
+        cause: "La quantité d'œufs varie selon combien ta pâte a séché sur le feu. Mettre les 4 œufs d'un coup = quasi-certain d'être hors ratio",
+        fix: "Incorpore les œufs UN PAR UN (ou 50g par 50g si pesés). Entre chaque ajout, mélange bien. STOP dès que la pâte forme un V qui retombe lentement au fouet. Peut nécessiter 3.5 ou 4.5 œufs"
+      },
+      d_pasassezoeufs: {
+        title: "Pas assez d'œufs",
+        cause: "Si ta pâte est trop épaisse et que tu ne fais pas le V, c'est qu'il manque des œufs. La pâte n'a pas assez d'hydratation pour former la vapeur qui fait gonfler",
+        fix: "Ajoute un œuf de plus (ou 50g). La bonne texture : V qui retombe lentement, surface brillante, tient sur la maryse mais coule progressivement. Pas compacte, pas liquide"
+      },
+      d_tropoeufs: {
+        title: "Trop d'œufs",
+        cause: "Si la pâte s'étale comme une flaque, tu as mis trop d'œufs. Elle ne tient pas sa forme au pochage, elle s'étale à la cuisson",
+        fix: "Arrête-toi dès que la pâte fait le V. Il vaut mieux 3.5 œufs bien incorporés qu'4 œufs de trop. Tu peux pas rattraper (sauf ajouter une nouvelle panade)"
+      },
+      d_four_ouvert: {
+        title: "Four ouvert = choc thermique",
+        cause: "La pâte à choux monte grâce à la vapeur d'eau. Si tu ouvres le four avant que la structure soit rigide, la vapeur s'échappe, les choux retombent",
+        fix: "NE JAMAIS OUVRIR LE FOUR les 25-30 premières minutes. Cuisson totale : 170°C 35-40 min. Regarde à travers la vitre. Sort seulement quand bien dorés et fermes"
+      },
+      d_soussuit: {
+        title: "Cuisson insuffisante",
+        cause: "Si tes choux gonflent puis retombent sans que tu aies ouvert le four, ils sont sortis trop tôt. La structure intérieure n'était pas assez sèche pour tenir",
+        fix: "Cuisson minimum 35 min à 170°C. Teste : sort un chou, coupe-le. Intérieur = sec, parois fines et stables. Si humide ou mou, remets au four 5-10 min de plus"
+      },
+      d_trop_cuits: {
+        title: "Cuisson excessive ou température trop haute",
+        cause: "Choux creux et secs = trop cuits OU four trop chaud qui a fait exploser la vapeur avant que l'intérieur ait pu se former",
+        fix: "170°C chaleur statique (pas tournante). 35-40 min max. Ils doivent être dorés partout, secs au toucher mais pas bruns. L'intérieur est creux : c'est normal, il se remplit de crème"
+      }
+    }
+  },
+
+  glacagemiroir: {
+    name: "Glaçage miroir raté",
+    sub: "Finitions",
+    start: "q1",
+    questions: {
+      q1: {
+        text: "Quel est le problème principal ?",
+        options: [
+          {text: "Plein de bulles dans mon glaçage", next: "d_bulles"},
+          {text: "Le glaçage ne couvre pas uniformément (trous, zones fines)", next: "q2"},
+          {text: "Il glisse et n'accroche pas à l'entremet", next: "d_entremet_pascongele"},
+          {text: "Il n'est pas brillant, terne", next: "d_pasbrillant"}
+        ]
+      },
+      q2: {
+        text: "À quelle température tu l'as coulé ?",
+        options: [
+          {text: "30-35°C comme indiqué", next: "d_mixage"},
+          {text: "Plus froid, il commençait à prendre", next: "d_tropfroid"},
+          {text: "Plus chaud, j'étais pressé", next: "d_tropchaud"}
+        ]
+      }
+    },
+    diagnoses: {
+      d_bulles: {
+        title: "Tu as mixé mal",
+        cause: "Les bulles viennent du mixage. Soit tu as sorti le mixeur plongeant de la préparation (a aspiré de l'air), soit tu as mixé trop vite/trop longtemps",
+        fix: "Mixage : incline le mixeur plongeant, laisse-le au FOND, ne remonte JAMAIS à la surface. Mixe à vitesse moyenne, pas à fond. Puis passe le glaçage au chinois pour éliminer les bulles restantes"
+      },
+      d_tropchaud: {
+        title: "Glaçage trop chaud",
+        cause: "Un glaçage trop chaud fait fondre localement ton entremet ou traverse la couche supérieure. Il glisse trop vite et laisse des zones fines",
+        fix: "Température de coulage : 30-35°C EXACTEMENT. Utilise un thermomètre. Remue doucement pendant que tu attends qu'il refroidisse. Une fois à 35°C, coule IMMÉDIATEMENT"
+      },
+      d_tropfroid: {
+        title: "Glaçage trop froid",
+        cause: "Trop froid = il commence à prendre, la viscosité est trop élevée. Il ne s'étale pas uniformément, laisse des traces, des trous",
+        fix: "Si ton glaçage descend sous 30°C, chauffe-le 10 secondes au micro-ondes, remue, recontrôle. 32°C c'est l'idéal. Ne jamais couler en dessous de 28°C"
+      },
+      d_entremet_pascongele: {
+        title: "Ton entremet n'était pas assez congelé",
+        cause: "Le glaçage miroir doit se poser sur une surface TRÈS FROIDE pour figer instantanément. Si ton entremet est juste froid ou mi-pris, le glaçage glisse",
+        fix: "Entremet au CONGÉLATEUR 6h minimum (idéalement 12h ou +). Sors-le juste avant de couler, démoule rapide, pose sur grille, coule en un passage. Remets au frigo (pas congèle) 30 min avant service"
+      },
+      d_pasbrillant: {
+        title: "Glaçage pas assez brillant",
+        cause: "Causes possibles : pas assez de sirop de glucose (qui donne la brillance), pas assez de gélatine (qui donne la tenue), ou coulé à la mauvaise température",
+        fix: "Ratio standard : 150g sucre, 150g glucose, 75g eau, 100g lait concentré, 150g chocolat blanc, 10g gélatine. Le glucose est CRITIQUE pour la brillance. La gélatine en feuille, bien hydratée"
+      },
+      d_mixage: {
+        title: "Problème d'émulsion probable",
+        cause: "Si la température est bonne mais l'aspect pas uniforme, c'est l'émulsion qui n'est pas parfaite. Trop mixé ou pas assez",
+        fix: "Mixage court et incliné. Puis laisse reposer le glaçage 10 min avant de couler pour que les bulles résiduelles remontent. Passe au chinois étamine avant utilisation"
+      }
+    }
+  }
+};
+
+function init() {
+  const container = document.getElementById('recipes');
+  Object.keys(tree).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'recipe-btn';
+    btn.innerHTML = `
+      <div class="recipe-name">${tree[key].name}</div>
+      <div class="recipe-sub">${tree[key].sub}</div>
+    `;
+    btn.onclick = () => selectRecipe(key, btn);
+    container.appendChild(btn);
+  });
+}
+
+function selectRecipe(key, btnEl) {
+  document.querySelectorAll('.recipe-btn').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  document.getElementById('diagnosisContainer').innerHTML = '';
+  showQuestion(key, tree[key].start);
+}
+
+function showQuestion(recipeKey, questionId) {
+  const recipe = tree[recipeKey];
+  const q = recipe.questions[questionId];
+  if (!q) return;
+
+  const container = document.getElementById('questionContainer');
+  container.innerHTML = '';
+
+  const card = document.createElement('div');
+  card.className = 'question-card visible';
+  card.innerHTML = `<h3>${q.text}</h3><div class="options"></div>`;
+
+  const optsDiv = card.querySelector('.options');
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = opt.text;
+    btn.onclick = () => handleAnswer(recipeKey, opt.next);
+    optsDiv.appendChild(btn);
+  });
+
+  container.appendChild(card);
+  card.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function handleAnswer(recipeKey, nextId) {
+  if (nextId.startsWith('d_')) {
+    showDiagnosis(recipeKey, nextId);
+  } else {
+    showQuestion(recipeKey, nextId);
+  }
+}
+
+function showDiagnosis(recipeKey, diagId) {
+  const recipe = tree[recipeKey];
+  const diag = recipe.diagnoses[diagId];
+  document.getElementById('questionContainer').innerHTML = '';
+
+  const container = document.getElementById('diagnosisContainer');
+  container.innerHTML = `
+    <div class="diagnosis visible">
+      <h3>${diag.title}</h3>
+      <p><strong style="color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px">Ce qui s'est passé</strong>${diag.cause}</p>
+      <div class="fix">
+        <strong>La solution</strong>
+        ${diag.fix}
+      </div>
+      <button class="reset" onclick="resetDiagnosis()">← Nouveau diagnostic</button>
+    </div>
+  `;
+  container.scrollIntoView({behavior: 'smooth', block: 'center'});
+}
+
+function resetDiagnosis() {
+  document.querySelectorAll('.recipe-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('questionContainer').innerHTML = '';
+  document.getElementById('diagnosisContainer').innerHTML = '';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+init();
+</script>
+</body>
+</html>

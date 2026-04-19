@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accords de saveurs — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:680px}
+
+  .category-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(26,20,16,0.5);margin:28px 0 14px;display:block}
+  .flavors-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:8px}
+  .flavor{background:#fff;border:1px solid rgba(26,20,16,0.1);padding:14px 12px;border-radius:4px;cursor:pointer;text-align:center;transition:all 0.2s ease;font-size:14px;font-family:inherit;color:#1A1410}
+  .flavor:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 14px rgba(26,20,16,0.06)}
+  .flavor.active{background:#1A1410;color:#FDF8F0;border-color:#C8A04A}
+  .flavor.active .emoji{filter:none}
+  .flavor .emoji{font-size:22px;display:block;margin-bottom:4px}
+
+  .result{margin-top:40px;background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);min-height:240px}
+  .empty{text-align:center;color:rgba(26,20,16,0.45);padding:60px 20px;font-family:Georgia,serif;font-size:18px;font-style:italic}
+  .result h2{font-family:Georgia,serif;font-size:clamp(26px,3.5vw,32px);font-weight:400;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+  .result h2 .emoji{font-size:32px}
+  .result .desc{color:rgba(26,20,16,0.65);font-size:14px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid rgba(200,160,74,0.2)}
+
+  .pairings{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .pairing{background:#FDF8F0;border-left:3px solid #C8A04A;padding:16px 18px;border-radius:3px;transition:all 0.2s ease}
+  .pairing.strong{border-left-width:5px;background:rgba(200,160,74,0.08)}
+  .pairing-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .pairing-name{font-family:Georgia,serif;font-size:17px;color:#1A1410}
+  .pairing-strength{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:#C8A04A}
+  .pairing-why{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.55}
+
+  .ideas{margin-top:28px;padding-top:24px;border-top:1px solid rgba(200,160,74,0.2)}
+  .ideas h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;font-weight:400}
+  .ideas-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .idea{background:#1A1410;color:#FDF8F0;padding:14px 16px;border-radius:3px;font-size:13px;line-height:1.5}
+  .idea .idea-name{font-family:Georgia,serif;font-size:15px;color:#C8A04A;display:block;margin-bottom:4px}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Accords de saveurs</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Trouve l'accord <span class="accent">parfait</span> à ta saveur</h1>
+  <p class="intro">Choisis une saveur principale, obtiens toutes les associations qui fonctionnent, pourquoi elles fonctionnent et quelques idées de desserts signature</p>
+
+  <span class="category-label">🍫 Chocolats</span>
+  <div class="flavors-grid" id="cat-chocolats"></div>
+
+  <span class="category-label">🍓 Fruits rouges & exotiques</span>
+  <div class="flavors-grid" id="cat-fruits"></div>
+
+  <span class="category-label">🥥 Fruits secs & céréales</span>
+  <div class="flavors-grid" id="cat-secs"></div>
+
+  <span class="category-label">🌿 Épices & herbes</span>
+  <div class="flavors-grid" id="cat-epices"></div>
+
+  <span class="category-label">☕ Boissons & autres</span>
+  <div class="flavors-grid" id="cat-autres"></div>
+
+  <div class="result" id="result">
+    <div class="empty">Clique sur une saveur pour découvrir ses accords</div>
+  </div>
+</main>
+
+<script>
+const flavors = {
+  // CHOCOLATS
+  "Chocolat noir": {cat:"chocolats", emoji:"🍫", desc:"Puissant, amer, complexe — aime les saveurs franches qui tiennent face à lui",
+    pairings:[
+      {name:"Framboise", strength:"Évident", why:"L'acidité vive coupe l'amertume du cacao, combo intemporel"},
+      {name:"Poire", strength:"Classique", why:"Douceur fondante qui équilibre la puissance du chocolat"},
+      {name:"Noisette / Praliné", strength:"Évident", why:"Le grillé et le gras du fruit sec amplifient le cacao"},
+      {name:"Orange", strength:"Classique", why:"Le zeste amer résonne avec le chocolat noir corsé"},
+      {name:"Café", strength:"Puissant", why:"Même famille aromatique torréfiée, profondeur garantie"},
+      {name:"Caramel / Fleur de sel", strength:"Classique", why:"Le sel booste toutes les notes cacaotées"},
+      {name:"Piment d'Espelette", strength:"Audacieux", why:"La chaleur douce prolonge la finale du chocolat"},
+      {name:"Yuzu", strength:"Moderne", why:"L'agrume japonais apporte une vivacité qui réveille le noir"},
+      {name:"Whisky / Rhum", strength:"Audacieux", why:"Les notes boisées se marient aux tanins du cacao"},
+      {name:"Menthe fraîche", strength:"Classique", why:"La fraîcheur tranche net avec la richesse"}
+    ],
+    ideas:[
+      {name:"Tarte chocolat-framboise", desc:"Sablé breton, ganache noire, confit framboise, billes croquantes"},
+      {name:"Entremet Poire-Chocolat", desc:"Biscuit Joconde, crémeux chocolat, poires pochées vanille, glaçage miroir"},
+      {name:"Cake Espelette-Chocolat", desc:"Gros cake au cacao, éclats chocolat 70%, pincée de piment d'Espelette"}
+    ]},
+  "Chocolat lait": {cat:"chocolats", emoji:"🍫", desc:"Crémeux, sucré, lacté — cherche des accords qui ne l'écrasent pas",
+    pairings:[
+      {name:"Noisette", strength:"Évident", why:"Accord historique Gianduja, le gras du fruit épouse la douceur"},
+      {name:"Caramel", strength:"Évident", why:"Deux douceurs qui se complètent sans lasser"},
+      {name:"Banane", strength:"Classique", why:"La banane cuite renforce les notes lactées du chocolat lait"},
+      {name:"Noix de pécan", strength:"Moderne", why:"Plus doux que la noix, il ajoute du croquant sans amertume"},
+      {name:"Passion", strength:"Audacieux", why:"L'acidité tropicale réveille le chocolat lait trop sage"},
+      {name:"Coco", strength:"Classique", why:"Douceur lactée qui fait écho sans se marcher dessus"},
+      {name:"Vanille de Tahiti", strength:"Classique", why:"Enrichit les notes aromatiques naturelles du chocolat lait"},
+      {name:"Praliné", strength:"Évident", why:"Le praliné est littéralement fait pour le chocolat lait"}
+    ],
+    ideas:[
+      {name:"Paris-Brest revisité lait-praliné", desc:"Pâte à choux, crémeux chocolat lait, praliné noisette, éclats pétillants"},
+      {name:"Entremet passion-chocolat lait", desc:"Biscuit noisette, crémeux lait, insert passion, glaçage ivoire"},
+      {name:"Cookie lait-pécan-fleur de sel", desc:"Le cookie américain ultime, cuit mi-cuit, fleur de sel au dernier moment"}
+    ]},
+  "Chocolat blanc": {cat:"chocolats", emoji:"🤍", desc:"Très sucré, beurré, crémeux — demande à être contrebalancé par de l'acidité ou de l'amertume",
+    pairings:[
+      {name:"Framboise", strength:"Évident", why:"L'acidité vive casse le côté trop sucré du blanc"},
+      {name:"Yuzu", strength:"Moderne", why:"Agrume complexe qui apporte fraîcheur et élégance"},
+      {name:"Citron", strength:"Classique", why:"L'acidité sauve le chocolat blanc de la lourdeur"},
+      {name:"Pistache", strength:"Évident", why:"Couleur, texture et léger amer parfaitement équilibrés"},
+      {name:"Rose", strength:"Classique", why:"Floralité qui accompagne sans forcer la délicatesse"},
+      {name:"Matcha", strength:"Moderne", why:"L'amertume du thé vert fait contrepoids au sucre"},
+      {name:"Cardamome", strength:"Audacieux", why:"Épice tiède qui structure et sort le blanc du sucré plat"},
+      {name:"Fruits rouges (griottes, groseilles)", strength:"Classique", why:"L'acidité des fruits rouges est la meilleure alliée du blanc"}
+    ],
+    ideas:[
+      {name:"Tarte citron-chocolat blanc", desc:"Sablé amande, ganache blanche citron, meringue italienne dorée"},
+      {name:"Bûche yuzu-blanc", desc:"Biscuit pistache, mousse blanc, insert yuzu, glaçage miroir nacré"},
+      {name:"Ispahan moderne", desc:"Macaron framboise-rose-litchi avec ganache blanche infusée rose"}
+    ]},
+
+  // FRUITS
+  "Fraise": {cat:"fruits", emoji:"🍓", desc:"Rouge, estivale, un peu acidulée — adore les accords herbacés et lactés",
+    pairings:[
+      {name:"Basilic", strength:"Moderne", why:"Le côté anisé du basilic sublime la fraise fraîche"},
+      {name:"Rhubarbe", strength:"Classique", why:"Même saison, même famille acidulée, accord évident"},
+      {name:"Vanille", strength:"Évident", why:"La vanille adoucit et enveloppe la fraise"},
+      {name:"Citron vert", strength:"Moderne", why:"Le zeste vert booste la vivacité de la fraise"},
+      {name:"Menthe", strength:"Classique", why:"Fraîcheur herbacée qui allonge la finale"},
+      {name:"Balsamique", strength:"Audacieux", why:"Le vieux balsamique révèle des notes profondes insoupçonnées"},
+      {name:"Mascarpone", strength:"Évident", why:"La crème douce et grasse magnifie le fruit"},
+      {name:"Poivre de Timut", strength:"Audacieux", why:"Poivre pamplemousse qui prolonge l'acidité"}
+    ],
+    ideas:[
+      {name:"Fraisier basilic", desc:"Génoise punchée, mousseline vanille-basilic, fraises fraîches, nappage neutre"},
+      {name:"Pavlova fraise-mascarpone", desc:"Meringue française, crème mascarpone-vanille, fraises marinées balsamique"},
+      {name:"Verrine fraise-rhubarbe", desc:"Compote rhubarbe, fraises crues, crumble sablé, Chantilly citron vert"}
+    ]},
+  "Framboise": {cat:"fruits", emoji:"🫐", desc:"Vive, acidulée, parfumée — elle adore les contrastes forts",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"Le contraste acide/amer est un classique intemporel"},
+      {name:"Rose", strength:"Classique", why:"L'Ispahan de Pierre Hermé, floral et fruité"},
+      {name:"Litchi", strength:"Classique", why:"Le fruit asiatique amplifie la note florale de la framboise"},
+      {name:"Pistache", strength:"Évident", why:"Rouge contre vert, gras contre acide, parfait"},
+      {name:"Vanille", strength:"Classique", why:"La vanille arrondit les angles vifs du fruit"},
+      {name:"Basilic", strength:"Moderne", why:"Accord herbacé moderne qui dynamise"},
+      {name:"Violette", strength:"Audacieux", why:"Deux délicatesses florales qui dialoguent"},
+      {name:"Citron", strength:"Moderne", why:"Double dose d'acidité pour une tarte tonique"}
+    ],
+    ideas:[
+      {name:"Ispahan", desc:"Macaron rose, crème rose, framboises fraîches, litchi"},
+      {name:"Tarte framboise-pistache", desc:"Sablé pistache, crème pistache, framboises crues, poudre de pistache"},
+      {name:"Entremet chocolat-framboise", desc:"Dacquoise amande, mousse chocolat noir, insert framboise, glaçage rouge"}
+    ]},
+  "Citron": {cat:"fruits", emoji:"🍋", desc:"Acide, vif, aromatique — le contraste avec le sucre est son terrain de jeu",
+    pairings:[
+      {name:"Meringue italienne", strength:"Évident", why:"Tarte citron meringuée, accord indémodable"},
+      {name:"Basilic", strength:"Moderne", why:"L'herbe italienne coupe l'acidité avec élégance"},
+      {name:"Framboise", strength:"Moderne", why:"Double acidité, saveurs estivales qui s'aiment"},
+      {name:"Verveine", strength:"Moderne", why:"Infusion herbacée subtile qui prolonge le citron"},
+      {name:"Gingembre", strength:"Audacieux", why:"Piquant qui amplifie la vivacité"},
+      {name:"Huile d'olive", strength:"Audacieux", why:"Le vert de l'huile nappe l'acidité du citron"},
+      {name:"Chocolat blanc", strength:"Classique", why:"Le blanc adoucit et crémeux le citron"},
+      {name:"Amande", strength:"Classique", why:"Le gras de l'amande enveloppe l'acidité"}
+    ],
+    ideas:[
+      {name:"Tarte citron meringuée", desc:"Pâte sucrée, crème citron, meringue italienne dorée au chalumeau"},
+      {name:"Cheesecake citron-basilic", desc:"Sablé breton, appareil citron-basilic, copeaux de zeste"},
+      {name:"Madeleines citron-verveine", desc:"Beurre noisette, zeste citron, infusion verveine, bosse garantie"}
+    ]},
+  "Orange": {cat:"fruits", emoji:"🍊", desc:"Douce ou amère, toujours ensoleillée — aime les épices chaudes",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"L'Orangette, l'Écorce, toujours un hit"},
+      {name:"Cannelle", strength:"Classique", why:"Épice chaude qui épouse la chaleur solaire de l'orange"},
+      {name:"Amande", strength:"Classique", why:"Le gâteau au yaourt orange-amande existe depuis toujours"},
+      {name:"Fleur d'oranger", strength:"Évident", why:"Même famille, double dose florale"},
+      {name:"Clou de girofle", strength:"Audacieux", why:"Épice puissante qui structure l'orange en hiver"},
+      {name:"Olive", strength:"Audacieux", why:"Salé végétal qui sublime l'orange amère (à la méditerranéenne)"},
+      {name:"Whisky", strength:"Audacieux", why:"Les arômes boisés du whisky résonnent avec le zeste"},
+      {name:"Cardamome", strength:"Moderne", why:"Épice mentholée qui modernise le duo orange-chocolat"}
+    ],
+    ideas:[
+      {name:"Cake orange-cardamome", desc:"Cake classique zeste orange et cardamome moulue, sirop d'imbibage"},
+      {name:"Tarte chocolat-orange", desc:"Sablé cacao, ganache noire orange, confit orange amère"},
+      {name:"Pain de Gênes à l'orange", desc:"Pâte d'amande, zeste orange, Grand Marnier en finition"}
+    ]},
+  "Passion": {cat:"fruits", emoji:"🥭", desc:"Acidulée, tropicale, aromatique — le contrepoids parfait aux saveurs sucrées",
+    pairings:[
+      {name:"Chocolat blanc", strength:"Évident", why:"L'accord Valrhona signature, acidité tropicale contre douceur lactée"},
+      {name:"Mangue", strength:"Classique", why:"Duo tropical, le sucré de la mangue équilibre le pep du fruit"},
+      {name:"Noix de coco", strength:"Classique", why:"Ambiance îles, textures douces et vives"},
+      {name:"Banane", strength:"Moderne", why:"La banane rôtie enrobe l'acidité passion"},
+      {name:"Chocolat lait", strength:"Moderne", why:"Crémeux lacté contre vivacité tropicale"},
+      {name:"Fruit de la passion + rhum", strength:"Classique", why:"La version cocktail exotique"},
+      {name:"Gingembre", strength:"Moderne", why:"Double punch piquant-acide, très moderne"}
+    ],
+    ideas:[
+      {name:"Entremet Mogador", desc:"Biscuit Joconde, mousse chocolat lait, gelée passion, glaçage miroir"},
+      {name:"Tarte passion-coco", desc:"Sablé coco, ganache blanche passion, meringue coco torchée"},
+      {name:"Verrine exotique", desc:"Brunoise mangue-passion, mousse coco, crumble citron vert"}
+    ]},
+  "Mangue": {cat:"fruits", emoji:"🥭", desc:"Sucrée, charnue, solaire — adore les épices tropicales et les acidités",
+    pairings:[
+      {name:"Passion", strength:"Évident", why:"Couple tropical par excellence, acide et sucré"},
+      {name:"Noix de coco", strength:"Évident", why:"La coco enrobe et amplifie l'exotisme"},
+      {name:"Gingembre", strength:"Classique", why:"Le piquant réveille la mangue un peu sage"},
+      {name:"Citron vert", strength:"Évident", why:"L'accord du ceviche version dessert"},
+      {name:"Cardamome", strength:"Classique", why:"Épice indienne traditionnelle avec la mangue"},
+      {name:"Piment", strength:"Audacieux", why:"Street food mexicain transposé en dessert"},
+      {name:"Vanille", strength:"Classique", why:"La vanille lisse la chair du fruit"}
+    ],
+    ideas:[
+      {name:"Pavlova mangue-passion", desc:"Meringue croustillante, Chantilly, brunoise mangue-passion"},
+      {name:"Tarte mangue-gingembre", desc:"Sablé breton, crème amande gingembre, lamelles de mangue rôties"},
+      {name:"Verrine exotique mangue-coco", desc:"Dés de mangue, panna cotta coco, crumble citron vert"}
+    ]},
+  "Pomme": {cat:"fruits", emoji:"🍎", desc:"Polyvalente, rustique ou sophistiquée — parle d'automne et de feu",
+    pairings:[
+      {name:"Caramel beurre salé", strength:"Évident", why:"Tatin, crêpe, tarte, un duo sans faille"},
+      {name:"Cannelle", strength:"Évident", why:"L'accord d'automne par excellence"},
+      {name:"Vanille", strength:"Classique", why:"Vanille Tahiti sur pomme rôtie, confort absolu"},
+      {name:"Calvados", strength:"Classique", why:"Même matière première, double effet"},
+      {name:"Noix / Pécan", strength:"Classique", why:"Le gras des noix enrobe le croquant du fruit"},
+      {name:"Thym / Romarin", strength:"Audacieux", why:"L'herbe boisée modernise la tarte aux pommes"},
+      {name:"Gingembre", strength:"Moderne", why:"Le piquant dynamise les pommes trop sages"},
+      {name:"Beurre noisette", strength:"Évident", why:"Toute pomme cuite adore le beurre noisette"}
+    ],
+    ideas:[
+      {name:"Tarte Tatin classique", desc:"Pommes caramélisées, pâte feuilletée retournée, Chantilly vanille"},
+      {name:"Chausson pomme-noix", desc:"Feuilletage, compote de pommes, noix caramélisées, badigeon œuf"},
+      {name:"Entremet pomme-calva", desc:"Biscuit noisette, mousse Calvados, insert pomme tatin"}
+    ]},
+  "Poire": {cat:"fruits", emoji:"🍐", desc:"Délicate, fondante, juteuse — préfère les accords doux mais structurés",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"Belle-Hélène, indémodable, rustique ou chic"},
+      {name:"Caramel", strength:"Classique", why:"Douceur sur douceur avec la touche grillée qui relance"},
+      {name:"Vanille", strength:"Classique", why:"Poire pochée vanille, accord de la sagesse"},
+      {name:"Badiane / Anis étoilé", strength:"Classique", why:"Épice qui soutient la poire pochée en sirop"},
+      {name:"Gingembre", strength:"Moderne", why:"Piquant qui redonne du peps à la poire trop mûre"},
+      {name:"Noix", strength:"Classique", why:"Combo rustique avec bleu ou caramel"},
+      {name:"Praliné", strength:"Moderne", why:"Base modernisée sur bûche ou entremet"},
+      {name:"Eau-de-vie de poire", strength:"Audacieux", why:"Double intensité, pour connaisseurs"}
+    ],
+    ideas:[
+      {name:"Poire Belle-Hélène revisité", desc:"Poire pochée vanille-badiane, sauce chocolat noir tiède, glace vanille"},
+      {name:"Entremet poire-caramel", desc:"Biscuit noisette, mousse caramel, insert poire, glaçage doré"},
+      {name:"Tarte poire-chocolat-amande", desc:"Pâte sucrée, crème d'amande, poires pochées, ganache coulée"}
+    ]},
+
+  // FRUITS SECS
+  "Noisette": {cat:"secs", emoji:"🌰", desc:"Grillée, grasse, boisée — soutient les chocolats et se suffit presque à elle-même",
+    pairings:[
+      {name:"Chocolat lait", strength:"Évident", why:"Gianduja, Nutella, le mariage historique"},
+      {name:"Chocolat noir", strength:"Évident", why:"Ferrero, Rocher, toujours un succès"},
+      {name:"Caramel", strength:"Évident", why:"Praliné + caramel = paradis"},
+      {name:"Poire", strength:"Classique", why:"Tarte poire-noisette, accord d'automne parfait"},
+      {name:"Café", strength:"Classique", why:"Notes torréfiées communes, puissant ensemble"},
+      {name:"Vanille", strength:"Classique", why:"Arrondit le côté un peu sec de la noisette"},
+      {name:"Praliné", strength:"Évident", why:"Littéralement la même famille"}
+    ],
+    ideas:[
+      {name:"Paris-Brest noisette", desc:"Pâte à choux, crème mousseline au praliné maison, éclats de noisette caramélisée"},
+      {name:"Tarte poire-noisette", desc:"Sablé noisette, frangipane noisette, poires en lamelles"},
+      {name:"Cookie chocolat-noisette-fleur de sel", desc:"Gros cookie mi-cuit avec chunks 64% et éclats noisette"}
+    ]},
+  "Pistache": {cat:"secs", emoji:"🟢", desc:"Vert tendre, légèrement amer, fin — demande des partenaires qui la soulignent",
+    pairings:[
+      {name:"Framboise", strength:"Évident", why:"Le contraste rouge-vert, acide-gras, iconique"},
+      {name:"Chocolat blanc", strength:"Évident", why:"La pistache + blanc, Pierre Marcolini adore"},
+      {name:"Rose", strength:"Classique", why:"Parfum oriental délicat et raffiné"},
+      {name:"Griotte / Cerise", strength:"Classique", why:"Deux notes acidulées qui s'élèvent"},
+      {name:"Fleur d'oranger", strength:"Classique", why:"Orient parfumé dans le même esprit"},
+      {name:"Orange", strength:"Moderne", why:"Contraste solaire-végétal moderne"},
+      {name:"Abricot", strength:"Moderne", why:"Moelleux et acidité tout en douceur"}
+    ],
+    ideas:[
+      {name:"Tarte pistache-framboise", desc:"Sablé pistache, crème pistache, framboises fraîches empilées"},
+      {name:"Entremet pistache-griotte", desc:"Dacquoise pistache, mousse blanche pistache, insert griotte, glaçage vert"},
+      {name:"Financier pistache-rose", desc:"Beurre noisette, pâte pistache, eau de rose en finition"}
+    ]},
+  "Amande": {cat:"secs", emoji:"🟤", desc:"Douce, grasse, polyvalente — la base cachée de toute la pâtisserie française",
+    pairings:[
+      {name:"Abricot", strength:"Évident", why:"Tarte amandine à l'abricot, le mariage de toujours"},
+      {name:"Cerise / Griotte", strength:"Évident", why:"Clafoutis, frangipane, toujours"},
+      {name:"Orange / Citron", strength:"Classique", why:"L'agrume réveille l'amande riche"},
+      {name:"Chocolat noir", strength:"Classique", why:"Pain de Gênes au chocolat, robuste et fin"},
+      {name:"Fleur d'oranger", strength:"Classique", why:"Couple oriental dans la galette des Rois"},
+      {name:"Poire", strength:"Classique", why:"Bourdaloue, frangipane classique"},
+      {name:"Miel", strength:"Moderne", why:"Douceur sur douceur avec profondeur"}
+    ],
+    ideas:[
+      {name:"Tarte Bourdaloue", desc:"Pâte sucrée, crème d'amande, poires pochées rangées"},
+      {name:"Galette des Rois revisitée", desc:"Feuilletage inversé, frangipane fleur d'oranger, fève cachée"},
+      {name:"Financier amande-cerise", desc:"Beurre noisette, poudre amande, griottes entières"}
+    ]},
+  "Coco": {cat:"secs", emoji:"🥥", desc:"Douce, lactée, parfumée — emporte vers les tropiques sans effort",
+    pairings:[
+      {name:"Passion", strength:"Évident", why:"Duo tropical, équilibre acide-sucré parfait"},
+      {name:"Mangue", strength:"Évident", why:"Mangue-coco, Piña style, toujours un hit"},
+      {name:"Ananas", strength:"Classique", why:"Ambiance carnaval, acidité solaire"},
+      {name:"Chocolat blanc", strength:"Classique", why:"Bounty inversé, douceur lactée extrême"},
+      {name:"Lime / Citron vert", strength:"Classique", why:"Fraîcheur qui sauve la coco de la lourdeur"},
+      {name:"Chocolat noir", strength:"Moderne", why:"Bounty version chef, contraste amer-doux"},
+      {name:"Rhum", strength:"Classique", why:"Accords caribéens évidents"}
+    ],
+    ideas:[
+      {name:"Rocher coco maison", desc:"Noix de coco, blanc d'œuf, sucre, bande de chocolat noir en finition"},
+      {name:"Tarte coco-passion", desc:"Sablé coco, ganache blanche coco, insert passion, copeaux dorés"},
+      {name:"Entremet exotique tropical", desc:"Biscuit coco, mousse coco, insert mangue-passion, glaçage ivoire"}
+    ]},
+
+  // ÉPICES
+  "Vanille": {cat:"epices", emoji:"🌱", desc:"Chaleureuse, ronde, universelle — la colonne vertébrale de la pâtisserie",
+    pairings:[
+      {name:"Caramel", strength:"Évident", why:"Duo de base, l'un sans l'autre c'est trop peu"},
+      {name:"Framboise", strength:"Classique", why:"La vanille enveloppe l'acidité du fruit rouge"},
+      {name:"Poire", strength:"Classique", why:"Poire pochée vanille, accord éternel"},
+      {name:"Rhum", strength:"Classique", why:"Saveurs antillaises liées à l'origine même des gousses"},
+      {name:"Café", strength:"Classique", why:"Vanille en finition adoucit l'amertume"},
+      {name:"Fraise", strength:"Évident", why:"Fraisier vanille, la base"},
+      {name:"Pomme", strength:"Classique", why:"Pommes au four vanillé, confort absolu"}
+    ],
+    ideas:[
+      {name:"Crème brûlée vanille Bourbon", desc:"Crème infusée longue, cassonade caramélisée au chalumeau"},
+      {name:"Millefeuille vanille", desc:"Feuilletage inversé, crème mousseline vanille Tahiti, glaçage blanc"},
+      {name:"Flan pâtissier vanille", desc:"Pâte brisée, appareil à flan vanille intense, dessus doré"}
+    ]},
+  "Cardamome": {cat:"epices", emoji:"🌿", desc:"Mentholée, florale, camphrée — l'épice qui modernise sans dénaturer",
+    pairings:[
+      {name:"Chocolat blanc", strength:"Moderne", why:"Structure élégamment le chocolat blanc trop sucré"},
+      {name:"Orange", strength:"Moderne", why:"Accord oriental moderne, frais et chaud à la fois"},
+      {name:"Mangue", strength:"Classique", why:"Accord indien traditionnel"},
+      {name:"Chocolat noir", strength:"Audacieux", why:"Profondeur aromatique, tanins communs"},
+      {name:"Poire", strength:"Moderne", why:"Poire pochée cardamome, délicatesse"},
+      {name:"Café", strength:"Classique", why:"Café turc, familier et exotique"},
+      {name:"Rose", strength:"Moderne", why:"Deux florales qui dialoguent"}
+    ],
+    ideas:[
+      {name:"Cake orange-cardamome", desc:"Cake moelleux au zeste d'orange et cardamome fraîchement moulue"},
+      {name:"Crémeux chocolat-cardamome", desc:"Ganache infusée cardamome, servie en verrine avec sablé cacao"},
+      {name:"Kulfi mangue-cardamome", desc:"Glace indienne mangue, cardamome, pistache concassée"}
+    ]},
+  "Cannelle": {cat:"epices", emoji:"🟤", desc:"Chaleureuse, boisée, sucrée — l'épice du réconfort hivernal",
+    pairings:[
+      {name:"Pomme", strength:"Évident", why:"Strudel, tarte tatin, crumble, accord éternel"},
+      {name:"Orange", strength:"Classique", why:"Ambiance Noël, vin chaud en dessert"},
+      {name:"Chocolat noir", strength:"Classique", why:"Le Mexique ancestral, cacao-cannelle"},
+      {name:"Noix de pécan", strength:"Classique", why:"Pecan pie à l'américaine"},
+      {name:"Raisin sec", strength:"Classique", why:"Escargot, brioche, classique boulangerie"},
+      {name:"Café", strength:"Moderne", why:"Cappuccino cannelle, chaleur sur chaleur"},
+      {name:"Banane", strength:"Moderne", why:"Banana bread à l'américaine"}
+    ],
+    ideas:[
+      {name:"Crumble pomme-cannelle", desc:"Pommes golden à peine sucrées, crumble beurre-cannelle-avoine"},
+      {name:"Roulé à la cannelle", desc:"Pâte briochée, beurre cannelle-cassonade, glaçage fromage frais"},
+      {name:"Pain d'épices maison", desc:"Miel, farine de seigle, mélange 5 épices maison, glaçage orange"}
+    ]},
+  "Fleur d'oranger": {cat:"epices", emoji:"🌼", desc:"Florale, méditerranéenne, raffinée — parle toujours de soleil",
+    pairings:[
+      {name:"Amande", strength:"Évident", why:"Galette des Rois, couscous sucré, toujours"},
+      {name:"Orange", strength:"Évident", why:"Cousins aromatiques, double dose solaire"},
+      {name:"Miel", strength:"Classique", why:"Orient méditerranéen, baklavas et gâteaux du sud"},
+      {name:"Pistache", strength:"Classique", why:"Oriental chic, loukoums et galettes"},
+      {name:"Chocolat blanc", strength:"Moderne", why:"Délicatesse sur délicatesse"},
+      {name:"Framboise", strength:"Moderne", why:"Floral contre acide, dialogue subtil"}
+    ],
+    ideas:[
+      {name:"Brioche des Rois", desc:"Brioche parfumée fleur d'oranger, fruits confits, sucre perlé"},
+      {name:"Financier pistache-fleur d'oranger", desc:"Beurre noisette, pâte pistache, eau fleur d'oranger"},
+      {name:"Pain de Gênes à la fleur d'oranger", desc:"Pâte d'amande, fleur d'oranger, amandes effilées"}
+    ]},
+  "Rose": {cat:"epices", emoji:"🌹", desc:"Florale, poétique, délicate — doit être dosée avec précision",
+    pairings:[
+      {name:"Framboise", strength:"Évident", why:"Ispahan Pierre Hermé, la rose parfaite"},
+      {name:"Litchi", strength:"Évident", why:"Même trio que Ispahan, toujours gagnant"},
+      {name:"Pistache", strength:"Classique", why:"Oriental raffiné, accord persan"},
+      {name:"Chocolat blanc", strength:"Classique", why:"La blancheur neutre laisse chanter la rose"},
+      {name:"Fraise", strength:"Moderne", why:"Floralité sur fruité, très féminin"},
+      {name:"Miel", strength:"Classique", why:"Douceurs orientales traditionnelles"}
+    ],
+    ideas:[
+      {name:"Ispahan", desc:"Macaron rose, crème rose, framboises fraîches, dés de litchi"},
+      {name:"Loukoum rose-pistache", desc:"Pâte gélifiée maison parfumée rose, éclats de pistache torréfiée"},
+      {name:"Éclair rose-framboise", desc:"Pâte à choux, crème pâtissière rose, framboises crues, glaçage fondant rose"}
+    ]},
+  "Gingembre": {cat:"epices", emoji:"🫚", desc:"Piquant, frais, chaud — modernise tout et amplifie les acidités",
+    pairings:[
+      {name:"Citron / Lime", strength:"Évident", why:"Double punch acide-piquant, très moderne"},
+      {name:"Mangue", strength:"Classique", why:"Duo thaï, piquant contre sucré"},
+      {name:"Chocolat noir", strength:"Moderne", why:"Contraste puissant, finale longue"},
+      {name:"Poire", strength:"Moderne", why:"Redonne de la tension à une poire trop sage"},
+      {name:"Pêche", strength:"Moderne", why:"Peps estival inattendu"},
+      {name:"Passion", strength:"Audacieux", why:"Double acidité piquante, tropical moderne"}
+    ],
+    ideas:[
+      {name:"Tarte citron-gingembre", desc:"Sablé breton, crème citron gingembre frais, meringue dorée"},
+      {name:"Moelleux chocolat-gingembre confit", desc:"Fondant chocolat noir, éclats de gingembre confit"},
+      {name:"Carpaccio de mangue au gingembre", desc:"Mangue fine, sirop gingembre-citron vert, menthe fraîche"}
+    ]},
+  "Basilic": {cat:"epices", emoji:"🌿", desc:"Anisé, herbacé, frais — la surprise qui marche presque à tous les coups",
+    pairings:[
+      {name:"Fraise", strength:"Évident", why:"Accord italien contemporain, herbacé contre fruité"},
+      {name:"Citron", strength:"Évident", why:"Grande classique méditerranéenne"},
+      {name:"Framboise", strength:"Moderne", why:"Deux fraîcheurs qui s'élèvent"},
+      {name:"Pêche", strength:"Moderne", why:"Été en bouche, fruité-herbacé doux"},
+      {name:"Abricot", strength:"Moderne", why:"Le moelleux contre l'herbacé vif"},
+      {name:"Chocolat blanc", strength:"Audacieux", why:"Basilic dans une ganache blanche, surprise élégante"}
+    ],
+    ideas:[
+      {name:"Sorbet fraise-basilic", desc:"Pulpe de fraise, sirop basilic frais infusé, sorbet velouté"},
+      {name:"Tarte citron-basilic", desc:"Sablé amande, crème citron basilic, meringue italienne"},
+      {name:"Entremet fraise-basilic", desc:"Génoise pistache, mousseline basilic, insert fraise, glaçage rouge"}
+    ]},
+
+  // AUTRES
+  "Café": {cat:"autres", emoji:"☕", desc:"Amer, torréfié, puissant — se marie aux saveurs franches et rondes",
+    pairings:[
+      {name:"Chocolat noir / lait", strength:"Évident", why:"Le duo torréfié par excellence"},
+      {name:"Caramel", strength:"Évident", why:"Douceur qui équilibre l'amertume"},
+      {name:"Noisette", strength:"Évident", why:"Mêmes notes grillées, complémentarité totale"},
+      {name:"Vanille", strength:"Classique", why:"Arrondit et adoucit le café corsé"},
+      {name:"Cardamome", strength:"Classique", why:"Café turc, ambiance orientale"},
+      {name:"Noix de pécan", strength:"Classique", why:"Duo américain, rustique et chic"},
+      {name:"Whisky / Bourbon", strength:"Moderne", why:"Deux boissons profondes en dialogue"}
+    ],
+    ideas:[
+      {name:"Tiramisu classique", desc:"Mascarpone montée, biscuits imbibés café-amaretto, cacao amer"},
+      {name:"Opéra", desc:"Biscuit Joconde imbibé café, crème au beurre café, ganache chocolat"},
+      {name:"Entremet café-noisette", desc:"Dacquoise noisette, crémeux café, praliné, glaçage miroir"}
+    ]},
+  "Caramel": {cat:"autres", emoji:"🍯", desc:"Doux, beurré, profond — demande du sel et de l'acidité pour ne pas lasser",
+    pairings:[
+      {name:"Fleur de sel", strength:"Évident", why:"Le sel sublime toutes les notes caramel"},
+      {name:"Pomme", strength:"Évident", why:"Tatin, toujours, jamais en échec"},
+      {name:"Chocolat noir", strength:"Évident", why:"Contraste amer-doux parfait"},
+      {name:"Cacahuète", strength:"Classique", why:"Duo américain, Snickers réinventé"},
+      {name:"Poire", strength:"Classique", why:"Douceur sur douceur équilibrée"},
+      {name:"Café", strength:"Classique", why:"Amertume qui structure la rondeur"},
+      {name:"Banane", strength:"Classique", why:"Banane foster, banoffee, accord du soleil"}
+    ],
+    ideas:[
+      {name:"Banoffee pie", desc:"Pâte sablée, dulce de leche, bananes, Chantilly vanille, chocolat râpé"},
+      {name:"Tarte Tatin caramel-fleur de sel", desc:"Pommes caramélisées au beurre salé, pâte feuilletée retournée"},
+      {name:"Entremet caramel-cacahuète", desc:"Biscuit cacahuète, mousse caramel beurre salé, insert cacahuète"}
+    ]},
+  "Matcha": {cat:"autres", emoji:"🍵", desc:"Végétal, amer, délicat — crée des contrastes modernes avec la douceur",
+    pairings:[
+      {name:"Chocolat blanc", strength:"Évident", why:"Contraste amer-doux, couleur et saveur équilibrées"},
+      {name:"Yuzu", strength:"Classique", why:"Accord japonais traditionnel, agrume contre thé"},
+      {name:"Framboise", strength:"Moderne", why:"Rouge contre vert, acide contre amer"},
+      {name:"Sésame noir", strength:"Classique", why:"Accord japonais, umami et torréfié"},
+      {name:"Haricot azuki", strength:"Classique", why:"Traditionnel japonais, douceur contre amertume"},
+      {name:"Noix de coco", strength:"Moderne", why:"Coco lactée qui adoucit le matcha"}
+    ],
+    ideas:[
+      {name:"Tiramisu matcha", desc:"Mascarpone matcha, biscuits imbibés thé vert, poudre de matcha en finition"},
+      {name:"Entremet matcha-yuzu", desc:"Biscuit sésame, mousse matcha, insert yuzu, glaçage nacré"},
+      {name:"Dorayaki matcha", desc:"Pancakes japonais, crème matcha, haricot azuki"}
+    ]},
+  "Miel": {cat:"autres", emoji:"🍯", desc:"Floral, nutritif, varié selon l'origine — accompagne ou domine selon le dosage",
+    pairings:[
+      {name:"Amande", strength:"Évident", why:"Nougat, halva, pâtisseries orientales"},
+      {name:"Noix", strength:"Classique", why:"Baklavas, rustique et riche"},
+      {name:"Fleur d'oranger", strength:"Classique", why:"Couple méditerranéen idéal"},
+      {name:"Lavande", strength:"Moderne", why:"Miel de lavande souligné par la fleur"},
+      {name:"Poire", strength:"Moderne", why:"Douceur ronde, automnale"},
+      {name:"Citron", strength:"Classique", why:"Tarte au citron au miel, acidité adoucie"},
+      {name:"Thym", strength:"Audacieux", why:"Miel de thym en pâtisserie, herbacé boisé"}
+    ],
+    ideas:[
+      {name:"Baklavas", desc:"Feuilles de filo, mélange noix-miel-fleur d'oranger, sirop de miel chaud"},
+      {name:"Nougat de Montélimar", desc:"Miel, blancs d'œufs, amandes-pistaches, pain azyme"},
+      {name:"Tarte miel-citron-thym", desc:"Sablé breton, crème citron-miel-thym, zestes confits"}
+    ]}
+};
+
+const cats = {chocolats:"cat-chocolats", fruits:"cat-fruits", secs:"cat-secs", epices:"cat-epices", autres:"cat-autres"};
+
+// Render flavor buttons
+Object.entries(flavors).forEach(([name, data]) => {
+  const container = document.getElementById(cats[data.cat]);
+  if (!container) return;
+  const btn = document.createElement('button');
+  btn.className = 'flavor';
+  btn.innerHTML = `<span class="emoji">${data.emoji}</span>${name}`;
+  btn.onclick = () => selectFlavor(name, btn);
+  container.appendChild(btn);
+});
+
+function selectFlavor(name, btn) {
+  document.querySelectorAll('.flavor').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const data = flavors[name];
+  const result = document.getElementById('result');
+
+  const pairingsHTML = data.pairings.map(p => `
+    <div class="pairing ${p.strength === 'Évident' ? 'strong' : ''}">
+      <div class="pairing-head">
+        <span class="pairing-name">${p.name}</span>
+        <span class="pairing-strength">${p.strength}</span>
+      </div>
+      <div class="pairing-why">${p.why}</div>
+    </div>
+  `).join('');
+
+  const ideasHTML = data.ideas ? `
+    <div class="ideas">
+      <h3>💡 3 idées de desserts pour démarrer</h3>
+      <div class="ideas-list">
+        ${data.ideas.map(i => `<div class="idea"><span class="idea-name">${i.name}</span>${i.desc}</div>`).join('')}
+      </div>
+    </div>
+  ` : '';
+
+  result.innerHTML = `
+    <h2><span class="emoji">${data.emoji}</span>${name}</h2>
+    <p class="desc">${data.desc}</p>
+    <div class="pairings">${pairingsHTML}</div>
+    ${ideasHTML}
+  `;
+
+  // Scroll to result
+  setTimeout(() => result.scrollIntoView({behavior: 'smooth', block: 'start'}), 100);
+}
+</script>
+</body>
+</html>

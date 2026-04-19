@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de ratios — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:600px}
+  .selector{margin-bottom:32px}
+  label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
+  select,input{width:100%;padding:14px 18px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  select:focus,input:focus{outline:none;border-color:#C8A04A}
+  .inputs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:32px}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s}
+  .calculate-btn:hover{background:#B08A3E}
+  .result{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:32px;display:none}
+  .result.visible{display:block}
+  .result h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin-bottom:24px;color:#1A1410;border-bottom:1px solid rgba(200,160,74,0.3);padding-bottom:16px}
+  .ingredient-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .ingredient-row:last-child{border-bottom:none}
+  .ingredient-name{font-size:15px;color:#1A1410}
+  .ingredient-qty{font-family:Georgia,serif;font-size:20px;color:#C8A04A}
+  .tip{background:rgba(200,160,74,0.08);padding:20px;margin-top:24px;border-left:3px solid #C8A04A;font-size:14px;color:#1A1410;border-radius:2px}
+  .tip strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Calculateur de ratios</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Tes grammages, <span style="color:#C8A04A;font-style:italic">adaptés à ton besoin</span></h1>
+  <p class="intro">Choisis une recette de base, indique ton besoin, obtiens les quantités exactes de chaque ingrédient</p>
+
+  <div class="selector">
+    <label for="recipe">Recette de base</label>
+    <select id="recipe" onchange="updateForm()">
+      <option value="">— Choisir une recette —</option>
+      <option value="cremepatissiere">Crème pâtissière</option>
+      <option value="ganachenoire">Ganache chocolat noir (montage/fourrage)</option>
+      <option value="ganacheblanche">Ganache chocolat blanc (fourrage)</option>
+      <option value="genoise">Génoise</option>
+      <option value="dacquoise">Dacquoise amande</option>
+      <option value="sablebreton">Sablé breton</option>
+      <option value="patesucree">Pâte sucrée</option>
+      <option value="patesablee">Pâte sablée</option>
+      <option value="pateachoux">Pâte à choux</option>
+      <option value="cremechantilly">Crème chantilly mascarpone</option>
+      <option value="cremeanglaise">Crème anglaise</option>
+      <option value="mousseau">Mousse au chocolat (type entremet)</option>
+    </select>
+  </div>
+
+  <div class="inputs-grid" id="inputsGrid" style="display:none">
+    <div>
+      <label for="input1" id="label1">Quantité</label>
+      <input type="number" id="input1" min="1" value="500">
+    </div>
+    <div>
+      <label for="input2" id="label2" style="display:none">Paramètre 2</label>
+      <input type="number" id="input2" min="1" value="1" style="display:none">
+    </div>
+  </div>
+
+  <button class="calculate-btn" onclick="calculate()" id="calcBtn" style="display:none">Calculer les quantités</button>
+
+  <div class="result" id="result">
+    <h2 id="resultTitle">Tes ingrédients</h2>
+    <div id="ingredients"></div>
+    <div class="tip" id="tip"></div>
+  </div>
+</main>
+
+<script>
+const recipes = {
+  cremepatissiere: {
+    name: "Crème pâtissière",
+    inputs: [{label: "Quantité finale souhaitée (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Lait entier", qty: 375, unit: "g"},
+      {name: "Sucre", qty: 93, unit: "g"},
+      {name: "Jaunes d'œuf", qty: 75, unit: "g (~4 jaunes)"},
+      {name: "Maïzena", qty: 37, unit: "g"},
+      {name: "Beurre (facultatif)", qty: 20, unit: "g"},
+      {name: "Gousse de vanille", qty: 1, unit: "unité"}
+    ],
+    tip: "Chauffe ton lait infusé jusqu'à frémissement. Verse sur le mélange jaunes/sucre/maïzena. Remets sur feu moyen 2 min après ébullition en remuant. Filme au contact et refroidis rapidement"
+  },
+  ganachenoire: {
+    name: "Ganache chocolat noir (fourrage/montage)",
+    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
+    base: 200,
+    ingredients: [
+      {name: "Chocolat noir 64-70%", qty: 200, unit: "g"},
+      {name: "Crème liquide 35%", qty: 200, unit: "g"},
+      {name: "Miel ou glucose", qty: 20, unit: "g"},
+      {name: "Beurre (après refroidissement)", qty: 40, unit: "g"}
+    ],
+    tip: "Ratio 1:1 pour montage/fourrage souple. Pour un glaçage plus fluide passe à 1:1.5 (200g chocolat / 300g crème). Verse la crème chaude en 3 fois sur le chocolat haché, émulsionne au centre"
+  },
+  ganacheblanche: {
+    name: "Ganache chocolat blanc",
+    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
+    base: 200,
+    ingredients: [
+      {name: "Chocolat blanc (min 30% beurre cacao)", qty: 200, unit: "g"},
+      {name: "Crème liquide 35%", qty: 100, unit: "g"},
+      {name: "Sirop de glucose", qty: 20, unit: "g"}
+    ],
+    tip: "Le chocolat blanc étant plus gras, on divise la crème par 2. Utilise toujours un bon chocolat de couverture (Valrhona Ivoire, Opalys...) pas du chocolat à pâtisser industriel"
+  },
+  genoise: {
+    name: "Génoise",
+    inputs: [{label: "Diamètre du moule (cm)", id: "diam", default: 20}],
+    base: 20,
+    ingredients: [
+      {name: "Œufs entiers", qty: 200, unit: "g (~4 œufs)"},
+      {name: "Sucre", qty: 125, unit: "g"},
+      {name: "Farine T45", qty: 125, unit: "g"},
+      {name: "Beurre fondu (facultatif)", qty: 25, unit: "g"}
+    ],
+    tip: "Monte les œufs et sucre au bain-marie jusqu'à 50°C puis fouette jusqu'à refroidissement (ruban épais). Incorpore la farine délicatement à la maryse. Cuisson 180°C 25-30 min"
+  },
+  dacquoise: {
+    name: "Dacquoise amande",
+    inputs: [{label: "Diamètre du cercle (cm)", id: "diam", default: 20}],
+    base: 20,
+    ingredients: [
+      {name: "Blancs d'œuf", qty: 125, unit: "g (~4 blancs)"},
+      {name: "Sucre semoule (pour meringue)", qty: 40, unit: "g"},
+      {name: "Sucre glace", qty: 100, unit: "g"},
+      {name: "Poudre d'amande", qty: 100, unit: "g"},
+      {name: "Farine T45", qty: 25, unit: "g"}
+    ],
+    tip: "Monte tes blancs en serrant avec le sucre semoule en 3 fois. Tamise ensemble sucre glace, poudre amande et farine. Incorpore délicatement à la maryse. Cuisson 170°C 18-22 min"
+  },
+  sablebreton: {
+    name: "Sablé breton",
+    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Beurre demi-sel", qty: 150, unit: "g"},
+      {name: "Sucre", qty: 100, unit: "g"},
+      {name: "Jaunes d'œuf", qty: 40, unit: "g (~2 jaunes)"},
+      {name: "Farine T55", qty: 200, unit: "g"},
+      {name: "Levure chimique", qty: 4, unit: "g"},
+      {name: "Fleur de sel", qty: 2, unit: "g"}
+    ],
+    tip: "Crème le beurre pommade avec le sucre. Ajoute les jaunes puis la farine tamisée avec levure. Réserve 2h au frais. Étale entre 2 feuilles, détaille, cuis dans un cercle 170°C 15-18 min"
+  },
+  patesucree: {
+    name: "Pâte sucrée",
+    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Farine T55", qty: 250, unit: "g"},
+      {name: "Beurre doux", qty: 150, unit: "g"},
+      {name: "Sucre glace", qty: 95, unit: "g"},
+      {name: "Poudre d'amande", qty: 30, unit: "g"},
+      {name: "Œuf entier", qty: 50, unit: "g (~1 œuf)"},
+      {name: "Fleur de sel", qty: 1, unit: "g"}
+    ],
+    tip: "Méthode par crémage : beurre pommade + sucre glace + poudre amande + sel + œuf, puis farine. Fraise légèrement, étale, frais 2h minimum avant foncer. Cuisson à blanc 170°C"
+  },
+  patesablee: {
+    name: "Pâte sablée",
+    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Farine T55", qty: 250, unit: "g"},
+      {name: "Beurre froid", qty: 125, unit: "g"},
+      {name: "Sucre glace", qty: 80, unit: "g"},
+      {name: "Jaunes d'œuf", qty: 40, unit: "g (~2 jaunes)"},
+      {name: "Eau froide", qty: 20, unit: "g"},
+      {name: "Sel fin", qty: 2, unit: "g"}
+    ],
+    tip: "Méthode par sablage : beurre froid + farine jusqu'à texture sableuse. Ajoute le sucre, les jaunes et l'eau. Fraise, boule, frais 1h. Étale entre 2 feuilles pour éviter la farine"
+  },
+  pateachoux: {
+    name: "Pâte à choux",
+    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Eau", qty: 125, unit: "g"},
+      {name: "Lait entier", qty: 125, unit: "g"},
+      {name: "Beurre", qty: 100, unit: "g"},
+      {name: "Sucre", qty: 5, unit: "g"},
+      {name: "Sel fin", qty: 3, unit: "g"},
+      {name: "Farine T45", qty: 125, unit: "g"},
+      {name: "Œufs entiers", qty: 220, unit: "g (~4-5 œufs)"}
+    ],
+    tip: "Bouillir eau + lait + beurre + sucre + sel. Verse la farine en une fois, dessèche 1-2 min à feu moyen. Laisse tiédir puis incorpore les œufs progressivement : la pâte doit faire un V au fouet. Cuisson 170°C 35-40 min"
+  },
+  cremechantilly: {
+    name: "Crème chantilly mascarpone",
+    inputs: [{label: "Quantité finale souhaitée (g)", id: "masse", default: 500}],
+    base: 500,
+    ingredients: [
+      {name: "Crème liquide 35% (très froide)", qty: 350, unit: "g"},
+      {name: "Mascarpone (très froid)", qty: 100, unit: "g"},
+      {name: "Sucre glace", qty: 50, unit: "g"},
+      {name: "Gousse de vanille", qty: 1, unit: "unité"}
+    ],
+    tip: "Tout doit être glacé : crème, mascarpone, bol, fouet. Monte à vitesse moyenne (pas maximum = bulles). Arrête dès que la chantilly fait le bec. Le mascarpone stabilise, elle tient 24h au frais"
+  },
+  cremeanglaise: {
+    name: "Crème anglaise",
+    inputs: [{label: "Quantité de lait (g)", id: "masse", default: 250}],
+    base: 250,
+    ingredients: [
+      {name: "Lait entier", qty: 250, unit: "g"},
+      {name: "Jaunes d'œuf", qty: 60, unit: "g (~3 jaunes)"},
+      {name: "Sucre", qty: 50, unit: "g"},
+      {name: "Gousse de vanille", qty: 0.5, unit: "unité"}
+    ],
+    tip: "Cuis à la nappe : 82-85°C au thermomètre ou jusqu'à ce qu'elle nappe la cuillère (trait reste marqué au doigt). Filtre et refroidis immédiatement au bain-marie froid. Ne dépasse jamais 85°C ou elle tranche"
+  },
+  mousseau: {
+    name: "Mousse au chocolat (type entremet)",
+    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
+    base: 200,
+    ingredients: [
+      {name: "Chocolat noir 64-70%", qty: 200, unit: "g"},
+      {name: "Lait entier", qty: 100, unit: "g"},
+      {name: "Crème liquide 35% montée", qty: 300, unit: "g"},
+      {name: "Gélatine poudre", qty: 4, unit: "g"},
+      {name: "Eau (pour gélatine)", qty: 24, unit: "g"}
+    ],
+    tip: "Hydrate la gélatine 10 min. Chauffe le lait, ajoute la gélatine, verse sur le chocolat en 3 fois (émulsion). Attends 35-40°C puis incorpore la crème montée délicatement. Coule vite dans le moule"
+  }
+};
+
+function updateForm() {
+  const key = document.getElementById('recipe').value;
+  const grid = document.getElementById('inputsGrid');
+  const btn = document.getElementById('calcBtn');
+  const result = document.getElementById('result');
+  result.classList.remove('visible');
+
+  if (!key) {
+    grid.style.display = 'none';
+    btn.style.display = 'none';
+    return;
+  }
+
+  const recipe = recipes[key];
+  document.getElementById('label1').textContent = recipe.inputs[0].label;
+  document.getElementById('input1').value = recipe.inputs[0].default;
+  grid.style.display = 'grid';
+  btn.style.display = 'block';
+}
+
+function calculate() {
+  const key = document.getElementById('recipe').value;
+  if (!key) return;
+
+  const recipe = recipes[key];
+  const inputValue = parseFloat(document.getElementById('input1').value) || recipe.base;
+  let ratio;
+
+  if (recipe.inputs[0].id === 'diam') {
+    // Surface ratio : on adapte au carré du diamètre
+    ratio = (inputValue * inputValue) / (recipe.base * recipe.base);
+  } else {
+    ratio = inputValue / recipe.base;
+  }
+
+  const ingredientsDiv = document.getElementById('ingredients');
+  ingredientsDiv.innerHTML = '';
+
+  recipe.ingredients.forEach(ing => {
+    const qty = (ing.qty * ratio);
+    const displayQty = qty < 10 ? qty.toFixed(1) : Math.round(qty);
+    const row = document.createElement('div');
+    row.className = 'ingredient-row';
+    row.innerHTML = `
+      <span class="ingredient-name">${ing.name}</span>
+      <span class="ingredient-qty">${displayQty} ${ing.unit}</span>
+    `;
+    ingredientsDiv.appendChild(row);
+  });
+
+  document.getElementById('resultTitle').textContent = recipe.name;
+  document.getElementById('tip').innerHTML = `<strong>💡 Le conseil de Geoffrey</strong>${recipe.tip}`;
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+</script>
+</body>
+</html>

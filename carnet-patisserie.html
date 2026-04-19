@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon carnet de pâtisserie — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:600px}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:40px}
+  .stat{background:#fff;border:1px solid rgba(26,20,16,0.1);padding:20px 24px;border-radius:4px;border-top:3px solid #C8A04A}
+  .stat-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.6);margin-bottom:6px}
+  .stat-value{font-family:Georgia,serif;font-size:32px;color:#1A1410}
+  .add-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:14px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;margin-bottom:32px;transition:background 0.2s}
+  .add-btn:hover{background:#B08A3E}
+  .form-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,20,16,0.75);z-index:100;overflow-y:auto;padding:20px}
+  .form-overlay.visible{display:flex;align-items:flex-start;justify-content:center}
+  .form-card{background:#FDF8F0;max-width:600px;width:100%;border-radius:4px;padding:clamp(24px,4vw,40px);margin:40px auto;border-top:4px solid #C8A04A}
+  .form-card h2{font-family:Georgia,serif;font-size:26px;font-weight:400;margin-bottom:24px}
+  label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin:16px 0 8px;font-weight:600}
+  input,textarea,select{width:100%;padding:12px 16px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:14px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:#C8A04A}
+  textarea{resize:vertical;min-height:80px}
+  .rating{display:flex;gap:8px;margin-top:8px}
+  .star{font-size:28px;cursor:pointer;color:rgba(26,20,16,0.25);transition:color 0.15s}
+  .star.active{color:#C8A04A}
+  .form-actions{display:flex;gap:12px;margin-top:24px}
+  .btn-save{flex:1;background:#C8A04A;color:#fff;border:none;padding:14px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px}
+  .btn-cancel{flex:1;background:transparent;color:#1A1410;border:1px solid rgba(26,20,16,0.25);padding:14px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px}
+  .entries{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+  .entry{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;overflow:hidden;transition:all 0.25s}
+  .entry:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,20,16,0.08)}
+  .entry-img{width:100%;height:180px;background:linear-gradient(135deg,rgba(200,160,74,0.2),rgba(200,160,74,0.05));display:flex;align-items:center;justify-content:center;color:#C8A04A;font-family:Georgia,serif;font-size:56px;overflow:hidden}
+  .entry-img img{width:100%;height:100%;object-fit:cover}
+  .entry-body{padding:20px}
+  .entry-cat{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .entry-title{font-family:Georgia,serif;font-size:20px;margin-bottom:8px}
+  .entry-date{font-size:12px;color:rgba(26,20,16,0.5);margin-bottom:12px}
+  .entry-rating{color:#C8A04A;font-size:16px;margin-bottom:12px}
+  .entry-notes{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.55;margin-bottom:12px}
+  .entry-actions{display:flex;gap:8px;margin-top:12px}
+  .btn-small{flex:1;padding:8px 10px;border:none;font-size:10px;font-family:'Courier New',monospace;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:2px}
+  .btn-delete{background:rgba(26,20,16,0.05);color:rgba(26,20,16,0.6)}
+  .btn-delete:hover{background:rgba(180,50,50,0.15);color:#b03232}
+  .empty{text-align:center;padding:60px 20px;color:rgba(26,20,16,0.5);background:rgba(200,160,74,0.05);border-radius:4px;border:1px dashed rgba(200,160,74,0.3)}
+  .empty-icon{font-size:48px;color:#C8A04A;margin-bottom:16px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Mon carnet de pâtisserie</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Ton journal <span class="accent">de progression</span></h1>
+  <p class="intro">Note chaque recette testée, tes ajustements, tes réussites, tes ratés. Toutes tes données restent dans ton navigateur (rien n'est envoyé sur le web)</p>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Recettes testées</div>
+      <div class="stat-value" id="statTotal">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Ce mois-ci</div>
+      <div class="stat-value" id="statMonth">0</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Réussite moyenne</div>
+      <div class="stat-value" id="statRating">—</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Catégorie favorite</div>
+      <div class="stat-value" id="statCategory" style="font-size:20px">—</div>
+    </div>
+  </div>
+
+  <button class="add-btn" onclick="openForm()">+ Ajouter une recette</button>
+
+  <div id="entries" class="entries"></div>
+</main>
+
+<div class="form-overlay" id="formOverlay">
+  <div class="form-card">
+    <h2>Nouvelle recette testée</h2>
+
+    <label for="f_name">Nom de la recette</label>
+    <input type="text" id="f_name" placeholder="Ex : Tarte citron meringuée">
+
+    <label for="f_category">Catégorie</label>
+    <select id="f_category">
+      <option value="Tarte">Tarte</option>
+      <option value="Entremet">Entremet</option>
+      <option value="Choux">Choux (éclair, Paris-Brest...)</option>
+      <option value="Macarons">Macarons</option>
+      <option value="Biscuit">Biscuit / Gâteau</option>
+      <option value="Viennoiserie">Viennoiserie</option>
+      <option value="Chocolat">Chocolat / Bonbon</option>
+      <option value="Dessert à l'assiette">Dessert à l'assiette</option>
+      <option value="Crème / Base">Crème / Base</option>
+      <option value="Autre">Autre</option>
+    </select>
+
+    <label for="f_date">Date</label>
+    <input type="date" id="f_date">
+
+    <label>Note sur 5</label>
+    <div class="rating" id="f_rating">
+      <span class="star" data-v="1">★</span>
+      <span class="star" data-v="2">★</span>
+      <span class="star" data-v="3">★</span>
+      <span class="star" data-v="4">★</span>
+      <span class="star" data-v="5">★</span>
+    </div>
+
+    <label for="f_notes">Notes et ajustements</label>
+    <textarea id="f_notes" placeholder="Ce qui a bien marché, ce que tu ajusterais la prochaine fois..."></textarea>
+
+    <label for="f_photo">Photo (facultatif)</label>
+    <input type="file" id="f_photo" accept="image/*">
+
+    <div class="form-actions">
+      <button class="btn-cancel" onclick="closeForm()">Annuler</button>
+      <button class="btn-save" onclick="saveEntry()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'mfp_carnet_patisserie';
+let currentRating = 0;
+
+function getEntries() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  } catch (e) { return []; }
+}
+
+function saveEntries(entries) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+
+function openForm() {
+  document.getElementById('formOverlay').classList.add('visible');
+  document.getElementById('f_date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('f_name').value = '';
+  document.getElementById('f_notes').value = '';
+  document.getElementById('f_photo').value = '';
+  currentRating = 0;
+  updateStars();
+}
+
+function closeForm() {
+  document.getElementById('formOverlay').classList.remove('visible');
+}
+
+function updateStars() {
+  document.querySelectorAll('#f_rating .star').forEach(s => {
+    const v = parseInt(s.dataset.v);
+    s.classList.toggle('active', v <= currentRating);
+  });
+}
+
+document.querySelectorAll('#f_rating .star').forEach(s => {
+  s.onclick = () => { currentRating = parseInt(s.dataset.v); updateStars(); };
+});
+
+function saveEntry() {
+  const name = document.getElementById('f_name').value.trim();
+  if (!name) { alert('Mets au moins un nom de recette'); return; }
+
+  const photoInput = document.getElementById('f_photo');
+  const process = (photoData) => {
+    const entries = getEntries();
+    entries.unshift({
+      id: Date.now(),
+      name,
+      category: document.getElementById('f_category').value,
+      date: document.getElementById('f_date').value || new Date().toISOString().split('T')[0],
+      rating: currentRating,
+      notes: document.getElementById('f_notes').value.trim(),
+      photo: photoData
+    });
+    saveEntries(entries);
+    closeForm();
+    render();
+  };
+
+  if (photoInput.files && photoInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => process(e.target.result);
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    process(null);
+  }
+}
+
+function deleteEntry(id) {
+  if (!confirm('Supprimer cette entrée ?')) return;
+  const entries = getEntries().filter(e => e.id !== id);
+  saveEntries(entries);
+  render();
+}
+
+function formatDate(d) {
+  const parts = d.split('-');
+  return `${parts[2]}/${parts[1]}/${parts[0]}`;
+}
+
+function categoryEmoji(cat) {
+  const map = {
+    'Tarte':'🥧','Entremet':'🎂','Choux':'🥐','Macarons':'🍪',
+    'Biscuit':'🍰','Viennoiserie':'🥐','Chocolat':'🍫',
+    "Dessert à l'assiette":'🍨','Crème / Base':'🥣','Autre':'✨'
+  };
+  return map[cat] || '✨';
+}
+
+function render() {
+  const entries = getEntries();
+  const container = document.getElementById('entries');
+
+  // Stats
+  document.getElementById('statTotal').textContent = entries.length;
+  const now = new Date();
+  const thisMonth = entries.filter(e => {
+    const d = new Date(e.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  }).length;
+  document.getElementById('statMonth').textContent = thisMonth;
+
+  if (entries.length > 0) {
+    const avgRating = entries.reduce((s, e) => s + (e.rating || 0), 0) / entries.length;
+    document.getElementById('statRating').textContent = avgRating.toFixed(1) + '/5';
+
+    const cats = {};
+    entries.forEach(e => { cats[e.category] = (cats[e.category] || 0) + 1; });
+    const favCat = Object.entries(cats).sort((a,b) => b[1]-a[1])[0][0];
+    document.getElementById('statCategory').textContent = favCat;
+  } else {
+    document.getElementById('statRating').textContent = '—';
+    document.getElementById('statCategory').textContent = '—';
+  }
+
+  // Entries
+  if (entries.length === 0) {
+    container.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">📓</div>
+        <div style="font-family:Georgia,serif;font-size:20px;margin-bottom:8px">Ton carnet est vide</div>
+        <div style="font-size:14px">Clique sur "+ Ajouter une recette" pour commencer ton journal de progression</div>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = entries.map(e => `
+    <div class="entry">
+      <div class="entry-img">
+        ${e.photo ? `<img src="${e.photo}" alt="${e.name}">` : categoryEmoji(e.category)}
+      </div>
+      <div class="entry-body">
+        <div class="entry-cat">${e.category}</div>
+        <div class="entry-title">${e.name}</div>
+        <div class="entry-date">${formatDate(e.date)}</div>
+        <div class="entry-rating">${'★'.repeat(e.rating)}${'☆'.repeat(5-e.rating)}</div>
+        ${e.notes ? `<div class="entry-notes">${e.notes}</div>` : ''}
+        <div class="entry-actions">
+          <button class="btn-small btn-delete" onclick="deleteEntry(${e.id})">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('formOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'formOverlay') closeForm();
+});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les outils de la Méthode Fondations Pro</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:#FDF8F0;
+    color:#1A1410;
+    min-height:100vh;
+    line-height:1.6;
+  }
+  .hero{
+    background:#1A1410;
+    color:#FDF8F0;
+    padding:clamp(60px,8vw,100px) clamp(20px,5vw,60px);
+    text-align:center;
+    border-bottom:3px solid #C8A04A;
+  }
+  .overline{
+    font-family:'Courier New',monospace;
+    font-size:9px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:#C8A04A;
+    margin-bottom:20px;
+    display:inline-block;
+    padding:6px 14px;
+    border:1px solid rgba(200,160,74,0.4);
+    border-radius:2px;
+  }
+  h1{
+    font-family:Georgia,serif;
+    font-size:clamp(32px,5vw,56px);
+    font-weight:400;
+    letter-spacing:-0.5px;
+    line-height:1.15;
+    margin-bottom:20px;
+  }
+  .accent{color:#C8A04A;font-style:italic}
+  .sub{
+    font-size:clamp(15px,2vw,18px);
+    color:rgba(253,248,240,0.75);
+    max-width:640px;
+    margin:0 auto;
+  }
+  main{
+    max-width:1200px;
+    margin:0 auto;
+    padding:clamp(40px,6vw,80px) clamp(20px,5vw,40px);
+  }
+  .section-title{
+    font-family:Georgia,serif;
+    font-size:clamp(24px,3vw,32px);
+    text-align:center;
+    margin-bottom:40px;
+    font-weight:400;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:24px;
+    margin-bottom:60px;
+  }
+  .tool-card{
+    background:#fff;
+    border:1px solid rgba(26,20,16,0.1);
+    border-radius:4px;
+    padding:32px 28px;
+    text-decoration:none;
+    color:#1A1410;
+    transition:all 0.3s ease;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    position:relative;
+    overflow:hidden;
+  }
+  .tool-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+    background:#C8A04A;
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.3s ease;
+  }
+  .tool-card:hover{
+    border-color:#C8A04A;
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(26,20,16,0.08);
+  }
+  .tool-card:hover::before{transform:scaleX(1)}
+  .tool-number{
+    font-family:'Courier New',monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    color:#C8A04A;
+  }
+  .tool-title{
+    font-family:Georgia,serif;
+    font-size:22px;
+    font-weight:400;
+    line-height:1.3;
+  }
+  .tool-desc{
+    font-size:14px;
+    color:rgba(26,20,16,0.65);
+    line-height:1.55;
+  }
+  .tool-arrow{
+    margin-top:12px;
+    font-size:13px;
+    color:#C8A04A;
+    font-family:'Courier New',monospace;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+  }
+  footer{
+    background:#1A1410;
+    color:rgba(253,248,240,0.5);
+    padding:40px 20px;
+    text-align:center;
+    font-size:13px;
+  }
+  footer .brand{color:#C8A04A;font-family:Georgia,serif;font-size:16px}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <span class="overline">Méthode Fondations Pro — Boîte à outils</span>
+  <h1>Tes <span class="accent">8 outils</span><br>de pâtissier</h1>
+  <p class="sub">Des calculateurs, des diagnostics et des créateurs qui t'accompagnent dans ta pratique — où que tu sois, quand tu veux</p>
+</header>
+
+<main>
+  <h2 class="section-title">Choisis ton outil</h2>
+  <div class="grid">
+    <a href="calculateur-ratios.html" class="tool-card">
+      <span class="tool-number">01</span>
+      <span class="tool-title">Calculateur de ratios</span>
+      <span class="tool-desc">Rentre ton nombre de parts ou ton diamètre de cerclage, obtiens les grammages exacts pour chaque recette de base</span>
+      <span class="tool-arrow">→ Calculer</span>
+    </a>
+
+    <a href="diagnostic-rates.html" class="tool-card">
+      <span class="tool-number">02</span>
+      <span class="tool-title">Pourquoi ça a raté ?</span>
+      <span class="tool-desc">Diagnostic interactif pour comprendre ce qui a bloqué ta ganache, tes macarons, ta pâte à choux ou ta crème pâtissière</span>
+      <span class="tool-arrow">→ Diagnostiquer</span>
+    </a>
+
+    <a href="carnet-patisserie.html" class="tool-card">
+      <span class="tool-number">03</span>
+      <span class="tool-title">Carnet de pâtisserie</span>
+      <span class="tool-desc">Ton journal digital pour logger chaque recette testée, noter tes ajustements et suivre ta progression dans le temps</span>
+      <span class="tool-arrow">→ Ouvrir mon carnet</span>
+    </a>
+
+    <a href="calculateur-prix-vente.html" class="tool-card">
+      <span class="tool-number">04</span>
+      <span class="tool-title">Calcul prix de vente</span>
+      <span class="tool-desc">Pour qui vend ses créations : coût matière, charges, marge, prix de vente conseillé en 2 minutes</span>
+      <span class="tool-arrow">→ Calculer mon prix</span>
+    </a>
+
+    <a href="table-temperatures.html" class="tool-card">
+      <span class="tool-number">05</span>
+      <span class="tool-title">Table des températures</span>
+      <span class="tool-desc">Crèmes, sucres cuits, chocolats de couverture — toutes les températures clés de la pâtisserie en un coup d'œil</span>
+      <span class="tool-arrow">→ Consulter</span>
+    </a>
+
+    <a href="accords-saveurs.html" class="tool-card">
+      <span class="tool-number">06</span>
+      <span class="tool-title">Accords de saveurs</span>
+      <span class="tool-desc">Choisis une saveur principale, découvre toutes les associations qui fonctionnent et pourquoi elles fonctionnent</span>
+      <span class="tool-arrow">→ Explorer</span>
+    </a>
+
+    <a href="createur-recettes.html" class="tool-card">
+      <span class="tool-number">07</span>
+      <span class="tool-title">Créateur de recettes</span>
+      <span class="tool-desc">Compose ta création idéale : base + crème + biscuit + topping. L'outil te génère une recette cohérente</span>
+      <span class="tool-arrow">→ Créer</span>
+    </a>
+
+    <a href="convertisseur-moules.html" class="tool-card">
+      <span class="tool-number">08</span>
+      <span class="tool-title">Convertisseur de moules</span>
+      <span class="tool-desc">Ta recette est pour un 20 rond et t'as un 24 carré ? Calcule le ratio exact et ajuste tous tes ingrédients</span>
+      <span class="tool-arrow">→ Convertir</span>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <p class="brand">Les Secrets de Geoffrey</p>
+  <p style="margin-top:8px">Méthode Fondations Pro — Les outils de ma communauté</p>
+</footer>
+</body>
+</html>

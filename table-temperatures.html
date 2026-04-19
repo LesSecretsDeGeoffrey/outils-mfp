@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table des températures — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:32px;max-width:680px}
+  .tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;border-bottom:1px solid rgba(26,20,16,0.1);padding-bottom:0}
+  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease}
+  .tab:hover{color:#1A1410}
+  .tab.active{color:#C8A04A;border-bottom-color:#C8A04A;font-weight:600}
+  .search-wrap{margin-bottom:28px;position:relative}
+  .search-wrap input{width:100%;padding:14px 20px 14px 48px;border:1px solid rgba(26,20,16,0.15);background:#fff;font-size:14px;font-family:inherit;border-radius:3px}
+  .search-wrap input:focus{outline:none;border-color:#C8A04A}
+  .search-wrap::before{content:"🔍";position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.5}
+  .panel{display:none}
+  .panel.active{display:block;animation:fadeIn 0.3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+  .panel h2{font-family:Georgia,serif;font-size:clamp(22px,3vw,28px);font-weight:400;margin-bottom:8px}
+  .panel .subtitle{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:24px}
+  .table{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;overflow:hidden;margin-bottom:28px}
+  .row{display:grid;grid-template-columns:2fr 1.2fr 2fr;gap:20px;padding:20px 24px;border-bottom:1px solid rgba(26,20,16,0.08);align-items:start;transition:background 0.15s ease}
+  .row:last-child{border-bottom:none}
+  .row:hover{background:#FDF8F0}
+  .row.head{background:#1A1410;color:#FDF8F0;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:14px 24px}
+  .row.head:hover{background:#1A1410}
+  .name{font-family:Georgia,serif;font-size:17px;color:#1A1410}
+  .name small{display:block;font-family:-apple-system,sans-serif;font-size:12px;color:rgba(26,20,16,0.55);margin-top:4px;font-weight:400}
+  .temp{font-family:'Courier New',monospace;font-size:16px;font-weight:700;color:#C8A04A;white-space:nowrap}
+  .temp.range{font-size:14px}
+  .note{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.55}
+  @media (max-width:700px){
+    .row{grid-template-columns:1fr;gap:8px;padding:16px 18px}
+    .row.head{display:none}
+    .name::before{content:"🧁 "}
+    .temp::before{content:"🌡️ "}
+    .note::before{content:"💡 "}
+  }
+  .stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:28px}
+  .stage{background:#fff;border:1px solid rgba(26,20,16,0.1);border-top:3px solid #C8A04A;padding:20px;border-radius:4px;transition:all 0.2s ease;cursor:default}
+  .stage:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,20,16,0.06)}
+  .stage .stage-name{font-family:Georgia,serif;font-size:18px;margin-bottom:4px}
+  .stage .stage-temp{font-family:'Courier New',monospace;font-size:22px;color:#C8A04A;font-weight:700;margin-bottom:8px}
+  .stage .stage-use{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.55}
+  .choco-card{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:24px;margin-bottom:18px}
+  .choco-card h3{font-family:Georgia,serif;font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+  .choco-card h3::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--choco-color)}
+  .choco-noir{--choco-color:#3a1f0f}
+  .choco-lait{--choco-color:#8b5a2b}
+  .choco-blanc{--choco-color:#f5e6c8}
+  .choco-ruby{--choco-color:#c44a6f}
+  .choco-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  @media (max-width:600px){.choco-steps{grid-template-columns:1fr}}
+  .step{background:#FDF8F0;padding:14px;border-radius:3px;text-align:center}
+  .step .step-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);margin-bottom:4px}
+  .step .step-temp{font-family:Georgia,serif;font-size:24px;color:#C8A04A}
+  .warning{background:rgba(200,160,74,0.1);border-left:3px solid #C8A04A;padding:16px 20px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.8);margin-top:16px;line-height:1.55}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Table des températures</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Les températures <span class="accent">clés</span> de la pâtisserie</h1>
+  <p class="intro">Crèmes, sucres cuits, chocolats de couverture — toutes les températures qui font la différence entre un ratage et une réussite</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('cremes', this)">Crèmes & Appareils</button>
+    <button class="tab" onclick="switchTab('sucres', this)">Sucres cuits</button>
+    <button class="tab" onclick="switchTab('chocolats', this)">Chocolats</button>
+    <button class="tab" onclick="switchTab('fours', this)">Fours</button>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Rechercher une crème, un sucre, un chocolat..." oninput="filterTable(this.value)">
+  </div>
+
+  <!-- CRÈMES -->
+  <div class="panel active" id="panel-cremes">
+    <h2>Crèmes & appareils de base</h2>
+    <p class="subtitle">La température à cœur détermine la texture finale. Un thermomètre est indispensable</p>
+    <div class="table" id="table-cremes">
+      <div class="row head">
+        <span>Préparation</span>
+        <span>Température</span>
+        <span>Point de vigilance</span>
+      </div>
+      <div class="row">
+        <div class="name">Crème anglaise<small>Nappe la cuillère, servie telle quelle ou base de glace</small></div>
+        <div class="temp">82-85°C</div>
+        <div class="note">Au-delà de 85°C les jaunes coagulent et tu obtiens des œufs brouillés. En dessous de 80°C, elle reste liquide et instable</div>
+      </div>
+      <div class="row">
+        <div class="name">Crème pâtissière<small>Base universelle (tartes, choux, mille-feuille)</small></div>
+        <div class="temp">Ébullition 2 min</div>
+        <div class="note">La fécule a besoin de bouillir pour épaissir ET se stabiliser. Stop trop tôt = goût de farine crue. Trop tard = elle tranche</div>
+      </div>
+      <div class="row">
+        <div class="name">Crème mousseline<small>Pâtissière + beurre pommade (fraisier, Paris-Brest)</small></div>
+        <div class="temp">30°C max</div>
+        <div class="note">Incorpore le beurre quand la pâtissière est à température ambiante. Trop chaude = beurre fondu, trop froide = grains</div>
+      </div>
+      <div class="row">
+        <div class="name">Crème diplomate<small>Pâtissière + gélatine + chantilly</small></div>
+        <div class="temp">25-30°C</div>
+        <div class="note">Incorpore la chantilly quand la pâtissière + gélatine est à 25-30°C. Trop chaude tu fais retomber la chantilly</div>
+      </div>
+      <div class="row">
+        <div class="name">Crème bavaroise<small>Anglaise + gélatine + chantilly</small></div>
+        <div class="temp">20-25°C</div>
+        <div class="note">Travaille la bavaroise entre 20 et 25°C pour garder une texture aérée. Au-dessus elle ne prend pas en bouche</div>
+      </div>
+      <div class="row">
+        <div class="name">Crème au beurre (PAB bombe)<small>Sirop 118°C sur jaunes</small></div>
+        <div class="temp">Beurre à 18-22°C</div>
+        <div class="note">Le beurre doit être pommade pas fondu. Incorporé dans une PAB tiède (25°C), pas chaude sinon il fond</div>
+      </div>
+      <div class="row">
+        <div class="name">Meringue italienne<small>Sirop 118-121°C sur blancs montés</small></div>
+        <div class="temp">Sirop 118°C</div>
+        <div class="note">Verse le sirop en filet sur les blancs à vitesse moyenne, puis monte en vitesse max jusqu'à refroidissement complet</div>
+      </div>
+      <div class="row">
+        <div class="name">Ganache montée<small>Type chantilly au chocolat</small></div>
+        <div class="temp">Repos 4h à 4°C</div>
+        <div class="note">Mélange chaud (35°C) puis obligatoire 4h minimum au frigo avant de monter. Sinon elle tranche au fouet</div>
+      </div>
+      <div class="row">
+        <div class="name">Chantilly<small>Crème liquide 30% + sucre</small></div>
+        <div class="temp">Tout à 4°C</div>
+        <div class="note">Crème, bol, fouet : tout doit être froid. Crème à plus de 10°C = pas de montage, tu fais du beurre</div>
+      </div>
+      <div class="row">
+        <div class="name">Glaçage miroir<small>À couler sur entremet</small></div>
+        <div class="temp">30-35°C</div>
+        <div class="note">Coule à 30-35°C sur un entremet congelé (-18°C). Plus chaud = trop liquide et se fait la malle. Plus froid = épais et marques</div>
+      </div>
+      <div class="row">
+        <div class="name">Appareil à soufflé<small>Base pâtissière + blancs montés</small></div>
+        <div class="temp">Pâte à 40°C</div>
+        <div class="note">Incorpore les blancs dans une base à 40°C max. Plus chaud ils cuisent. Plus froid ils ne s'incorporent pas bien</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCRES -->
+  <div class="panel" id="panel-sucres">
+    <h2>Cuisson du sucre — les 10 stades</h2>
+    <p class="subtitle">Un degré de différence et tu passes d'une texture à l'autre. Thermomètre obligatoire</p>
+    <div class="stages" id="table-sucres">
+      <div class="stage" data-name="nappé lissé">
+        <div class="stage-name">Nappé / Lissé</div>
+        <div class="stage-temp">100-105°C</div>
+        <div class="stage-use">Sirop pour imbiber les biscuits, babas, savarins</div>
+      </div>
+      <div class="stage" data-name="filet">
+        <div class="stage-name">Filet</div>
+        <div class="stage-temp">103-105°C</div>
+        <div class="stage-use">Confitures, gelées, fruits confits</div>
+      </div>
+      <div class="stage" data-name="petit perlé">
+        <div class="stage-name">Petit perlé</div>
+        <div class="stage-temp">108-110°C</div>
+        <div class="stage-use">Pâtes de fruits, fondants pâtissiers</div>
+      </div>
+      <div class="stage" data-name="grand perlé soufflé">
+        <div class="stage-name">Grand perlé / Soufflé</div>
+        <div class="stage-temp">112-115°C</div>
+        <div class="stage-use">Marrons glacés, sirops de conservation</div>
+      </div>
+      <div class="stage" data-name="petit boulé">
+        <div class="stage-name">Petit boulé</div>
+        <div class="stage-temp">115-118°C</div>
+        <div class="stage-use">Meringue italienne, pâte à bombe, fondant</div>
+      </div>
+      <div class="stage" data-name="gros boulé">
+        <div class="stage-name">Gros boulé</div>
+        <div class="stage-temp">121-125°C</div>
+        <div class="stage-use">Caramels mous, nougats, guimauves</div>
+      </div>
+      <div class="stage" data-name="petit cassé">
+        <div class="stage-name">Petit cassé</div>
+        <div class="stage-temp">132-140°C</div>
+        <div class="stage-use">Caramels durs, berlingots, toffees</div>
+      </div>
+      <div class="stage" data-name="grand cassé">
+        <div class="stage-name">Grand cassé</div>
+        <div class="stage-temp">145-155°C</div>
+        <div class="stage-use">Sucre filé, pièces montées, décors soufflés</div>
+      </div>
+      <div class="stage" data-name="caramel clair">
+        <div class="stage-name">Caramel clair</div>
+        <div class="stage-temp">160-170°C</div>
+        <div class="stage-use">Nappages dorés, croquembouche, pralin</div>
+      </div>
+      <div class="stage" data-name="caramel foncé">
+        <div class="stage-name">Caramel foncé</div>
+        <div class="stage-temp">175-185°C</div>
+        <div class="stage-use">Sauces caramel profondes, arômes corsés</div>
+      </div>
+    </div>
+    <div class="warning">
+      ⚠️ <strong>Au-delà de 185°C</strong>, le sucre brûle et devient amer. Stoppe la cuisson en plongeant la casserole 3 secondes dans l'eau froide pour figer la température
+    </div>
+  </div>
+
+  <!-- CHOCOLATS -->
+  <div class="panel" id="panel-chocolats">
+    <h2>Tempérage des chocolats de couverture</h2>
+    <p class="subtitle">La courbe de température garantit le brillant, le snap et la conservation. Fais-la, ne la saute pas</p>
+
+    <div class="choco-card choco-noir">
+      <h3>Chocolat noir (pur beurre de cacao)</h3>
+      <div class="choco-steps">
+        <div class="step"><div class="step-label">Fonte</div><div class="step-temp">50-55°C</div></div>
+        <div class="step"><div class="step-label">Refroidissement</div><div class="step-temp">28-29°C</div></div>
+        <div class="step"><div class="step-label">Travail</div><div class="step-temp">31-32°C</div></div>
+      </div>
+    </div>
+
+    <div class="choco-card choco-lait">
+      <h3>Chocolat au lait</h3>
+      <div class="choco-steps">
+        <div class="step"><div class="step-label">Fonte</div><div class="step-temp">45-50°C</div></div>
+        <div class="step"><div class="step-label">Refroidissement</div><div class="step-temp">27-28°C</div></div>
+        <div class="step"><div class="step-label">Travail</div><div class="step-temp">29-30°C</div></div>
+      </div>
+    </div>
+
+    <div class="choco-card choco-blanc">
+      <h3>Chocolat blanc</h3>
+      <div class="choco-steps">
+        <div class="step"><div class="step-label">Fonte</div><div class="step-temp">40-45°C</div></div>
+        <div class="step"><div class="step-label">Refroidissement</div><div class="step-temp">26-27°C</div></div>
+        <div class="step"><div class="step-label">Travail</div><div class="step-temp">28-29°C</div></div>
+      </div>
+    </div>
+
+    <div class="choco-card choco-ruby">
+      <h3>Chocolat Ruby</h3>
+      <div class="choco-steps">
+        <div class="step"><div class="step-label">Fonte</div><div class="step-temp">45°C</div></div>
+        <div class="step"><div class="step-label">Refroidissement</div><div class="step-temp">26-27°C</div></div>
+        <div class="step"><div class="step-label">Travail</div><div class="step-temp">28-29°C</div></div>
+      </div>
+    </div>
+
+    <div class="warning">
+      💡 <strong>Méthode ensemencement (la plus simple)</strong> : fais fondre 2/3 du chocolat, ajoute 1/3 en pistoles non fondues, mélange jusqu'à atteindre la température de travail. Pas besoin de tabler sur marbre
+    </div>
+  </div>
+
+  <!-- FOURS -->
+  <div class="panel" id="panel-fours">
+    <h2>Cuissons au four</h2>
+    <p class="subtitle">Chaleur tournante sauf mention contraire. Adapte selon ton four (tous mentent de 10 à 20°C)</p>
+    <div class="table" id="table-fours">
+      <div class="row head">
+        <span>Préparation</span>
+        <span>Température</span>
+        <span>Durée / astuce</span>
+      </div>
+      <div class="row">
+        <div class="name">Macarons<small>Coques lisses avec collerette</small></div>
+        <div class="temp">150°C</div>
+        <div class="note">14 min sur plaque épaisse double. Chaleur tournante basse. Teste sur 1 coque d'abord</div>
+      </div>
+      <div class="row">
+        <div class="name">Pâte à choux<small>Choux, éclairs, Paris-Brest</small></div>
+        <div class="temp">180°C puis 160°C</div>
+        <div class="note">10 min à 180°C pour pousser, puis 20-25 min à 160°C pour sécher. N'ouvre JAMAIS avant 25 min</div>
+      </div>
+      <div class="row">
+        <div class="name">Génoise<small>Biscuit aérien type entremet</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">20-25 min. Sort quand un cure-dent ressort sec. Démoule chaud et laisse refroidir sur grille</div>
+      </div>
+      <div class="row">
+        <div class="name">Dacquoise<small>Biscuit noisettes ou amandes</small></div>
+        <div class="temp">170-180°C</div>
+        <div class="note">15-18 min. Doit être doré en surface et moelleux à cœur. Sous-cuite elle s'effondre</div>
+      </div>
+      <div class="row">
+        <div class="name">Pâte sucrée / sablée<small>Fonds de tarte</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">Cuisson à blanc 20-25 min avec poids. Puis 5-10 min sans poids pour colorer</div>
+      </div>
+      <div class="row">
+        <div class="name">Financiers / madeleines<small>Petits gâteaux au beurre noisette</small></div>
+        <div class="temp">200°C puis 170°C</div>
+        <div class="note">3 min à 200°C pour créer la bosse, puis 8-10 min à 170°C. Choc thermique obligatoire (pâte froide dans four chaud)</div>
+      </div>
+      <div class="row">
+        <div class="name">Cake classique<small>Quatre-quarts, cake agrumes</small></div>
+        <div class="temp">165°C</div>
+        <div class="note">45 min environ. Fends le dessus au cutter à mi-cuisson pour une belle crête régulière</div>
+      </div>
+      <div class="row">
+        <div class="name">Meringue française<small>À sécher</small></div>
+        <div class="temp">90-100°C</div>
+        <div class="note">1h30 à 2h. On ne les cuit pas, on les sèche. Porte entrouverte ou four ventilé</div>
+      </div>
+      <div class="row">
+        <div class="name">Cheesecake<small>Bain-marie ou au four doux</small></div>
+        <div class="temp">150°C</div>
+        <div class="note">45 min puis four éteint 1h porte fermée. Pas de fissures, pas de mi-cuit effondré</div>
+      </div>
+      <div class="row">
+        <div class="name">Viennoiseries feuilletées<small>Croissants, pains au chocolat</small></div>
+        <div class="temp">180-190°C</div>
+        <div class="note">18-20 min chaleur tournante. Pousse à 26-28°C avant cuisson sinon le beurre fond dans la pâte</div>
+      </div>
+    </div>
+    <div class="warning">
+      🌡️ <strong>Ton four te ment</strong> : teste-le avec un thermomètre indépendant. La plupart des fours domestiques affichent 180°C mais montent à 165 ou 200°C réels. Une fois que tu connais son offset, ajuste toutes tes recettes
+    </div>
+  </div>
+</main>
+
+<script>
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+  document.getElementById('search').value = '';
+  filterTable('');
+}
+
+function filterTable(query) {
+  const q = query.toLowerCase().trim();
+  const activePanel = document.querySelector('.panel.active');
+  if (!activePanel) return;
+
+  // Filter table rows
+  activePanel.querySelectorAll('.row').forEach(row => {
+    if (row.classList.contains('head')) return;
+    const text = row.textContent.toLowerCase();
+    row.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+
+  // Filter stage cards
+  activePanel.querySelectorAll('.stage').forEach(stage => {
+    const text = stage.textContent.toLowerCase();
+    stage.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+
+  // Filter chocolate cards
+  activePanel.querySelectorAll('.choco-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>

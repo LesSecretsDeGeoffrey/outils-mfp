@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Créateur de recettes — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:680px}
+
+  .step{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,3vw,28px);margin-bottom:18px;transition:all 0.3s ease}
+  .step.done{border-left:4px solid #C8A04A}
+  .step-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .step-num{background:#1A1410;color:#C8A04A;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:12px;font-weight:700}
+  .step.done .step-num{background:#C8A04A;color:#1A1410}
+  .step-title{font-family:Georgia,serif;font-size:20px;font-weight:400;flex:1}
+  .step-badge{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(26,20,16,0.5);text-transform:uppercase}
+
+  .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+  .option{background:#FDF8F0;border:1px solid rgba(26,20,16,0.1);padding:14px 16px;border-radius:3px;cursor:pointer;text-align:left;font-family:inherit;font-size:14px;color:#1A1410;transition:all 0.2s ease}
+  .option:hover{border-color:#C8A04A;transform:translateY(-2px)}
+  .option.active{background:#1A1410;color:#FDF8F0;border-color:#C8A04A}
+  .option .opt-name{display:block;font-family:Georgia,serif;font-size:16px;margin-bottom:3px}
+  .option .opt-desc{display:block;font-size:11px;color:rgba(26,20,16,0.55);line-height:1.4}
+  .option.active .opt-desc{color:rgba(253,248,240,0.6)}
+
+  .recipe-card{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(32px,5vw,48px);margin-top:28px;border-top:4px solid #C8A04A;animation:fadeIn 0.4s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .recipe-card .tag{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;margin-bottom:14px;padding:5px 12px;border:1px solid rgba(200,160,74,0.3);border-radius:2px;text-transform:uppercase}
+  .recipe-card h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);font-weight:400;margin-bottom:10px;line-height:1.2}
+  .recipe-card .subtitle{color:rgba(253,248,240,0.7);font-size:15px;margin-bottom:28px;font-style:italic}
+
+  .layers{margin-bottom:32px}
+  .layers h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;color:#C8A04A;font-weight:400}
+  .layer{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid rgba(253,248,240,0.08);align-items:start}
+  .layer:last-child{border-bottom:none}
+  .layer-type{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(200,160,74,0.8);min-width:90px;padding-top:3px;text-transform:uppercase}
+  .layer-name{font-family:Georgia,serif;font-size:16px;margin-bottom:4px}
+  .layer-note{font-size:13px;color:rgba(253,248,240,0.65);line-height:1.5}
+
+  .method{margin-bottom:28px}
+  .method h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;color:#C8A04A;font-weight:400}
+  .method ol{padding-left:0;list-style:none;counter-reset:m}
+  .method li{padding:12px 0 12px 40px;border-bottom:1px solid rgba(253,248,240,0.05);position:relative;counter-increment:m;font-size:14px;line-height:1.55;color:rgba(253,248,240,0.85)}
+  .method li:last-child{border-bottom:none}
+  .method li::before{content:counter(m);position:absolute;left:0;top:12px;font-family:Georgia,serif;font-size:15px;color:#C8A04A;width:28px;height:28px;border:1px solid rgba(200,160,74,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:400}
+
+  .tips{background:rgba(200,160,74,0.08);padding:20px;border-radius:3px;border-left:3px solid #C8A04A}
+  .tips h4{font-family:Georgia,serif;font-size:16px;color:#C8A04A;margin-bottom:10px;font-weight:400}
+  .tips ul{padding-left:0;list-style:none}
+  .tips li{padding:6px 0 6px 18px;font-size:13px;color:rgba(253,248,240,0.8);position:relative;line-height:1.5}
+  .tips li::before{content:"→";position:absolute;left:0;color:#C8A04A}
+
+  .actions{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{background:#C8A04A;color:#1A1410;border:none;padding:14px 24px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;border-radius:3px;font-weight:700;transition:all 0.2s ease}
+  .btn:hover{background:#FDF8F0;transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:#FDF8F0;border:1px solid rgba(253,248,240,0.3)}
+  .btn.ghost:hover{background:rgba(253,248,240,0.05);color:#C8A04A;border-color:#C8A04A}
+
+  .empty-recipe{background:#fff;border:1px dashed rgba(26,20,16,0.2);border-radius:4px;padding:60px 30px;text-align:center;margin-top:28px}
+  .empty-recipe p{color:rgba(26,20,16,0.5);font-family:Georgia,serif;font-size:18px;font-style:italic}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Créateur de recettes</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Compose ta création <span class="accent">signature</span></h1>
+  <p class="intro">Choisis un format, une saveur, une base, une crème, un insert et une finition — l'outil te génère une recette cohérente avec méthode et astuces</p>
+
+  <!-- ÉTAPE 1 : Format -->
+  <div class="step" id="step-format">
+    <div class="step-head">
+      <span class="step-num">1</span>
+      <span class="step-title">Quel format ?</span>
+      <span class="step-badge" id="badge-format">À choisir</span>
+    </div>
+    <div class="options" id="opts-format"></div>
+  </div>
+
+  <!-- ÉTAPE 2 : Saveur principale -->
+  <div class="step" id="step-flavor">
+    <div class="step-head">
+      <span class="step-num">2</span>
+      <span class="step-title">Ta saveur principale</span>
+      <span class="step-badge" id="badge-flavor">À choisir</span>
+    </div>
+    <div class="options" id="opts-flavor"></div>
+  </div>
+
+  <!-- ÉTAPE 3 : Base -->
+  <div class="step" id="step-base">
+    <div class="step-head">
+      <span class="step-num">3</span>
+      <span class="step-title">La base (socle / biscuit)</span>
+      <span class="step-badge" id="badge-base">À choisir</span>
+    </div>
+    <div class="options" id="opts-base"></div>
+  </div>
+
+  <!-- ÉTAPE 4 : Crème -->
+  <div class="step" id="step-cream">
+    <div class="step-head">
+      <span class="step-num">4</span>
+      <span class="step-title">La crème principale</span>
+      <span class="step-badge" id="badge-cream">À choisir</span>
+    </div>
+    <div class="options" id="opts-cream"></div>
+  </div>
+
+  <!-- ÉTAPE 5 : Insert -->
+  <div class="step" id="step-insert">
+    <div class="step-head">
+      <span class="step-num">5</span>
+      <span class="step-title">L'insert (cœur gourmand)</span>
+      <span class="step-badge" id="badge-insert">À choisir</span>
+    </div>
+    <div class="options" id="opts-insert"></div>
+  </div>
+
+  <!-- ÉTAPE 6 : Finition -->
+  <div class="step" id="step-finish">
+    <div class="step-head">
+      <span class="step-num">6</span>
+      <span class="step-title">La finition</span>
+      <span class="step-badge" id="badge-finish">À choisir</span>
+    </div>
+    <div class="options" id="opts-finish"></div>
+  </div>
+
+  <div id="output">
+    <div class="empty-recipe"><p>Ta recette signature apparaîtra ici dès que tu auras complété les 6 étapes</p></div>
+  </div>
+</main>
+
+<script>
+const data = {
+  formats: [
+    {id:"tarte", name:"Tarte", desc:"Fond cuit + crème + fruit ou garniture"},
+    {id:"entremet", name:"Entremet", desc:"Multi-couches, mousse principale, glaçage"},
+    {id:"choux", name:"Choux / Éclair", desc:"Pâte à choux + crème + topping"},
+    {id:"cake", name:"Cake / Layer", desc:"Biscuits empilés + crème de montage"},
+    {id:"dessert", name:"Dessert à l'assiette", desc:"Composé individuel, plusieurs textures"}
+  ],
+  flavors: [
+    {id:"chocolat-noir", name:"Chocolat noir", emoji:"🍫"},
+    {id:"chocolat-lait", name:"Chocolat lait", emoji:"🍫"},
+    {id:"vanille", name:"Vanille", emoji:"🌱"},
+    {id:"caramel", name:"Caramel", emoji:"🍯"},
+    {id:"framboise", name:"Framboise", emoji:"🫐"},
+    {id:"fraise", name:"Fraise", emoji:"🍓"},
+    {id:"citron", name:"Citron", emoji:"🍋"},
+    {id:"passion", name:"Fruit de la passion", emoji:"🥭"},
+    {id:"noisette", name:"Noisette / Praliné", emoji:"🌰"},
+    {id:"pistache", name:"Pistache", emoji:"🟢"},
+    {id:"cafe", name:"Café", emoji:"☕"},
+    {id:"poire", name:"Poire", emoji:"🍐"}
+  ],
+  bases: [
+    {id:"sable-breton", name:"Sablé breton", desc:"Croustillant beurré, accompagne tous les fruits", formats:["tarte","dessert","cake"]},
+    {id:"pate-sucree", name:"Pâte sucrée", desc:"Fond classique, fine et croquante", formats:["tarte","dessert"]},
+    {id:"pate-sablee", name:"Pâte sablée amande", desc:"Plus friable, plus riche en beurre", formats:["tarte","dessert"]},
+    {id:"pate-feuilletee", name:"Pâte feuilletée inversée", desc:"Croustillant feuillage, classique chic", formats:["tarte","dessert","cake"]},
+    {id:"genoise", name:"Génoise", desc:"Biscuit aérien pour les fraisiers et opéras", formats:["cake","entremet"]},
+    {id:"biscuit-joconde", name:"Biscuit Joconde", desc:"Fin et moelleux, classique entremet", formats:["entremet","cake"]},
+    {id:"dacquoise", name:"Dacquoise aux noisettes", desc:"Biscuit meringué aux fruits secs", formats:["entremet","cake","dessert"]},
+    {id:"pate-a-choux", name:"Pâte à choux", desc:"Aérée, dorée, base des choux et éclairs", formats:["choux"]},
+    {id:"streusel", name:"Streusel / Crumble", desc:"Émiettement beurré croquant", formats:["dessert","tarte"]},
+    {id:"financier", name:"Biscuit financier", desc:"Beurre noisette, moelleux intense", formats:["cake","dessert","entremet"]}
+  ],
+  creams: [
+    {id:"patissiere", name:"Crème pâtissière", desc:"Base universelle, tartes et choux"},
+    {id:"mousseline", name:"Mousseline", desc:"Pâtissière + beurre, fraisier et Paris-Brest"},
+    {id:"diplomate", name:"Diplomate", desc:"Pâtissière + chantilly gélifiée, aérée"},
+    {id:"chiboust", name:"Chiboust", desc:"Pâtissière + meringue italienne"},
+    {id:"mousse-choc", name:"Mousse au chocolat", desc:"Aérée, intense, entremets"},
+    {id:"ganache-montee", name:"Ganache montée", desc:"Type chantilly au chocolat, tient au froid"},
+    {id:"bavaroise", name:"Bavaroise", desc:"Anglaise + gélatine + chantilly"},
+    {id:"cremeux", name:"Crémeux", desc:"Anglaise nappée de chocolat, fondant en bouche"},
+    {id:"chantilly-masca", name:"Chantilly mascarpone", desc:"Tenue parfaite, fraîche et riche"},
+    {id:"lemon-curd", name:"Lemon curd / Curd de fruit", desc:"Crème acidulée au beurre"}
+  ],
+  inserts: [
+    {id:"confit", name:"Confit de fruits", desc:"Fruit cuit gélifié au coeur"},
+    {id:"gelee", name:"Gelée / Jelly de fruit", desc:"Transparence et fraîcheur"},
+    {id:"compotee", name:"Compotée fraîche", desc:"Fruits cuits rapidement, texture"},
+    {id:"praliné", name:"Praliné maison", desc:"Fruits secs caramélisés, incontournable"},
+    {id:"caramel-tendre", name:"Caramel tendre fleur de sel", desc:"Coulant et salé"},
+    {id:"croustillant", name:"Croustillant praliné-feuilletine", desc:"Apporte du croquant à l'entremet"},
+    {id:"fruits-frais", name:"Fruits frais / poêlés", desc:"Fruit brut ou juste saisi"},
+    {id:"brunoise", name:"Brunoise de fruits marinée", desc:"Petits dés parfumés, éclat"},
+    {id:"ganache-insert", name:"Ganache souple", desc:"Cœur fondant au chocolat"},
+    {id:"streusel-insert", name:"Streusel en couche", desc:"Croquant caché en couche"}
+  ],
+  finishes: [
+    {id:"miroir", name:"Glaçage miroir", desc:"Brillant, aspect pro, entremet"},
+    {id:"velours", name:"Spray velours", desc:"Effet velours chocolat, moderne"},
+    {id:"meringue", name:"Meringue italienne dorée", desc:"Sur tarte ou entremet au chalumeau"},
+    {id:"chantilly-fin", name:"Chantilly à la poche", desc:"Rosaces ou pointes élégantes"},
+    {id:"fruits-deco", name:"Fruits frais en décor", desc:"Brillance nappage neutre"},
+    {id:"tempered-choc", name:"Décor chocolat tempéré", desc:"Plaquette, volutes, texture"},
+    {id:"caramel-decor", name:"Caramel tiré / filé", desc:"Fils fins pour pièce montée"},
+    {id:"feuille-or", name:"Feuille d'or et fleurs", desc:"Finition haute couture"},
+    {id:"streusel-finition", name:"Streusel craquant en finition", desc:"Sur cake ou tarte"},
+    {id:"poudre-deco", name:"Poudre (cacao, pistache, sucre glace)", desc:"Minimalisme sobre"}
+  ]
+};
+
+const state = {format:null, flavor:null, base:null, cream:null, insert:null, finish:null};
+
+function render(category, containerId, badgeId, items, filter) {
+  const container = document.getElementById(containerId);
+  const filtered = filter ? items.filter(filter) : items;
+  container.innerHTML = filtered.map(item => `
+    <button class="option" data-id="${item.id}" onclick="select('${category}', '${item.id}')">
+      <span class="opt-name">${item.emoji ? item.emoji + ' ' : ''}${item.name}</span>
+      ${item.desc ? `<span class="opt-desc">${item.desc}</span>` : ''}
+    </button>
+  `).join('');
+
+  if (state[category]) {
+    const btn = container.querySelector(`[data-id="${state[category]}"]`);
+    if (btn) btn.classList.add('active');
+    const selected = items.find(i => i.id === state[category]);
+    document.getElementById(badgeId).textContent = selected ? selected.name : 'À choisir';
+  } else {
+    document.getElementById(badgeId).textContent = 'À choisir';
+  }
+}
+
+function renderAll() {
+  render('format', 'opts-format', 'badge-format', data.formats);
+  render('flavor', 'opts-flavor', 'badge-flavor', data.flavors);
+  render('base', 'opts-base', 'badge-base', data.bases, b => !state.format || b.formats.includes(state.format));
+  render('cream', 'opts-cream', 'badge-cream', data.creams);
+  render('insert', 'opts-insert', 'badge-insert', data.inserts);
+  render('finish', 'opts-finish', 'badge-finish', data.finishes);
+
+  ['format','flavor','base','cream','insert','finish'].forEach(k => {
+    document.getElementById('step-' + k).classList.toggle('done', !!state[k]);
+  });
+
+  checkComplete();
+}
+
+function select(category, id) {
+  state[category] = id;
+  renderAll();
+}
+
+function checkComplete() {
+  const all = state.format && state.flavor && state.base && state.cream && state.insert && state.finish;
+  if (all) generateRecipe();
+  else {
+    document.getElementById('output').innerHTML = `<div class="empty-recipe"><p>Ta recette signature apparaîtra ici dès que tu auras complété les 6 étapes</p></div>`;
+  }
+}
+
+function getItem(category, id) {
+  return data[category + 's'].find(i => i.id === id) || data[category].find(i => i.id === id);
+}
+
+function generateRecipe() {
+  const format = data.formats.find(f => f.id === state.format);
+  const flavor = data.flavors.find(f => f.id === state.flavor);
+  const base = data.bases.find(b => b.id === state.base);
+  const cream = data.creams.find(c => c.id === state.cream);
+  const insert = data.inserts.find(i => i.id === state.insert);
+  const finish = data.finishes.find(f => f.id === state.finish);
+
+  const names = generateName(flavor, format);
+  const method = generateMethod(format, base, cream, insert, finish, flavor);
+  const tips = generateTips(format, base, cream, insert, finish, flavor);
+
+  document.getElementById('output').innerHTML = `
+    <div class="recipe-card">
+      <span class="tag">Ta création signature</span>
+      <h2>${names.title}</h2>
+      <p class="subtitle">${names.subtitle}</p>
+
+      <div class="layers">
+        <h3>Composition</h3>
+        <div class="layer"><span class="layer-type">Base</span><div><div class="layer-name">${base.name}</div><div class="layer-note">${base.desc}</div></div></div>
+        <div class="layer"><span class="layer-type">Crème</span><div><div class="layer-name">${cream.name} ${flavor.name.toLowerCase()}</div><div class="layer-note">${cream.desc}</div></div></div>
+        <div class="layer"><span class="layer-type">Insert</span><div><div class="layer-name">${insert.name}</div><div class="layer-note">${insert.desc}</div></div></div>
+        <div class="layer"><span class="layer-type">Finition</span><div><div class="layer-name">${finish.name}</div><div class="layer-note">${finish.desc}</div></div></div>
+      </div>
+
+      <div class="method">
+        <h3>La méthode, étape par étape</h3>
+        <ol>${method.map(m => `<li>${m}</li>`).join('')}</ol>
+      </div>
+
+      <div class="tips">
+        <h4>🎯 Les 3 points de vigilance</h4>
+        <ul>${tips.map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="window.print()">Imprimer ma recette</button>
+        <button class="btn ghost" onclick="reset()">Créer une autre recette</button>
+      </div>
+    </div>
+  `;
+
+  setTimeout(() => document.getElementById('output').scrollIntoView({behavior:'smooth', block:'start'}), 100);
+}
+
+function generateName(flavor, format) {
+  const templates = {
+    "tarte": [`Tarte ${flavor.name}`, `Une tarte ${flavor.name.toLowerCase()} signature — simple en apparence, précise dans l'exécution`],
+    "entremet": [`L'Entremet ${flavor.name}`, `Un entremet construit en strates pour déployer toute la gamme de textures de ta saveur principale`],
+    "choux": [`Éclair ${flavor.name}`, `Pâte à choux dorée, crème généreuse, finition maîtrisée — le choux classique revisité`],
+    "cake": [`Cake signature ${flavor.name}`, `Empilement de biscuits et crème dans un format individuel ou à partager`],
+    "dessert": [`${flavor.name} dans tous ses états`, `Un dessert à l'assiette qui multiplie les textures autour de ta saveur principale`]
+  };
+  return {title: templates[format.id][0], subtitle: templates[format.id][1]};
+}
+
+function generateMethod(format, base, cream, insert, finish, flavor) {
+  const steps = [];
+  steps.push(`<strong>La veille :</strong> prépare tous les éléments qui ont besoin de reposer (${cream.id === 'ganache-montee' ? 'ganache à faire la veille minimum' : 'pâtes, ganaches, inserts'}). La pâtisserie à J-1 = pâtisserie sereine`);
+
+  // Base
+  if (base.id === 'sable-breton' || base.id === 'pate-sucree' || base.id === 'pate-sablee') {
+    steps.push(`<strong>La base :</strong> prépare ton ${base.name.toLowerCase()}, étale-le à 3 mm, fonce ton cercle ou moule, mets au congélateur 20 min avant cuisson à blanc 170°C pendant 20-25 min`);
+  } else if (base.id === 'pate-feuilletee') {
+    steps.push(`<strong>La base :</strong> détaille ton feuilletage à la taille voulue, pique à la fourchette, cuisson 180°C 25-30 min avec grille sur le dessus pour éviter trop de pousse`);
+  } else if (base.id === 'genoise' || base.id === 'biscuit-joconde' || base.id === 'dacquoise' || base.id === 'financier') {
+    steps.push(`<strong>La base :</strong> réalise ta ${base.name.toLowerCase()}, étale sur plaque 1 cm, cuisson 170-180°C selon recette, laisse refroidir puis détaille les disques ou rectangles selon ton moule`);
+  } else if (base.id === 'pate-a-choux') {
+    steps.push(`<strong>La base :</strong> dresse tes éclairs ou choux à la poche douille, dore à l'œuf, craquelin facultatif, cuisson 180°C 10 min puis 160°C 25 min sans ouvrir le four`);
+  } else if (base.id === 'streusel') {
+    steps.push(`<strong>La base :</strong> sable beurre-farine-sucre-poudre d'amande, émiette, congèle 30 min puis cuisson 160°C 15-18 min jusqu'à doré uniforme`);
+  }
+
+  // Cream with flavor
+  const flavorNotes = {
+    "chocolat-noir": "infuse ta crème avec 40% de chocolat noir 70% pur origine",
+    "chocolat-lait": "ajoute du chocolat au lait 40% et une pointe de fleur de sel pour relever",
+    "vanille": "fends 1 à 2 gousses de vanille (selon format), infuse 20 min minimum dans ta base",
+    "caramel": "prépare un caramel à sec beurre salé avant de l'intégrer à ta crème",
+    "framboise": "incorpore une purée de framboises à 30% du poids total de crème",
+    "fraise": "utilise une purée de fraises intense (Ponthier) à 30% du poids",
+    "citron": "incorpore zeste + jus à la base, adoucis avec un peu de miel",
+    "passion": "ajoute pulpe de passion filtrée, dose prudent (saveur forte)",
+    "noisette": "intègre praliné noisette 50/50 à la crème de base",
+    "pistache": "utilise une pâte de pistache pure 100% (Sicile ou Iran) à 15% du poids",
+    "cafe": "infuse grains de café torréfiés dans le lait chaud 15 min, filtre",
+    "poire": "utilise purée de poire William + alcool de poire facultatif"
+  };
+
+  steps.push(`<strong>La crème principale :</strong> réalise ta ${cream.name.toLowerCase()} selon la technique classique, parfume à la ${flavor.name.toLowerCase()} — ${flavorNotes[flavor.id]}`);
+
+  // Insert
+  if (insert.id === 'confit' || insert.id === 'gelee' || insert.id === 'compotee') {
+    steps.push(`<strong>L'insert :</strong> cuis ton ${insert.name.toLowerCase()} à 103°C pour les confitures/gelées, ou 5-8 min pour une compotée rapide. Coule dans un moule à insert chemisé, direction congélateur 2h minimum`);
+  } else if (insert.id === 'praliné' || insert.id === 'caramel-tendre' || insert.id === 'croustillant') {
+    steps.push(`<strong>L'insert :</strong> prépare ton ${insert.name.toLowerCase()}, étale en fine couche sur la base ou dans un cadre, lisse, réserve au frais`);
+  } else if (insert.id === 'fruits-frais' || insert.id === 'brunoise') {
+    steps.push(`<strong>L'insert :</strong> taille ta brunoise ou détaille tes fruits au dernier moment, marine éventuellement avec sucre + zeste + alcool, garde au frais`);
+  } else if (insert.id === 'ganache-insert') {
+    steps.push(`<strong>L'insert :</strong> coule une fine couche de ganache souple dans ton moule à insert, congèle 1h avant de l'insérer au cœur de l'entremet`);
+  } else if (insert.id === 'streusel-insert') {
+    steps.push(`<strong>L'insert :</strong> prépare le streusel au beurre noisette, cuis et concasse grossièrement, presse dans ton moule d'insert et congèle`);
+  }
+
+  // Montage
+  if (format.id === 'entremet') {
+    steps.push(`<strong>Le montage (à l'envers) :</strong> coule 1/3 de mousse dans ton moule, déposes l'insert congelé, le reste de mousse, puis le biscuit pour terminer. Lisse à la spatule, direction congélateur 8h minimum avant glaçage`);
+  } else if (format.id === 'tarte') {
+    steps.push(`<strong>Le montage :</strong> dépose ton insert sur le fond cuit refroidi, recouvre de crème à la poche douille en spirale ou en rosaces, lisse ou laisse le relief`);
+  } else if (format.id === 'choux') {
+    steps.push(`<strong>Le garnissage :</strong> perce la base du choux/éclair (3 trous), garnis à la poche avec douille fine, essuie l'excédent`);
+  } else if (format.id === 'cake') {
+    steps.push(`<strong>Le montage :</strong> pose le premier biscuit, pochage régulier de crème, ajoute l'insert, continue en alternance, finis par un biscuit de dessus. Frigo 30 min avant crumb coating`);
+  } else {
+    steps.push(`<strong>Le dressage :</strong> dresse à l'assiette en réfléchissant à la hauteur, aux couleurs, aux textures. 1 ou 2 éléments de hauteur suffisent`);
+  }
+
+  // Finish
+  if (finish.id === 'miroir') {
+    steps.push(`<strong>Le glaçage :</strong> sors l'entremet du congélateur, pose sur grille au-dessus d'un plat, coule le miroir à 30-35°C d'un seul geste, laisse couler l'excédent, lisse les côtés à la spatule`);
+  } else if (finish.id === 'velours') {
+    steps.push(`<strong>Le velours :</strong> fais fondre un mélange 50/50 chocolat + beurre de cacao à 40°C, charge ton pistolet (ou bombe), pulvérise à 20 cm de l'entremet congelé, mouvement régulier`);
+  } else if (finish.id === 'meringue') {
+    steps.push(`<strong>La meringue :</strong> réalise une meringue italienne ferme, poche en rosaces ou tranchée à la spatule, dore au chalumeau de près pour colorer net`);
+  } else if (finish.id === 'chantilly-fin') {
+    steps.push(`<strong>La chantilly :</strong> monte crème froide + sucre + vanille à texture ferme-tenant, poche avec douille choisie, froid jusqu'au service`);
+  } else if (finish.id === 'fruits-deco') {
+    steps.push(`<strong>Le décor fruits :</strong> dispose fruits frais harmoniquement, nappe avec nappage neutre tiède au pinceau pour la brillance`);
+  } else if (finish.id === 'tempered-choc') {
+    steps.push(`<strong>Le décor chocolat :</strong> tempère ton chocolat (voir Table des températures), étale fin sur Rhodoïd, avant cristallisation découpe à l'emporte-pièce ou détaille les formes voulues`);
+  } else if (finish.id === 'caramel-decor') {
+    steps.push(`<strong>Le caramel :</strong> cuis un caramel à sec à 160-170°C, trempe 2 fourchettes dos à dos dedans, sors et balance entre 2 supports pour créer les fils`);
+  } else if (finish.id === 'feuille-or' || finish.id === 'streusel-finition' || finish.id === 'poudre-deco') {
+    steps.push(`<strong>La finition :</strong> applique ta finition juste avant service (une fois l'entremet à température), sobre et précise`);
+  }
+
+  steps.push(`<strong>Décongélation & service :</strong> sors ton dessert du congélateur 4 à 6h avant dégustation (frigo), ou 2h à température ambiante. Jamais en direct du congélo à l'assiette`);
+
+  return steps;
+}
+
+function generateTips(format, base, cream, insert, finish, flavor) {
+  const tips = [];
+
+  // Tip base
+  if (base.id === 'sable-breton' || base.id === 'pate-sucree' || base.id === 'pate-sablee') {
+    tips.push(`<strong>La base :</strong> passe-la au congélateur 15-20 min avant cuisson — zéro rétractation, cuisson plus homogène`);
+  } else if (base.id === 'pate-a-choux') {
+    tips.push(`<strong>La pâte à choux :</strong> n'ouvre jamais le four avant 25 min, et fais-la bien "dessécher" dans la casserole avant d'ajouter les œufs`);
+  } else if (base.id === 'dacquoise' || base.id === 'financier') {
+    tips.push(`<strong>Les biscuits :</strong> sors-les de la plaque dès la sortie du four, sinon humidité = pâte collante`);
+  } else {
+    tips.push(`<strong>La base :</strong> teste la cuisson avec une pointe au centre — elle doit ressortir sèche. Mieux vaut 2 min de plus que de sortir trop tôt`);
+  }
+
+  // Tip cream/flavor
+  const creamTips = {
+    "chocolat-noir": "Respecte ta courbe de température pour le chocolat — ganaches et mousses tranchent vite en dessous de 28°C",
+    "chocolat-lait": "Attention au goût sucré du chocolat au lait, ajoute toujours une pointe de sel pour structurer",
+    "vanille": "Infuse à 60°C couvert, jamais à ébullition — tu perds les arômes volatils",
+    "caramel": "Pour un caramel à sec sans cristallisation, ajoute le sucre en 3 fois en laissant fondre entre chaque",
+    "framboise": "Les pépins de framboise gâchent la texture — passe ta purée au tamis fin avant incorporation",
+    "fraise": "Les fraises rendent énormément d'eau — sale légèrement et laisse dégorger 15 min avant usage cru",
+    "citron": "Le zeste d'abord dans le sucre pour extraire les huiles essentielles, ensuite dans la crème",
+    "passion": "Dose prudent, la passion est puissante — commence à 15% du poids total et ajuste",
+    "noisette": "Torréfie tes noisettes 10 min à 160°C avant de faire le praliné — le goût change radicalement",
+    "pistache": "Prends une pâte de pistache pure, pas une \"crème de pistache\" avec sucre et colorant",
+    "cafe": "Pour un goût intense, utilise du café très fort + trempage long, pas juste de la poudre dans la crème",
+    "poire": "Ajoute une pointe de jus de citron à ta purée de poire pour éviter qu'elle ne noircisse"
+  };
+  tips.push(creamTips[flavor.id]);
+
+  // Tip finition
+  if (finish.id === 'miroir') {
+    tips.push(`<strong>Le glaçage miroir :</strong> température exacte 30-35°C sur un entremet à -18°C. Plus chaud il coule et traverse, plus froid il laisse des marques`);
+  } else if (finish.id === 'velours') {
+    tips.push(`<strong>Le velours :</strong> pulvérise sur un entremet congelé (-18°C) — impérativement, sinon le velours ne fige pas en gouttelettes`);
+  } else if (finish.id === 'meringue') {
+    tips.push(`<strong>La meringue :</strong> ne brûle JAMAIS la meringue au chalumeau — caramélise juste les pointes, la meringue doit rester blanche ailleurs`);
+  } else if (finish.id === 'tempered-choc' || finish.id === 'caramel-decor') {
+    tips.push(`<strong>Les décors :</strong> prépare-les en avance et stocke au sec (chocolat) ou en boîte hermétique avec dessicant (caramel)`);
+  } else {
+    tips.push(`<strong>La finition :</strong> elle se décide AVANT de commencer, pas à la fin — sinon tu improvises et ça se voit`);
+  }
+
+  return tips;
+}
+
+function reset() {
+  Object.keys(state).forEach(k => state[k] = null);
+  renderAll();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+renderAll();
+</script>
+</body>
+</html>
