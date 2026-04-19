@@ -310,20 +310,28 @@ def _extract_format(cuisson, total=None, format_reference=None):
     """Derive a 'Pour Ø X cm' / 'Cadre X × Y cm' / 'Tapis X × Y cm' string.
 
     Priority :
-    1. format_reference (explicit JSON field) — cleanest
+    1. format_reference (explicit JSON field) — cleanest. Supports multiple
+       fields simultaneously (e.g. tapis-cm + diametre-cm) joined by ' ou '.
     2. cuisson entries with cercle/cadre/moule + diametre-cm
     3. fallback on tapis + epaisseur
     """
-    # 1. Explicit reference
+    # 1. Explicit reference — may combine multiple formats
     if isinstance(format_reference, dict):
-        if 'diametre-cm' in format_reference:
-            return f"Pour Ø {format_reference['diametre-cm']} cm"
-        if 'cadre-cm' in format_reference:
-            return f"Cadre {format_reference['cadre-cm']} cm"
+        parts = []
         if 'tapis-cm' in format_reference:
-            return f"Tapis {format_reference['tapis-cm']} cm"
+            parts.append(f"Tapis {format_reference['tapis-cm']} cm")
+        if 'cadre-cm' in format_reference:
+            parts.append(f"Cadre {format_reference['cadre-cm']} cm")
+        if 'diametre-cm' in format_reference:
+            parts.append(f"Ø {format_reference['diametre-cm']} cm")
         if 'nombre' in format_reference:
-            return f"Pour {format_reference['nombre']}"
+            parts.append(format_reference['nombre'])
+        if parts:
+            # Single value gets a "Pour" prefix for natural reading.
+            # Multiple values are joined by "ou" without prefix.
+            if len(parts) == 1:
+                return f"Pour {parts[0]}"
+            return ' ou '.join(parts)
 
     # 2. Derived from cuisson list
     if not cuisson:

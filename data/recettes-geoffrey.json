@@ -284,7 +284,8 @@
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
       ],
       "format-reference": {
-        "nombre": "18-20 madeleines"
+        "nombre": "18-20 madeleines",
+        "diametre-cm": 20
       }
     },
     "madeleine-cacao": {
@@ -309,7 +310,8 @@
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
       ],
       "format-reference": {
-        "nombre": "18-20 madeleines"
+        "nombre": "18-20 madeleines",
+        "diametre-cm": 20
       }
     },
     "madeleine-praline": {
@@ -335,7 +337,8 @@
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
       ],
       "format-reference": {
-        "nombre": "18-20 madeleines"
+        "nombre": "18-20 madeleines",
+        "diametre-cm": 20
       }
     },
     "brownie": {
@@ -597,7 +600,8 @@
         "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
       ],
       "format-reference": {
-        "tapis-cm": "40 × 30"
+        "tapis-cm": "40 × 30",
+        "diametre-cm": 20
       }
     },
     "joconde-cacao": {
@@ -624,7 +628,8 @@
         "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
       ],
       "format-reference": {
-        "tapis-cm": "40 × 30"
+        "tapis-cm": "40 × 30",
+        "diametre-cm": 20
       }
     },
     "pain-de-genes": {
