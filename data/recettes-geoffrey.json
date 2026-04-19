@@ -38,7 +38,10 @@
       "preparation": [
         "Dans le bol de votre robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs avec les jaunes et le sucre semoule pendant une dizaine de minutes jusqu’au signe du ruban.",
         "Ajoutez la farine tamisée sur le mélange en une seule fois, et incorporez-la à la maryse jusqu’à l’obtention d’une pâte parfaitement homogène."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "genoise-cacao": {
       "nom": "Génoise Cacao",
@@ -67,7 +70,10 @@
       "preparation": [
         "Dans le bol de votre robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs avec les jaunes et le sucre semoule pendant une dizaine de minutes jusqu’au signe du ruban.",
         "Enfin, ajoutez la farine tamisée sur le mélange en une seule fois, et incorporez-la à la maryse jusqu’à l’obtention d’une pâte parfaitement homogène."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "dacquoise": {
       "nom": "Biscuit Dacquoise / Succès",
@@ -98,7 +104,10 @@
         "Augmentez une dernière fois la vitesse jusqu'à obtenir un bec d'oiseau à la texture de votre choix en fonction du résultat que vous souhaitez obtenir.",
         "Puis vous ajoutez en une fois le reste des ingrédients tamisés que vous incorporez à la maryse pour ne pas faire retomber la meringue. Le tout jusqu'à complète intégration.",
         "Vous pouvez maintenant pocher ce biscuit et le cuire environ 15mn à 180°C sur un tapis bien graissé dans un four préchauffé."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "dacquoise-cacao": {
       "nom": "Dacquoise Cacao",
@@ -125,7 +134,10 @@
         "Augmentez une dernière fois la vitesse jusqu'à obtenir un bec d'oiseau à la texture de votre choix en fonction du résultat que vous souhaitez obtenir.",
         "Puis vous ajoutez en une fois le reste des ingrédients tamisés que vous incorporez à la maryse pour ne pas faire retomber la meringue. Le tout jusqu'à complète intégration.",
         "Vous pouvez maintenant pocher ce biscuit et le cuire environ 15mn à 180°C sur un tapis bien graissé dans un four préchauffé."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "financier": {
       "nom": "Biscuit Financier",
@@ -166,7 +178,10 @@
         "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
         "Mélangez jusqu’à homogénéisation complète.",
         "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "financier-cacao": {
       "nom": "Financier Cacao",
@@ -200,7 +215,10 @@
         "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
         "Mélangez jusqu’à homogénéisation complète.",
         "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "financier-praline": {
       "nom": "Financier Praliné",
@@ -220,7 +238,10 @@
         "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
         "Mélangez jusqu’à homogénéisation complète.",
         "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "madeleine": {
       "nom": "Biscuit Madeleine",
@@ -261,7 +282,10 @@
         "Incorporez le lait, mélangez délicatement au fouet.",
         "Terminez par l’ajout du beurre bien tiède.",
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
-      ]
+      ],
+      "format-reference": {
+        "nombre": "18-20 madeleines"
+      }
     },
     "madeleine-cacao": {
       "nom": "Madeleine Cacao",
@@ -283,7 +307,10 @@
         "Incorporez le lait, mélangez délicatement au fouet.",
         "Terminez par l’ajout du beurre bien tiède.",
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
-      ]
+      ],
+      "format-reference": {
+        "nombre": "18-20 madeleines"
+      }
     },
     "madeleine-praline": {
       "nom": "Madeleine Praliné",
@@ -306,7 +333,10 @@
         "Incorporez le praliné et mélangez",
         "Terminez par l’ajout du beurre bien tiède",
         "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
-      ]
+      ],
+      "format-reference": {
+        "nombre": "18-20 madeleines"
+      }
     },
     "brownie": {
       "nom": "Brownie",
@@ -347,7 +377,10 @@
         "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
         "Ajoutez le mélange chocolat/beurre à environ 40°C",
         "Incorporez ensuite les poudres tamisées à la maryse"
-      ]
+      ],
+      "format-reference": {
+        "cadre-cm": "20 × 20"
+      }
     },
     "brownie-lait": {
       "nom": "Brownie Chocolat au Lait",
@@ -367,7 +400,10 @@
         "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
         "Ajoutez le mélange chocolat/beurre à environ 40°C",
         "Incorporez ensuite les poudres tamisées à la maryse"
-      ]
+      ],
+      "format-reference": {
+        "cadre-cm": "20 × 20"
+      }
     },
     "brownie-blanc": {
       "nom": "Brownie Chocolat Blanc",
@@ -387,7 +423,10 @@
         "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
         "Ajoutez le mélange chocolat/beurre à environ 40°C",
         "Incorporez ensuite les poudres tamisées à la maryse"
-      ]
+      ],
+      "format-reference": {
+        "cadre-cm": "20 × 20"
+      }
     },
     "savoie": {
       "nom": "Biscuit de Savoie",
@@ -429,7 +468,10 @@
         "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
         "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
         "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "savoie-cacao": {
       "nom": "Biscuit de Savoie Cacao",
@@ -449,7 +491,10 @@
         "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
         "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
         "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "sacher": {
       "nom": "Biscuit Sacher",
@@ -484,7 +529,10 @@
         "Ajoutez ensuite le reste du sucre lorsque la texture devient vague.",
         "Terminez en augmentant une dernière fois la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
         "Incorporez cette meringue au premier mélange en trois fois Le premier tiers au fouet, Le reste à la maryse, pour conserver un maximum d’air"
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "sacher-cacao": {
       "nom": "Sacher Cacao",
@@ -506,7 +554,10 @@
         "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
         "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
         "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 20
+      }
     },
     "joconde": {
       "nom": "Biscuit Joconde",
@@ -544,7 +595,10 @@
         "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
         "Incorporez un premier tiers de ces blancs montés au mélange précédent au fouet, puis le reste à la maryse, délicatement.",
         "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     },
     "joconde-cacao": {
       "nom": "Joconde Cacao",
@@ -568,7 +622,10 @@
         "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
         "Incorporez un premier tiers de ces blancs montés au mélange précédent au fouet, puis le reste à la maryse, délicatement.",
         "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     },
     "pain-de-genes": {
       "nom": "Biscuit Pain de Gênes",
@@ -604,7 +661,10 @@
         "Versez ce mélange dans le bol du robot pâtissier, puis fouettez à vitesse moyenne pendant 10 minutes pour l’aérer.",
         "Tout en continuant de fouetter, versez le beurre tiédi en filet sur le mélange.",
         "Terminez en ajoutant les poudres tamisées (farine + levure) en pluie, tout en fouettant jusqu’à incorporation totale. Variante plus légère : incorporer les poudres à la maryse au lieu du fouet."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 16
+      }
     },
     "pain-de-genes-cacao": {
       "nom": "Pain de Gênes Cacao",
@@ -623,7 +683,10 @@
         "Versez ce mélange dans le bol du robot pâtissier, puis fouettez à vitesse moyenne pendant 10 minutes pour l’aérer.",
         "Tout en continuant de fouetter, versez le beurre tiédi en filet sur le mélange.",
         "Terminez en ajoutant les poudres tamisées (farine + levure) en pluie, tout en fouettant jusqu’à incorporation totale. Variante plus légère : incorporer les poudres à la maryse au lieu du fouet."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 16
+      }
     },
     "viennois": {
       "nom": "Biscuit Viennois",
@@ -658,7 +721,10 @@
         "Incorporez un tiers des blancs montés dans le sabayon (mélange œufs/sucre) à la maryse, pour détendre la masse.",
         "Saupoudrez les poudres tamisées (farine) sur le mélange, et incorporez-les délicatement à la maryse.",
         "Terminez en ajoutant le reste des blancs montés, toujours à la maryse, jusqu’à homogénéisation complète."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     },
     "viennois-cacao": {
       "nom": "Viennois Cacao",
@@ -677,7 +743,10 @@
         "Incorporez un tiers des blancs montés dans le sabayon (mélange œufs/sucre) à la maryse, pour détendre la masse.",
         "Saupoudrez les poudres tamisées (farine) sur le mélange, et incorporez-les délicatement à la maryse.",
         "Terminez en ajoutant le reste des blancs montés, toujours à la maryse, jusqu’à homogénéisation complète."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     },
     "trocadero": {
       "nom": "Biscuit Trocadero",
@@ -714,7 +783,10 @@
         "Incorporez ensuite cette meringue en trois fois dans le premier mélange : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour ne pas faire retomber la préparation.",
         "Prélevez une petite partie de la pâte et incorporez-la dans le beurre tiède, puis reversez le tout dans la préparation principale.",
         "Mélangez délicatement à la maryse, jusqu’à obtenir une texture homogène et aérée."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 16
+      }
     },
     "trocadero-cacao": {
       "nom": "Trocadero Cacao",
@@ -736,7 +808,10 @@
         "Incorporez ensuite cette meringue en trois fois dans le premier mélange : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour ne pas faire retomber la préparation.",
         "Prélevez une petite partie de la pâte et incorporez-la dans le beurre tiède, puis reversez le tout dans la préparation principale.",
         "Mélangez délicatement à la maryse, jusqu’à obtenir une texture homogène et aérée."
-      ]
+      ],
+      "format-reference": {
+        "diametre-cm": 16
+      }
     },
     "pate-a-choux-japonais": {
       "nom": "Biscuit Pâte à Choux / Japonais",
@@ -776,7 +851,10 @@
         "À part, dans le bol du robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre (2) lorsque le mélange mousse. Augmentez légèrement la vitesse, puis ajoutez le reste du sucre (2) lorsque la texture devient vague. Terminez en fouettant à vitesse moyenne + jusqu’à obtenir un bec d’oiseau, avec une texture de mousse à raser.",
         "Incorporez cette meringue à la pâte à choux en trois fois : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour préserver le volume.",
         "Coulez le biscuit sur un tapis bien graissé, sur environ 1 cm d’épaisseur, et cuisez à 190°C pendant 14 minutes (four préchauffé)."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     },
     "pate-a-choux-cacao": {
       "nom": "Biscuit Pâte à Choux Cacao",
@@ -803,7 +881,10 @@
         "À part, dans le bol du robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre (2) lorsque le mélange mousse. Augmentez légèrement la vitesse, puis ajoutez le reste du sucre (2) lorsque la texture devient vague. Terminez en fouettant à vitesse moyenne + jusqu’à obtenir un bec d’oiseau, avec une texture de mousse à raser.",
         "Incorporez cette meringue à la pâte à choux en trois fois : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour préserver le volume.",
         "Coulez le biscuit sur un tapis bien graissé, sur environ 1 cm d’épaisseur, et cuisez à 190°C pendant 14 minutes (four préchauffé)."
-      ]
+      ],
+      "format-reference": {
+        "tapis-cm": "40 × 30"
+      }
     }
   },
   "pates-a-tarte": {

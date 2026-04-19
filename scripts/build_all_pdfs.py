@@ -75,6 +75,7 @@ def build_fondations(story):
             cuisson=r.get('cuisson'),
             preparation=r.get('preparation'),
             description=r.get('description'),
+            format_reference=r.get('format-reference'),
             notes=r.get('notes') or _build_usages_note(r),
             meta_extras=_biscuit_meta(r)
         ))

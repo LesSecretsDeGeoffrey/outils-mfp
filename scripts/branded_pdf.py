@@ -306,12 +306,26 @@ def method_list(steps):
     return t
 
 
-def _extract_format(cuisson, total=None):
-    """Derive a 'pour un cercle de Ø X cm' string from cuisson entries.
+def _extract_format(cuisson, total=None, format_reference=None):
+    """Derive a 'Pour Ø X cm' / 'Cadre X × Y cm' / 'Tapis X × Y cm' string.
 
-    Looks for the first cuisson entry that is a cercle/cadre with a dimension.
-    Returns a short readable string like 'Pour Ø 20 cm' or None.
+    Priority :
+    1. format_reference (explicit JSON field) — cleanest
+    2. cuisson entries with cercle/cadre/moule + diametre-cm
+    3. fallback on tapis + epaisseur
     """
+    # 1. Explicit reference
+    if isinstance(format_reference, dict):
+        if 'diametre-cm' in format_reference:
+            return f"Pour Ø {format_reference['diametre-cm']} cm"
+        if 'cadre-cm' in format_reference:
+            return f"Cadre {format_reference['cadre-cm']} cm"
+        if 'tapis-cm' in format_reference:
+            return f"Tapis {format_reference['tapis-cm']} cm"
+        if 'nombre' in format_reference:
+            return f"Pour {format_reference['nombre']}"
+
+    # 2. Derived from cuisson list
     if not cuisson:
         return None
     if isinstance(cuisson, list):
@@ -323,8 +337,8 @@ def _extract_format(cuisson, total=None):
                 if 'diametre-cm' in c:
                     return f"Pour Ø {c['diametre-cm']} cm"
                 if 'dimensions-cm' in c:
-                    return f"Pour cadre {c['dimensions-cm']} cm"
-        # Fall back on a tapis with an epaisseur — mention only the epaisseur
+                    return f"Cadre {c['dimensions-cm']} cm"
+        # 3. Fallback : tapis only
         for c in cuisson:
             if not isinstance(c, dict):
                 continue
@@ -338,7 +352,7 @@ def _extract_format(cuisson, total=None):
 
 def recipe_card(title, total=None, rendement=None, ingredients=None,
                 cuisson=None, notes=None, meta_extras=None,
-                preparation=None, description=None):
+                preparation=None, description=None, format_reference=None):
     """A complete recipe card.
 
     Returns a LIST of flowables — header+description+ingredients are grouped
@@ -352,7 +366,7 @@ def recipe_card(title, total=None, rendement=None, ingredients=None,
     meta_bits = []
     if total is not None:
         meta_bits.append(f"Total {total} g")
-    fmt = _extract_format(cuisson, total=total)
+    fmt = _extract_format(cuisson, total=total, format_reference=format_reference)
     if fmt:
         meta_bits.append(fmt)
     if rendement:
