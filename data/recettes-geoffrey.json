@@ -1533,7 +1533,7 @@
         "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
         "Verse la crème anglaise sur le chocolat noir et attends quelques minutes que le chocolat fonde",
         "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
-        "Laisse cirstalliser quelques heures au frigo"
+        "Laisse cristalliser quelques heures au frigo"
       ]
     },
     "cremeux-chocolat-lait": {
@@ -1554,19 +1554,19 @@
         "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
         "Verse la crème anglaise sur le chocolat au lait, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
         "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
-        "Laisse cirstalliser quelques heures au frigo"
+        "Laisse cristalliser quelques heures au frigo"
       ]
     },
     "cremeux-chocolat-blanc": {
       "nom": "Crémeux Chocolat Blanc",
-      "total": 271,
+      "total": 473,
       "ingredients": {
-        "lait": 70,
-        "creme-liquide": 70,
-        "jaunes": 30,
-        "sucre": 15,
-        "chocolat-blanc": 85,
-        "gelatine": 1
+        "lait": 190,
+        "creme-liquide": 65,
+        "jaunes": 50,
+        "sucre": 35,
+        "chocolat-blanc": 130,
+        "gelatine": 3
       },
       "preparation": [
         "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
@@ -1575,7 +1575,7 @@
         "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
         "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
         "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
-        "Laisse cirstalliser quelques heures au frigo"
+        "Laisse cristalliser quelques heures au frigo"
       ]
     },
     "cremeux-chocolat-blanc-praline": {
@@ -1597,7 +1597,7 @@
         "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
         "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et le pralinée, puis attends quelques minutes que le chocolat fonde",
         "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
-        "Laisse cirstalliser quelques heures au frigo"
+        "Laisse cristalliser quelques heures au frigo"
       ]
     },
     "cremeux-chocolat-blanc-infuse": {
@@ -1644,7 +1644,7 @@
         "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
         "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
         "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
-        "Laisse cirstalliser quelques heures au frigo"
+        "Laisse cristalliser quelques heures au frigo"
       ]
     },
     "ganache-chocolat-noir": {
