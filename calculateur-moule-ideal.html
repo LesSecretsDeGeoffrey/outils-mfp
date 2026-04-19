@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quel moule pour ma recette — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:680px}
+
+  .tabs{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid rgba(26,20,16,0.1)}
+  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease}
+  .tab:hover{color:#1A1410}
+  .tab.active{color:#C8A04A;border-bottom-color:#C8A04A;font-weight:600}
+
+  .panel{display:none}
+  .panel.active{display:block}
+
+  .section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,32px);margin-bottom:24px}
+  .section h2{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-bottom:8px}
+  .section .subtitle{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:20px}
+
+  label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin:14px 0 6px;font-weight:600}
+  input,select{width:100%;padding:10px 14px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:14px;font-family:inherit;color:#1A1410;border-radius:3px}
+  input:focus,select:focus{outline:none;border-color:#C8A04A}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:600px){.grid2{grid-template-columns:1fr}}
+
+  .ingredient-row{display:grid;grid-template-columns:2fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(26,20,16,0.08)}
+  .ingredient-row:last-child{border-bottom:none}
+  .ingredient-row label{margin-top:0}
+  .btn-remove{background:transparent;border:none;color:rgba(26,20,16,0.4);font-size:20px;cursor:pointer;padding:8px;line-height:1}
+  .btn-remove:hover{color:#b03232}
+  .btn-add{background:transparent;color:#C8A04A;border:1px dashed rgba(200,160,74,0.5);padding:12px;width:100%;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;border-radius:3px;margin-top:8px}
+  .btn-add:hover{background:rgba(200,160,74,0.08);border-style:solid}
+
+  .mode-switch{display:flex;gap:10px;margin-bottom:18px}
+  .mode-btn{flex:1;padding:12px;background:#FDF8F0;border:1px solid rgba(26,20,16,0.1);cursor:pointer;border-radius:3px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;transition:all 0.2s ease}
+  .mode-btn.active{background:#1A1410;color:#FDF8F0;border-color:#C8A04A}
+
+  .total-weight{background:rgba(200,160,74,0.08);padding:14px 18px;border-radius:3px;font-family:Georgia,serif;font-size:20px;color:#1A1410;text-align:center;margin-top:14px}
+  .total-weight span{color:#C8A04A;font-weight:700}
+
+  .results{margin-top:28px}
+  .results h3{font-family:Georgia,serif;font-size:22px;margin-bottom:6px;font-weight:400}
+  .results .sub{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:20px}
+  .options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .option-card{background:#1A1410;color:#FDF8F0;padding:24px;border-radius:4px;border-top:3px solid #C8A04A;transition:all 0.2s ease}
+  .option-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(26,20,16,0.08)}
+  .option-card svg{display:block;margin:0 auto 14px;stroke:#C8A04A;fill:none;stroke-width:2}
+  .option-card .shape-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:rgba(200,160,74,0.8);text-transform:uppercase;text-align:center;margin-bottom:6px}
+  .option-card .dim{font-family:Georgia,serif;font-size:24px;color:#C8A04A;text-align:center;margin-bottom:8px;line-height:1.2}
+  .option-card .dim-detail{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1px;color:rgba(253,248,240,0.6);text-align:center;margin-bottom:12px}
+  .option-card .note{font-size:12px;color:rgba(253,248,240,0.75);text-align:center;line-height:1.45;padding-top:12px;border-top:1px solid rgba(253,248,240,0.08)}
+
+  .tip{background:rgba(200,160,74,0.08);padding:16px 20px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.8);line-height:1.6;border-left:3px solid #C8A04A;margin-top:28px}
+
+  .weight-display{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,32px);border-top:4px solid #C8A04A;margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+  @media (max-width:600px){.weight-display{grid-template-columns:1fr;text-align:center}}
+  .weight-display h3{font-family:Georgia,serif;font-size:20px;color:#C8A04A;margin-bottom:6px;font-weight:400}
+  .weight-display p{color:rgba(253,248,240,0.75);font-size:14px}
+  .big-weight{font-family:Georgia,serif;font-size:clamp(44px,6vw,60px);color:#C8A04A;line-height:1;white-space:nowrap}
+  .big-weight small{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:rgba(253,248,240,0.55);margin-top:6px;text-transform:uppercase}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Quel moule pour ma recette</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Le bon moule pour la <span class="accent">bonne recette</span></h1>
+  <p class="intro">Tu as une recette et tu te demandes quel moule utiliser ? Ou l'inverse : tu as un moule et tu veux savoir combien d'appareil faire ? Les 2 modes sont là</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('recipe', this)">J'ai une recette → quel moule ?</button>
+    <button class="tab" onclick="switchTab('mold', this)">J'ai un moule → combien de grammes ?</button>
+  </div>
+
+  <!-- MODE 1 : Recette → Moule -->
+  <div class="panel active" id="panel-recipe">
+    <div class="section">
+      <h2>1. Quel type de préparation ?</h2>
+      <p class="subtitle">Chaque préparation a une densité finale différente après cuisson</p>
+      <select id="prep-recipe" onchange="calculateRecipe()"></select>
+    </div>
+
+    <div class="section">
+      <h2>2. Ton appareil (poids total)</h2>
+      <p class="subtitle">Entre le poids direct ou détaille tes ingrédients</p>
+      <div class="mode-switch">
+        <button class="mode-btn active" onclick="setWeightMode('direct')">Poids direct</button>
+        <button class="mode-btn" onclick="setWeightMode('ingredients')">Liste d'ingrédients</button>
+      </div>
+
+      <div id="mode-direct">
+        <label>Poids total d'appareil (g)</label>
+        <input type="number" id="direct-weight" step="10" min="0" value="500" oninput="calculateRecipe()">
+      </div>
+
+      <div id="mode-ingredients" style="display:none">
+        <div id="ingredients"></div>
+        <button class="btn-add" onclick="addIngredient()">+ Ajouter un ingrédient</button>
+        <div class="total-weight">Total : <span id="total-ing">0</span> g</div>
+      </div>
+    </div>
+
+    <div class="results" id="results-recipe"></div>
+  </div>
+
+  <!-- MODE 2 : Moule → Poids -->
+  <div class="panel" id="panel-mold">
+    <div class="section">
+      <h2>1. Quel type de préparation ?</h2>
+      <p class="subtitle">Pour savoir combien d'appareil préparer</p>
+      <select id="prep-mold" onchange="calculateMold()"></select>
+    </div>
+
+    <div class="section">
+      <h2>2. Tes dimensions de moule</h2>
+      <p class="subtitle">Choisis la forme et rentre les dimensions</p>
+      <label>Forme du moule</label>
+      <select id="mold-shape" onchange="renderMoldDims()">
+        <option value="rond">Rond (cercle)</option>
+        <option value="carre">Carré</option>
+        <option value="rect">Rectangle / Tapis</option>
+      </select>
+      <div id="mold-dims"></div>
+      <div class="weight-display">
+        <div>
+          <h3>Poids d'appareil à préparer</h3>
+          <p id="mold-detail">Rentre les dimensions pour voir le calcul</p>
+        </div>
+        <div class="big-weight" id="mold-weight">— g<small>À préparer</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    💡 <strong>Astuce Geoffrey :</strong> ces calculs sont des estimations basées sur des densités moyennes de laboratoire. Ajoute toujours 10% de marge pour être tranquille (tu peux toujours garder les chutes pour un verrine ou un test). Mieux vaut un peu trop que pas assez
+  </div>
+</main>
+
+<script>
+// Densités finales en g/cm³ (empiriques, retour pâtisserie pro)
+const preparations = [
+  {id:"genoise", name:"Génoise", density:0.27, defaultH:4.5, tapisH:1, tip:"Hauteur cible : 4 à 5 cm en cercle, 1 cm en tapis roulé"},
+  {id:"dacquoise", name:"Dacquoise (amande/noisette)", density:0.42, defaultH:2, tapisH:1, tip:"Biscuit meringué dense, ne gonfle quasi pas"},
+  {id:"joconde", name:"Biscuit Joconde (tapis fin)", density:0.78, defaultH:0.8, tapisH:0.8, tip:"Toujours en tapis fin (8 mm) pour entremets roulés ou découpés"},
+  {id:"financier", name:"Financier", density:0.85, defaultH:2, tapisH:1.5, tip:"Dense, cuisson rapide, hauteur 1,5 à 2,5 cm"},
+  {id:"cake", name:"Cake classique", density:0.58, defaultH:6, tapisH:null, tip:"Moule à cake standard type 8×25×6 cm"},
+  {id:"madeleine", name:"Madeleines (à l'unité)", density:0.85, defaultH:null, tapisH:null, tip:"Compte environ 25-30 g d'appareil par madeleine", perPiece:27},
+  {id:"mousse", name:"Mousse / Entremet", density:0.40, defaultH:5, tapisH:null, tip:"Hauteur d'entremet standard 4 à 6 cm"},
+  {id:"bavaroise", name:"Bavaroise / Crème prise", density:0.50, defaultH:4, tapisH:null, tip:"Plus dense que la mousse, prend bien en moule"},
+  {id:"cremeux", name:"Crémeux (insert)", density:1.0, defaultH:1.5, tapisH:null, tip:"Insert plat pour entremet, hauteur 1 à 2 cm"},
+  {id:"pate-choux", name:"Pâte à choux (éclairs/choux)", density:0.80, defaultH:null, tapisH:null, tip:"Compte environ 30 g par choux standard, 80 g par éclair 12 cm", perPiece:30, perEclair:80}
+];
+
+let ingredients = [
+  {name:"Œufs", qty:200},
+  {name:"Sucre", qty:150},
+  {name:"Farine", qty:150}
+];
+
+let weightMode = 'direct';
+
+// Init dropdowns
+function initPreps() {
+  ['prep-recipe', 'prep-mold'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = preparations.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  });
+}
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+function setWeightMode(mode) {
+  weightMode = mode;
+  document.querySelectorAll('.mode-btn').forEach((b,i) => b.classList.toggle('active', (i===0 && mode==='direct') || (i===1 && mode==='ingredients')));
+  document.getElementById('mode-direct').style.display = mode === 'direct' ? '' : 'none';
+  document.getElementById('mode-ingredients').style.display = mode === 'ingredients' ? '' : 'none';
+  if (mode === 'ingredients') renderIngredients();
+  calculateRecipe();
+}
+
+function renderIngredients() {
+  const container = document.getElementById('ingredients');
+  container.innerHTML = ingredients.map((ing, i) => `
+    <div class="ingredient-row">
+      <div><label>Ingrédient ${i+1}</label>
+        <input type="text" value="${ing.name}" oninput="updateIng(${i},'name',this.value)">
+      </div>
+      <div><label>Poids (g)</label>
+        <input type="number" step="1" min="0" value="${ing.qty || ''}" oninput="updateIng(${i},'qty',parseFloat(this.value)||0)">
+      </div>
+      <button class="btn-remove" onclick="removeIng(${i})" title="Supprimer">×</button>
+    </div>
+  `).join('');
+  updateTotal();
+}
+
+function updateIng(i, k, v) {
+  ingredients[i][k] = v;
+  if (k === 'qty') updateTotal();
+  calculateRecipe();
+}
+
+function addIngredient() {
+  ingredients.push({name:"", qty:0});
+  renderIngredients();
+}
+
+function removeIng(i) {
+  if (ingredients.length <= 1) return;
+  ingredients.splice(i,1);
+  renderIngredients();
+  calculateRecipe();
+}
+
+function updateTotal() {
+  const total = ingredients.reduce((s,i) => s + (parseFloat(i.qty)||0), 0);
+  document.getElementById('total-ing').textContent = total;
+}
+
+function getWeight() {
+  if (weightMode === 'direct') return parseFloat(document.getElementById('direct-weight').value) || 0;
+  return ingredients.reduce((s,i) => s + (parseFloat(i.qty)||0), 0);
+}
+
+function svgRond() { return '<svg viewBox="0 0 60 60" width="50" height="50"><circle cx="30" cy="30" r="22"/></svg>'; }
+function svgCarre() { return '<svg viewBox="0 0 60 60" width="50" height="50"><rect x="8" y="8" width="44" height="44"/></svg>'; }
+function svgRect() { return '<svg viewBox="0 0 60 60" width="50" height="50"><rect x="4" y="18" width="52" height="24"/></svg>'; }
+function svgCake() { return '<svg viewBox="0 0 60 60" width="50" height="50"><rect x="14" y="10" width="32" height="40" rx="2"/></svg>'; }
+function svgDrops() { return '<svg viewBox="0 0 60 60" width="50" height="50"><circle cx="20" cy="30" r="7"/><circle cx="40" cy="30" r="7"/></svg>'; }
+
+function calculateRecipe() {
+  const prepId = document.getElementById('prep-recipe').value;
+  const prep = preparations.find(p => p.id === prepId);
+  const weight = getWeight();
+  const results = document.getElementById('results-recipe');
+
+  if (!prep || weight <= 0) {
+    results.innerHTML = '';
+    return;
+  }
+
+  // Special: per-piece preparations
+  if (prep.perPiece) {
+    const pieces = Math.round(weight / prep.perPiece);
+    let html = `<h3>Avec ${weight} g de ${prep.name.toLowerCase()}</h3><p class="sub">${prep.tip}</p><div class="options-grid">`;
+    html += `<div class="option-card">${svgDrops()}<div class="shape-label">À l'unité</div><div class="dim">${pieces} pièces</div><div class="dim-detail">${prep.perPiece} g × pièce</div><div class="note">${prep.name} standard</div></div>`;
+    if (prep.perEclair) {
+      const eclairs = Math.round(weight / prep.perEclair);
+      html += `<div class="option-card">${svgRect()}<div class="shape-label">Version éclair</div><div class="dim">${eclairs} éclairs</div><div class="dim-detail">${prep.perEclair} g × éclair 12 cm</div><div class="note">Éclairs pochés à la douille douille unie 15 mm</div></div>`;
+    }
+    html += '</div>';
+    results.innerHTML = html;
+    return;
+  }
+
+  const volume = weight / prep.density; // cm³
+  const options = [];
+
+  // Cercle rond (hauteur fixée)
+  if (prep.defaultH) {
+    const h = prep.defaultH;
+    const diameter = 2 * Math.sqrt(volume / (Math.PI * h));
+    const rounded = Math.round(diameter);
+    const h2 = volume / (Math.PI * Math.pow(rounded/2, 2));
+    options.push({
+      svg: svgRond(),
+      label: "Cercle rond",
+      dim: `Ø ${rounded} cm`,
+      detail: `Hauteur ${h2.toFixed(1).replace('.', ',')} cm`,
+      note: `Cercle à entremet ou à tarte Ø ${rounded} cm, hauteur ${h} cm idéale`
+    });
+    // Option alternative : Ø arrondi au standard le plus proche
+    const standards = [16, 18, 20, 22, 24, 26, 28];
+    const closestStd = standards.reduce((a,b) => Math.abs(b - rounded) < Math.abs(a - rounded) ? b : a);
+    if (closestStd !== rounded) {
+      const hStd = volume / (Math.PI * Math.pow(closestStd/2, 2));
+      options.push({
+        svg: svgRond(),
+        label: "Cercle standard",
+        dim: `Ø ${closestStd} cm`,
+        detail: `Hauteur ${hStd.toFixed(1).replace('.', ',')} cm`,
+        note: `Diamètre classique du commerce, ajuste la hauteur du cercle`
+      });
+    }
+  }
+
+  // Carré
+  if (prep.defaultH) {
+    const h = prep.defaultH;
+    const side = Math.sqrt(volume / h);
+    const rounded = Math.round(side);
+    const hSq = volume / (rounded * rounded);
+    options.push({
+      svg: svgCarre(),
+      label: "Cadre carré",
+      dim: `${rounded} × ${rounded} cm`,
+      detail: `Hauteur ${hSq.toFixed(1).replace('.', ',')} cm`,
+      note: `Cadre inox carré, hauteur ${h} cm idéale`
+    });
+  }
+
+  // Tapis / plaque (si applicable)
+  if (prep.tapisH) {
+    const h = prep.tapisH;
+    const surfaceNeeded = volume / h; // cm²
+    // Plaques standards
+    const plaques = [
+      {l:40, w:30, name:"Plaque 40×30"},
+      {l:60, w:40, name:"Plaque 60×40"}
+    ];
+    const bestPlaque = plaques.find(p => (p.l * p.w) >= surfaceNeeded) || plaques[plaques.length-1];
+    const fillRate = Math.min(100, Math.round((surfaceNeeded / (bestPlaque.l * bestPlaque.w)) * 100));
+    options.push({
+      svg: svgRect(),
+      label: "Tapis / plaque",
+      dim: `${bestPlaque.l} × ${bestPlaque.w} cm`,
+      detail: `Épaisseur ${h} cm, remplissage ${fillRate}%`,
+      note: `${bestPlaque.name} standard, biscuit roulé ou découpé en disques`
+    });
+    // Calcul surface optimale ratio 4:3
+    const lOpti = Math.round(Math.sqrt(surfaceNeeded * 4/3));
+    const wOpti = Math.round(lOpti * 3/4);
+    if (lOpti <= 60 && wOpti >= 10) {
+      options.push({
+        svg: svgRect(),
+        label: "Tapis sur mesure",
+        dim: `${lOpti} × ${wOpti} cm`,
+        detail: `Épaisseur ${h} cm`,
+        note: `Dimensions optimales avec un cadre inox réglable`
+      });
+    }
+  }
+
+  // Moule à cake (si cake)
+  if (prep.id === 'cake') {
+    // cake standard 8×25×6 = 1200 cm³
+    const std = {l:25, w:8, h:6};
+    const ratio = volume / (std.l * std.w * std.h);
+    const scaledL = Math.round(std.l * Math.pow(ratio, 1/3) * 10) / 10;
+    options.push({
+      svg: svgCake(),
+      label: "Moule à cake",
+      dim: `${scaledL} × 8 cm`,
+      detail: `Hauteur 6 cm, pour un cake classique`,
+      note: `Moule à cake type "anglais", hauteur de pâte crue 2/3 du moule`
+    });
+  }
+
+  let html = `<h3>Avec ${Math.round(weight)} g de ${prep.name.toLowerCase()}</h3>`;
+  html += `<p class="sub">Volume d'appareil : ${Math.round(volume)} cm³ — ${prep.tip}</p>`;
+  html += '<div class="options-grid">';
+  html += options.map(o => `
+    <div class="option-card">
+      ${o.svg}
+      <div class="shape-label">${o.label}</div>
+      <div class="dim">${o.dim}</div>
+      <div class="dim-detail">${o.detail}</div>
+      <div class="note">${o.note}</div>
+    </div>
+  `).join('');
+  html += '</div>';
+  results.innerHTML = html;
+}
+
+// Mode 2 : Moule → Poids
+function renderMoldDims() {
+  const shape = document.getElementById('mold-shape').value;
+  const container = document.getElementById('mold-dims');
+  let dims = '';
+  if (shape === 'rond') {
+    dims = `<div class="grid2"><div><label>Diamètre (cm)</label><input type="number" id="md-d" step="0.5" value="20" oninput="calculateMold()"></div><div><label>Hauteur (cm)</label><input type="number" id="md-h" step="0.5" value="4.5" oninput="calculateMold()"></div></div>`;
+  } else if (shape === 'carre') {
+    dims = `<div class="grid2"><div><label>Côté (cm)</label><input type="number" id="md-c" step="0.5" value="18" oninput="calculateMold()"></div><div><label>Hauteur (cm)</label><input type="number" id="md-h" step="0.5" value="4.5" oninput="calculateMold()"></div></div>`;
+  } else if (shape === 'rect') {
+    dims = `<div class="grid2"><div><label>Longueur (cm)</label><input type="number" id="md-l" step="0.5" value="40" oninput="calculateMold()"></div><div><label>Largeur (cm)</label><input type="number" id="md-w" step="0.5" value="30" oninput="calculateMold()"></div></div><div><label>Hauteur / épaisseur (cm)</label><input type="number" id="md-h" step="0.5" value="1" oninput="calculateMold()"></div>`;
+  }
+  container.innerHTML = dims;
+  calculateMold();
+}
+
+function calculateMold() {
+  const shape = document.getElementById('mold-shape').value;
+  const prepId = document.getElementById('prep-mold').value;
+  const prep = preparations.find(p => p.id === prepId);
+  if (!prep) return;
+
+  let volume = 0;
+  let detail = '';
+
+  if (shape === 'rond') {
+    const d = parseFloat(document.getElementById('md-d')?.value) || 0;
+    const h = parseFloat(document.getElementById('md-h')?.value) || 0;
+    volume = Math.PI * Math.pow(d/2, 2) * h;
+    detail = `Cercle Ø ${d} cm × hauteur ${h} cm = ${Math.round(volume)} cm³`;
+  } else if (shape === 'carre') {
+    const c = parseFloat(document.getElementById('md-c')?.value) || 0;
+    const h = parseFloat(document.getElementById('md-h')?.value) || 0;
+    volume = c * c * h;
+    detail = `Cadre ${c}×${c} cm × hauteur ${h} cm = ${Math.round(volume)} cm³`;
+  } else if (shape === 'rect') {
+    const l = parseFloat(document.getElementById('md-l')?.value) || 0;
+    const w = parseFloat(document.getElementById('md-w')?.value) || 0;
+    const h = parseFloat(document.getElementById('md-h')?.value) || 0;
+    volume = l * w * h;
+    detail = `Plaque ${l}×${w} cm × épaisseur ${h} cm = ${Math.round(volume)} cm³`;
+  }
+
+  const weight = volume * prep.density;
+  document.getElementById('mold-weight').innerHTML = `${Math.round(weight)} g<small>À préparer</small>`;
+  document.getElementById('mold-detail').textContent = detail;
+}
+
+// Init
+initPreps();
+renderMoldDims();
+calculateRecipe();
+</script>
+</body>
+</html>
