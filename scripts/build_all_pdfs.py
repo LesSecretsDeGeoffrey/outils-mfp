@@ -12,7 +12,7 @@ from branded_pdf import (  # noqa: E402
     styles, gold_line, section_heading, overline,
     recipe_card, gold_callout, problem_block, method_list,
     ingredients_table, pretty_ing, fmt_value,
-    build_pdf,
+    build_pdf, toc_page,
 )
 
 ROOT = os.path.abspath(os.path.join(HERE, '..'))
@@ -28,13 +28,14 @@ with open(JSON_PATH) as f:
 # 1) BOOK — LES FONDATIONS DU CHEF
 # ════════════════════════════════════════════════════════════
 
-def chapter_title(story, number, title, subtitle=None):
+def chapter_title(story, number, title, subtitle=None, anchor=None):
     s = styles()
     story.append(PageBreak())
     story.append(Spacer(1, 20))
     story.append(Paragraph(f'<font color="#C8A04A">CHAPITRE {number:02d}</font>',
                            styles()['overline']))
-    story.append(Paragraph(title, s['h1']))
+    anchor_tag = f'<a name="{anchor}"/>' if anchor else ''
+    story.append(Paragraph(f'{anchor_tag}{title}', s['h1']))
     if subtitle:
         story.append(Paragraph(subtitle, s['body_italic']))
     story.append(gold_line(1.5, 6, 18))
@@ -62,107 +63,109 @@ def build_fondations(story):
     ))
     story.append(Spacer(1, 6))
 
-    # CH 01 : BISCUITS
+    # ── Load chapter data ──
     biscuits = DATA['biscuits']
+    pates = DATA['pates-a-tarte']
+    choux = DATA['pate-a-choux']
+    mac = DATA['macarons']
+    perso = DATA.get('personnalisation-biscuits', {})
+    cremes = DATA['cremes-garnitures']
+
+    def _entries(items, skip_keys=()):
+        out = []
+        for key, r in items.items():
+            if key in skip_keys:
+                continue
+            out.append({
+                'anchor': f'recipe-{key}',
+                'name': r.get('nom', pretty_ing(key))
+            })
+        return out
+
+    toc_chapters = [
+        {'number': 1, 'title': 'Biscuits', 'anchor': 'chap-biscuits',
+         'entries': _entries(biscuits)},
+        {'number': 2, 'title': 'Pâtes à tarte', 'anchor': 'chap-pates',
+         'entries': _entries(pates)},
+        {'number': 3, 'title': 'Pâte à choux', 'anchor': 'chap-choux',
+         'entries': _entries(choux)},
+        {'number': 4, 'title': 'Macarons', 'anchor': 'chap-macarons',
+         'entries': _entries(mac, skip_keys=('astuces', 'faq'))},
+    ]
+    if perso:
+        toc_chapters.append({
+            'number': 5, 'title': 'Personnaliser tes biscuits',
+            'anchor': 'chap-perso',
+            'entries': [{'anchor': f'perso-{k}', 'name': pretty_ing(k)}
+                        for k in perso.keys()]})
+    toc_chapters.append({
+        'number': 6, 'title': 'Crèmes & garnitures', 'anchor': 'chap-cremes',
+        'entries': _entries(cremes)})
+
+    # ── TOC page ──
+    story.extend(toc_page(
+        toc_chapters,
+        title='Sommaire',
+        intro="Clique sur un titre pour accéder directement à la recette."
+    ))
+
+    # CH 01 : BISCUITS
     chapter_title(story, 1, 'Biscuits',
-                  f"{len(biscuits)} recettes de base pour tous tes entremets, gâteaux et pièces de pâtisserie")
-    for key, r in biscuits.items():
-        story.extend(recipe_card(
-            r.get('nom', pretty_ing(key)),
-            total=r.get('total'),
-            rendement=r.get('rendement'),
-            ingredients=r.get('ingredients'),
-            cuisson=r.get('cuisson'),
-            preparation=r.get('preparation'),
-            description=r.get('description'),
-            format_reference=r.get('format-reference'),
-            notes=r.get('notes') or _build_usages_note(r),
-            meta_extras=_biscuit_meta(r)
-        ))
+                  f"{len(biscuits)} recettes de base pour tous tes entremets, gâteaux et pièces de pâtisserie",
+                  anchor='chap-biscuits')
+    _render_recipes(story, biscuits,
+                    include_format=True,
+                    build_notes=_build_usages_note,
+                    meta_fn=_biscuit_meta)
 
     # CH 02 : PÂTES À TARTE
-    pates = DATA['pates-a-tarte']
     chapter_title(story, 2, 'Pâtes à tarte',
-                  f"{len(pates)} pâtes sablées, sucrées et sablés bretons — ta base pour tartes, fonds et petits-fours")
-    for key, r in pates.items():
-        story.extend(recipe_card(
-            r.get('nom', pretty_ing(key)),
-            total=r.get('total'),
-            ingredients=r.get('ingredients'),
-            cuisson=r.get('cuisson'),
-            preparation=r.get('preparation'),
-            description=r.get('description'),
-            notes=r.get('notes') or _build_usages_note(r),
-            meta_extras=_pate_meta(r)
-        ))
+                  f"{len(pates)} pâtes sablées, sucrées et sablés bretons — ta base pour tartes, fonds et petits-fours",
+                  anchor='chap-pates')
+    _render_recipes(story, pates, build_notes=_build_usages_note,
+                    meta_fn=_pate_meta)
 
     # CH 03 : PÂTE À CHOUX
-    choux = DATA['pate-a-choux']
     chapter_title(story, 3, 'Pâte à choux',
-                  f"{len(choux)} recettes pour maîtriser les choux, éclairs, religieuses et Paris-Brest")
-    for key, r in choux.items():
-        story.extend(recipe_card(
-            r.get('nom', pretty_ing(key)),
-            total=r.get('total'),
-            ingredients=r.get('ingredients'),
-            cuisson=r.get('cuisson'),
-            preparation=r.get('preparation'),
-            description=r.get('description'),
-            notes=r.get('notes')
-        ))
+                  f"{len(choux)} recettes pour maîtriser les choux, éclairs, religieuses et Paris-Brest",
+                  anchor='chap-choux')
+    _render_recipes(story, choux)
 
     # CH 04 : MACARONS
-    mac = DATA['macarons']
     chapter_title(story, 4, 'Macarons',
-                  "Méthodes italienne et française à 35, avec et sans cacao")
-    for key, r in mac.items():
-        if key in ('astuces', 'faq'):
-            continue
-        story.extend(recipe_card(
-            r.get('nom', pretty_ing(key)),
-            total=r.get('total'),
-            ingredients=r.get('ingredients'),
-            cuisson=r.get('cuisson'),
-            preparation=r.get('preparation'),
-            description=r.get('description'),
-            notes=r.get('notes') or r.get('procedure')
-        ))
+                  "Méthodes italienne et française à 35, avec et sans cacao",
+                  anchor='chap-macarons')
+    _render_recipes(story, mac, skip_keys=('astuces', 'faq'),
+                    notes_fallback_key='procedure')
     if 'astuces' in mac:
+        story.append(PageBreak())
         story.append(Spacer(1, 10))
         _render_tips(story, 'Mes astuces macarons', mac['astuces'])
     if 'faq' in mac:
+        story.append(PageBreak())
         story.append(Spacer(1, 10))
         _render_tips(story, 'FAQ macarons', mac['faq'])
 
     # CH 05 : PERSONNALISATION
-    if 'personnalisation-biscuits' in DATA:
-        perso = DATA['personnalisation-biscuits']
+    if perso:
         chapter_title(story, 5, 'Personnaliser tes biscuits',
-                      "Remplacer la farine, choisir le bon sucre — varier les textures et les saveurs")
+                      "Remplacer la farine, choisir le bon sucre — varier les textures et les saveurs",
+                      anchor='chap-perso')
         for section_key, content in perso.items():
-            story.append(Paragraph(pretty_ing(section_key), s['h3']))
+            story.append(PageBreak())
+            anchor_tag = f'<a name="perso-{section_key}"/>'
+            story.append(Paragraph(f'{anchor_tag}{pretty_ing(section_key)}',
+                                    s['h3']))
             story.append(gold_line(0.3, 2, 6))
             _render_flex(story, content)
             story.append(Spacer(1, 10))
 
     # CH 06 : CRÈMES & GARNITURES
-    cremes = DATA['cremes-garnitures']
     chapter_title(story, 6, 'Crèmes & garnitures',
-                  f"{len(cremes)} crèmes pâtissières, mousselines, diplomates, crémeux et pralinés maison")
-    for key, r in cremes.items():
-        meta = []
-        if r.get('rendement'):
-            meta.append(r['rendement'])
-        story.extend(recipe_card(
-            r.get('nom', pretty_ing(key)),
-            total=r.get('total'),
-            ingredients=r.get('ingredients'),
-            cuisson=r.get('cuisson'),
-            preparation=r.get('preparation'),
-            description=r.get('description'),
-            notes=r.get('notes') or _build_usages_note(r),
-            meta_extras=meta or None
-        ))
+                  f"{len(cremes)} crèmes pâtissières, mousselines, diplomates, crémeux et pralinés maison",
+                  anchor='chap-cremes')
+    _render_recipes(story, cremes, build_notes=_build_usages_note,
+                    meta_fn=_creme_meta)
 
     # Closing
     story.append(PageBreak())
@@ -195,9 +198,16 @@ def _biscuit_meta(r):
 
 
 def _pate_meta(r):
+    # rendement is passed directly to recipe_card, don't duplicate here
     bits = []
-    if r.get('rendement'):
-        bits.append(r['rendement'])
+    if r.get('conservation-jours'):
+        bits.append(f"Conservation {r['conservation-jours']} j")
+    return bits or None
+
+
+def _creme_meta(r):
+    # rendement is passed directly to recipe_card, don't duplicate here
+    bits = []
     if r.get('conservation-jours'):
         bits.append(f"Conservation {r['conservation-jours']} j")
     return bits or None
@@ -213,6 +223,38 @@ def _build_usages_note(r):
     if r.get('conservation'):
         parts.append(f"Conservation : {r['conservation']}")
     return '. '.join(parts) if parts else None
+
+
+def _render_recipes(story, items, skip_keys=(), include_format=False,
+                    build_notes=None, notes_fallback_key=None, meta_fn=None):
+    """Render a dict of recipes, one per page. Each recipe gets a named
+    anchor (`recipe-{key}`) so TOC links can jump to it."""
+    for key, r in items.items():
+        if key in skip_keys:
+            continue
+        if not isinstance(r, dict):
+            continue
+        story.append(PageBreak())
+        kwargs = {
+            'anchor': f'recipe-{key}',
+            'total': r.get('total'),
+            'rendement': r.get('rendement'),
+            'ingredients': r.get('ingredients'),
+            'cuisson': r.get('cuisson'),
+            'preparation': r.get('preparation'),
+            'description': r.get('description'),
+        }
+        if include_format:
+            kwargs['format_reference'] = r.get('format-reference')
+        notes = r.get('notes')
+        if not notes and notes_fallback_key:
+            notes = r.get(notes_fallback_key)
+        if not notes and build_notes:
+            notes = build_notes(r)
+        kwargs['notes'] = notes
+        if meta_fn:
+            kwargs['meta_extras'] = meta_fn(r)
+        story.extend(recipe_card(r.get('nom', pretty_ing(key)), **kwargs))
 
 
 def _render_tips(story, title, tips):

@@ -352,16 +352,20 @@ def _extract_format(cuisson, total=None, format_reference=None):
 
 def recipe_card(title, total=None, rendement=None, ingredients=None,
                 cuisson=None, notes=None, meta_extras=None,
-                preparation=None, description=None, format_reference=None):
+                preparation=None, description=None, format_reference=None,
+                anchor=None):
     """A complete recipe card.
 
     Returns a LIST of flowables — header+description+ingredients are grouped
     in a KeepTogether (never split), while cuisson/preparation/notes can flow
     across pages when the preparation is long.
+
+    `anchor` (str) adds a named bookmark on the title for internal PDF links.
     """
     s = styles()
     header = []
-    header.append(Paragraph(title, s['card_title']))
+    anchor_tag = f'<a name="{anchor}"/>' if anchor else ''
+    header.append(Paragraph(f'{anchor_tag}{title}', s['card_title']))
 
     meta_bits = []
     if total is not None:
@@ -455,6 +459,64 @@ def recipe_card(title, total=None, rendement=None, ingredients=None,
     body.append(gold_line(0.3, 6, 12))
 
     return [KeepTogether(header), *body]
+
+
+def toc_page(chapters, title='Sommaire', intro=None):
+    """Build a clickable table of contents.
+
+    chapters : list of dicts like :
+      {
+        'number': 1,
+        'title': 'Biscuits',
+        'anchor': 'chap-biscuits',
+        'entries': [
+          {'anchor': 'recipe-genoise-nature', 'name': 'Génoise Nature'},
+          ...
+        ]
+      }
+
+    Returns a list of flowables (starts with its own PageBreak).
+    """
+    s = styles()
+    els = []
+    els.append(PageBreak())
+    els.append(Spacer(1, 10))
+    els.append(Paragraph(
+        '<font color="#C8A04A">§</font> ' + title,
+        ParagraphStyle('TocTitle', fontName='Times-Roman', fontSize=28,
+                       textColor=DARK, leading=34, spaceAfter=6)))
+    els.append(gold_line(1.2, 2, 18))
+
+    if intro:
+        els.append(Paragraph(intro, s['body_italic']))
+        els.append(Spacer(1, 12))
+
+    chap_style = ParagraphStyle(
+        'TocChap', fontName='Courier-Bold', fontSize=9, textColor=GOLD,
+        leading=12, spaceBefore=14, spaceAfter=6, leftIndent=0)
+    entry_style = ParagraphStyle(
+        'TocEntry', fontName='Helvetica', fontSize=10.5, textColor=DARK,
+        leading=16, spaceAfter=1, leftIndent=14)
+
+    for chap in chapters:
+        num = chap.get('number')
+        chap_title = chap.get('title', '')
+        chap_anchor = chap.get('anchor', '')
+        prefix = f'CHAPITRE {num:02d}  ·  ' if num else ''
+        link = (f'<link href="#{chap_anchor}">{prefix}{chap_title.upper()}</link>'
+                if chap_anchor else f'{prefix}{chap_title.upper()}')
+        els.append(Paragraph(link, chap_style))
+        for entry in chap.get('entries', []):
+            name = entry.get('name', '')
+            a = entry.get('anchor', '')
+            if a:
+                els.append(Paragraph(
+                    f'<link href="#{a}"><font color="#1A1410">→ {name}</font></link>',
+                    entry_style))
+            else:
+                els.append(Paragraph(f'→ {name}', entry_style))
+
+    return els
 
 
 def gold_callout(title, content):

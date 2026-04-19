@@ -589,7 +589,7 @@
       "preparation": [
         "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à tiédissement.",
         "Dans le bol du robot, fouettez les œufs avec le sucre glace et la poudre d’amande à vitesse moyenne pendant 10 minutes.",
-        "Prélevez 1/10ᵉ de ce mélange et incorporez-le au beurre tiédi.",
+        "Prélevez 1/10e de ce mélange et incorporez-le au beurre tiédi.",
         "Reversez le tout dans le mélange principal et homogénéisez à la maryse.",
         "Ajoutez ensuite la farine tamisée, et incorporez-la délicatement à la maryse pour préserver l’air du mélange.",
         "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
@@ -616,7 +616,7 @@
       "preparation": [
         "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à tiédissement.",
         "Dans le bol du robot, fouettez les œufs avec le sucre glace et la poudre d’amande à vitesse moyenne pendant 10 minutes.",
-        "Prélevez 1/10ᵉ de ce mélange et incorporez-le au beurre tiédi.",
+        "Prélevez 1/10e de ce mélange et incorporez-le au beurre tiédi.",
         "Reversez le tout dans le mélange principal et homogénéisez à la maryse.",
         "Ajoutez ensuite la farine tamisée, et incorporez-la délicatement à la maryse pour préserver l’air du mélange.",
         "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
@@ -707,7 +707,7 @@
         }
       ],
       "notes": "Sans matière grasse, impossible à aromatiser directement. À associer à une garniture savoureuse.",
-      "description": "Le biscuit le plus reconnu pour les gâteaux roulés ! D’une souplesse exceptionnelle et d’une légèreté incomparable, il s’associe parfaitement à des crèmes riches en goût. ⚠️ Ce biscuit ne contient pas de matière grasse, ce qui le rend impossible à aromatiser directement il doit donc être associé à une garniture savoureuse.",
+      "description": "Le biscuit le plus reconnu pour les gâteaux roulés ! D’une souplesse exceptionnelle et d’une légèreté incomparable, il s’associe parfaitement à des crèmes riches en goût. Attention : Ce biscuit ne contient pas de matière grasse, ce qui le rend impossible à aromatiser directement il doit donc être associé à une garniture savoureuse.",
       "usages": [
         "Gâteaux roulés",
         "Bûches roulées",
@@ -1446,7 +1446,7 @@
         "max-pourcent": 30
       },
       "coco": {
-        "description": "Goût subtil exotique. 1 poids farine blé = ¼ poids farine coco (absorbe beaucoup plus)",
+        "description": "Goût subtil exotique. 1 poids farine blé = 1/4 poids farine coco (absorbe beaucoup plus)",
         "max-pourcent": 30
       }
     },
