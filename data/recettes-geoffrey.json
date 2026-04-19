@@ -2379,7 +2379,15 @@
           "creme-liquide-30": 160,
           "gousse-vanille": 1
         },
-        "notes": "Infuser la gousse + graines dans la crème 30 min après petite ébullition. Retirer la gousse, chauffer à nouveau. Verser en 3 fois sur le chocolat fondu. Cristalliser 2h au frigo."
+        "notes": "Infuser la gousse + graines dans la crème 30 min après petite ébullition. Retirer la gousse, chauffer à nouveau. Verser en 3 fois sur le chocolat fondu. Cristalliser 2h au frigo.",
+        "preparation": [
+          "Récupère les graines de la gousse de vanille et fais les infuser avec la gousse dans la crème pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Retire la gousse de vanille et chauffe la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-yuzu": {
         "nom": "Ganache Yuzu",
@@ -2390,7 +2398,16 @@
           "creme-liquide-30": 70,
           "gelatine": 2
         },
-        "notes": "Ajouter la gélatine et mixer. Ajouter le jus de Yuzu à la fin et mixer à nouveau. Cristalliser 2h."
+        "notes": "Ajouter la gélatine et mixer. Ajouter le jus de Yuzu à la fin et mixer à nouveau. Cristalliser 2h.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème liquide bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la gélatine et mixe au mixeur plongeant",
+          "Ajoute le jus de Yuzu et mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-griotte": {
         "nom": "Ganache Griotte",
@@ -2399,7 +2416,14 @@
           "chocolat-blanc-34": 240,
           "puree-cerise": 150
         },
-        "notes": "Purée de cerise à ébullition, verser en 3 fois sur le chocolat fondu. Cristalliser 2h."
+        "notes": "Purée de cerise à ébullition, verser en 3 fois sur le chocolat fondu. Cristalliser 2h.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de cerise",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-chocolat-noir": {
         "nom": "Ganache Chocolat Noir",
@@ -2410,7 +2434,15 @@
           "miel": 30,
           "beurre": 30
         },
-        "notes": "Crème chaude sur chocolat noir fondu. Ajouter miel et beurre, mixer au plongeant jusqu'à ganache bien lisse et brillante. Cristalliser 2h."
+        "notes": "Crème chaude sur chocolat noir fondu. Ajouter miel et beurre, mixer au plongeant jusqu'à ganache bien lisse et brillante. Cristalliser 2h.",
+        "preparation": [
+          "Fais fondre le chocolat noir au bain marie",
+          "Chauffe la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat noir en créant une émulsion au centre avec ta maryse",
+          "Verse le beurre et le miel et mixe au mixeur plongeant jusqu’à obtenir une ganache bien lisse et brillante",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-chocolat-lait": {
         "nom": "Ganache Chocolat au Lait",
@@ -2421,7 +2453,15 @@
           "beurre": 25,
           "miel": 10
         },
-        "notes": "Crème chaude sur chocolat lait fondu. Ajouter beurre et miel, mixer au plongeant pour parfaire l'émulsion."
+        "notes": "Crème chaude sur chocolat lait fondu. Ajouter beurre et miel, mixer au plongeant pour parfaire l'émulsion.",
+        "preparation": [
+          "Fais fondre le chocolat au lait au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat au lait en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre et le miel, puis mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-dulcey": {
         "nom": "Ganache Chocolat Dulcey",
@@ -2432,7 +2472,15 @@
           "beurre": 20,
           "miel": 15
         },
-        "notes": "Crème chaude sur Dulcey fondu. Ajouter beurre et miel, mixer au plongeant."
+        "notes": "Crème chaude sur Dulcey fondu. Ajouter beurre et miel, mixer au plongeant.",
+        "preparation": [
+          "Fais fondre le chocolat Dulcey au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat Dulcey en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre et le miel, puis mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-noisette": {
         "nom": "Ganache Noisette",
@@ -2442,7 +2490,15 @@
           "creme-liquide-30": 200,
           "praline-noisette": 50
         },
-        "notes": "Ajouter le praliné et mixer au plongeant. Cristalliser 4h (temps allongé pour les pralinés)."
+        "notes": "Ajouter le praliné et mixer au plongeant. Cristalliser 4h (temps allongé pour les pralinés).",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le praliné et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 4h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-cafe": {
         "nom": "Ganache Café",
@@ -2452,7 +2508,16 @@
           "creme-liquide-30": 160,
           "cafe-grains": 20
         },
-        "notes": "Infuser les grains de café 30 min dans la crème après petite ébullition. Filtrer, repeser, rajouter pour retomber à 160g. Chauffer à nouveau."
+        "notes": "Infuser les grains de café 30 min dans la crème après petite ébullition. Filtrer, repeser, rajouter pour retomber à 160g. Chauffer à nouveau.",
+        "preparation": [
+          "Fais infuser les grains de café dans la crème pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre le mélange crème/grains de café et repèse bien la crème filtrée, rajoute en pour retomber à 160g",
+          "Chauffe à nouveau la crème",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-framboise": {
         "nom": "Ganache Framboise",
@@ -2460,7 +2525,14 @@
         "ingredients": {
           "chocolat-blanc-34": 240,
           "puree-framboise": 150
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de framboise",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-pistache": {
         "nom": "Ganache Pistache",
@@ -2470,7 +2542,15 @@
           "creme-liquide-30": 200,
           "pate-pistache": 50
         },
-        "notes": "Cristalliser 4h."
+        "notes": "Cristalliser 4h.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la pâte de pistache et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 4h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-brioche": {
         "nom": "Ganache à la Brioche",
@@ -2481,7 +2561,17 @@
           "beurre": 30,
           "brioche": 50
         },
-        "notes": "Émietter la brioche, infuser 30 min dans la crème. Filtrer, repeser, rajouter pour retomber à 150g. Ajouter beurre en petits dés à la fin."
+        "notes": "Émietter la brioche, infuser 30 min dans la crème. Filtrer, repeser, rajouter pour retomber à 150g. Ajouter beurre en petits dés à la fin.",
+        "preparation": [
+          "Emiette la brioche, fais infuser les morceaux dans la crème pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre le mélange crème/brioche repèse bien la crème filtrée, rajoute en pour retomber à 150g",
+          "Chauffe à nouveau la crème",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre coupé en petits dés et mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-mandarine": {
         "nom": "Ganache Mandarine",
@@ -2491,7 +2581,15 @@
           "creme-liquide-30": 100,
           "puree-mandarine": 50,
           "miel": 20
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide avec le sirop de glucose",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Verse la purée de mandarine et mixe au mixeur plongeant",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-cacahuete": {
         "nom": "Ganache Cacahuète",
@@ -2501,7 +2599,15 @@
           "creme-liquide-30": 200,
           "beurre-cacahuete": 50
         },
-        "notes": "Cristalliser 4h."
+        "notes": "Cristalliser 4h.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre de cacahuète et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 4h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-passion": {
         "nom": "Ganache Fruit de la Passion",
@@ -2509,7 +2615,14 @@
         "ingredients": {
           "chocolat-blanc-34": 240,
           "puree-fruit-passion": 150
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de fruit de la passion",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-cassis-violette": {
         "nom": "Ganache Cassis et Violette",
@@ -2518,7 +2631,15 @@
           "chocolat-blanc-34": 240,
           "puree-cassis": 150,
           "sirop-violette": 5
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de cassis",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le sirop de violette et mélange",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-lait-passion": {
         "nom": "Ganache Chocolat au Lait et Fruit de la Passion",
@@ -2527,7 +2648,15 @@
           "chocolat-lait-40": 180,
           "puree-fruit-passion": 80,
           "beurre": 30
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat au lait au bain marie",
+          "Porte à ébullition la purée de fruit de la passion",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-passion-mangue": {
         "nom": "Ganache Fruit de la Passion et Mangue",
@@ -2536,7 +2665,14 @@
           "chocolat-blanc-34": 240,
           "puree-fruit-passion": 100,
           "puree-mangue": 50
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition les purées de mangue et fruit de la passion",
+          "Verse les purées bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-framboise-rose": {
         "nom": "Ganache Framboise et Rose",
@@ -2545,7 +2681,15 @@
           "chocolat-blanc-34": 240,
           "puree-framboise": 150,
           "eau-rose": 10
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de framboise",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute l’eau de rose et mélange",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-griotte-amaretto": {
         "nom": "Ganache Griotte et Amaretto",
@@ -2554,7 +2698,15 @@
           "chocolat-blanc-34": 240,
           "puree-cerise": 150,
           "amaretto": 10
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la purée de cerise",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute l’amaretto et mélange",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-griotte-tonka": {
         "nom": "Ganache Griotte et Tonka",
@@ -2564,7 +2716,14 @@
           "puree-cerise": 150,
           "feve-tonka": 0.25
         },
-        "notes": "Râper la fève de tonka dans la purée avant ébullition."
+        "notes": "Râper la fève de tonka dans la purée avant ébullition.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Râpe la fève de tonka dans la purée de cerise et porte à ébullition",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-rose": {
         "nom": "Ganache à la Rose",
@@ -2573,7 +2732,14 @@
           "chocolat-blanc-34": 250,
           "creme-liquide-30": 160,
           "eau-rose": 10
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute l’eau de rose et mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-jasmin": {
         "nom": "Ganache au Jasmin",
@@ -2583,7 +2749,15 @@
           "creme-liquide-30": 160,
           "the-jasmin": 10
         },
-        "notes": "Infuser le thé 10 min. Filtrer au chinois/tamis, repeser pour retomber à 185g."
+        "notes": "Infuser le thé 10 min. Filtrer au chinois/tamis, repeser pour retomber à 185g.",
+        "preparation": [
+          "Fais infuser le thé dans la crème pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Retire le thé en passant la crème au chinois/tamis, puis repèse la crème et ajoute la quantité suffisante pour retomber sur 185g",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-fleur-oranger": {
         "nom": "Ganache à la Fleur d'Oranger",
@@ -2592,7 +2766,14 @@
           "chocolat-blanc-34": 240,
           "creme-liquide-30": 160,
           "eau-fleur-oranger": 10
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute l’eau de fleur d’oranger et mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-chocolat-piment-espelette": {
         "nom": "Ganache Chocolat et Piment d'Espelette",
@@ -2604,7 +2785,16 @@
           "piment-espelette": 2,
           "beurre": 30
         },
-        "notes": "Infuser le piment 15 min dans la crème après courte ébullition. Cristalliser 4h."
+        "notes": "Infuser le piment 15 min dans la crème après courte ébullition. Cristalliser 4h.",
+        "preparation": [
+          "Fais infuser pendant 15 minutes le piment d’espelette dans la crème liquide après une courte ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 4h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-safran": {
         "nom": "Ganache au Safran",
@@ -2614,7 +2804,14 @@
           "creme-liquide-30": 160,
           "filament-safran": 0.2
         },
-        "notes": "Infuser le safran 10 min dans la crème fumante (ne pas porter à ébullition)."
+        "notes": "Infuser le safran 10 min dans la crème fumante (ne pas porter à ébullition).",
+        "preparation": [
+          "Fais infuser le safran dans la crème pendant 10 minutes dans la crème bien fumante (ne la porte pas à ébullition)",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-verveine": {
         "nom": "Ganache à la Verveine",
@@ -2624,7 +2821,15 @@
           "creme-liquide-30": 160,
           "verveine-sechee": 5
         },
-        "notes": "Infuser la verveine 10 min. Filtrer, repeser pour retomber à 185g."
+        "notes": "Infuser la verveine 10 min. Filtrer, repeser pour retomber à 185g.",
+        "preparation": [
+          "Fais infuser la verveine dans la crème pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Retire la verveine en passant la crème au chinois/tamis, puis repèse la crème et ajoute la quantité suffisante pour retomber sur 185g",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-matcha": {
         "nom": "Ganache au Matcha",
@@ -2634,7 +2839,15 @@
           "creme-liquide-30": 160,
           "the-matcha": 5
         },
-        "notes": "Infuser le matcha 10 min dans la crème fumante (ne pas porter à ébullition). Filtrer."
+        "notes": "Infuser le matcha 10 min dans la crème fumante (ne pas porter à ébullition). Filtrer.",
+        "preparation": [
+          "Fais infuser le matcha dans la crème pendant 10 minutes dans la crème bien fumante (ne la porte pas à ébullition)",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Retire le matcha en passant la crème au chinois/tamis, puis repèse la crème et ajoute la quantité suffisante pour retomber sur 185g",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-sesame-noir": {
         "nom": "Ganache Sésame Noir",
@@ -2644,7 +2857,15 @@
           "creme-liquide-30": 120,
           "praline-sesame-noir-ou-pate": 60
         },
-        "notes": "Cristalliser 4h."
+        "notes": "Cristalliser 4h.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Porte à ébullition la crème liquide",
+          "Verse la purée bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le praliné (ou la pâte) de sésame noir et mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 4h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-mojito": {
         "nom": "Ganache façon Mojito",
@@ -2657,7 +2878,19 @@
           "feuille-menthe": 5,
           "rhum-ambre": 5
         },
-        "notes": "Ciseler les feuilles de menthe pour libérer les huiles. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g. Ajouter gélatine, citron vert et rhum à la fin."
+        "notes": "Ciseler les feuilles de menthe pour libérer les huiles. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g. Ajouter gélatine, citron vert et rhum à la fin.",
+        "preparation": [
+          "Cisèle les feuilles de menthe pour libérer les huiles essentielles",
+          "Fais infuser les feuilles pendant 24h à froid dans la crème liquide",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème liquide pour retirer les feuilles de menthe et ajoute de la crème pour retomber à 70g",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème liquide bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la gélatine et mixe au mixeur plongeant",
+          "Ajoute le jus de citron vert et le rhum, puis mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-chocolat-tonka": {
         "nom": "Ganache Chocolat Tonka",
@@ -2669,7 +2902,15 @@
           "miel": 15,
           "feve-tonka": 0.25
         },
-        "notes": "Porter à ébullition crème + tonka, laisser infuser 5 min."
+        "notes": "Porter à ébullition crème + tonka, laisser infuser 5 min.",
+        "preparation": [
+          "Fais fondre le chocolat noir au bain marie",
+          "Porte à ébullition la crème liquide avec la fève de tonka et laisse infuser 5 minutes",
+          "Verse la crème bien chaude en 3 fois sur le chocolat en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre et le miel, puis mixe au mixeur plongeant pour parfaire l’émulsion",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-citron-basilic": {
         "nom": "Ganache Citron Basilic",
@@ -2681,7 +2922,19 @@
           "gelatine": 2,
           "feuille-basilic": 5
         },
-        "notes": "Ciseler le basilic. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g."
+        "notes": "Ciseler le basilic. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g.",
+        "preparation": [
+          "Cisèle les feuilles de basilic pour libérer les huiles essentielles",
+          "Fais infuser les feuilles pendant 24h à froid dans la crème liquide",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème liquide pour retirer les feuilles de basilic et ajoute de la crème pour retomber à 70g",
+          "Porte à ébullition la crème liquide",
+          "Verse la crème liquide bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la gélatine et mixe au mixeur plongeant",
+          "Ajoute le jus de citron vert, puis mixe à nouveau",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       },
       "ganache-popcorn": {
         "nom": "Ganache Popcorn",
@@ -2691,7 +2944,15 @@
           "creme-liquide-30": 125,
           "popcorn": 40
         },
-        "notes": "Mixer le popcorn, infuser 30 min dans la crème après petite ébullition. Filtrer, chauffer à nouveau."
+        "notes": "Mixer le popcorn, infuser 30 min dans la crème après petite ébullition. Filtrer, chauffer à nouveau.",
+        "preparation": [
+          "Mixe le popcorn fais le infuser dans la crème pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre le mélange crème/popcorn et chauffe à nouveau la crème liquide",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Laisse cristalliser 2h au frigo en filmant au contact",
+          "Si la ganache est trop dure à la sortie du frigo, travaille la légèrement à la maryse pour la détendre et la pocher sur tes macarons"
+        ]
       }
     },
     "montees": {
@@ -2706,7 +2967,16 @@
           "eau-gelatine": 12,
           "gousse-vanille": 1
         },
-        "notes": "Base universelle pour ganaches montées infusées. Crème (1) chauffée pour infusion + émulsion sur chocolat, crème (2) froide incorporée au mixeur. Cristallisation toute une nuit au frigo avant montage au fouet."
+        "notes": "Base universelle pour ganaches montées infusées. Crème (1) chauffée pour infusion + émulsion sur chocolat, crème (2) froide incorporée au mixeur. Cristallisation toute une nuit au frigo avant montage au fouet.",
+        "preparation": [
+          "Récupère les graines de la gousse de vanille et fais les infuser avec la gousse dans la crème (1) pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Retire la gousse de vanille et chauffe la crème liquide",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-piment-espelette": {
         "nom": "Ganache Montée au Piment d'Espelette",
@@ -2719,7 +2989,16 @@
           "eau-gelatine": 12,
           "piment-espelette": 2
         },
-        "notes": "Infuser le piment 30 min dans la crème (1) après petite ébullition."
+        "notes": "Infuser le piment 30 min dans la crème (1) après petite ébullition.",
+        "preparation": [
+          "Fais infuser le piment d’Espelette dans la crème (1) pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-basilic": {
         "nom": "Ganache Montée au Basilic",
@@ -2732,7 +3011,16 @@
           "eau-gelatine": 12,
           "feuilles-basilic": 10
         },
-        "notes": "Infuser 10 min. Filtrer, rajouter de la crème pour retomber sur 100g."
+        "notes": "Infuser 10 min. Filtrer, rajouter de la crème pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les feuilles de basilic dans la crème (1) pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-menthe": {
         "nom": "Ganache Montée à la Menthe",
@@ -2745,7 +3033,16 @@
           "eau-gelatine": 12,
           "feuilles-menthe": 15
         },
-        "notes": "Infuser 10 min. Filtrer, rajouter pour retomber sur 100g."
+        "notes": "Infuser 10 min. Filtrer, rajouter pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les feuilles de menthe dans la crème (1) pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-cafe": {
         "nom": "Ganache Montée au Café",
@@ -2758,7 +3055,16 @@
           "eau-gelatine": 12,
           "grains-cafe": 15
         },
-        "notes": "Infuser 15 min puis mixer. Filtrer, rajouter pour retomber sur 100g."
+        "notes": "Infuser 15 min puis mixer. Filtrer, rajouter pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les grains de café dans la crème (1) pendant 15 minutes après une petite ébullition puis mixe",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-cannelle": {
         "nom": "Ganache Montée à la Cannelle",
@@ -2771,7 +3077,16 @@
           "eau-gelatine": 12,
           "batons-cannelle": 15
         },
-        "notes": "Infuser 30 min. Filtrer, rajouter pour retomber sur 100g."
+        "notes": "Infuser 30 min. Filtrer, rajouter pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les bâtons de cannelle dans la crème (1) pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-matcha": {
         "nom": "Ganache Montée au Thé Matcha",
@@ -2784,7 +3099,16 @@
           "eau-gelatine": 12,
           "the-matcha": 5
         },
-        "notes": "Infuser 10 min après petite ébullition."
+        "notes": "Infuser 10 min après petite ébullition.",
+        "preparation": [
+          "Fais infuser le thé Matcha dans la crème (1) pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-chocolat-lait": {
         "nom": "Ganache Montée au Chocolat au Lait",
@@ -2795,7 +3119,15 @@
           "creme-liquide-30-2": 150,
           "gelatine": 3,
           "eau-gelatine": 18
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat au lait au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-lait-passion": {
         "nom": "Ganache Montée au Chocolat au Lait et Fruit de la Passion",
@@ -2808,7 +3140,15 @@
           "gelatine": 3.5,
           "eau-gelatine": 21
         },
-        "notes": "Chauffer crème (1) avec purée de fruit de la passion ensemble."
+        "notes": "Chauffer crème (1) avec purée de fruit de la passion ensemble.",
+        "preparation": [
+          "Fais fondre le chocolat au lait au bain marie",
+          "Chauffe la crème liquide (1) et la purée de fruit de la passion",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème et la purée de fruit de la passion bien chaudes en 3 fois sur le chocolat au lait en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-chocolat-noir": {
         "nom": "Ganache Montée au Chocolat Noir",
@@ -2819,7 +3159,15 @@
           "creme-liquide-30-2": 150,
           "gelatine": 3,
           "eau-gelatine": 18
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat noir au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-dulcey": {
         "nom": "Ganache Montée au Chocolat Dulcey",
@@ -2830,7 +3178,15 @@
           "creme-liquide-30-2": 315,
           "gelatine": 3.5,
           "eau-gelatine": 21
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat noir au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-noisette": {
         "nom": "Ganache Montée à la Noisette",
@@ -2843,7 +3199,16 @@
           "gelatine": 2,
           "eau-gelatine": 12
         },
-        "notes": "Ajouter le praliné avant la crème (2)."
+        "notes": "Ajouter le praliné avant la crème (2).",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le praliné noisette et mixe au mixeur plongeant",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-pistache": {
         "nom": "Ganache Montée à la Pistache",
@@ -2855,7 +3220,16 @@
           "praline-pistache": 60,
           "gelatine": 2,
           "eau-gelatine": 12
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le praliné pistache et mixe au mixeur plongeant",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-cacahuete": {
         "nom": "Ganache Montée à la Cacahuète",
@@ -2867,7 +3241,16 @@
           "beurre-cacahuete": 60,
           "gelatine": 2,
           "eau-gelatine": 12
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le beurre de cacahuète et mixe au mixeur plongeant",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-sesame-noir": {
         "nom": "Ganache Montée au Sésame Noir",
@@ -2879,7 +3262,16 @@
           "praline-sesame-noir": 60,
           "gelatine": 2,
           "eau-gelatine": 12
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème liquide (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute le praliné de sésame noir et mixe au mixeur plongeant",
+          "Ajoute la crème liquide (2) en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-rhum": {
         "nom": "Ganache Montée au Rhum",
@@ -2891,7 +3283,15 @@
           "gelatine": 2,
           "eau-gelatine": 12,
           "rhum": 15
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) et le rhum en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-fleur-oranger": {
         "nom": "Ganache Montée à la Fleur d'Oranger",
@@ -2903,7 +3303,15 @@
           "gelatine": 2,
           "eau-gelatine": 12,
           "eau-fleur-oranger": 15
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) et l’eau de fleur d’oranger en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-rose": {
         "nom": "Ganache Montée à la Rose",
@@ -2915,7 +3323,15 @@
           "gelatine": 2,
           "eau-gelatine": 12,
           "eau-rose": 15
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) et l’eau de rose en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-noix-de-coco": {
         "nom": "Ganache Montée à la Noix de Coco",
@@ -2926,7 +3342,15 @@
           "creme-liquide-30": 185,
           "gelatine": 3,
           "eau-gelatine": 12
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème de coco",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème de coco bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-yuzu": {
         "nom": "Ganache Montée au Yuzu",
@@ -2938,7 +3362,15 @@
           "jus-yuzu": 65,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et le jus de Yuzu en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-passion": {
         "nom": "Ganache Montée au Fruit de la Passion",
@@ -2950,7 +3382,15 @@
           "puree-fruit-passion": 65,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et la purée de fruit de la passion en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-framboise": {
         "nom": "Ganache Montée à la Framboise",
@@ -2962,7 +3402,15 @@
           "puree-framboise": 65,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et la purée de framboise en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-fraise": {
         "nom": "Ganache Montée à la Fraise",
@@ -2974,7 +3422,15 @@
           "puree-fraise": 65,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et la purée de fraise en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-citron-vert": {
         "nom": "Ganache Montée au Citron Vert",
@@ -2987,7 +3443,15 @@
           "gelatine": 1.5,
           "eau-gelatine": 9
         },
-        "notes": "Chauffer la crème (1) avec les zestes."
+        "notes": "Chauffer la crème (1) avec les zestes.",
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1) avec les zestes de citron vert",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et le jus de citron vert en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-mojito": {
         "nom": "Ganache Montée façon Mojito",
@@ -3002,7 +3466,18 @@
           "gelatine": 1.5,
           "eau-gelatine": 9
         },
-        "notes": "Infuser les feuilles de menthe 10 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g."
+        "notes": "Infuser les feuilles de menthe 10 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les feuilles de menthe dans la crème (1) pendant 10 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide, le jus de citron vert et le rhum en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-cerise": {
         "nom": "Ganache Montée à la Cerise",
@@ -3014,7 +3489,15 @@
           "puree-cerise": 65,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et la purée de cerise en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-tiramisu": {
         "nom": "Ganache Montée Façon Tiramisu",
@@ -3028,7 +3511,16 @@
           "gelatine": 2,
           "eau-gelatine": 12
         },
-        "notes": "Infuser le café 15 min dans crème (1), mixer, filtrer. Ajouter le mascarpone avec la crème (2)."
+        "notes": "Infuser le café 15 min dans crème (1), mixer, filtrer. Ajouter le mascarpone avec la crème (2).",
+        "preparation": [
+          "Fais infuser les grains de café dans la crème (1) pendant 15 minutes après une petite ébullition puis mixe",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème bien chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide (2) et le mascarpone en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-cerise-amaretto": {
         "nom": "Ganache Montée à la Cerise et Amaretto",
@@ -3041,7 +3533,15 @@
           "amaretto": 15,
           "gelatine": 1.5,
           "eau-gelatine": 9
-        }
+        },
+        "preparation": [
+          "Fais fondre le chocolat blanc au bain marie",
+          "Chauffe la crème (1)",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide, la purée de cerise et l’Amaretto en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       },
       "ganache-montee-pomme-cannelle": {
         "nom": "Ganache Montée à la Pomme et à la Cannelle",
@@ -3055,7 +3555,16 @@
           "gelatine": 1.5,
           "eau-gelatine": 9
         },
-        "notes": "Infuser les bâtons de cannelle 30 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g."
+        "notes": "Infuser les bâtons de cannelle 30 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g.",
+        "preparation": [
+          "Fais infuser les bâtons de cannelle dans la crème (1) pendant 30 minutes après une petite ébullition",
+          "Fais fondre le chocolat blanc au bain marie",
+          "Filtre la crème infusée et rajoute de la crème si nécessaire pour retomber sur 100g et chauffe la",
+          "Ajoute la gélatine réhydratée",
+          "Verse la crème chaude en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+          "Ajoute la crème liquide et le jus de pomme en une fois et mixe au mixeur plongeant",
+          "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+        ]
       }
     }
   },
