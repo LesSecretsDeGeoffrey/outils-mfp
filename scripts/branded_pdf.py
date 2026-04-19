@@ -306,31 +306,76 @@ def method_list(steps):
     return t
 
 
+def _extract_format(cuisson, total=None):
+    """Derive a 'pour un cercle de Ø X cm' string from cuisson entries.
+
+    Looks for the first cuisson entry that is a cercle/cadre with a dimension.
+    Returns a short readable string like 'Pour Ø 20 cm' or None.
+    """
+    if not cuisson:
+        return None
+    if isinstance(cuisson, list):
+        for c in cuisson:
+            if not isinstance(c, dict):
+                continue
+            support = str(c.get('support', '')).lower()
+            if 'cercle' in support or 'cadre' in support or 'moule' in support:
+                if 'diametre-cm' in c:
+                    return f"Pour Ø {c['diametre-cm']} cm"
+                if 'dimensions-cm' in c:
+                    return f"Pour cadre {c['dimensions-cm']} cm"
+        # Fall back on a tapis with an epaisseur — mention only the epaisseur
+        for c in cuisson:
+            if not isinstance(c, dict):
+                continue
+            if 'epaisseur-cm' in c:
+                return f"Sur tapis · {c['epaisseur-cm']} cm d'épaisseur"
+    elif isinstance(cuisson, dict):
+        if 'diametre-cm' in cuisson:
+            return f"Pour Ø {cuisson['diametre-cm']} cm"
+    return None
+
+
 def recipe_card(title, total=None, rendement=None, ingredients=None,
-                cuisson=None, notes=None, meta_extras=None):
-    """A complete recipe card. Returns a KeepTogether block."""
+                cuisson=None, notes=None, meta_extras=None,
+                preparation=None, description=None):
+    """A complete recipe card.
+
+    Returns a LIST of flowables — header+description+ingredients are grouped
+    in a KeepTogether (never split), while cuisson/preparation/notes can flow
+    across pages when the preparation is long.
+    """
     s = styles()
-    els = []
-    els.append(Paragraph(title, s['card_title']))
+    header = []
+    header.append(Paragraph(title, s['card_title']))
 
     meta_bits = []
     if total is not None:
         meta_bits.append(f"Total {total} g")
+    fmt = _extract_format(cuisson, total=total)
+    if fmt:
+        meta_bits.append(fmt)
     if rendement:
         meta_bits.append(rendement)
     if meta_extras:
         meta_bits.extend(meta_extras)
     if meta_bits:
-        els.append(Paragraph("  ·  ".join(meta_bits), s['card_meta']))
-    els.append(gold_line(0.4, 2, 6))
+        header.append(Paragraph("  ·  ".join(meta_bits), s['card_meta']))
+    header.append(gold_line(0.4, 2, 6))
+
+    if description:
+        header.append(Paragraph(description, s['body_italic']))
+        header.append(Spacer(1, 6))
 
     if ingredients:
-        els.append(overline("Ingrédients"))
-        els.append(ingredients_table(ingredients))
-        els.append(Spacer(1, 6))
+        header.append(overline("Ingrédients"))
+        header.append(ingredients_table(ingredients))
+        header.append(Spacer(1, 6))
+
+    body = []
 
     if cuisson:
-        els.append(overline("Cuisson"))
+        body.append(overline("Cuisson"))
         if isinstance(cuisson, list):
             rows = []
             for c in cuisson:
@@ -340,8 +385,12 @@ def recipe_card(title, total=None, rendement=None, ingredients=None,
                     bits.append(f"{c['epaisseur-cm']} cm")
                 if 'diametre-cm' in c:
                     bits.append(f"Ø {c['diametre-cm']} cm")
-                bits.append(f"{c.get('temperature', '?')}°C")
-                bits.append(f"{c.get('minutes', '?')} min")
+                if 'dimensions-cm' in c:
+                    bits.append(f"{c['dimensions-cm']} cm")
+                if c.get('temperature') is not None:
+                    bits.append(f"{c['temperature']}°C")
+                if c.get('minutes') is not None:
+                    bits.append(f"{c['minutes']} min")
                 rows.append([
                     Paragraph(support.capitalize(), s['ing_label']),
                     Paragraph(" · ".join(bits), s['ing_value'])
@@ -355,7 +404,7 @@ def recipe_card(title, total=None, rendement=None, ingredients=None,
                 ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
                 ('LINEBELOW', (0, 0), (-1, -2), 0.25, LINE_SOFT),
             ]))
-            els.append(t)
+            body.append(t)
         elif isinstance(cuisson, dict):
             for k, v in cuisson.items():
                 unit = ''
@@ -370,19 +419,28 @@ def recipe_card(title, total=None, rendement=None, ingredients=None,
                     v_disp = f"{v}{unit}"
                 else:
                     v_disp = str(v)
-                els.append(Paragraph(
+                body.append(Paragraph(
                     f"<b>{pretty_ing(k)}</b> : {v_disp}", s['body']))
         else:
-            els.append(Paragraph(str(cuisson), s['body']))
-        els.append(Spacer(1, 6))
+            body.append(Paragraph(str(cuisson), s['body']))
+        body.append(Spacer(1, 6))
+
+    if preparation:
+        body.append(overline("Préparation"))
+        if isinstance(preparation, list):
+            body.append(method_list(preparation))
+        else:
+            body.append(Paragraph(str(preparation), s['body']))
+        body.append(Spacer(1, 6))
 
     if notes:
-        els.append(overline("Notes de Geoffrey"))
-        els.append(Paragraph(notes, s['note_gold']))
-        els.append(Spacer(1, 4))
+        body.append(overline("Notes de Geoffrey"))
+        body.append(Paragraph(notes, s['note_gold']))
+        body.append(Spacer(1, 4))
 
-    els.append(gold_line(0.3, 6, 12))
-    return KeepTogether(els)
+    body.append(gold_line(0.3, 6, 12))
+
+    return [KeepTogether(header), *body]
 
 
 def gold_callout(title, content):

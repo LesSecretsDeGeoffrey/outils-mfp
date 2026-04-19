@@ -67,12 +67,14 @@ def build_fondations(story):
     chapter_title(story, 1, 'Biscuits',
                   f"{len(biscuits)} recettes de base pour tous tes entremets, gâteaux et pièces de pâtisserie")
     for key, r in biscuits.items():
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             rendement=r.get('rendement'),
             ingredients=r.get('ingredients'),
             cuisson=r.get('cuisson'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
             notes=r.get('notes') or _build_usages_note(r),
             meta_extras=_biscuit_meta(r)
         ))
@@ -82,12 +84,14 @@ def build_fondations(story):
     chapter_title(story, 2, 'Pâtes à tarte',
                   f"{len(pates)} pâtes sablées, sucrées et sablés bretons — ta base pour tartes, fonds et petits-fours")
     for key, r in pates.items():
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             cuisson=r.get('cuisson'),
-            notes=r.get('notes'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
+            notes=r.get('notes') or _build_usages_note(r),
             meta_extras=_pate_meta(r)
         ))
 
@@ -96,11 +100,13 @@ def build_fondations(story):
     chapter_title(story, 3, 'Pâte à choux',
                   f"{len(choux)} recettes pour maîtriser les choux, éclairs, religieuses et Paris-Brest")
     for key, r in choux.items():
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             cuisson=r.get('cuisson'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
             notes=r.get('notes')
         ))
 
@@ -109,18 +115,23 @@ def build_fondations(story):
     chapter_title(story, 4, 'Macarons',
                   "Méthodes italienne et française à 35, avec et sans cacao")
     for key, r in mac.items():
-        if key == 'astuces':
+        if key in ('astuces', 'faq'):
             continue
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             cuisson=r.get('cuisson'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
             notes=r.get('notes') or r.get('procedure')
         ))
     if 'astuces' in mac:
         story.append(Spacer(1, 10))
         _render_tips(story, 'Mes astuces macarons', mac['astuces'])
+    if 'faq' in mac:
+        story.append(Spacer(1, 10))
+        _render_tips(story, 'FAQ macarons', mac['faq'])
 
     # CH 05 : PERSONNALISATION
     if 'personnalisation-biscuits' in DATA:
@@ -141,12 +152,14 @@ def build_fondations(story):
         meta = []
         if r.get('rendement'):
             meta.append(r['rendement'])
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
             cuisson=r.get('cuisson'),
-            notes=r.get('notes'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
+            notes=r.get('notes') or _build_usages_note(r),
             meta_extras=meta or None
         ))
 
@@ -258,10 +271,12 @@ def build_ganaches(story):
         "textures fermes pour les bonbons chocolat et les pièces de pâtisserie"
     ))
     for key, r in g.get('classiques', {}).items():
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
             notes=r.get('notes')
         ))
 
@@ -274,10 +289,12 @@ def build_ganaches(story):
         "garnir des choux, monter des entremets légers"
     ))
     for key, r in g.get('montees', {}).items():
-        story.append(recipe_card(
+        story.extend(recipe_card(
             r.get('nom', pretty_ing(key)),
             total=r.get('total'),
             ingredients=r.get('ingredients'),
+            preparation=r.get('preparation'),
+            description=r.get('description'),
             notes=r.get('notes')
         ))
 

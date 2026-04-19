@@ -33,6 +33,11 @@
         "moka",
         "forêt noire",
         "bûche roulée"
+      ],
+      "description": "Le biscuit le plus classique de la pâtisserie française. Extrêmement simple, moelleux et léger.",
+      "preparation": [
+        "Dans le bol de votre robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs avec les jaunes et le sucre semoule pendant une dizaine de minutes jusqu’au signe du ruban.",
+        "Ajoutez la farine tamisée sur le mélange en une seule fois, et incorporez-la à la maryse jusqu’à l’obtention d’une pâte parfaitement homogène."
       ]
     },
     "genoise-cacao": {
@@ -58,6 +63,10 @@
           "temperature": 170,
           "minutes": 20
         }
+      ],
+      "preparation": [
+        "Dans le bol de votre robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs avec les jaunes et le sucre semoule pendant une dizaine de minutes jusqu’au signe du ruban.",
+        "Enfin, ajoutez la farine tamisée sur le mélange en une seule fois, et incorporez-la à la maryse jusqu’à l’obtention d’une pâte parfaitement homogène."
       ]
     },
     "dacquoise": {
@@ -80,6 +89,15 @@
       "usages": [
         "succès praliné",
         "créations personnelles"
+      ],
+      "description": "Deux dénominations pour parler quasiment de la même chose. La dacquoise étant simplement un biscuit succès avec des fruits à coque par dessus. C' est un biscuit assez sucré mais qui apporte un goût et un fondant inimitable !",
+      "preparation": [
+        "Dans le bol de votre robot muni du fouet, commencez par fouetter les blancs à vitesse moyenne. Insérez un premier tiers du sucre (2)",
+        "quand le mélange mousse et augmentez légèrement la vitesse du robot.",
+        "Ajoutez le reste du sucre (2) quand le mélange vague.",
+        "Augmentez une dernière fois la vitesse jusqu'à obtenir un bec d'oiseau à la texture de votre choix en fonction du résultat que vous souhaitez obtenir.",
+        "Puis vous ajoutez en une fois le reste des ingrédients tamisés que vous incorporez à la maryse pour ne pas faire retomber la meringue. Le tout jusqu'à complète intégration.",
+        "Vous pouvez maintenant pocher ce biscuit et le cuire environ 15mn à 180°C sur un tapis bien graissé dans un four préchauffé."
       ]
     },
     "dacquoise-cacao": {
@@ -99,6 +117,14 @@
           "temperature": 180,
           "minutes": 15
         }
+      ],
+      "preparation": [
+        "Dans le bol de votre robot muni du fouet, commencez par fouetter les blancs à vitesse moyenne. Insérez un premier tiers du sucre (1)",
+        "quand le mélange mousse et augmentez légèrement la vitesse du robot.",
+        "Ajoutez le reste du sucre (2) quand le mélange vague.",
+        "Augmentez une dernière fois la vitesse jusqu'à obtenir un bec d'oiseau à la texture de votre choix en fonction du résultat que vous souhaitez obtenir.",
+        "Puis vous ajoutez en une fois le reste des ingrédients tamisés que vous incorporez à la maryse pour ne pas faire retomber la meringue. Le tout jusqu'à complète intégration.",
+        "Vous pouvez maintenant pocher ce biscuit et le cuire environ 15mn à 180°C sur un tapis bien graissé dans un four préchauffé."
       ]
     },
     "financier": {
@@ -127,7 +153,20 @@
         }
       ],
       "repos": "24h au frais, filmé au contact",
-      "notes": "Beurre noisette puis tiédi. Technique : poudres + blancs d'abord, puis beurre en filet."
+      "notes": "Beurre noisette puis tiédi. Technique : poudres + blancs d'abord, puis beurre en filet.",
+      "description": "Un des biscuits préférés des pâtissiers. Il donne beaucoup de mâche, beaucoup de goût, et offre une liberté de création incroyable ! C’est un biscuit absolument nécessaire à maîtriser.",
+      "usages": [
+        "Tea time",
+        "Entremets",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans le bol du robot muni de la feuille, mélangez toutes les poudres tamisées avec les blancs d’œufs jusqu’à obtenir un mélange homogène.",
+        "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
+        "Mélangez jusqu’à homogénéisation complète.",
+        "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
+      ]
     },
     "financier-cacao": {
       "nom": "Financier Cacao",
@@ -154,6 +193,13 @@
           "temperature": 175,
           "minutes": 15
         }
+      ],
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans le bol du robot muni de la feuille, mélangez toutes les poudres tamisées avec les blancs d’œufs jusqu’à obtenir un mélange homogène.",
+        "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
+        "Mélangez jusqu’à homogénéisation complète.",
+        "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
       ]
     },
     "financier-praline": {
@@ -167,7 +213,14 @@
         "poudre-fruit-coque": 110,
         "farine": 55,
         "fleur-sel": 1.5
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans le bol du robot muni de la feuille, mélangez toutes les poudres tamisées avec les blancs d’œufs jusqu’à obtenir un mélange homogène.",
+        "Versez ensuite le beurre tiédi en filet, tout en continuant de mélanger.",
+        "Mélangez jusqu’à homogénéisation complète.",
+        "Laissez reposer l’appareil 24 heures au frais, bien filmé au contact."
+      ]
     },
     "madeleine": {
       "nom": "Biscuit Madeleine",
@@ -194,7 +247,21 @@
           "minutes": 20
         }
       ],
-      "repos": "20 min au congélateur avant cuisson pour un beau bombé"
+      "repos": "20 min au congélateur avant cuisson pour un beau bombé",
+      "description": "Ce biscuit a un potentiel gustatif et structurel incroyable ! Il offre une liberté d’expression sans limite, tout en apportant une texture fondante et un goût beurré incomparable.",
+      "usages": [
+        "Tea time",
+        "Entremets",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou juste fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans un bol, fouettez les œufs avec le sucre et le miel.",
+        "Ajoutez ensuite les poudres tamisées (farine + levure), puis fouettez jusqu’à homogénéisation.",
+        "Incorporez le lait, mélangez délicatement au fouet.",
+        "Terminez par l’ajout du beurre bien tiède.",
+        "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
+      ]
     },
     "madeleine-cacao": {
       "nom": "Madeleine Cacao",
@@ -208,7 +275,15 @@
         "farine-t55": 180,
         "levure-chimique": 11,
         "cacao": 20
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou juste fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans un bol, fouettez les œufs avec le sucre et le miel.",
+        "Ajoutez ensuite les poudres tamisées (farine + levure), puis fouettez jusqu’à homogénéisation.",
+        "Incorporez le lait, mélangez délicatement au fouet.",
+        "Terminez par l’ajout du beurre bien tiède.",
+        "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
+      ]
     },
     "madeleine-praline": {
       "nom": "Madeleine Praliné",
@@ -222,7 +297,16 @@
         "farine-t55": 200,
         "levure-chimique": 11,
         "praline": 60
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou juste fondu), puis réservez-le jusqu’à complet tiédissement.",
+        "Dans un bol, fouettez les œufs avec le sucre et le miel.",
+        "Ajoutez ensuite les poudres tamisées (farine + levure), puis fouettez jusqu’à homogénéisation.",
+        "Incorporez le lait, mélangez délicatement au fouet",
+        "Incorporez le praliné et mélangez",
+        "Terminez par l’ajout du beurre bien tiède",
+        "Laissez reposer l’appareil 20 minutes au congélateur avant cuisson pour un beau bombé."
+      ]
     },
     "brownie": {
       "nom": "Brownie",
@@ -248,6 +332,21 @@
           "temperature": 160,
           "minutes": 20
         }
+      ],
+      "description": "Un biscuit hyper fondant, avec énormément de goût, et bien plus de potentiel qu’on ne le pense ! Il s’intègre parfaitement dans vos entremets, apporte une belle densité en tartes et se déguste aussi seul au tea time..",
+      "usages": [
+        "Tea time",
+        "Entremets",
+        "Tartes",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu).",
+        "Mélangez-le doucement avec le chocolat fondu.",
+        "Laissez le mélange tiédir.",
+        "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
+        "Ajoutez le mélange chocolat/beurre à environ 40°C",
+        "Incorporez ensuite les poudres tamisées à la maryse"
       ]
     },
     "brownie-lait": {
@@ -260,7 +359,15 @@
         "oeufs": 100,
         "sucre-semoule": 50,
         "fruits-coque": 30
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu).",
+        "Mélangez-le doucement avec le chocolat fondu.",
+        "Laissez le mélange tiédir.",
+        "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
+        "Ajoutez le mélange chocolat/beurre à environ 40°C",
+        "Incorporez ensuite les poudres tamisées à la maryse"
+      ]
     },
     "brownie-blanc": {
       "nom": "Brownie Chocolat Blanc",
@@ -272,7 +379,15 @@
         "oeufs": 100,
         "sucre-semoule": 35,
         "fruits-coque": 30
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu).",
+        "Mélangez-le doucement avec le chocolat fondu.",
+        "Laissez le mélange tiédir.",
+        "Dans le bol du robot, fouettez les œufs avec le sucre pour les blanchir",
+        "Ajoutez le mélange chocolat/beurre à environ 40°C",
+        "Incorporez ensuite les poudres tamisées à la maryse"
+      ]
     },
     "savoie": {
       "nom": "Biscuit de Savoie",
@@ -298,6 +413,22 @@
           "temperature": 170,
           "minutes": 20
         }
+      ],
+      "description": "Le parfait mélange entre légèreté et densité ! Un biscuit d’un moelleux incomparable, bien épais, et propice à de nombreuses aromatisations.",
+      "usages": [
+        "Fraisiers",
+        "Framboisiers",
+        "Cake design",
+        "Mokas",
+        "Forêts noires",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Faites fondre le beurre doux dans une casserole (en beurre noisette ou non, selon votre choix), puis laissez-le redescendre à température ambiante.",
+        "Dans le bol de votre robot muni du fouet, battez les œufs avec le sucre à vitesse moyenne/rapide pendant environ 10 minutes, jusqu’à obtenir le signe du ruban.",
+        "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
+        "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
+        "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
       ]
     },
     "savoie-cacao": {
@@ -311,7 +442,14 @@
         "beurre-doux": 80,
         "levure-chimique": 5,
         "cacao": 15
-      }
+      },
+      "preparation": [
+        "Faites fondre le beurre doux dans une casserole (en beurre noisette ou non, selon votre choix), puis laissez-le redescendre à température ambiante.",
+        "Dans le bol de votre robot muni du fouet, battez les œufs avec le sucre à vitesse moyenne/rapide pendant environ 10 minutes, jusqu’à obtenir le signe du ruban.",
+        "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
+        "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
+        "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
+      ]
     },
     "sacher": {
       "nom": "Biscuit Sacher",
@@ -333,6 +471,19 @@
           "temperature": 200,
           "minutes": 8
         }
+      ],
+      "description": "Un biscuit très dense, au goût d’amande puissant. Il allie souplesse et humidité, ce qui en fait un biscuit de choix pour accompagner toutes sortes de crèmes.",
+      "usages": [
+        "Sachertortes",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans un robot coupe, mixez les œufs avec le sucre glace, la pâte d’amandes, la farine, le beurre fondu tiède et les jaunes d’œufs, jusqu’à obtenir une pâte lisse et homogène.",
+        "Dans le bol de votre robot muni du fouet, commencez à fouetter les blancs d’œufs à vitesse moyenne (-).",
+        "Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse.",
+        "Ajoutez ensuite le reste du sucre lorsque la texture devient vague.",
+        "Terminez en augmentant une dernière fois la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
+        "Incorporez cette meringue au premier mélange en trois fois Le premier tiers au fouet, Le reste à la maryse, pour conserver un maximum d’air"
       ]
     },
     "sacher-cacao": {
@@ -348,7 +499,14 @@
         "blancs": 100,
         "sucre-semoule": 40,
         "cacao": 35
-      }
+      },
+      "preparation": [
+        "Faites fondre le beurre doux dans une casserole (en beurre noisette ou non, selon votre choix), puis laissez-le redescendre à température ambiante.",
+        "Dans le bol de votre robot muni du fouet, battez les œufs avec le sucre à vitesse moyenne/rapide pendant environ 10 minutes, jusqu’à obtenir le signe du ruban.",
+        "Versez le beurre fondu tiédi en filet sur le mélange, tout en continuant de fouetter.",
+        "Ajoutez ensuite les poudres tamisées (farine, fécule, levure) sur le mélange.",
+        "Incorporez-les à la maryse, en dehors du robot, jusqu’à obtenir une pâte parfaitement homogène."
+      ]
     },
     "joconde": {
       "nom": "Biscuit Joconde",
@@ -369,6 +527,23 @@
           "temperature": 210,
           "minutes": 7
         }
+      ],
+      "description": "Un biscuit très connu, réputé pour son goût de fruits à coque et sa densité. C’est le biscuit parfait à insérer dans vos entremets, grâce à sa texture souple et son goût équilibré.",
+      "usages": [
+        "Opéras",
+        "Tartes",
+        "Entremets",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à tiédissement.",
+        "Dans le bol du robot, fouettez les œufs avec le sucre glace et la poudre d’amande à vitesse moyenne pendant 10 minutes.",
+        "Prélevez 1/10ᵉ de ce mélange et incorporez-le au beurre tiédi.",
+        "Reversez le tout dans le mélange principal et homogénéisez à la maryse.",
+        "Ajoutez ensuite la farine tamisée, et incorporez-la délicatement à la maryse pour préserver l’air du mélange.",
+        "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
+        "Incorporez un premier tiers de ces blancs montés au mélange précédent au fouet, puis le reste à la maryse, délicatement.",
+        "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
       ]
     },
     "joconde-cacao": {
@@ -383,7 +558,17 @@
         "beurre-doux": 30,
         "blancs": 180,
         "cacao": 10
-      }
+      },
+      "preparation": [
+        "Dans une casserole, réalisez un beurre noisette (ou simplement fondu), puis réservez-le jusqu’à tiédissement.",
+        "Dans le bol du robot, fouettez les œufs avec le sucre glace et la poudre d’amande à vitesse moyenne pendant 10 minutes.",
+        "Prélevez 1/10ᵉ de ce mélange et incorporez-le au beurre tiédi.",
+        "Reversez le tout dans le mélange principal et homogénéisez à la maryse.",
+        "Ajoutez ensuite la farine tamisée, et incorporez-la délicatement à la maryse pour préserver l’air du mélange.",
+        "À part, dans le bol de votre robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre semoule lorsque le mélange mousse, puis augmentez légèrement la vitesse. Ajoutez le reste du sucre lorsque la texture devient vague. Terminez en augmentant la vitesse (moyenne +) jusqu’à obtenir un bec d’oiseau à la texture de mousse à raser.",
+        "Incorporez un premier tiers de ces blancs montés au mélange précédent au fouet, puis le reste à la maryse, délicatement.",
+        "Coulez le biscuit sur un tapis graissé, sur environ 1 cm d’épaisseur, et cuisez 7 minutes à 210°C."
+      ]
     },
     "pain-de-genes": {
       "nom": "Biscuit Pain de Gênes",
@@ -408,6 +593,17 @@
           "temperature": 160,
           "minutes": 17
         }
+      ],
+      "description": "Un biscuit très puissant en amande, qui combine densité et moelleux à la perfection. Il se prête magnifiquement bien au jeu de l’aromatisation et s’adapte à de nombreuses créations.",
+      "usages": [
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Faites fondre le beurre (en beurre noisette ou non), puis réservez-le jusqu’à tiédissement.",
+        "Dans un robot coupe, mixez les œufs avec la pâte d’amandes jusqu’à obtenir une texture homogène.",
+        "Versez ce mélange dans le bol du robot pâtissier, puis fouettez à vitesse moyenne pendant 10 minutes pour l’aérer.",
+        "Tout en continuant de fouetter, versez le beurre tiédi en filet sur le mélange.",
+        "Terminez en ajoutant les poudres tamisées (farine + levure) en pluie, tout en fouettant jusqu’à incorporation totale. Variante plus légère : incorporer les poudres à la maryse au lieu du fouet."
       ]
     },
     "pain-de-genes-cacao": {
@@ -420,7 +616,14 @@
         "beurre-doux": 30,
         "levure-chimique": 1.2,
         "cacao": 5
-      }
+      },
+      "preparation": [
+        "Faites fondre le beurre (en beurre noisette ou non), puis réservez-le jusqu’à tiédissement.",
+        "Dans un robot coupe, mixez les œufs avec la pâte d’amandes jusqu’à obtenir une texture homogène.",
+        "Versez ce mélange dans le bol du robot pâtissier, puis fouettez à vitesse moyenne pendant 10 minutes pour l’aérer.",
+        "Tout en continuant de fouetter, versez le beurre tiédi en filet sur le mélange.",
+        "Terminez en ajoutant les poudres tamisées (farine + levure) en pluie, tout en fouettant jusqu’à incorporation totale. Variante plus légère : incorporer les poudres à la maryse au lieu du fouet."
+      ]
     },
     "viennois": {
       "nom": "Biscuit Viennois",
@@ -440,7 +643,22 @@
           "minutes": 4
         }
       ],
-      "notes": "Sans matière grasse, impossible à aromatiser directement. À associer à une garniture savoureuse."
+      "notes": "Sans matière grasse, impossible à aromatiser directement. À associer à une garniture savoureuse.",
+      "description": "Le biscuit le plus reconnu pour les gâteaux roulés ! D’une souplesse exceptionnelle et d’une légèreté incomparable, il s’associe parfaitement à des crèmes riches en goût. ⚠️ Ce biscuit ne contient pas de matière grasse, ce qui le rend impossible à aromatiser directement il doit donc être associé à une garniture savoureuse.",
+      "usages": [
+        "Gâteaux roulés",
+        "Bûches roulées",
+        "Mokas",
+        "Forêts noires",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans le bol du robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs entiers avec les jaunes et la moitié du sucre pendant environ 10 minutes, jusqu’à obtenir le signe du ruban.",
+        "En parallèle, montez les blancs d’œufs au fouet en ajoutant petit à petit le reste du sucre semoule, jusqu’à obtenir un bec d’oiseau et une texture de mousse à raser.",
+        "Incorporez un tiers des blancs montés dans le sabayon (mélange œufs/sucre) à la maryse, pour détendre la masse.",
+        "Saupoudrez les poudres tamisées (farine) sur le mélange, et incorporez-les délicatement à la maryse.",
+        "Terminez en ajoutant le reste des blancs montés, toujours à la maryse, jusqu’à homogénéisation complète."
+      ]
     },
     "viennois-cacao": {
       "nom": "Viennois Cacao",
@@ -452,7 +670,14 @@
         "blancs": 70,
         "farine": 30,
         "cacao": 30
-      }
+      },
+      "preparation": [
+        "Dans le bol du robot muni du fouet, fouettez à vitesse moyenne/rapide les œufs entiers avec les jaunes et la moitié du sucre pendant environ 10 minutes, jusqu’à obtenir le signe du ruban.",
+        "En parallèle, montez les blancs d’œufs au fouet en ajoutant petit à petit le reste du sucre semoule, jusqu’à obtenir un bec d’oiseau et une texture de mousse à raser.",
+        "Incorporez un tiers des blancs montés dans le sabayon (mélange œufs/sucre) à la maryse, pour détendre la masse.",
+        "Saupoudrez les poudres tamisées (farine) sur le mélange, et incorporez-les délicatement à la maryse.",
+        "Terminez en ajoutant le reste des blancs montés, toujours à la maryse, jusqu’à homogénéisation complète."
+      ]
     },
     "trocadero": {
       "nom": "Biscuit Trocadero",
@@ -480,6 +705,15 @@
           "temperature": 165,
           "minutes": 22
         }
+      ],
+      "description": "Ce biscuit est le parfait mélange de tous les biscuits vus jusqu’ici ! Moelleux, goûteux, humide, et offrant des possibilités de variations infinies... Ce n’est pas juste un biscuit c’est un véritable terrain de jeu pour les pâtissiers.",
+      "preparation": [
+        "Faites fondre le beurre doux (en beurre noisette ou non), puis réservez-le jusqu’à tiédissement.",
+        "Dans un robot coupe, mixez les fruits à coque, le sucre glace, les blancs (1), le jaune d’œuf et la fécule jusqu’à obtenir une pâte homogène. → Réservez cette préparation dans un cul de poule.",
+        "Dans le bol de votre robot muni du fouet, montez les blancs (2) en incorporant le sucre semoule petit à petit, jusqu’à obtenir un bec d’oiseau et une texture de mousse à raser.",
+        "Incorporez ensuite cette meringue en trois fois dans le premier mélange : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour ne pas faire retomber la préparation.",
+        "Prélevez une petite partie de la pâte et incorporez-la dans le beurre tiède, puis reversez le tout dans la préparation principale.",
+        "Mélangez délicatement à la maryse, jusqu’à obtenir une texture homogène et aérée."
       ]
     },
     "trocadero-cacao": {
@@ -494,7 +728,15 @@
         "cacao": 5,
         "blancs-2": 30,
         "sucre-semoule": 20
-      }
+      },
+      "preparation": [
+        "Faites fondre le beurre doux (en beurre noisette ou non), puis réservez-le jusqu’à tiédissement.",
+        "Dans un robot coupe, mixez les fruits à coque, le sucre glace, les blancs (1), le jaune d’œuf et la fécule jusqu’à obtenir une pâte homogène. Réservez cette préparation dans un cul de poule.",
+        "Dans le bol de votre robot muni du fouet, montez les blancs (2) en incorporant le sucre semoule petit à petit, jusqu’à obtenir un bec d’oiseau et une texture de mousse à raser.",
+        "Incorporez ensuite cette meringue en trois fois dans le premier mélange : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour ne pas faire retomber la préparation.",
+        "Prélevez une petite partie de la pâte et incorporez-la dans le beurre tiède, puis reversez le tout dans la préparation principale.",
+        "Mélangez délicatement à la maryse, jusqu’à obtenir une texture homogène et aérée."
+      ]
     },
     "pate-a-choux-japonais": {
       "nom": "Biscuit Pâte à Choux / Japonais",
@@ -518,6 +760,22 @@
           "temperature": 190,
           "minutes": 14
         }
+      ],
+      "description": "C’est le biscuit le plus souple qui existe ! Issu du Japon, il est devenu le nouveau biscuit de prédilection pour les gâteaux roulés. Si vous aimez en plus le goût unique de la pâte à choux, il sera parfait pour vous.",
+      "usages": [
+        "Gâteaux roulés",
+        "Bûches roulées",
+        "Créations personnelles"
+      ],
+      "preparation": [
+        "Dans une casserole, faites chauffer le lait, l’eau, le sucre (1), le sel et le beurre à feu moyen, jusqu’à la première bulle. Le beurre doit être totalement fondu avant que les bulles n’apparaissent.",
+        "Retirez la casserole du feu et ajoutez en une seule fois la farine tamisée.",
+        "Desséchez la pâte 30 secondes sur feu moyen, en remuant bien.",
+        "Placez la pâte dans un cul de poule et ajoutez les œufs en trois fois, en mélangeant bien à chaque ajout, au fouet ou à la maryse.",
+        "Incorporez ensuite l’huile et mélangez jusqu’à homogénéisation.",
+        "À part, dans le bol du robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre (2) lorsque le mélange mousse. Augmentez légèrement la vitesse, puis ajoutez le reste du sucre (2) lorsque la texture devient vague. Terminez en fouettant à vitesse moyenne + jusqu’à obtenir un bec d’oiseau, avec une texture de mousse à raser.",
+        "Incorporez cette meringue à la pâte à choux en trois fois : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour préserver le volume.",
+        "Coulez le biscuit sur un tapis bien graissé, sur environ 1 cm d’épaisseur, et cuisez à 190°C pendant 14 minutes (four préchauffé)."
       ]
     },
     "pate-a-choux-cacao": {
@@ -535,7 +793,17 @@
         "beurre-doux": 35,
         "oeufs": 150,
         "blancs": 150
-      }
+      },
+      "preparation": [
+        "Dans une casserole, faites chauffer le lait, l’eau, le sucre (1), le sel et le beurre à feu moyen, jusqu’à la première bulle. Le beurre doit être totalement fondu avant que les bulles n’apparaissent.",
+        "Retirez la casserole du feu et ajoutez en une seule fois la farine tamisée.",
+        "Desséchez la pâte 30 secondes sur feu moyen, en remuant bien.",
+        "Placez la pâte dans un cul de poule et ajoutez les œufs en trois fois, en mélangeant bien à chaque ajout, au fouet ou à la maryse.",
+        "Incorporez ensuite l’huile et mélangez jusqu’à homogénéisation.",
+        "À part, dans le bol du robot muni du fouet, commencez à monter les blancs d’œufs à vitesse moyenne (-). Ajoutez un premier tiers du sucre (2) lorsque le mélange mousse. Augmentez légèrement la vitesse, puis ajoutez le reste du sucre (2) lorsque la texture devient vague. Terminez en fouettant à vitesse moyenne + jusqu’à obtenir un bec d’oiseau, avec une texture de mousse à raser.",
+        "Incorporez cette meringue à la pâte à choux en trois fois : Le premier tiers au fouet, Les deux autres tiers à la maryse, pour préserver le volume.",
+        "Coulez le biscuit sur un tapis bien graissé, sur environ 1 cm d’épaisseur, et cuisez à 190°C pendant 14 minutes (four préchauffé)."
+      ]
     }
   },
   "pates-a-tarte": {
@@ -572,7 +840,15 @@
         "entremets",
         "créations personnelles"
       ],
-      "notes": "Pâte riche en beurre, friable, croustillant incomparable. Repos 30 min au congélateur avant cuisson. Décercler à chaud. Dorure pour imperméabiliser."
+      "notes": "Pâte riche en beurre, friable, croustillant incomparable. Repos 30 min au congélateur avant cuisson. Décercler à chaud. Dorure pour imperméabiliser.",
+      "description": "Une pâte riche en beurre, plus friable que la brisée ou la sucrée. Idéale pour l’aromatisation, elle offre un croustillant incomparable.",
+      "preparation": [
+        "Dans le bol du robot muni de la feuille, mélangez le beurre froid en dés avec la farine tamisée, le sucre et le sel.",
+        "Une fois le sablage terminé, ajoutez l’œuf battu et mélangez à petite vitesse pour ne pas trop activer le gluten.",
+        "Dès que la pâte devient homogène, arrêtez le robot.",
+        "Fraisez la pâte sur le plan de travail, boulez-la et filmez-la au contact. Vous pouvez également l’étaler entre deux feuilles de papier cuisson si vous ne souhaitez pas la faire maturer.",
+        "Foncez vos cercles beurrés, puis placez-les 30 minutes minimum au congélateur avant cuisson pour éviter qu’ils ne retombent."
+      ]
     },
     "pate-sablee-cacao": {
       "nom": "Pâte Sablée Cacao",
@@ -596,6 +872,14 @@
           "temperature": 160,
           "minutes": 15
         }
+      ],
+      "preparation": [
+        "Dans le bol du robot muni de la feuille, mélangez le beurre froid en dés avec la farine tamisée, le sucre et le sel.",
+        "Une fois le sablage terminé, ajoutez l’œuf battu et mélangez à petite vitesse pour ne pas trop activer le gluten.",
+        "Dès que la pâte devient homogène, arrêtez le robot.",
+        "Fraisez la pâte sur le plan de travail, boulez-la et filmez-la au contact.",
+        "Vous pouvez également l’étaler entre deux feuilles de papier cuisson si vous ne souhaitez pas la faire maturer.",
+        "Foncez vos cercles beurrés, puis placez-les 30 minutes minimum au congélateur avant cuisson pour éviter qu’ils ne retombent."
       ]
     },
     "sable-breton": {
@@ -622,7 +906,16 @@
         "tea time",
         "créations personnelles"
       ],
-      "notes": "Pâte crémeuse, fondante. Allie moelleux et croustillant. Incontournable pour les fonds non foncés et les bases d'entremets modernes."
+      "notes": "Pâte crémeuse, fondante. Allie moelleux et croustillant. Incontournable pour les fonds non foncés et les bases d'entremets modernes.",
+      "description": "Une pâte crémeuse et fondante, au process très différent des autres. Elle allie à la perfection moelleux et croustillant. Incontournable pour les fonds non foncés et les bases d’entremets modernes.",
+      "preparation": [
+        "Dans le bol du robot muni du fouet, battre les jaunes d’œufs avec le sucre pendant 10 minutes jusqu’à obtenir un mélange crémeux et pâle.",
+        "À vitesse moyenne, incorporez le beurre pommade en dés.",
+        "Changez ensuite l’outil du robot pour la feuille.",
+        "Ajoutez la farine et la levure tamisées, mélangez à vitesse moyenne jusqu’à homogénéisation.",
+        "Terminez avec la fleur de sel.",
+        "Étalez la pâte sur 1 cm d’épaisseur, puis détaillez selon la forme souhaitée."
+      ]
     },
     "sable-breton-cacao": {
       "nom": "Sablé Breton Cacao",
@@ -643,6 +936,14 @@
           "temperature": 160,
           "minutes": 15
         }
+      ],
+      "preparation": [
+        "Dans le bol du robot muni du fouet, battre les jaunes d’œufs avec le sucre pendant 10 minutes jusqu’à obtenir un mélange crémeux et pâle.",
+        "À vitesse moyenne, incorporez le beurre pommade en dés.",
+        "Changez ensuite l’outil du robot pour la feuille.",
+        "Ajoutez la farine et la levure tamisées, mélangez à vitesse moyenne jusqu’à homogénéisation.",
+        "Terminez avec la fleur de sel.",
+        "Étalez la pâte sur 1 cm d’épaisseur, puis détaillez selon la forme souhaitée."
       ]
     },
     "pate-sucree": {
@@ -680,7 +981,15 @@
         "entremets",
         "créations personnelles"
       ],
-      "notes": "LA pâte star des tartes modernes. Croustillante, fondante, stable à la cuisson. Rendu net, brillant et précis, digne des palaces. Étaler sur 2 mm."
+      "notes": "LA pâte star des tartes modernes. Croustillante, fondante, stable à la cuisson. Rendu net, brillant et précis, digne des palaces. Étaler sur 2 mm.",
+      "description": "C’est LA pâte star des tartes modernes. Très croustillante, fondante, stable à la cuisson, elle offre un rendu net, brillant et précis, digne des palaces.",
+      "preparation": [
+        "Dans le robot muni de la feuille, crémez le beurre pommade avec le sucre glace.",
+        "Ajoutez la poudre d’amandes, puis l’œuf battu.",
+        "Mélangez à petite vitesse avant d’incorporer la farine tamisée en pluie. → Arrêtez dès que la pâte est homogène (ne pas trop la travailler).",
+        "Fraisez la pâte rapidement pour la lisser, puis : Soit l’abaisser directement entre deux feuilles de papier cuisson, Soit la laisser maturer au réfrigérateur.",
+        "Étalez sur 2 mm d’épaisseur, foncez vos cercles beurrés, puis laissez reposer 30 minutes au congélateur."
+      ]
     },
     "pate-sucree-cacao": {
       "nom": "Pâte Sucrée Cacao",
@@ -706,6 +1015,13 @@
           "temperature": 160,
           "minutes": 15
         }
+      ],
+      "preparation": [
+        "Dans le robot muni de la feuille, crémez le beurre pommade avec le sucre glace.",
+        "Ajoutez la poudre d’amandes, puis l’œuf battu.",
+        "Mélangez à petite vitesse avant d’incorporer la farine tamisée en pluie. → Arrêtez dès que la pâte est homogène (ne pas trop la travailler).",
+        "Fraisez la pâte rapidement pour la lisser, puis : Soit l’abaisser directement entre deux feuilles de papier cuisson, Soit la laisser maturer au réfrigérateur.",
+        "Étalez sur 2 mm d’épaisseur, foncez vos cercles beurrés, puis laissez reposer 30 minutes au congélateur."
       ]
     }
   },
@@ -729,6 +1045,18 @@
         "Paris-Brest",
         "profiteroles",
         "religieuses"
+      ],
+      "preparation": [
+        "Tamise la farine",
+        "Dans une casserole, verse l’eau, le lait, le sucre, le sel et le beurre",
+        "Cuis à feu doux jusqu’à l’ébullition",
+        "Attention, le beurre doit être totalement fondu avant la première ébullition",
+        "Verse la farine tamisée hors du feu en une fois dès la première ébullition puis mélange jusqu’à incorporation complète de la farine",
+        "Dessèche la panade jusqu’à ce qu’elle n’accroche plus au fond de la casserole",
+        "Verse la pâte dans le bol de ton robot et mélange avec la feuille pour laisse la vapeur s’échapper",
+        "Mélange les oeufs dans un récipient",
+        "Ajoute les petit à petit jusqu’à obtenir une texture de bec de perroquet au bout de la feuille et qui forme un beau ruban",
+        "Mets la pâte dans une poche et laisse la retomber en température pour pouvoir la pocher plus facilement"
       ]
     },
     "pate-a-choux-chocolat": {
@@ -743,7 +1071,19 @@
         "farine-t55": 170,
         "cacao": 20,
         "oeufs": 320
-      }
+      },
+      "preparation": [
+        "Tamise la farine",
+        "Dans une casserole, verse l’eau, le lait, le sucre, le sel et le beurre",
+        "Cuis à feu doux jusqu’à l’ébullition",
+        "Attention, le beurre doit être totalement fondu avant la première ébullition",
+        "Verse la farine tamisée et la poudre de cacao hors du feu en une fois dès la première ébullition puis mélange jusqu’à incorporation complète de la farine",
+        "Dessèche la panade jusqu’à ce qu’elle n’accroche plus au fond de la casserole",
+        "Verse la pâte dans le bol de ton robot et mélange avec la feuille pour laisse la vapeur s’échapper",
+        "Mélange les oeufs dans un récipient",
+        "Ajoute les petit à petit jusqu’à obtenir une texture de bec de perroquet au bout de la feuille et qui forme un beau ruban",
+        "Mets la pâte dans une poche et laisse la retomber en température pour pouvoir la pocher plus facilement"
+      ]
     },
     "dorure-chou": {
       "nom": "Dorure Mycryo (pour choux)",
@@ -752,7 +1092,12 @@
         "beurre-cacao-mycryo": 225,
         "sucre-glace": 75
       },
-      "notes": "Se conserve plusieurs mois en pot hermétique. Saupoudrer à travers un tamis pour recouvrir choux et éclairs."
+      "notes": "Se conserve plusieurs mois en pot hermétique. Saupoudrer à travers un tamis pour recouvrir choux et éclairs.",
+      "preparation": [
+        "Mélange le sucre glace ert le beurre de cacao en poudre",
+        "Tu peux réserver ce mélange dans un pot hermétique plusieurs mois",
+        "Saupoudre tes choux et éclairs à travers un tamis pour les recouvrir"
+      ]
     },
     "craquelin": {
       "nom": "Craquelin",
@@ -762,7 +1107,14 @@
         "sucre-cassonade": 70,
         "farine": 70
       },
-      "notes": "Mélanger à la main pour faire revenir le beurre plus vite. Étaler sur 2 mm, passer au congélateur 15 min, puis détailler à la forme du chou. Poser sur chou/éclair/Paris-Brest avant cuisson."
+      "notes": "Mélanger à la main pour faire revenir le beurre plus vite. Étaler sur 2 mm, passer au congélateur 15 min, puis détailler à la forme du chou. Poser sur chou/éclair/Paris-Brest avant cuisson.",
+      "preparation": [
+        "Mélange les ingrédients (plus facile à la main pour faire revenir le beurre plius vite à température) jusqu’à obtenir une pâte bien lisse et homogène",
+        "Etale sur 2mm environ",
+        "Passe au congélateur une quinzaine de minutes",
+        "Emporte pièce la forme de ton choix",
+        "Pose sur tes choux/éclairs/Paris-Brest"
+      ]
     },
     "craquelin-cacao": {
       "nom": "Craquelin Cacao",
@@ -772,7 +1124,14 @@
         "sucre-cassonade": 70,
         "farine": 63,
         "cacao": 7
-      }
+      },
+      "preparation": [
+        "Mélange les ingrédients (plus facile à la main pour faire revenir le beurre plius vite à température) jusqu’à obtenir une pâte bien lisse et homogène",
+        "Etale sur 2mm environ",
+        "Passe au congélateur une quinzaine de minutes",
+        "Emporte pièce la forme de ton choix",
+        "Pose sur tes choux/éclairs/Paris-Brest"
+      ]
     }
   },
   "macarons": {
@@ -803,7 +1162,26 @@
       "gabarit-cm": 3.5,
       "douille-mm": "8-10",
       "repos-minutes": 10,
-      "notes": "Œufs à température ambiante. Verser sirop en filet contre la paroi. Fouetter jusqu'à refroidissement complet. Bec d'oiseau ferme. Macaronner en écrasant contre la paroi. Ruban fluide."
+      "notes": "Œufs à température ambiante. Verser sirop en filet contre la paroi. Fouetter jusqu'à refroidissement complet. Bec d'oiseau ferme. Macaronner en écrasant contre la paroi. Ruban fluide.",
+      "preparation": [
+        "Verse les blancs d’oeufs dans le bol de ton robot",
+        "Verse l’eau et le sucre dans une casserole",
+        "Chauffe l’eau et le sucre",
+        "Dès que tu atteins les 110°C, fouette à vitesse maximum tes blancs d’oeufs",
+        "Stop la cuisson du sirop une fois les 118°C, à ce stade, tes blancs doivent être bien mousseux",
+        "Verse en petit filet le sirop contre la paroi du bol de ton robot pour éviter les éclaboussures",
+        "Continue de fouetter jusqu’à refroidissement complet de la meringue",
+        "Si tu veux colorer tes macarons, ajoute ton colorant hydrosoluble directement dans la meringue tout en continuant de mélanger",
+        "Une fois la meringue refroidie, tu dois obtenir un beau bec d’oiseau",
+        "Tamise la poudre d’amande",
+        "Repèse pour retomber sur 150g après avoir tamisé",
+        "Fais la même chose avec le sucre glace",
+        "Ajoute les blancs d’oeufs",
+        "Mélange jusqu’à obtenir une pâte homogène",
+        "Verse la meringue italienne dans la pâte obtenue précédemment",
+        "Mélange la meringue en l’écrasant contre la paroi de ton cul de poule pour macaroner",
+        "Tu dois obtenir une pâte bien lisse et brillante qui forme une sorte de ruban quand tu la fais couler de ta maryse"
+      ]
     },
     "meringue-italienne-35-cacao": {
       "nom": "Meringue Italienne pour 35 Macarons Cacao",
@@ -825,7 +1203,27 @@
         "temperature": 145,
         "minutes": 15,
         "chaleur": "statique"
-      }
+      },
+      "preparation": [
+        "Verse les blancs d’oeufs dans le bol de ton robot",
+        "Verse l’eau et le sucre dans une casserole",
+        "Chauffe l’eau et le sucre",
+        "Dès que tu atteins les 110°C, fouette à vitesse maximum tes blancs d’oeufs",
+        "Stop la cuisson du sirop une fois les 118°C, à ce stade, tes blancs doivent être bien mousseux",
+        "Verse en petit filet le sirop contre la paroi du bol de ton robot pour éviter les éclaboussures",
+        "Continue de fouetter jusqu’à refroidissement complet de la meringue",
+        "meringue tout en continuant de mélanger",
+        "Une fois la meringue refroidie, tu dois obtenir un beau bec d’oiseau",
+        "Tamise la poudre d’amande",
+        "Repèse pour retomber sur 150g après avoir tamisé",
+        "Fais la même chose avec le sucre glace",
+        "Puis avec le cacao",
+        "Ajoute les blancs d’oeufs",
+        "Mélange jusqu’à obtenir une pâte homogène",
+        "Verse la meringue italienne dans la pâte obtenue précédemment",
+        "Mélange la meringue en l’écrasant contre la paroi de ton cul de poule pour macaroner",
+        "Tu dois obtenir une pâte bien lisse et brillante qui forme une sorte de ruban quand tu la fais couler de ta maryse"
+      ]
     },
     "meringue-francaise-35": {
       "nom": "Meringue Française pour 35 Macarons",
@@ -848,7 +1246,19 @@
       "gabarit-cm": 3.5,
       "douille-mm": "8-10",
       "repos-minutes": 10,
-      "notes": "Sucre en 3 fois pour obtenir un beau bec d'oiseau. Macaronner par tiers. Stopper dès que ruban lisse et brillant."
+      "notes": "Sucre en 3 fois pour obtenir un beau bec d'oiseau. Macaronner par tiers. Stopper dès que ruban lisse et brillant.",
+      "preparation": [
+        "Verse les blancs d’oeufs dans le bol de ton robot",
+        "Mélange à vitesse moyenne",
+        "Verse le sucre en 3 fois dans les blancs d’oeufs jusqu’à obtenir un beau bec d’oiseau",
+        "Si tu veux colorer tes macarons, ajoute ton colorant hydrosoluble directement dans la meringue tout en continuant de mélanger",
+        "Tamise la poudre d’amande",
+        "Repèse pour retomber sur 150g après avoir tamisé",
+        "Fais la même chose avec le sucre glace",
+        "Prends un tiers des poudres et mélange ce tiers à la meringue obtenue précédemment en écrasant le mélange sur la paroi pour bien macaronner",
+        "Ajoute le reste des poudres en continuant de macaronner",
+        "Stoppe le macaronnage dès que le mélange est lisse, brillant et crée un ruban lorsque tu le laisse retomber de ta maryse"
+      ]
     },
     "meringue-francaise-35-cacao": {
       "nom": "Meringue Française pour 35 Macarons Cacao",
@@ -868,7 +1278,18 @@
         "temperature": 145,
         "minutes": 15,
         "chaleur": "statique"
-      }
+      },
+      "preparation": [
+        "Verse les blancs d’oeufs dans le bol de ton robot",
+        "Mélange à vitesse moyenne",
+        "Verse le sucre en 3 fois dans les blancs d’oeufs jusqu’à obtenir un beau bec d’oiseau",
+        "Tamise la poudre d’amande",
+        "Repèse pour retomber sur 150g après avoir tamisé",
+        "Fais la même chose avec le sucre glace et le cacao en poudre",
+        "Prends un tiers des poudres et mélange ce tiers à la meringue obtenue précédemment en écrasant le mélange sur la paroi pour bien macaronner",
+        "Ajoute le reste des poudres en continuant de macaronner",
+        "Stoppe le macaronnage dès que le mélange est lisse, brillant et crée un ruban lorsque tu le laisse retomber de ta maryse"
+      ]
     },
     "astuces": [
       "Œufs à température ambiante avant la meringue italienne",
@@ -997,7 +1418,15 @@
         "torrefaction-minutes": "15 à 30"
       },
       "notes": "Caramel ambré avec le sucre puis refroidir. Mixer les fruits et le caramel jusqu'à la texture souhaitée (plus ou moins liquide). Conservation plusieurs mois à T° ambiante en pot hermétique.",
-      "conservation": "plusieurs mois en pot hermétique à température ambiante"
+      "conservation": "plusieurs mois en pot hermétique à température ambiante",
+      "preparation": [
+        "Torréfie tes fruits à coques à 150°C pendant 15 à 30 minutes et laisse refroidir",
+        "Réalise un caramel bien ambré avec le sucre puis laisse refroidir",
+        "Mixe les fruits à coques et le caramel jusqu’à obtenir la texture que tu souhaites (plus ou moins liquide)",
+        "Transvase le praliné dans un contenant hermétique",
+        "Ajoute le sel et mélange à la cuillère",
+        "Tu peux conserver le praliné pendant plusieurs mois à température ambiante dans un pot hermétique"
+      ]
     },
     "cremeux-chocolat-noir": {
       "nom": "Crémeux Chocolat Noir",
@@ -1010,7 +1439,16 @@
         "chocolat-noir": 60
       },
       "temperature-cuisson": 83,
-      "notes": "Crème anglaise à 82-84°C versée sur le chocolat. Mixer au mixeur plongeant pour émulsion parfaite. Cristalliser quelques heures au frigo."
+      "notes": "Crème anglaise à 82-84°C versée sur le chocolat. Mixer au mixeur plongeant pour émulsion parfaite. Cristalliser quelques heures au frigo.",
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Verse le lait et la crème dans une casserole et porte à ébullition",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat noir et attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cirstalliser quelques heures au frigo"
+      ]
     },
     "cremeux-chocolat-lait": {
       "nom": "Crémeux Chocolat au Lait",
@@ -1022,7 +1460,16 @@
         "sucre": 15,
         "chocolat-lait": 75,
         "gelatine": 0.5
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Verse le lait et la crème dans une casserole et porte à ébullition",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat au lait, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cirstalliser quelques heures au frigo"
+      ]
     },
     "cremeux-chocolat-blanc": {
       "nom": "Crémeux Chocolat Blanc",
@@ -1034,7 +1481,16 @@
         "sucre": 15,
         "chocolat-blanc": 85,
         "gelatine": 1
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Verse le lait et la crème dans une casserole et porte à ébullition",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cirstalliser quelques heures au frigo"
+      ]
     },
     "cremeux-chocolat-blanc-praline": {
       "nom": "Crémeux Chocolat Blanc et Praliné",
@@ -1047,7 +1503,16 @@
         "chocolat-blanc": 85,
         "gelatine": 1,
         "praline": 45
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Verse le lait et la crème dans une casserole et porte à ébullition",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et le pralinée, puis attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cirstalliser quelques heures au frigo"
+      ]
     },
     "cremeux-chocolat-blanc-infuse": {
       "nom": "Crémeux Chocolat Blanc Infusé",
@@ -1061,7 +1526,18 @@
         "gelatine": 1,
         "epices-herbes-vanille": 10
       },
-      "notes": "Infusion 10 à 30 minutes selon intensité souhaitée. Filtrer et repeser."
+      "notes": "Infusion 10 à 30 minutes selon intensité souhaitée. Filtrer et repeser.",
+      "preparation": [
+        "Fais infuser les épices et herbes choisies pendant 10 à 30 minutes avec le lait et la crème dans une casserole après une courte ébullition",
+        "Filtre le mélange",
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Porte à ébullition le mélange lait/crème",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée, puis attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cristalliser quelques heures au frigo"
+      ]
     },
     "cremeux-chocolat-blanc-fruits": {
       "nom": "Crémeux Chocolat Blanc aux Fruits",
@@ -1074,7 +1550,16 @@
         "chocolat-blanc": 85,
         "gelatine": 1
       },
-      "notes": "Remplace le lait par la purée de fruit."
+      "notes": "Remplace le lait par la purée de fruit.",
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre en mélangeant au fouet",
+        "Verse la purée de fruit et la crème dans une casserole et porte à ébullition",
+        "Verse sur les jaunes blanchis et mélange",
+        "Reverse dans la casserole et cuis à feu doux jusqu’à atteindre 82/84°C sans cesser de mélanger",
+        "Verse la crème anglaise sur le chocolat blanc, ajoute la gélatine réhydratée et attends quelques minutes que le chocolat fonde",
+        "Mixe au mixeur plongeant pour une émulsion parfait ou mélange avec une maryse au centre du mélange pour émulsionner",
+        "Laisse cirstalliser quelques heures au frigo"
+      ]
     },
     "ganache-chocolat-noir": {
       "nom": "Ganache Chocolat Noir",
@@ -1240,6 +1725,17 @@
         "millefeuille",
         "Saint-Honoré",
         "tarte aux fruits"
+      ],
+      "preparation": [
+        "Fais infuser la gousse de vanille dans le lait pendant 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Retire la gousse et chauffe le lait à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène"
       ]
     },
     "creme-patissiere-infusee": {
@@ -1253,7 +1749,18 @@
         "maizena": 20,
         "beurre": 20
       },
-      "notes": "Infusion 10 à 30 min selon intensité souhaitée. Filtrer le lait."
+      "notes": "Infusion 10 à 30 min selon intensité souhaitée. Filtrer le lait.",
+      "preparation": [
+        "Fais infuser les épices dans le lait pendant 10 à 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Filtre le lait et chauffe le à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène"
+      ]
     },
     "creme-patissiere-fruits": {
       "nom": "Crème Pâtissière aux Fruits",
@@ -1264,7 +1771,17 @@
         "sucre": 40,
         "maizena": 20,
         "beurre": 20
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre e tla maïzena",
+        "Chauffe la purée de fruit",
+        "Verse le la purée de fruit chaude sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés et mélange",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène"
+      ]
     },
     "creme-patissiere-chocolat": {
       "nom": "Crème Pâtissière au Chocolat",
@@ -1276,7 +1793,17 @@
         "maizena": 15,
         "chocolat": 75
       },
-      "notes": "Sucre à ajuster selon chocolat choisi (noir, lait, blanc) et goûts."
+      "notes": "Sucre à ajuster selon chocolat choisi (noir, lait, blanc) et goûts.",
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le chocolat (ajuster la quantité de sucre en fonction du chocolat et des goûts)",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène"
+      ]
     },
     "creme-patissiere-praline": {
       "nom": "Crème Pâtissière au Praliné",
@@ -1288,7 +1815,17 @@
         "maizena": 20,
         "beurre": 20,
         "praline": 75
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le praliné et mélange",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène"
+      ]
     },
     "namelaka-chocolat-noir": {
       "nom": "Namelaka Chocolat Noir",
@@ -1306,6 +1843,14 @@
         "garnitures tartes",
         "insert entremets",
         "créations personnelles"
+      ],
+      "preparation": [
+        "Fais fondre le chocolat noir au bain marie",
+        "Chauffe le lait",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat noir en créant une émulsion au centre avec ta maryse",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
       ]
     },
     "namelaka-chocolat-lait": {
@@ -1316,7 +1861,15 @@
         "lait": 200,
         "creme-liquide-30": 400,
         "gelatine": 5
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat au lait au bain marie",
+        "Chauffe le lait",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat au lait en créant une émulsion au centre avec ta maryse",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "namelaka-chocolat-blanc": {
       "nom": "Namelaka Chocolat Blanc",
@@ -1326,7 +1879,15 @@
         "lait": 200,
         "creme-liquide-30": 400,
         "gelatine": 4
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat blanc au bain marie",
+        "Chauffe le lait",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "namelaka-chocolat-dulcey": {
       "nom": "Namelaka Chocolat Dulcey",
@@ -1336,7 +1897,15 @@
         "lait": 200,
         "creme-liquide-30": 400,
         "gelatine": 4
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat Dulcey au bain marie",
+        "Chauffe le lait",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat Dulcey en créant une émulsion au centre avec ta maryse",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "namelaka-infusee": {
       "nom": "Namelaka Infusée",
@@ -1347,7 +1916,16 @@
         "creme-liquide-30": 200,
         "gelatine": 2,
         "infusion": "1 gousse vanille ou 5-10g épice"
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat blanc au bain marie",
+        "Chauffe le lait et laisse infuser tes épices pendant 10 à 30 minutes selon l’épice choisie",
+        "FIltre le mélange",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "namelaka-pralinee": {
       "nom": "Namelaka Pralinée",
@@ -1358,7 +1936,16 @@
         "creme-liquide-30": 200,
         "gelatine": 2,
         "praline": 20
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat blanc au bain marie",
+        "Chauffe le lait",
+        "Ajoute la gélatine réhydratée",
+        "Verse le lait bien chaud en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+        "Ajoute le praliné et mixe au mixeur plongeant",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "namelaka-fruits": {
       "nom": "Namelaka aux Fruits",
@@ -1369,7 +1956,16 @@
         "puree-fruit": 90,
         "creme-liquide-30": 200,
         "gelatine": 2
-      }
+      },
+      "preparation": [
+        "Fais fondre le chocolat blanc au bain marie",
+        "Chauffe le lait et la purée de fruit",
+        "Ajoute la gélatine réhydratée",
+        "Verse le mélange bien chaud en 3 fois sur le chocolat blanc en créant une émulsion au centre avec ta maryse",
+        "Ajoute le praliné et mixe au mixeur plongeant",
+        "Ajoute la crème liquide en une fois et mixe au mixeur plongeant",
+        "Laisse cristalliser toute une nuit au frigo en filmant au contact"
+      ]
     },
     "creme-mousseline-vanille": {
       "nom": "Crème Mousseline à la Vanille",
@@ -1389,6 +1985,19 @@
         "framboisier",
         "Paris-Brest",
         "créations personnelles"
+      ],
+      "preparation": [
+        "Fais infuser la goussedevanilledanslelaitpendant 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Retire la gousse et chauffe le lait à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Sors la crème pâtissière et le beurre (2) pour les faire retomber à température ambiante",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Ajoute le beurre bien pommade coupé en petit dès petit à petit et continue de foutter jusqu’à obtenir une crème bien lisse et homogène"
       ]
     },
     "creme-mousseline-infusee": {
@@ -1402,7 +2011,20 @@
         "maizena": 20,
         "beurre-1": 20,
         "beurre-2": 130
-      }
+      },
+      "preparation": [
+        "Fais infuser les épices dans le lait pendant 10 à 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Filtre le lait et chauffe le à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Sors la crème pâtissière et le beurre (2) pour les faire retomber à température ambiante",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Ajoute le beurre bien pommade coupé en petit dès petit à petit et continue de foutter jusqu’à obtenir une crème bien lisse et homogène"
+      ]
     },
     "creme-mousseline-fruits": {
       "nom": "Crème Mousseline aux Fruits",
@@ -1414,7 +2036,19 @@
         "maizena": 20,
         "beurre-1": 20,
         "beurre-2": 130
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre e tla maïzena",
+        "Chauffe la purée de fruit",
+        "Verse le la purée de fruit chaude sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés et mélange",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Sors la crème pâtissière et le beurre (2) pour les faire retomber à température ambiante",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Ajoute le beurre bien pommade coupé en petit dès petit à petit et continue de foutter jusqu’à obtenir une crème bien lisse et homogène"
+      ]
     },
     "creme-mousseline-chocolat": {
       "nom": "Crème Mousseline au Chocolat",
@@ -1426,7 +2060,18 @@
         "maizena": 15,
         "chocolat": 75,
         "beurre": 130
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le chocolat (ajuster la quantité de sucre en fonction du chocolat et des goûts)",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet. Sors la crème pâtissière et le beurre (2) pour les faire retomber à température ambiante",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Ajoute le beurre bien pommade coupé en petit dès petit à petit et continue de foutter jusqu’à obtenir une crème bien lisse et homogène"
+      ]
     },
     "creme-mousseline-praline": {
       "nom": "Crème Mousseline au Praliné",
@@ -1439,7 +2084,20 @@
         "beurre-1": 20,
         "praline": 250,
         "beurre-pommade": 130
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre (1) congelé coupé en petits",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Sors la crème pâtisière et le beurre pour les faire retomber à température ambiante",
+        "Ajoute le praliné au beurre et mélange jusqu’à obtenir un mélange homogène",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Ajoute le mélange beurre praliné et continue de fouetter jusqu’à obtenir uen crème bien lisse et homogène"
+      ]
     },
     "creme-diplomate-vanille": {
       "nom": "Crème Diplomate à la Vanille",
@@ -1460,6 +2118,19 @@
         "millefeuille",
         "fraisier version plus légère",
         "créations personnelles"
+      ],
+      "preparation": [
+        "Fais infuser la gousse de vanille dans le lait pendant 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Retire la gousse et chauffe le lait à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés et la gélatine réydratée",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Monte la crème liquide jusqu’à obtenir une texture de mousse à raser",
+        "Détends la crème pâtissière au fouet et incorpore la crème montée délicatement à la maryse"
       ]
     },
     "creme-diplomate-infusee": {
@@ -1474,7 +2145,20 @@
         "beurre": 20,
         "gelatine": 3,
         "creme-liquide-30": 100
-      }
+      },
+      "preparation": [
+        "Fais infuser les épices dans le lait pendant 10 à 30 minutes après une courte ébullition",
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Filtre le lait et chauffe le à nouveau",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés et la gélatine réydratée",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Monte la crème liquide jusqu’à obtenir une texture de mousse à raser",
+        "Détends la crème pâtissière au fouet et incropore la crème montée délicatement à la maryse"
+      ]
     },
     "creme-diplomate-fruits": {
       "nom": "Crème Diplomate aux Fruits",
@@ -1487,7 +2171,19 @@
         "beurre": 20,
         "gelatine": 3,
         "creme-liquide-30": 100
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre e tla maïzena",
+        "Chauffe la purée de fruit",
+        "Verse le la purée de fruit chaude sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le beurre congelé et coupé en petits dés et la gélatine réydratée",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Monte la crème liquide jusqu’à obtenir une texture de mousse à raser",
+        "Détends la crème pâtissière au fouet et incropore la crème montée délicatement à la maryse"
+      ]
     },
     "creme-diplomate-chocolat": {
       "nom": "Crème Diplomate au Chocolat",
@@ -1500,7 +2196,19 @@
         "chocolat": 75,
         "gelatine": 3,
         "creme-liquide-30": 100
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le chocolat et la gélatine réydratée",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Monte la crème liquide jusqu’à obtenir une texture de mousse à raser",
+        "Détends la crème pâtissière au fouet et incropore la crème montée délicatement à la maryse"
+      ]
     },
     "creme-diplomate-praline": {
       "nom": "Crème Diplomate au Praliné",
@@ -1514,7 +2222,19 @@
         "praline": 75,
         "gelatine": 3,
         "creme-liquide-30": 100
-      }
+      },
+      "preparation": [
+        "Blanchis les jaunes d’oeufs avec le sucre et la maïzena",
+        "Chauffe le lait",
+        "Verse le lait sur le mélange jaune d’oeuf, sucre, maïzena et mélange",
+        "Reverse dans la casserole et cuis à feu doux/moyen jusqu’à épaississement de la crème",
+        "Cuis à petite ébullition pendant 1 minute 30 à 2 minutes",
+        "Ajoute le praliné et la gélatine réydratée",
+        "Verse dans un plat et filme au contact jusqu’à refroidissement complet",
+        "Fouette la crème pour lui donner une texture bien lisse et homogène",
+        "Monte la crème liquide jusqu’à obtenir une texture de mousse à raser",
+        "Détends la crème pâtissière au fouet et incropore la crème montée délicatement à la maryse"
+      ]
     },
     "confit-de-fruits": {
       "nom": "Confit de Fruits",
@@ -1530,6 +2250,14 @@
         "insert entremets",
         "garniture tartes",
         "bonbons de chocolat"
+      ],
+      "preparation": [
+        "Mélange le sucre et la pectine NH",
+        "Chauffe la purée de fruit avec le jus de citron",
+        "Une fois les jus bien fumants, verse en pluie le mélange sucre/pectine",
+        "Porte à ébullition pendant quelques secondes",
+        "Transvase dans un récipient, filme au contact et réserve au frais jusqu’à gélification",
+        "Mixe le confit jusqu’à avoir une texture de gel bien lisse et homogène"
       ]
     },
     "confit-de-fruits-aromatise": {
@@ -1542,7 +2270,15 @@
         "pectine-nh": 5,
         "herbes-aromatiques": 10
       },
-      "notes": "Mixer avec herbes (menthe, basilic) à la fin pour un gel aromatisé lisse."
+      "notes": "Mixer avec herbes (menthe, basilic) à la fin pour un gel aromatisé lisse.",
+      "preparation": [
+        "Mélange le sucre et la pectine NH",
+        "Chauffe la purée de fruit avec le jus de citron",
+        "Une fois les jus bien fumants, verse en pluie le mélange sucre/pectine",
+        "Porte à ébullition pendant quelques secondes",
+        "Transvase dans un récipient, filme au contact et réserve au frais jusqu’à gélification",
+        "Mixe le confit avec les herbes aromatiques (menthe, basilic, etc) jusqu’à avoir une texture de gel bien lisse et homogène"
+      ]
     }
   },
   "ganaches-guide": {
