@@ -1,0 +1,3002 @@
+{
+  "source": "Les Fondations du Chef — L'Atelier de Geoffrey",
+  "extrait": "2026-04-19",
+  "biscuits": {
+    "genoise-nature": {
+      "nom": "Génoise Nature",
+      "total": 455,
+      "ingredients": {
+        "oeufs": 200,
+        "sucre-semoule": 100,
+        "jaunes": 75,
+        "farine": 80
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 200,
+          "minutes": 10
+        },
+        {
+          "support": "cercle-haut",
+          "diametre-cm": 20,
+          "temperature": 170,
+          "minutes": 20
+        }
+      ],
+      "conservation-jours": 2,
+      "usages": [
+        "fraisier",
+        "framboisier",
+        "cake design",
+        "moka",
+        "forêt noire",
+        "bûche roulée"
+      ]
+    },
+    "genoise-cacao": {
+      "nom": "Génoise Cacao",
+      "total": 455,
+      "ingredients": {
+        "oeufs": 200,
+        "sucre-semoule": 100,
+        "jaunes": 75,
+        "farine": 70,
+        "cacao": 10
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 200,
+          "minutes": 10
+        },
+        {
+          "support": "cercle-haut",
+          "diametre-cm": 20,
+          "temperature": 170,
+          "minutes": 20
+        }
+      ]
+    },
+    "dacquoise": {
+      "nom": "Biscuit Dacquoise / Succès",
+      "total": 545,
+      "ingredients": {
+        "farine": 40,
+        "poudre-fruit-coque": 115,
+        "sucre-semoule-1": 130,
+        "blancs": 190,
+        "sucre-semoule-2": 70
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "temperature": 180,
+          "minutes": 15
+        }
+      ],
+      "usages": [
+        "succès praliné",
+        "créations personnelles"
+      ]
+    },
+    "dacquoise-cacao": {
+      "nom": "Dacquoise Cacao",
+      "total": 545,
+      "ingredients": {
+        "farine": 30,
+        "cacao": 10,
+        "poudre-fruit-coque": 115,
+        "sucre-semoule-1": 130,
+        "blancs": 190,
+        "sucre-semoule-2": 70
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "temperature": 180,
+          "minutes": 15
+        }
+      ]
+    },
+    "financier": {
+      "nom": "Biscuit Financier",
+      "total": 596.5,
+      "ingredients": {
+        "beurre": 110,
+        "blancs": 155,
+        "sucre-glace": 155,
+        "poudre-fruit-coque": 110,
+        "farine": 55,
+        "fleur-sel": 1.5
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 190,
+          "minutes": 10
+        },
+        {
+          "support": "moule",
+          "epaisseur-cm": 2,
+          "temperature": 175,
+          "minutes": 15
+        }
+      ],
+      "repos": "24h au frais, filmé au contact",
+      "notes": "Beurre noisette puis tiédi. Technique : poudres + blancs d'abord, puis beurre en filet."
+    },
+    "financier-cacao": {
+      "nom": "Financier Cacao",
+      "total": 591.5,
+      "ingredients": {
+        "beurre": 110,
+        "blancs": 155,
+        "sucre-glace": 155,
+        "cacao": 10,
+        "poudre-fruit-coque": 110,
+        "farine": 50,
+        "fleur-sel": 1.5
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 190,
+          "minutes": 10
+        },
+        {
+          "support": "moule",
+          "epaisseur-cm": 2,
+          "temperature": 175,
+          "minutes": 15
+        }
+      ]
+    },
+    "financier-praline": {
+      "nom": "Financier Praliné",
+      "total": 616.5,
+      "ingredients": {
+        "beurre": 110,
+        "blancs": 155,
+        "sucre-glace": 155,
+        "praline": 20,
+        "poudre-fruit-coque": 110,
+        "farine": 55,
+        "fleur-sel": 1.5
+      }
+    },
+    "madeleine": {
+      "nom": "Biscuit Madeleine",
+      "total": 826,
+      "ingredients": {
+        "beurre": 250,
+        "miel": 30,
+        "oeufs": 145,
+        "lait": 60,
+        "sucre": 130,
+        "farine-t55": 200,
+        "levure-chimique": 11
+      },
+      "cuisson": [
+        {
+          "support": "individuelles",
+          "temperature": 190,
+          "minutes": 10
+        },
+        {
+          "support": "moule-tapis",
+          "epaisseur-cm": 2,
+          "temperature": 175,
+          "minutes": 20
+        }
+      ],
+      "repos": "20 min au congélateur avant cuisson pour un beau bombé"
+    },
+    "madeleine-cacao": {
+      "nom": "Madeleine Cacao",
+      "total": 816,
+      "ingredients": {
+        "beurre": 250,
+        "miel": 30,
+        "oeufs": 145,
+        "lait": 60,
+        "sucre": 130,
+        "farine-t55": 180,
+        "levure-chimique": 11,
+        "cacao": 20
+      }
+    },
+    "madeleine-praline": {
+      "nom": "Madeleine Praliné",
+      "total": 886,
+      "ingredients": {
+        "beurre": 250,
+        "miel": 30,
+        "oeufs": 145,
+        "lait": 60,
+        "sucre": 130,
+        "farine-t55": 200,
+        "levure-chimique": 11,
+        "praline": 60
+      }
+    },
+    "brownie": {
+      "nom": "Brownie",
+      "total": 450,
+      "ingredients": {
+        "beurre-doux": 100,
+        "chocolat-noir": 120,
+        "farine": 40,
+        "oeufs": 100,
+        "sucre-semoule": 60,
+        "fruits-coque": 30
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 180,
+          "minutes": 10
+        },
+        {
+          "support": "moule",
+          "epaisseur-cm": 2,
+          "temperature": 160,
+          "minutes": 20
+        }
+      ]
+    },
+    "brownie-lait": {
+      "nom": "Brownie Chocolat au Lait",
+      "total": 430,
+      "ingredients": {
+        "beurre-doux": 90,
+        "chocolat-lait": 120,
+        "farine": 40,
+        "oeufs": 100,
+        "sucre-semoule": 50,
+        "fruits-coque": 30
+      }
+    },
+    "brownie-blanc": {
+      "nom": "Brownie Chocolat Blanc",
+      "total": 410,
+      "ingredients": {
+        "beurre-doux": 85,
+        "chocolat-blanc": 120,
+        "farine": 40,
+        "oeufs": 100,
+        "sucre-semoule": 35,
+        "fruits-coque": 30
+      }
+    },
+    "savoie": {
+      "nom": "Biscuit de Savoie",
+      "total": 545,
+      "ingredients": {
+        "oeufs": 160,
+        "sucre-semoule": 145,
+        "fecule-mais": 55,
+        "farine": 100,
+        "beurre-doux": 80,
+        "levure-chimique": 5
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 200,
+          "minutes": 7
+        },
+        {
+          "support": "moule-cercle-haut",
+          "epaisseur-cm": 2,
+          "temperature": 170,
+          "minutes": 20
+        }
+      ]
+    },
+    "savoie-cacao": {
+      "nom": "Biscuit de Savoie Cacao",
+      "total": 545,
+      "ingredients": {
+        "oeufs": 160,
+        "sucre-semoule": 145,
+        "fecule-mais": 55,
+        "farine": 85,
+        "beurre-doux": 80,
+        "levure-chimique": 5,
+        "cacao": 15
+      }
+    },
+    "sacher": {
+      "nom": "Biscuit Sacher",
+      "total": 560,
+      "ingredients": {
+        "pate-amandes": 110,
+        "sucre-glace": 40,
+        "oeufs": 70,
+        "farine": 70,
+        "jaunes": 70,
+        "beurre-doux": 30,
+        "blancs": 100,
+        "sucre-semoule": 40
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 200,
+          "minutes": 8
+        }
+      ]
+    },
+    "sacher-cacao": {
+      "nom": "Sacher Cacao",
+      "total": 500,
+      "ingredients": {
+        "pate-amandes": 110,
+        "sucre-glace": 40,
+        "oeufs": 40,
+        "farine": 35,
+        "jaunes": 70,
+        "beurre-doux": 30,
+        "blancs": 100,
+        "sucre-semoule": 40,
+        "cacao": 35
+      }
+    },
+    "joconde": {
+      "nom": "Biscuit Joconde",
+      "total": 790,
+      "ingredients": {
+        "poudre-amandes": 160,
+        "sucre-glace": 160,
+        "sucre-semoule": 30,
+        "farine": 40,
+        "oeufs": 190,
+        "beurre-doux": 30,
+        "blancs": 180
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 210,
+          "minutes": 7
+        }
+      ]
+    },
+    "joconde-cacao": {
+      "nom": "Joconde Cacao",
+      "total": 770,
+      "ingredients": {
+        "poudre-amandes": 160,
+        "sucre-glace": 160,
+        "sucre-semoule": 30,
+        "farine": 30,
+        "oeufs": 190,
+        "beurre-doux": 30,
+        "blancs": 180,
+        "cacao": 10
+      }
+    },
+    "pain-de-genes": {
+      "nom": "Biscuit Pain de Gênes",
+      "total": 251.2,
+      "ingredients": {
+        "pate-amandes": 100,
+        "oeufs": 100,
+        "farine": 20,
+        "beurre-doux": 30,
+        "levure-chimique": 1.2
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 190,
+          "minutes": 10
+        },
+        {
+          "support": "moule",
+          "epaisseur-cm": 2,
+          "temperature": 160,
+          "minutes": 17
+        }
+      ]
+    },
+    "pain-de-genes-cacao": {
+      "nom": "Pain de Gênes Cacao",
+      "total": 251.2,
+      "ingredients": {
+        "pate-amandes": 100,
+        "oeufs": 100,
+        "farine": 15,
+        "beurre-doux": 30,
+        "levure-chimique": 1.2,
+        "cacao": 5
+      }
+    },
+    "viennois": {
+      "nom": "Biscuit Viennois",
+      "total": 395,
+      "ingredients": {
+        "jaunes": 40,
+        "oeufs-entiers": 110,
+        "sucre-semoule": 115,
+        "blancs": 70,
+        "farine": 60
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 230,
+          "minutes": 4
+        }
+      ],
+      "notes": "Sans matière grasse, impossible à aromatiser directement. À associer à une garniture savoureuse."
+    },
+    "viennois-cacao": {
+      "nom": "Viennois Cacao",
+      "total": 395,
+      "ingredients": {
+        "jaunes": 40,
+        "oeufs-entiers": 110,
+        "sucre-semoule": 115,
+        "blancs": 70,
+        "farine": 30,
+        "cacao": 30
+      }
+    },
+    "trocadero": {
+      "nom": "Biscuit Trocadero",
+      "total": 225,
+      "ingredients": {
+        "beurre-doux": 45,
+        "poudre-fruit-coque": 55,
+        "jaunes": 5,
+        "blancs-1": 30,
+        "sucre-glace": 35,
+        "fecule-mais": 5,
+        "blancs-2": 30,
+        "sucre-semoule": 20
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 190,
+          "minutes": 10
+        },
+        {
+          "support": "moule",
+          "epaisseur-cm": 2,
+          "temperature": 165,
+          "minutes": 22
+        }
+      ]
+    },
+    "trocadero-cacao": {
+      "nom": "Trocadero Cacao",
+      "total": 225,
+      "ingredients": {
+        "beurre-doux": 45,
+        "poudre-fruit-coque": 55,
+        "jaunes": 5,
+        "blancs-1": 30,
+        "sucre-glace": 35,
+        "cacao": 5,
+        "blancs-2": 30,
+        "sucre-semoule": 20
+      }
+    },
+    "pate-a-choux-japonais": {
+      "nom": "Biscuit Pâte à Choux / Japonais",
+      "total": 793,
+      "ingredients": {
+        "eau": 75,
+        "lait": 75,
+        "farine": 70,
+        "huile": 50,
+        "sucre-semoule-1": 5,
+        "sucre-semoule-2": 80,
+        "sel-fin": 3,
+        "beurre-doux": 35,
+        "oeufs": 150,
+        "blancs": 150
+      },
+      "cuisson": [
+        {
+          "support": "tapis",
+          "epaisseur-cm": 1,
+          "temperature": 190,
+          "minutes": 14
+        }
+      ]
+    },
+    "pate-a-choux-cacao": {
+      "nom": "Biscuit Pâte à Choux Cacao",
+      "total": 793,
+      "ingredients": {
+        "eau": 75,
+        "lait": 75,
+        "farine": 60,
+        "cacao": 10,
+        "huile": 50,
+        "sucre-semoule-1": 5,
+        "sucre-semoule-2": 80,
+        "sel-fin": 3,
+        "beurre-doux": 35,
+        "oeufs": 150,
+        "blancs": 150
+      }
+    }
+  },
+  "pates-a-tarte": {
+    "pate-sablee": {
+      "nom": "Pâte Sablée",
+      "total": 283,
+      "ingredients": {
+        "farine": 125,
+        "sucre-semoule": 57,
+        "beurre-doux": 75,
+        "fleur-sel": 1,
+        "oeufs": 25
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "temperature": 160,
+          "minutes": 15
+        },
+        {
+          "support": "dorure-4-contact",
+          "temperature": 160,
+          "minutes": 15
+        }
+      ],
+      "dorure": {
+        "jaunes": 20,
+        "creme-liquide": 5
+      },
+      "usages": [
+        "tartes foncées",
+        "tartes fines",
+        "sablés reconstitués",
+        "entremets",
+        "créations personnelles"
+      ],
+      "notes": "Pâte riche en beurre, friable, croustillant incomparable. Repos 30 min au congélateur avant cuisson. Décercler à chaud. Dorure pour imperméabiliser."
+    },
+    "pate-sablee-cacao": {
+      "nom": "Pâte Sablée Cacao",
+      "total": 281,
+      "ingredients": {
+        "farine": 110,
+        "sucre-semoule": 55,
+        "beurre-doux": 75,
+        "fleur-sel": 1,
+        "oeufs": 25,
+        "cacao": 15
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "temperature": 160,
+          "minutes": 15
+        },
+        {
+          "support": "dorure-4-contact",
+          "temperature": 160,
+          "minutes": 15
+        }
+      ]
+    },
+    "sable-breton": {
+      "nom": "Sablé Breton",
+      "total": 520,
+      "ingredients": {
+        "farine": 200,
+        "sucre-semoule": 110,
+        "beurre-doux": 140,
+        "fleur-sel": 3,
+        "jaunes": 60,
+        "levure-chimique": 7
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "epaisseur-cm": 1,
+          "temperature": 160,
+          "minutes": 15
+        }
+      ],
+      "usages": [
+        "tartes non foncées",
+        "tea time",
+        "créations personnelles"
+      ],
+      "notes": "Pâte crémeuse, fondante. Allie moelleux et croustillant. Incontournable pour les fonds non foncés et les bases d'entremets modernes."
+    },
+    "sable-breton-cacao": {
+      "nom": "Sablé Breton Cacao",
+      "total": 520,
+      "ingredients": {
+        "farine": 180,
+        "sucre-semoule": 110,
+        "beurre-doux": 140,
+        "fleur-sel": 3,
+        "jaunes": 60,
+        "cacao": 20,
+        "levure-chimique": 7
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "epaisseur-cm": 1,
+          "temperature": 160,
+          "minutes": 15
+        }
+      ]
+    },
+    "pate-sucree": {
+      "nom": "Pâte Sucrée",
+      "total": 547,
+      "ingredients": {
+        "farine": 250,
+        "beurre-doux-froid": 120,
+        "poudre-amandes": 30,
+        "sucre-glace": 90,
+        "sel": 2,
+        "oeufs": 55
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "epaisseur-cm": 0.2,
+          "temperature": 160,
+          "minutes": 15
+        },
+        {
+          "support": "dorure-4-contact",
+          "temperature": 160,
+          "minutes": 15
+        }
+      ],
+      "dorure": {
+        "jaunes": 20,
+        "creme-liquide": 5
+      },
+      "usages": [
+        "tartes foncées",
+        "tartes fines",
+        "sablés reconstitués",
+        "entremets",
+        "créations personnelles"
+      ],
+      "notes": "LA pâte star des tartes modernes. Croustillante, fondante, stable à la cuisson. Rendu net, brillant et précis, digne des palaces. Étaler sur 2 mm."
+    },
+    "pate-sucree-cacao": {
+      "nom": "Pâte Sucrée Cacao",
+      "total": 547,
+      "ingredients": {
+        "farine": 225,
+        "beurre-doux-froid": 120,
+        "poudre-amandes": 30,
+        "sucre-glace": 90,
+        "sel": 2,
+        "oeufs": 55,
+        "cacao": 25
+      },
+      "cuisson": [
+        {
+          "support": "cercle",
+          "epaisseur-cm": 0.2,
+          "temperature": 160,
+          "minutes": 15
+        },
+        {
+          "support": "dorure-4-contact",
+          "temperature": 160,
+          "minutes": 15
+        }
+      ]
+    }
+  },
+  "pate-a-choux": {
+    "pate-a-choux": {
+      "nom": "Pâte à Choux",
+      "total": 990,
+      "ingredients": {
+        "eau": 160,
+        "lait": 160,
+        "sucre": 20,
+        "sel": 4,
+        "beurre": 140,
+        "farine-t55": 190,
+        "oeufs": 320
+      },
+      "notes": "6 œufs environ. Texture : bec de perroquet, beau ruban. Beurre totalement fondu avant première ébullition. Dessécher la panade jusqu'à ce qu'elle n'accroche plus au fond de la casserole.",
+      "usages": [
+        "choux",
+        "éclairs",
+        "Paris-Brest",
+        "profiteroles",
+        "religieuses"
+      ]
+    },
+    "pate-a-choux-chocolat": {
+      "nom": "Pâte à Choux Chocolat",
+      "total": 990,
+      "ingredients": {
+        "eau": 160,
+        "lait": 160,
+        "sucre": 20,
+        "sel": 4,
+        "beurre": 140,
+        "farine-t55": 170,
+        "cacao": 20,
+        "oeufs": 320
+      }
+    },
+    "dorure-chou": {
+      "nom": "Dorure Mycryo (pour choux)",
+      "total": 300,
+      "ingredients": {
+        "beurre-cacao-mycryo": 225,
+        "sucre-glace": 75
+      },
+      "notes": "Se conserve plusieurs mois en pot hermétique. Saupoudrer à travers un tamis pour recouvrir choux et éclairs."
+    },
+    "craquelin": {
+      "nom": "Craquelin",
+      "total": 200,
+      "ingredients": {
+        "beurre": 60,
+        "sucre-cassonade": 70,
+        "farine": 70
+      },
+      "notes": "Mélanger à la main pour faire revenir le beurre plus vite. Étaler sur 2 mm, passer au congélateur 15 min, puis détailler à la forme du chou. Poser sur chou/éclair/Paris-Brest avant cuisson."
+    },
+    "craquelin-cacao": {
+      "nom": "Craquelin Cacao",
+      "total": 200,
+      "ingredients": {
+        "beurre": 60,
+        "sucre-cassonade": 70,
+        "farine": 63,
+        "cacao": 7
+      }
+    }
+  },
+  "macarons": {
+    "meringue-italienne-35": {
+      "nom": "Meringue Italienne pour 35 Macarons",
+      "total": 605,
+      "ingredients": {
+        "sirop": {
+          "sucre": 150,
+          "eau": 50,
+          "blancs-1": 55
+        },
+        "tant-pour-tant": {
+          "poudre-amande": 150,
+          "sucre-glace": 150,
+          "blancs-2": 50
+        }
+      },
+      "cuisson": {
+        "temperature": 145,
+        "minutes": 15,
+        "chaleur": "statique"
+      },
+      "temperatures-cles": {
+        "fouet-blancs": 110,
+        "arret-sirop": 118
+      },
+      "gabarit-cm": 3.5,
+      "douille-mm": "8-10",
+      "repos-minutes": 10,
+      "notes": "Œufs à température ambiante. Verser sirop en filet contre la paroi. Fouetter jusqu'à refroidissement complet. Bec d'oiseau ferme. Macaronner en écrasant contre la paroi. Ruban fluide."
+    },
+    "meringue-italienne-35-cacao": {
+      "nom": "Meringue Italienne pour 35 Macarons Cacao",
+      "total": 605,
+      "ingredients": {
+        "sirop": {
+          "sucre": 150,
+          "eau": 50,
+          "blancs-1": 55
+        },
+        "tant-pour-tant": {
+          "poudre-amande": 140,
+          "sucre-glace": 140,
+          "cacao": 20,
+          "blancs-2": 50
+        }
+      },
+      "cuisson": {
+        "temperature": 145,
+        "minutes": 15,
+        "chaleur": "statique"
+      }
+    },
+    "meringue-francaise-35": {
+      "nom": "Meringue Française pour 35 Macarons",
+      "total": 565,
+      "ingredients": {
+        "meringue": {
+          "blancs": 115,
+          "sucre-semoule": 150
+        },
+        "tant-pour-tant": {
+          "poudre-amande": 150,
+          "sucre-glace": 150
+        }
+      },
+      "cuisson": {
+        "temperature": 145,
+        "minutes": 15,
+        "chaleur": "statique"
+      },
+      "gabarit-cm": 3.5,
+      "douille-mm": "8-10",
+      "repos-minutes": 10,
+      "notes": "Sucre en 3 fois pour obtenir un beau bec d'oiseau. Macaronner par tiers. Stopper dès que ruban lisse et brillant."
+    },
+    "meringue-francaise-35-cacao": {
+      "nom": "Meringue Française pour 35 Macarons Cacao",
+      "total": 565,
+      "ingredients": {
+        "meringue": {
+          "blancs": 115,
+          "sucre-semoule": 150
+        },
+        "tant-pour-tant": {
+          "poudre-amande": 140,
+          "sucre-glace": 140,
+          "cacao": 20
+        }
+      },
+      "cuisson": {
+        "temperature": 145,
+        "minutes": 15,
+        "chaleur": "statique"
+      }
+    },
+    "astuces": [
+      "Œufs à température ambiante avant la meringue italienne",
+      "Feuilles de cuisson Téflon sur plaque perforée pour plus de régularité",
+      "Gabarit sous la feuille Téflon pour des macarons homogènes",
+      "Enfourner plaque par plaque",
+      "Préchauffer le four avec une plaque pleine dedans. Poser la plaque perforée avec les macarons pochés sur la plaque pleine bien chaude pour créer un choc thermique et favoriser la collerette",
+      "Chaleur statique pour favoriser la collerette",
+      "Laisser tomber la plaque plusieurs fois de petite hauteur pour chasser les bulles d'air"
+    ],
+    "faq": {
+      "pas-lisses": "Poudres pas assez tamisées. Plus les poudres sont fines, plus les macarons sont lisses.",
+      "craqueles": "Trop d'humidité dans le four. Entre deux fournées, ouvrir la porte pour laisser s'échapper la vapeur.",
+      "deformes": "Laisser tomber la plaque 2-3 fois pour évacuer les bulles d'air et aplatir légèrement.",
+      "liquides-etales": "Trop macaroné (pâte doit former un ruban) ou meringue pas assez ferme (bec d'oiseau).",
+      "pas-de-collerette": "Meringue pas assez montée. Préchauffer le four avec plaque pleine dedans pour choc thermique.",
+      "creux": "Cuisson trop longue ou température trop haute.",
+      "collent-a-la-feuille": "Macarons pas assez cuits. Ajuster la cuisson de quelques minutes."
+    }
+  },
+  "personnalisation-biscuits": {
+    "farines-ble": {
+      "t45": {
+        "description": "Très riche en gluten (après gruau). Viennoiseries, pâtes souples. Goût neutre, texture fine"
+      },
+      "t55": {
+        "description": "La plus utilisée en pâtisserie. Idéale pour la majorité des biscuits"
+      },
+      "t65": {
+        "description": "À privilégier en bio. Farine de tradition, légère rusticité"
+      },
+      "t80-plus": {
+        "description": "Jusqu'à 30% du poids total en complément de T55. Goût prononcé, vitamines et minéraux"
+      }
+    },
+    "farines-gluten-alt": {
+      "grand-epeautre": {
+        "description": "Riche protéines/minéraux. Peut remplacer le blé à 100%. Pâtes élastiques digestes",
+        "max-pourcent": 100
+      },
+      "petit-epeautre": {
+        "description": "Goût douce de noix/noisette. Max 50% du poids total",
+        "max-pourcent": 50
+      },
+      "kamut": {
+        "description": "Noisette, riche gluten. Remplace le blé à 100%",
+        "max-pourcent": 100
+      },
+      "seigle": {
+        "description": "Pauvre en gluten. Max 30% + complément T55",
+        "max-pourcent": 30
+      },
+      "avoine": {
+        "description": "Jusqu'à 70% du poids total. Texture moelleuse, énergétique",
+        "max-pourcent": 70
+      }
+    },
+    "farines-sans-gluten": {
+      "riz": {
+        "description": "Texture friable, goût léger. Jusqu'à 30% pour conserver le moelleux",
+        "max-pourcent": 30
+      },
+      "chataigne": {
+        "description": "Goût sucré et boisé, parfait avec fruits sous-bois ou praliné",
+        "max-pourcent": 30
+      },
+      "sarrasin": {
+        "description": "Goût noisette grillée, très intéressant",
+        "max-pourcent": 30
+      },
+      "mais": {
+        "description": "Apporte couleur et douceur, compléter avec T55",
+        "max-pourcent": 30
+      },
+      "coco": {
+        "description": "Goût subtil exotique. 1 poids farine blé = ¼ poids farine coco (absorbe beaucoup plus)",
+        "max-pourcent": 30
+      }
+    },
+    "sucres": {
+      "blanc": {
+        "pouvoir-sucrant": 1,
+        "description": "Le plus courant, raffiné et neutre. Idéal toutes bases et montages"
+      },
+      "roux": {
+        "pouvoir-sucrant": 1,
+        "description": "Betterave non raffinée. Caramel. Biscuits rustiques, pâtes sablées"
+      },
+      "cassonade": {
+        "pouvoir-sucrant": 1,
+        "description": "Canne à sucre non raffinée. Rhum et vanille. Biscuits moelleux, cookies, gâteaux de voyage"
+      },
+      "rapadura": {
+        "pouvoir-sucrant": 1.5,
+        "description": "Canne complet équitable. Réglisse et caramel. Utiliser 1,5 fois moins que sucre blanc"
+      },
+      "muscovado": {
+        "pouvoir-sucrant": 1.25,
+        "description": "Canne complet équitable. Mélasse, couleur foncée. Biscuits intenses, brownies, épices"
+      },
+      "coco": {
+        "pouvoir-sucrant": 1.2,
+        "description": "Goût subtil noix de coco. Recettes exotiques ou chocolatées. Couleur ambrée"
+      },
+      "miel": {
+        "pouvoir-sucrant": 1.5,
+        "description": "Très aromatique. Ne pas utiliser pour monter des blancs. Excellent dans biscuits moelleux"
+      },
+      "sirop-erable": {
+        "pouvoir-sucrant": 1,
+        "description": "Réconfortant et boisé. Ne pas utiliser en meringues. Brillance et douceur"
+      }
+    }
+  },
+  "cremes-garnitures": {
+    "praline": {
+      "nom": "Praliné",
+      "total": 753,
+      "ingredients": {
+        "fruits-a-coque": 500,
+        "sucre": 250,
+        "sel": 3
+      },
+      "cuisson": {
+        "torrefaction-temperature": 150,
+        "torrefaction-minutes": "15 à 30"
+      },
+      "notes": "Caramel ambré avec le sucre puis refroidir. Mixer les fruits et le caramel jusqu'à la texture souhaitée (plus ou moins liquide). Conservation plusieurs mois à T° ambiante en pot hermétique.",
+      "conservation": "plusieurs mois en pot hermétique à température ambiante"
+    },
+    "cremeux-chocolat-noir": {
+      "nom": "Crémeux Chocolat Noir",
+      "total": 245,
+      "ingredients": {
+        "lait": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-noir": 60
+      },
+      "temperature-cuisson": 83,
+      "notes": "Crème anglaise à 82-84°C versée sur le chocolat. Mixer au mixeur plongeant pour émulsion parfaite. Cristalliser quelques heures au frigo."
+    },
+    "cremeux-chocolat-lait": {
+      "nom": "Crémeux Chocolat au Lait",
+      "total": 260.5,
+      "ingredients": {
+        "lait": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-lait": 75,
+        "gelatine": 0.5
+      }
+    },
+    "cremeux-chocolat-blanc": {
+      "nom": "Crémeux Chocolat Blanc",
+      "total": 271,
+      "ingredients": {
+        "lait": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-blanc": 85,
+        "gelatine": 1
+      }
+    },
+    "cremeux-chocolat-blanc-praline": {
+      "nom": "Crémeux Chocolat Blanc et Praliné",
+      "total": 316,
+      "ingredients": {
+        "lait": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-blanc": 85,
+        "gelatine": 1,
+        "praline": 45
+      }
+    },
+    "cremeux-chocolat-blanc-infuse": {
+      "nom": "Crémeux Chocolat Blanc Infusé",
+      "total": 281,
+      "ingredients": {
+        "lait": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-blanc": 85,
+        "gelatine": 1,
+        "epices-herbes-vanille": 10
+      },
+      "notes": "Infusion 10 à 30 minutes selon intensité souhaitée. Filtrer et repeser."
+    },
+    "cremeux-chocolat-blanc-fruits": {
+      "nom": "Crémeux Chocolat Blanc aux Fruits",
+      "total": 271,
+      "ingredients": {
+        "puree-fruit": 70,
+        "creme-liquide": 70,
+        "jaunes": 30,
+        "sucre": 15,
+        "chocolat-blanc": 85,
+        "gelatine": 1
+      },
+      "notes": "Remplace le lait par la purée de fruit."
+    },
+    "ganache-chocolat-noir": {
+      "nom": "Ganache Chocolat Noir",
+      "total": 480,
+      "ingredients": {
+        "chocolat-noir-70": 200,
+        "creme": 200,
+        "glucose": 40,
+        "beurre": 40
+      },
+      "notes": "Glucose et beurre optionnels. Verser la crème chaude en 3 fois au centre (émulsion). Mixer sans incorporer d'air. Cristalliser toute une nuit au frigo filmé au contact.",
+      "ratio-chocolat-creme": "1:1 (70%)"
+    },
+    "ganache-chocolat-lait": {
+      "nom": "Ganache Chocolat au Lait",
+      "total": 300,
+      "ingredients": {
+        "chocolat-lait-40": 200,
+        "creme": 100
+      },
+      "ratio-chocolat-creme": "2:1 (40%)"
+    },
+    "ganache-chocolat-blanc": {
+      "nom": "Ganache Chocolat Blanc",
+      "total": 350,
+      "ingredients": {
+        "chocolat-blanc": 250,
+        "creme": 100
+      },
+      "ratio-chocolat-creme": "2.5:1"
+    },
+    "ganache-praline": {
+      "nom": "Ganache Praliné",
+      "total": 450,
+      "ingredients": {
+        "chocolat-blanc-34": 200,
+        "creme-liquide-30": 200,
+        "praline": 50
+      }
+    },
+    "ganache-infusee": {
+      "nom": "Ganache Infusée",
+      "total": 410,
+      "ingredients": {
+        "chocolat-blanc-34": 250,
+        "creme-liquide-30": 160,
+        "infusion": "1 gousse vanille / 10g herbes, thé, épices / 5g piment-poivre"
+      },
+      "notes": "Infusion 10 à 30 min selon intensité : herbes/thé 10 min, vanille 30 min, piment/poivre 10 min, épices 30 min. Filtrer la crème et repeser."
+    },
+    "ganache-chocolat-blanc-fruits": {
+      "nom": "Ganache Chocolat Blanc aux Fruits",
+      "total": 390,
+      "ingredients": {
+        "chocolat-blanc": 240,
+        "puree-fruit": 150
+      }
+    },
+    "ganache-chocolat-noir-fruits": {
+      "nom": "Ganache Chocolat Noir aux Fruits",
+      "total": 550,
+      "ingredients": {
+        "chocolat-noir": 250,
+        "puree-fruit": 250,
+        "beurre": 50
+      }
+    },
+    "ganache-montee-chocolat-noir": {
+      "nom": "Ganache Montée Chocolat Noir",
+      "total": 371,
+      "ingredients": {
+        "chocolat-noir": 100,
+        "creme-liquide-1": 100,
+        "creme-liquide-2": 150,
+        "gelatine": 3,
+        "eau-gelatine": 18
+      },
+      "notes": "Gélatine optionnelle. Crème 1 chaude sur chocolat (émulsion), puis crème 2 froide incorporée au mixeur. Cristalliser toute une nuit avant de monter au fouet."
+    },
+    "ganache-montee-chocolat-lait": {
+      "nom": "Ganache Montée Chocolat au Lait",
+      "total": 376,
+      "ingredients": {
+        "chocolat-lait": 130,
+        "creme-liquide-1": 75,
+        "creme-liquide-2": 150,
+        "gelatine": 3,
+        "eau-gelatine": 18
+      }
+    },
+    "ganache-montee-dulcey": {
+      "nom": "Ganache Montée Chocolat Dulcey",
+      "total": 619.5,
+      "ingredients": {
+        "chocolat-dulcey": 120,
+        "creme-liquide-1": 160,
+        "creme-liquide-2": 315,
+        "gelatine": 3.5,
+        "eau-gelatine": 21
+      }
+    },
+    "ganache-montee-chocolat-blanc": {
+      "nom": "Ganache Montée Chocolat Blanc",
+      "total": 354,
+      "ingredients": {
+        "chocolat-blanc": 60,
+        "creme-liquide-1": 100,
+        "creme-liquide-2": 180,
+        "gelatine": 2,
+        "eau-gelatine": 12
+      }
+    },
+    "ganache-montee-pralinee": {
+      "nom": "Ganache Montée Pralinée",
+      "total": 429,
+      "ingredients": {
+        "chocolat-blanc": 55,
+        "creme-liquide-1": 100,
+        "creme-liquide-2": 200,
+        "praline": 60,
+        "gelatine": 2,
+        "eau-gelatine": 12
+      }
+    },
+    "ganache-montee-infusee": {
+      "nom": "Ganache Montée Infusée",
+      "total": 354,
+      "ingredients": {
+        "chocolat-blanc": 60,
+        "creme-liquide-1": 100,
+        "creme-liquide-2": 180,
+        "gelatine": 2,
+        "eau-gelatine": 12,
+        "infusion": "1 gousse vanille / 10g herbes, thé, épices / 5g piment-poivre"
+      }
+    },
+    "ganache-montee-chocolat-blanc-fruits": {
+      "nom": "Ganache Montée Chocolat Blanc aux Fruits",
+      "total": 401.5,
+      "ingredients": {
+        "chocolat-blanc": 70,
+        "creme-liquide-1": 130,
+        "creme-liquide-2": 125,
+        "puree-fruit": 65,
+        "gelatine": 1.5,
+        "eau-gelatine": 9
+      }
+    },
+    "creme-patissiere-vanille": {
+      "nom": "Crème Pâtissière à la Vanille",
+      "total": 380,
+      "ingredients": {
+        "lait": 250,
+        "gousse-vanille": 1,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20
+      },
+      "notes": "Infusion vanille 30 min après courte ébullition. Cuisson petite ébullition 1 min 30 à 2 min. Beurre congelé en petits dés. Filmer au contact.",
+      "usages": [
+        "éclair",
+        "millefeuille",
+        "Saint-Honoré",
+        "tarte aux fruits"
+      ]
+    },
+    "creme-patissiere-infusee": {
+      "nom": "Crème Pâtissière Infusée",
+      "total": 390,
+      "ingredients": {
+        "lait": 250,
+        "epice-herbe": 10,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20
+      },
+      "notes": "Infusion 10 à 30 min selon intensité souhaitée. Filtrer le lait."
+    },
+    "creme-patissiere-fruits": {
+      "nom": "Crème Pâtissière aux Fruits",
+      "total": 380,
+      "ingredients": {
+        "puree-fruit": 250,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20
+      }
+    },
+    "creme-patissiere-chocolat": {
+      "nom": "Crème Pâtissière au Chocolat",
+      "total": 430,
+      "ingredients": {
+        "lait": 250,
+        "sucre": 40,
+        "jaunes": 50,
+        "maizena": 15,
+        "chocolat": 75
+      },
+      "notes": "Sucre à ajuster selon chocolat choisi (noir, lait, blanc) et goûts."
+    },
+    "creme-patissiere-praline": {
+      "nom": "Crème Pâtissière au Praliné",
+      "total": 455,
+      "ingredients": {
+        "lait": 250,
+        "sucre": 40,
+        "jaunes": 50,
+        "maizena": 20,
+        "beurre": 20,
+        "praline": 75
+      }
+    },
+    "namelaka-chocolat-noir": {
+      "nom": "Namelaka Chocolat Noir",
+      "total": 855,
+      "ingredients": {
+        "chocolat-noir-70": 250,
+        "lait": 200,
+        "creme-liquide-30": 400,
+        "gelatine": 5
+      },
+      "notes": "Base infinie en termes d'usages. Texture comme des langes (traduction japonaise).",
+      "usages": [
+        "glaçage",
+        "pochage",
+        "garnitures tartes",
+        "insert entremets",
+        "créations personnelles"
+      ]
+    },
+    "namelaka-chocolat-lait": {
+      "nom": "Namelaka Chocolat au Lait",
+      "total": 955,
+      "ingredients": {
+        "chocolat-lait-40": 350,
+        "lait": 200,
+        "creme-liquide-30": 400,
+        "gelatine": 5
+      }
+    },
+    "namelaka-chocolat-blanc": {
+      "nom": "Namelaka Chocolat Blanc",
+      "total": 944,
+      "ingredients": {
+        "chocolat-blanc-35": 340,
+        "lait": 200,
+        "creme-liquide-30": 400,
+        "gelatine": 4
+      }
+    },
+    "namelaka-chocolat-dulcey": {
+      "nom": "Namelaka Chocolat Dulcey",
+      "total": 944,
+      "ingredients": {
+        "chocolat-dulcey-35": 340,
+        "lait": 200,
+        "creme-liquide-30": 400,
+        "gelatine": 4
+      }
+    },
+    "namelaka-infusee": {
+      "nom": "Namelaka Infusée",
+      "total": 472,
+      "ingredients": {
+        "chocolat-blanc-35": 170,
+        "lait": 100,
+        "creme-liquide-30": 200,
+        "gelatine": 2,
+        "infusion": "1 gousse vanille ou 5-10g épice"
+      }
+    },
+    "namelaka-pralinee": {
+      "nom": "Namelaka Pralinée",
+      "total": 492,
+      "ingredients": {
+        "chocolat-blanc-35": 170,
+        "lait": 100,
+        "creme-liquide-30": 200,
+        "gelatine": 2,
+        "praline": 20
+      }
+    },
+    "namelaka-fruits": {
+      "nom": "Namelaka aux Fruits",
+      "total": 472,
+      "ingredients": {
+        "chocolat-blanc-35": 170,
+        "lait": 10,
+        "puree-fruit": 90,
+        "creme-liquide-30": 200,
+        "gelatine": 2
+      }
+    },
+    "creme-mousseline-vanille": {
+      "nom": "Crème Mousseline à la Vanille",
+      "total": 510,
+      "ingredients": {
+        "lait": 250,
+        "gousse-vanille": 1,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre-1": 20,
+        "beurre-2": 130
+      },
+      "notes": "Crème pâtissière + beurre pommade ajouté après refroidissement complet. Monter au fouet jusqu'à crème bien lisse et homogène.",
+      "usages": [
+        "fraisier",
+        "framboisier",
+        "Paris-Brest",
+        "créations personnelles"
+      ]
+    },
+    "creme-mousseline-infusee": {
+      "nom": "Crème Mousseline Infusée",
+      "total": 520,
+      "ingredients": {
+        "lait": 250,
+        "epice-herbe": 10,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre-1": 20,
+        "beurre-2": 130
+      }
+    },
+    "creme-mousseline-fruits": {
+      "nom": "Crème Mousseline aux Fruits",
+      "total": 510,
+      "ingredients": {
+        "puree-fruit": 250,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre-1": 20,
+        "beurre-2": 130
+      }
+    },
+    "creme-mousseline-chocolat": {
+      "nom": "Crème Mousseline au Chocolat",
+      "total": 560,
+      "ingredients": {
+        "lait": 250,
+        "sucre": 40,
+        "jaunes": 50,
+        "maizena": 15,
+        "chocolat": 75,
+        "beurre": 130
+      }
+    },
+    "creme-mousseline-praline": {
+      "nom": "Crème Mousseline au Praliné",
+      "total": 730,
+      "ingredients": {
+        "lait": 220,
+        "sucre": 35,
+        "jaunes": 50,
+        "maizena": 25,
+        "beurre-1": 20,
+        "praline": 250,
+        "beurre-pommade": 130
+      }
+    },
+    "creme-diplomate-vanille": {
+      "nom": "Crème Diplomate à la Vanille",
+      "total": 483,
+      "ingredients": {
+        "lait": 250,
+        "gousse-vanille": 1,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20,
+        "gelatine": 3,
+        "creme-liquide-30": 100
+      },
+      "notes": "Crème pâtissière + gélatine + crème montée mousse à raser. Incorporer délicatement à la maryse.",
+      "usages": [
+        "tartes",
+        "millefeuille",
+        "fraisier version plus légère",
+        "créations personnelles"
+      ]
+    },
+    "creme-diplomate-infusee": {
+      "nom": "Crème Diplomate Infusée",
+      "total": 493,
+      "ingredients": {
+        "lait": 250,
+        "epice-herbe": 10,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20,
+        "gelatine": 3,
+        "creme-liquide-30": 100
+      }
+    },
+    "creme-diplomate-fruits": {
+      "nom": "Crème Diplomate aux Fruits",
+      "total": 483,
+      "ingredients": {
+        "puree-fruit": 250,
+        "jaunes": 50,
+        "sucre": 40,
+        "maizena": 20,
+        "beurre": 20,
+        "gelatine": 3,
+        "creme-liquide-30": 100
+      }
+    },
+    "creme-diplomate-chocolat": {
+      "nom": "Crème Diplomate au Chocolat",
+      "total": 543,
+      "ingredients": {
+        "lait": 250,
+        "sucre": 50,
+        "jaunes": 50,
+        "maizena": 15,
+        "chocolat": 75,
+        "gelatine": 3,
+        "creme-liquide-30": 100
+      }
+    },
+    "creme-diplomate-praline": {
+      "nom": "Crème Diplomate au Praliné",
+      "total": 558,
+      "ingredients": {
+        "lait": 250,
+        "sucre": 40,
+        "jaunes": 50,
+        "maizena": 20,
+        "beurre": 20,
+        "praline": 75,
+        "gelatine": 3,
+        "creme-liquide-30": 100
+      }
+    },
+    "confit-de-fruits": {
+      "nom": "Confit de Fruits",
+      "total": 245,
+      "ingredients": {
+        "puree-fruit": 200,
+        "sucre": 20,
+        "jus-citron": 20,
+        "pectine-nh": 5
+      },
+      "notes": "Mélanger sucre et pectine NH avant versement en pluie. Ébullition quelques secondes. Filmer au contact jusqu'à gélification. Mixer pour texture gel lisse.",
+      "usages": [
+        "insert entremets",
+        "garniture tartes",
+        "bonbons de chocolat"
+      ]
+    },
+    "confit-de-fruits-aromatise": {
+      "nom": "Confit de Fruits Aromatisé",
+      "total": 255,
+      "ingredients": {
+        "puree-fruit": 200,
+        "sucre": 20,
+        "jus-citron": 20,
+        "pectine-nh": 5,
+        "herbes-aromatiques": 10
+      },
+      "notes": "Mixer avec herbes (menthe, basilic) à la fin pour un gel aromatisé lisse."
+    }
+  },
+  "ganaches-guide": {
+    "description": "Mes recettes de ganaches et de ganaches montées — guide ultime. Deux grandes familles : ganaches classiques (pour garnir les macarons, remplir des choux, fourrer des bonbons) et ganaches montées (texture aérienne, pochage sur entremets, macarons, tartes). Pour toutes : émulsion au centre avec la maryse en 3 fois. Si ganache trop dure à la sortie du frigo, travailler légèrement à la maryse pour détendre.",
+    "methode-emulsion": "1) Fais fondre le chocolat au bain marie. 2) Porte la crème (ou purée) à ébullition. 3) Verse en 3 fois sur le chocolat en créant une émulsion au centre avec ta maryse. 4) Ajoute les additifs (beurre, miel, alcool, gélatine) et mixe au mixeur plongeant. 5) Cristallise au frigo filmé au contact. 6) Pour les montées : ajoute la crème 2 froide avant cristallisation, une nuit au frigo, puis monte au fouet le lendemain.",
+    "classiques": {
+      "ganache-vanille": {
+        "nom": "Ganache à la vanille",
+        "total": 345,
+        "ingredients": {
+          "chocolat-blanc-34": 185,
+          "creme-liquide-30": 160,
+          "gousse-vanille": 1
+        },
+        "notes": "Infuser la gousse + graines dans la crème 30 min après petite ébullition. Retirer la gousse, chauffer à nouveau. Verser en 3 fois sur le chocolat fondu. Cristalliser 2h au frigo."
+      },
+      "ganache-yuzu": {
+        "nom": "Ganache Yuzu",
+        "total": 302,
+        "ingredients": {
+          "chocolat-couverture-yuzu-ou-blanc-34": 200,
+          "jus-yuzu": 30,
+          "creme-liquide-30": 70,
+          "gelatine": 2
+        },
+        "notes": "Ajouter la gélatine et mixer. Ajouter le jus de Yuzu à la fin et mixer à nouveau. Cristalliser 2h."
+      },
+      "ganache-griotte": {
+        "nom": "Ganache Griotte",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-cerise": 150
+        },
+        "notes": "Purée de cerise à ébullition, verser en 3 fois sur le chocolat fondu. Cristalliser 2h."
+      },
+      "ganache-chocolat-noir": {
+        "nom": "Ganache Chocolat Noir",
+        "total": 395,
+        "ingredients": {
+          "chocolat-noir-65": 150,
+          "creme-liquide-30": 185,
+          "miel": 30,
+          "beurre": 30
+        },
+        "notes": "Crème chaude sur chocolat noir fondu. Ajouter miel et beurre, mixer au plongeant jusqu'à ganache bien lisse et brillante. Cristalliser 2h."
+      },
+      "ganache-chocolat-lait": {
+        "nom": "Ganache Chocolat au Lait",
+        "total": 230,
+        "ingredients": {
+          "chocolat-lait-40": 90,
+          "creme-liquide-30": 105,
+          "beurre": 25,
+          "miel": 10
+        },
+        "notes": "Crème chaude sur chocolat lait fondu. Ajouter beurre et miel, mixer au plongeant pour parfaire l'émulsion."
+      },
+      "ganache-dulcey": {
+        "nom": "Ganache Chocolat Dulcey",
+        "total": 350,
+        "ingredients": {
+          "chocolat-dulcey": 195,
+          "creme-liquide-30": 120,
+          "beurre": 20,
+          "miel": 15
+        },
+        "notes": "Crème chaude sur Dulcey fondu. Ajouter beurre et miel, mixer au plongeant."
+      },
+      "ganache-noisette": {
+        "nom": "Ganache Noisette",
+        "total": 450,
+        "ingredients": {
+          "chocolat-blanc-34": 200,
+          "creme-liquide-30": 200,
+          "praline-noisette": 50
+        },
+        "notes": "Ajouter le praliné et mixer au plongeant. Cristalliser 4h (temps allongé pour les pralinés)."
+      },
+      "ganache-cafe": {
+        "nom": "Ganache Café",
+        "total": 405,
+        "ingredients": {
+          "chocolat-blanc-34": 225,
+          "creme-liquide-30": 160,
+          "cafe-grains": 20
+        },
+        "notes": "Infuser les grains de café 30 min dans la crème après petite ébullition. Filtrer, repeser, rajouter pour retomber à 160g. Chauffer à nouveau."
+      },
+      "ganache-framboise": {
+        "nom": "Ganache Framboise",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-framboise": 150
+        }
+      },
+      "ganache-pistache": {
+        "nom": "Ganache Pistache",
+        "total": 450,
+        "ingredients": {
+          "chocolat-blanc-34": 200,
+          "creme-liquide-30": 200,
+          "pate-pistache": 50
+        },
+        "notes": "Cristalliser 4h."
+      },
+      "ganache-brioche": {
+        "nom": "Ganache à la Brioche",
+        "total": 330,
+        "ingredients": {
+          "chocolat-blanc-34": 100,
+          "creme-liquide-30": 150,
+          "beurre": 30,
+          "brioche": 50
+        },
+        "notes": "Émietter la brioche, infuser 30 min dans la crème. Filtrer, repeser, rajouter pour retomber à 150g. Ajouter beurre en petits dés à la fin."
+      },
+      "ganache-mandarine": {
+        "nom": "Ganache Mandarine",
+        "total": 410,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "creme-liquide-30": 100,
+          "puree-mandarine": 50,
+          "miel": 20
+        }
+      },
+      "ganache-cacahuete": {
+        "nom": "Ganache Cacahuète",
+        "total": 450,
+        "ingredients": {
+          "chocolat-blanc-34": 200,
+          "creme-liquide-30": 200,
+          "beurre-cacahuete": 50
+        },
+        "notes": "Cristalliser 4h."
+      },
+      "ganache-passion": {
+        "nom": "Ganache Fruit de la Passion",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-fruit-passion": 150
+        }
+      },
+      "ganache-cassis-violette": {
+        "nom": "Ganache Cassis et Violette",
+        "total": 395,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-cassis": 150,
+          "sirop-violette": 5
+        }
+      },
+      "ganache-lait-passion": {
+        "nom": "Ganache Chocolat au Lait et Fruit de la Passion",
+        "total": 290,
+        "ingredients": {
+          "chocolat-lait-40": 180,
+          "puree-fruit-passion": 80,
+          "beurre": 30
+        }
+      },
+      "ganache-passion-mangue": {
+        "nom": "Ganache Fruit de la Passion et Mangue",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-fruit-passion": 100,
+          "puree-mangue": 50
+        }
+      },
+      "ganache-framboise-rose": {
+        "nom": "Ganache Framboise et Rose",
+        "total": 400,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-framboise": 150,
+          "eau-rose": 10
+        }
+      },
+      "ganache-griotte-amaretto": {
+        "nom": "Ganache Griotte et Amaretto",
+        "total": 400,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-cerise": 150,
+          "amaretto": 10
+        }
+      },
+      "ganache-griotte-tonka": {
+        "nom": "Ganache Griotte et Tonka",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "puree-cerise": 150,
+          "feve-tonka": 0.25
+        },
+        "notes": "Râper la fève de tonka dans la purée avant ébullition."
+      },
+      "ganache-rose": {
+        "nom": "Ganache à la Rose",
+        "total": 420,
+        "ingredients": {
+          "chocolat-blanc-34": 250,
+          "creme-liquide-30": 160,
+          "eau-rose": 10
+        }
+      },
+      "ganache-jasmin": {
+        "nom": "Ganache au Jasmin",
+        "total": 395,
+        "ingredients": {
+          "chocolat-blanc-34": 225,
+          "creme-liquide-30": 160,
+          "the-jasmin": 10
+        },
+        "notes": "Infuser le thé 10 min. Filtrer au chinois/tamis, repeser pour retomber à 185g."
+      },
+      "ganache-fleur-oranger": {
+        "nom": "Ganache à la Fleur d'Oranger",
+        "total": 410,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "creme-liquide-30": 160,
+          "eau-fleur-oranger": 10
+        }
+      },
+      "ganache-chocolat-piment-espelette": {
+        "nom": "Ganache Chocolat et Piment d'Espelette",
+        "total": 332,
+        "ingredients": {
+          "creme-liquide-30": 150,
+          "chocolat-noir-65": 75,
+          "chocolat-lait-40": 75,
+          "piment-espelette": 2,
+          "beurre": 30
+        },
+        "notes": "Infuser le piment 15 min dans la crème après courte ébullition. Cristalliser 4h."
+      },
+      "ganache-safran": {
+        "nom": "Ganache au Safran",
+        "total": 385.2,
+        "ingredients": {
+          "chocolat-blanc-34": 225,
+          "creme-liquide-30": 160,
+          "filament-safran": 0.2
+        },
+        "notes": "Infuser le safran 10 min dans la crème fumante (ne pas porter à ébullition)."
+      },
+      "ganache-verveine": {
+        "nom": "Ganache à la Verveine",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 225,
+          "creme-liquide-30": 160,
+          "verveine-sechee": 5
+        },
+        "notes": "Infuser la verveine 10 min. Filtrer, repeser pour retomber à 185g."
+      },
+      "ganache-matcha": {
+        "nom": "Ganache au Matcha",
+        "total": 390,
+        "ingredients": {
+          "chocolat-blanc-34": 225,
+          "creme-liquide-30": 160,
+          "the-matcha": 5
+        },
+        "notes": "Infuser le matcha 10 min dans la crème fumante (ne pas porter à ébullition). Filtrer."
+      },
+      "ganache-sesame-noir": {
+        "nom": "Ganache Sésame Noir",
+        "total": 420,
+        "ingredients": {
+          "chocolat-blanc-34": 240,
+          "creme-liquide-30": 120,
+          "praline-sesame-noir-ou-pate": 60
+        },
+        "notes": "Cristalliser 4h."
+      },
+      "ganache-mojito": {
+        "nom": "Ganache façon Mojito",
+        "total": 312,
+        "ingredients": {
+          "chocolat-blanc-34": 200,
+          "jus-citron-vert": 30,
+          "creme-liquide-30": 70,
+          "gelatine": 2,
+          "feuille-menthe": 5,
+          "rhum-ambre": 5
+        },
+        "notes": "Ciseler les feuilles de menthe pour libérer les huiles. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g. Ajouter gélatine, citron vert et rhum à la fin."
+      },
+      "ganache-chocolat-tonka": {
+        "nom": "Ganache Chocolat Tonka",
+        "total": 195.25,
+        "ingredients": {
+          "chocolat-noir-65": 75,
+          "creme-liquide-30": 90,
+          "beurre": 15,
+          "miel": 15,
+          "feve-tonka": 0.25
+        },
+        "notes": "Porter à ébullition crème + tonka, laisser infuser 5 min."
+      },
+      "ganache-citron-basilic": {
+        "nom": "Ganache Citron Basilic",
+        "total": 307,
+        "ingredients": {
+          "chocolat-blanc-34": 200,
+          "jus-citron-vert": 30,
+          "creme-liquide-30": 70,
+          "gelatine": 2,
+          "feuille-basilic": 5
+        },
+        "notes": "Ciseler le basilic. Infuser 24h à froid dans la crème. Filtrer, rajouter pour retomber à 70g."
+      },
+      "ganache-popcorn": {
+        "nom": "Ganache Popcorn",
+        "total": 315,
+        "ingredients": {
+          "chocolat-blanc-34": 150,
+          "creme-liquide-30": 125,
+          "popcorn": 40
+        },
+        "notes": "Mixer le popcorn, infuser 30 min dans la crème après petite ébullition. Filtrer, chauffer à nouveau."
+      }
+    },
+    "montees": {
+      "ganache-montee-vanille": {
+        "nom": "Ganache Montée à la Vanille",
+        "total": 354,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "gousse-vanille": 1
+        },
+        "notes": "Base universelle pour ganaches montées infusées. Crème (1) chauffée pour infusion + émulsion sur chocolat, crème (2) froide incorporée au mixeur. Cristallisation toute une nuit au frigo avant montage au fouet."
+      },
+      "ganache-montee-piment-espelette": {
+        "nom": "Ganache Montée au Piment d'Espelette",
+        "total": 356,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "piment-espelette": 2
+        },
+        "notes": "Infuser le piment 30 min dans la crème (1) après petite ébullition."
+      },
+      "ganache-montee-basilic": {
+        "nom": "Ganache Montée au Basilic",
+        "total": 364,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "feuilles-basilic": 10
+        },
+        "notes": "Infuser 10 min. Filtrer, rajouter de la crème pour retomber sur 100g."
+      },
+      "ganache-montee-menthe": {
+        "nom": "Ganache Montée à la Menthe",
+        "total": 369,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "feuilles-menthe": 15
+        },
+        "notes": "Infuser 10 min. Filtrer, rajouter pour retomber sur 100g."
+      },
+      "ganache-montee-cafe": {
+        "nom": "Ganache Montée au Café",
+        "total": 369,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "grains-cafe": 15
+        },
+        "notes": "Infuser 15 min puis mixer. Filtrer, rajouter pour retomber sur 100g."
+      },
+      "ganache-montee-cannelle": {
+        "nom": "Ganache Montée à la Cannelle",
+        "total": 369,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "batons-cannelle": 15
+        },
+        "notes": "Infuser 30 min. Filtrer, rajouter pour retomber sur 100g."
+      },
+      "ganache-montee-matcha": {
+        "nom": "Ganache Montée au Thé Matcha",
+        "total": 359,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "the-matcha": 5
+        },
+        "notes": "Infuser 10 min après petite ébullition."
+      },
+      "ganache-montee-chocolat-lait": {
+        "nom": "Ganache Montée au Chocolat au Lait",
+        "total": 376,
+        "ingredients": {
+          "chocolat-lait": 130,
+          "creme-liquide-30-1": 75,
+          "creme-liquide-30-2": 150,
+          "gelatine": 3,
+          "eau-gelatine": 18
+        }
+      },
+      "ganache-montee-lait-passion": {
+        "nom": "Ganache Montée au Chocolat au Lait et Fruit de la Passion",
+        "total": 499.5,
+        "ingredients": {
+          "chocolat-lait": 145,
+          "puree-fruit-passion": 90,
+          "creme-liquide-30-1": 65,
+          "creme-liquide-30-2": 175,
+          "gelatine": 3.5,
+          "eau-gelatine": 21
+        },
+        "notes": "Chauffer crème (1) avec purée de fruit de la passion ensemble."
+      },
+      "ganache-montee-chocolat-noir": {
+        "nom": "Ganache Montée au Chocolat Noir",
+        "total": 371,
+        "ingredients": {
+          "chocolat-noir": 100,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 150,
+          "gelatine": 3,
+          "eau-gelatine": 18
+        }
+      },
+      "ganache-montee-dulcey": {
+        "nom": "Ganache Montée au Chocolat Dulcey",
+        "total": 619.5,
+        "ingredients": {
+          "chocolat-dulcey": 120,
+          "creme-liquide-30-1": 160,
+          "creme-liquide-30-2": 315,
+          "gelatine": 3.5,
+          "eau-gelatine": 21
+        }
+      },
+      "ganache-montee-noisette": {
+        "nom": "Ganache Montée à la Noisette",
+        "total": 429,
+        "ingredients": {
+          "chocolat-blanc": 55,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 200,
+          "praline-noisette": 60,
+          "gelatine": 2,
+          "eau-gelatine": 12
+        },
+        "notes": "Ajouter le praliné avant la crème (2)."
+      },
+      "ganache-montee-pistache": {
+        "nom": "Ganache Montée à la Pistache",
+        "total": 429,
+        "ingredients": {
+          "chocolat-blanc": 55,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 200,
+          "praline-pistache": 60,
+          "gelatine": 2,
+          "eau-gelatine": 12
+        }
+      },
+      "ganache-montee-cacahuete": {
+        "nom": "Ganache Montée à la Cacahuète",
+        "total": 429,
+        "ingredients": {
+          "chocolat-blanc": 55,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 200,
+          "beurre-cacahuete": 60,
+          "gelatine": 2,
+          "eau-gelatine": 12
+        }
+      },
+      "ganache-montee-sesame-noir": {
+        "nom": "Ganache Montée au Sésame Noir",
+        "total": 429,
+        "ingredients": {
+          "chocolat-blanc": 55,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 200,
+          "praline-sesame-noir": 60,
+          "gelatine": 2,
+          "eau-gelatine": 12
+        }
+      },
+      "ganache-montee-rhum": {
+        "nom": "Ganache Montée au Rhum",
+        "total": 369,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "rhum": 15
+        }
+      },
+      "ganache-montee-fleur-oranger": {
+        "nom": "Ganache Montée à la Fleur d'Oranger",
+        "total": 379,
+        "ingredients": {
+          "chocolat-blanc": 80,
+          "creme-liquide-30-1": 90,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "eau-fleur-oranger": 15
+        }
+      },
+      "ganache-montee-rose": {
+        "nom": "Ganache Montée à la Rose",
+        "total": 379,
+        "ingredients": {
+          "chocolat-blanc": 80,
+          "creme-liquide-30-1": 90,
+          "creme-liquide-30-2": 180,
+          "gelatine": 2,
+          "eau-gelatine": 12,
+          "eau-rose": 15
+        }
+      },
+      "ganache-montee-noix-de-coco": {
+        "nom": "Ganache Montée à la Noix de Coco",
+        "total": 345,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-de-coco": 85,
+          "creme-liquide-30": 185,
+          "gelatine": 3,
+          "eau-gelatine": 12
+        }
+      },
+      "ganache-montee-yuzu": {
+        "nom": "Ganache Montée au Yuzu",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc-ou-inspiration-yuzu": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "jus-yuzu": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-passion": {
+        "nom": "Ganache Montée au Fruit de la Passion",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc-ou-inspiration-passion": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "puree-fruit-passion": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-framboise": {
+        "nom": "Ganache Montée à la Framboise",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc-ou-inspiration-framboise": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "puree-framboise": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-fraise": {
+        "nom": "Ganache Montée à la Fraise",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc-ou-inspiration-fraise": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "puree-fraise": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-citron-vert": {
+        "nom": "Ganache Montée au Citron Vert",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "jus-citron-vert-zestes": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        },
+        "notes": "Chauffer la crème (1) avec les zestes."
+      },
+      "ganache-montee-mojito": {
+        "nom": "Ganache Montée façon Mojito",
+        "total": 425.5,
+        "ingredients": {
+          "chocolat-blanc": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "jus-citron-vert": 65,
+          "rhum": 15,
+          "feuilles-menthe": 10,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        },
+        "notes": "Infuser les feuilles de menthe 10 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g."
+      },
+      "ganache-montee-cerise": {
+        "nom": "Ganache Montée à la Cerise",
+        "total": 400.5,
+        "ingredients": {
+          "chocolat-blanc": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "puree-cerise": 65,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-tiramisu": {
+        "nom": "Ganache Montée Façon Tiramisu",
+        "total": 374,
+        "ingredients": {
+          "chocolat-blanc": 60,
+          "creme-liquide-30-1": 100,
+          "creme-liquide-30-2": 140,
+          "mascarpone": 40,
+          "grains-cafe": 20,
+          "gelatine": 2,
+          "eau-gelatine": 12
+        },
+        "notes": "Infuser le café 15 min dans crème (1), mixer, filtrer. Ajouter le mascarpone avec la crème (2)."
+      },
+      "ganache-montee-cerise-amaretto": {
+        "nom": "Ganache Montée à la Cerise et Amaretto",
+        "total": 415.5,
+        "ingredients": {
+          "chocolat-blanc": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "puree-cerise": 65,
+          "amaretto": 15,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        }
+      },
+      "ganache-montee-pomme-cannelle": {
+        "nom": "Ganache Montée à la Pomme et à la Cannelle",
+        "total": 415.5,
+        "ingredients": {
+          "chocolat-blanc": 70,
+          "creme-liquide-30-1": 130,
+          "creme-liquide-30-2": 125,
+          "jus-pomme": 65,
+          "batons-cannelle": 15,
+          "gelatine": 1.5,
+          "eau-gelatine": 9
+        },
+        "notes": "Infuser les bâtons de cannelle 30 min dans la crème (1). Filtrer, rajouter pour retomber sur 100g."
+      }
+    }
+  },
+  "pates-feuilletees": {
+    "description": "Les pâtes feuilletées de Geoffrey : la classique (plus croustillante) et l'inversée (plus fondante).",
+    "conseils-generaux": {
+      "repos-detrempe": "Minimum 30 minutes au frigo, idéalement toute une nuit",
+      "regle-des-tours": "5 ou 6 tours maximum. Jamais 2 tours doubles d'affilés sans repos. Max 2 tours avant chaque repos au frigo.",
+      "repos-entre-tours": "Idéalement plusieurs heures au frigo, minimum 30 minutes",
+      "epaisseurs": {
+        "mille-feuilles-galette": "2 à 3 mm",
+        "disque-saint-honore": "4 à 6 mm"
+      },
+      "cuisson": "180°C pendant 30 à 40 minutes. Sortir 2-5 min avant la fin, saupoudrer de caramel mixé ou sucre glace, puis 5 min à 200°C pour ambrer.",
+      "usages": [
+        "tartes feuilletées",
+        "flans",
+        "mille-feuilles",
+        "Saint-Honoré",
+        "créations personnelles"
+      ]
+    },
+    "feuilletee-classique": {
+      "nom": "Pâte Feuilletée Classique",
+      "description": "La plus croustillante des pâtes feuilletées. Beurre enchâssé dans une détrempe.",
+      "total": 554,
+      "rendement": "1 galette de 24 cm",
+      "ingredients": {
+        "detrempe": {
+          "farine-t55": 250,
+          "eau": 125,
+          "vinaigre-blanc": 4,
+          "beurre": 175
+        }
+      },
+      "formes": {
+        "detrempe-rectangle-cm": "30 x 15",
+        "beurre-carre-cm": "15 x 20"
+      },
+      "methode": [
+        "Mélanger farine, sel, eau et vinaigre blanc au robot jusqu'à pâte à peine homogène",
+        "Terminer de fraser à la main sur le plan de travail",
+        "Filmer au contact après incision en croix, reposer 30 min minimum (idéal : une nuit)",
+        "Former le beurre en carré 15x20 cm dans du papier sulfurisé",
+        "Étaler la détrempe en rectangle 30x15 cm",
+        "Dès que le beurre et la détrempe ont la même texture, démarrer les tours (simple ou double)",
+        "Max 2 tours avant repos, jamais 2 tours doubles d'affilés",
+        "Reposer 30 min minimum entre 2 tours (idéal : plusieurs heures)",
+        "5 ou 6 tours au total selon préférences (6 max)",
+        "Abaisser à 2-3 mm (mille-feuille/galette) ou 4-6 mm (Saint-Honoré)"
+      ]
+    },
+    "feuilletee-inversee": {
+      "nom": "Pâte Feuilletée Inversée",
+      "description": "La plus fondante des pâtes feuilletées. Détrempe enchâssée dans du beurre manié.",
+      "total": 700,
+      "rendement": "6 mille-feuilles individuels",
+      "ingredients": {
+        "detrempe": {
+          "farine-t55": 210,
+          "eau": 90,
+          "vinaigre-blanc": 3,
+          "beurre": 70,
+          "sel": 7
+        },
+        "beurre-manie": {
+          "farine-t55": 90,
+          "beurre": 230
+        }
+      },
+      "formes": {
+        "detrempe-carre-cm": "15 x 15",
+        "beurre-manie-carre-cm": "30 x 15"
+      },
+      "methode": [
+        "Détrempe : mélanger farine, sel, eau, beurre pommade et vinaigre au robot jusqu'à pâte à peine homogène",
+        "Terminer de fraser à la main, former un carré 15x15 cm dans du papier sulfurisé",
+        "Reposer au frigo 30 min minimum (idéal : une nuit)",
+        "Beurre manié : mélanger farine et beurre au robot feuille jusqu'à pâte à peine homogène",
+        "Fraser à la main, former un carré 30x15 cm dans du papier sulfurisé",
+        "Reposer le tout idéalement une nuit (minimum 30 min)",
+        "Dès que beurre manié et détrempe ont la même texture, démarrer les tours",
+        "Max 2 tours avant repos, jamais 2 tours doubles d'affilés",
+        "5 ou 6 tours au total (6 max)",
+        "Abaisser à 2-3 mm ou 4-6 mm selon usage"
+      ]
+    }
+  },
+  "anti-rate": {
+    "description": "Diagnostic anti-ratés de Geoffrey : pour chaque grand classique de la pâtisserie, les raisons qui font rater + les solutions qui sauvent. Tiré du Guide Anti-ratés (11 chapitres, 60+ problèmes).",
+    "regles-dor": {
+      "titre": "Les 5 règles d'or de Geoffrey",
+      "regles": [
+        {
+          "numero": 1,
+          "nom": "Lis la recette en entier avant de commencer",
+          "detail": "Avant de sortir le moindre ingrédient, lis la recette du début à la fin. Comprends chaque étape, repère les temps de repos, anticipe les étapes qui demandent du matériel spécifique. 90% des ratés viennent d'une lecture approximative."
+        },
+        {
+          "numero": 2,
+          "nom": "Pèse TOUT au gramme près",
+          "detail": "La pâtisserie n'est pas la cuisine. Jamais au volume (cuillères, tasses), toujours au poids. Même l'eau, même les oeufs. Une balance au 0,1g pour les petites quantités (gélatine, levure)."
+        },
+        {
+          "numero": 3,
+          "nom": "Respecte la précision : matériel + températures",
+          "detail": "Un bon thermomètre, des moules aux bonnes dimensions, les bons embouts de douille. Les températures (frigo, four, émulsions) ne sont pas des suggestions — ce sont des règles physiques."
+        },
+        {
+          "numero": 4,
+          "nom": "Respecte les temps de repos",
+          "detail": "30 min au frigo, ce n'est pas 15. Une nuit, ce n'est pas 3h. Les temps de repos servent à hydrater, relâcher le gluten, cristalliser, mûrir les arômes. Zapper un repos = zapper la réussite."
+        },
+        {
+          "numero": 5,
+          "nom": "Sois curieux : comprends le pourquoi",
+          "detail": "Ne te contente pas de suivre. Demande-toi pourquoi on fait fondre le chocolat à 35°C, pourquoi on tape la plaque des macarons, pourquoi la crème doit être froide. Quand tu comprends, tu ne rates plus."
+        }
+      ]
+    },
+    "pates-a-tarte": {
+      "titre": "Pâtes à tarte (sucrée, sablée, sucrée au beurre)",
+      "problemes": [
+        {
+          "probleme": "Des morceaux de beurre ne s'amalgament pas",
+          "raisons": [
+            "Beurre trop froid",
+            "Sablage pas assez poussé"
+          ],
+          "solutions": [
+            "Beurre en pommade (souple, pas fondu)",
+            "Sable la pâte jusqu'à obtenir une texture façon sable fin, sans morceau visible"
+          ]
+        },
+        {
+          "probleme": "La pâte est difficile à étaler, elle colle",
+          "raisons": [
+            "Pas assez de repos au frigo",
+            "Pâte trop chaude"
+          ],
+          "solutions": [
+            "Repos minimum 1h au frigo, idéalement toute une nuit",
+            "Étale entre deux feuilles guitare ou papier cuisson",
+            "Travaille vite sur un plan de travail froid"
+          ]
+        },
+        {
+          "probleme": "La pâte se casse à l'étalage",
+          "raisons": [
+            "Pâte trop froide / mal travaillée"
+          ],
+          "solutions": [
+            "Sors la pâte 5-10 min avant de l'étaler",
+            "Malaxe légèrement pour l'assouplir (sans chauffer)"
+          ]
+        },
+        {
+          "probleme": "La pâte rétrécit à la cuisson",
+          "raisons": [
+            "Gluten trop développé (pâte trop travaillée)",
+            "Pas assez de repos avant cuisson"
+          ],
+          "solutions": [
+            "Mélange le minimum — fraise une seule fois",
+            "Repose la pâte foncée dans le moule 30 min au frigo avant cuisson"
+          ]
+        },
+        {
+          "probleme": "Le fond de tarte gonfle à la cuisson",
+          "raisons": [
+            "Pas de trous (piquage)",
+            "Pas de cuisson à blanc avec des poids"
+          ],
+          "solutions": [
+            "Pique le fond à la fourchette ou avec un rouleau pic-vite",
+            "Cuisson à blanc avec billes de céramique, riz ou haricots secs"
+          ]
+        },
+        {
+          "probleme": "Les bords s'affaissent à la cuisson",
+          "raisons": [
+            "Fonçage pas assez serré contre le cercle",
+            "Pâte pas assez ferme au moment de la cuisson"
+          ],
+          "solutions": [
+            "Serre bien la pâte contre les parois (pas de pli d'air)",
+            "Congèle le fond foncé 15 min avant d'enfourner"
+          ]
+        }
+      ]
+    },
+    "pate-a-choux": {
+      "titre": "Pâte à choux",
+      "problemes": [
+        {
+          "probleme": "La pâte est trop liquide",
+          "raisons": [
+            "Trop d'oeufs incorporés",
+            "Panade pas assez desséchée"
+          ],
+          "solutions": [
+            "Dessèche bien la panade (film gras au fond de la casserole)",
+            "Incorpore les oeufs progressivement et vérifie la texture en continu : la pâte doit former un 'V' à la spatule"
+          ]
+        },
+        {
+          "probleme": "La pâte est trop ferme",
+          "raisons": [
+            "Pas assez d'oeufs",
+            "Évaporation trop forte pendant le dessèchement"
+          ],
+          "solutions": [
+            "Ajoute 1 oeuf supplémentaire légèrement battu, progressivement",
+            "La texture parfaite : ruban épais qui forme un bec"
+          ]
+        },
+        {
+          "probleme": "Les choux ne gonflent pas",
+          "raisons": [
+            "Four pas assez chaud au démarrage",
+            "Ouverture du four pendant la cuisson",
+            "Pâte trop liquide"
+          ],
+          "solutions": [
+            "Enfourne dans un four à 250°C puis descends immédiatement à 170°C (choc thermique)",
+            "N'ouvre JAMAIS le four pendant les 20 premières minutes",
+            "Respecte la texture idéale de la pâte"
+          ]
+        },
+        {
+          "probleme": "Les choux dégonflent à la sortie du four",
+          "raisons": [
+            "Sortie trop tôt (pas assez cuits)",
+            "Choc thermique à la sortie"
+          ],
+          "solutions": [
+            "Les choux doivent être bien dorés et légers quand tu les prends en main",
+            "Laisse refroidir progressivement, porte du four entrouverte 5 min avant de les sortir"
+          ]
+        },
+        {
+          "probleme": "Les choux craquent sur le dessus",
+          "raisons": [
+            "Pochage irrégulier",
+            "Croûtage insuffisant / craquelin absent"
+          ],
+          "solutions": [
+            "Poche régulièrement, lisse la pointe avec un doigt mouillé",
+            "Pose un disque de craquelin sur chaque chou : répartit la poussée et donne une surface parfaite"
+          ]
+        }
+      ]
+    },
+    "biscuits-cakes": {
+      "titre": "Biscuits et cakes",
+      "problemes": [
+        {
+          "probleme": "Le biscuit ne gonfle pas uniformément",
+          "raisons": [
+            "Mélange non homogène (blancs, farine ou beurre fondu mal incorporés)"
+          ],
+          "solutions": [
+            "Mélange soigneusement pour une incorporation parfaite : pas de mottes de farine, pas de traces de beurre, blancs bien intégrés"
+          ]
+        },
+        {
+          "probleme": "La génoise ne foisonne pas au bain-marie",
+          "raisons": [
+            "Les oeufs ont commencé à cuire (micro-grumeaux invisibles)"
+          ],
+          "solutions": [
+            "Mélange en continu pendant toute la durée du bain-marie",
+            "Ne dépasse jamais 50°C",
+            "Retire du bain-marie dès que le mélange est tiède-chaud et commence à mousser"
+          ]
+        },
+        {
+          "probleme": "Impossible de démouler le biscuit",
+          "raisons": [
+            "Moule mal graissé",
+            "Biscuit pas assez cuit",
+            "Cuit sur papier sulfurisé / tapis silicone"
+          ],
+          "solutions": [
+            "Graissage impeccable : beurre + farine, spray graissant, ou chemisage papier",
+            "Ajoute 1-2 min de cuisson : bords qui se rétractent, dessus qui rebondit",
+            "Pose la feuille (avec biscuit) sur une grille froide pendant 5 min : la vapeur s'échappe et la feuille se détache toute seule"
+          ]
+        }
+      ]
+    },
+    "macarons": {
+      "titre": "Macarons",
+      "problemes": [
+        {
+          "probleme": "Les macarons craquent à la cuisson",
+          "raisons": [
+            "Étape du croûtage zappée",
+            "Four trop humide"
+          ],
+          "solutions": [
+            "Laisse croûter jusqu'à ce que la surface soit mate et ne colle plus au doigt (20 min à 1h)",
+            "Cale la porte du four avec un manche de cuillère en bois, ou intercale une spatule en métal pour laisser l'humidité s'échapper"
+          ]
+        },
+        {
+          "probleme": "Les macarons sont granuleux",
+          "raisons": [
+            "Poudres pas assez mixées et/ou tamisées"
+          ],
+          "solutions": [
+            "Mixe poudre d'amande + sucre glace par petites pulsations (évite de faire sortir l'huile)",
+            "Tamise soigneusement, sans forcer — jette les grains trop gros",
+            "Objectif : un tant-pour-tant aussi fin que du talc"
+          ]
+        },
+        {
+          "probleme": "Les macarons ont une pointe",
+          "raisons": [
+            "Pas assez macaronné : l'appareil est trop épais"
+          ],
+          "solutions": [
+            "Macaronne jusqu'à obtenir un ruban souple et brillant : il forme un ruban continu, retombe en coulant doucement, se réabsorbe en quelques secondes, la surface se lisse toute seule"
+          ]
+        },
+        {
+          "probleme": "Les macarons sont en forme de dôme",
+          "raisons": [
+            "La plaque n'a pas été tapée après pochage"
+          ],
+          "solutions": [
+            "Soulève la plaque de quelques cm, laisse-la retomber fermement. Répète 2-3 fois. Les coques s'aplatissent, deviennent lisses, perdent leurs bulles d'air"
+          ]
+        },
+        {
+          "probleme": "Les macarons sont tout plats",
+          "raisons": [
+            "Tapé trop fort sur la plaque",
+            "Trop macaronné (appareil trop liquide)",
+            "Recette pas équilibrée",
+            "Blancs pas assez montés"
+          ],
+          "solutions": [
+            "Tape fermement mais raisonnablement",
+            "Macaronne jusqu'au ruban, pas au-delà — le ruban doit retomber mais la pâte doit garder une légère tenue",
+            "Utilise une recette testée et fiable",
+            "Monte les blancs jusqu'au bec d'oiseau ferme"
+          ]
+        },
+        {
+          "probleme": "Les macarons n'ont pas de collerette",
+          "raisons": [
+            "Blancs pas assez montés",
+            "Blancs trop frais ou trop froids",
+            "Collerette a cuit trop tôt (chaleur trop forte par le bas)"
+          ],
+          "solutions": [
+            "Monte les blancs jusqu'au bec d'oiseau ferme : brillants, fermes, forment un joli pic qui se tient",
+            "Utilise des blancs vieillis (2-3 jours) et à température ambiante",
+            "Cuis sur double plaque pour ralentir la chaleur du bas"
+          ]
+        },
+        {
+          "probleme": "Les macarons sont secs",
+          "raisons": [
+            "Trop cuits",
+            "Trop frais (juste cuits, pas maturés)"
+          ],
+          "solutions": [
+            "Raccourcis la cuisson de 1 à 2 min",
+            "Retire la feuille de cuisson de la plaque chaude dès la sortie du four (la chaleur résiduelle continue de sécher)",
+            "Laisse maturer 24h au frigo : la garniture hydrate la coque de l'intérieur",
+            "Sors les macarons au moins 10 min avant dégustation"
+          ]
+        }
+      ]
+    },
+    "caramel": {
+      "titre": "Caramel",
+      "problemes": [
+        {
+          "probleme": "Le sucre masse (recristallise)",
+          "raisons": [
+            "Récipient pas parfaitement propre (gras, résidus)",
+            "Récipient diffuse mal la chaleur",
+            "Sucre contient des impuretés",
+            "Sucre a subi un choc (remué, éclaboussures)"
+          ],
+          "solutions": [
+            "Travaille dans un récipient impeccable (dégraisse avec vinaigre blanc)",
+            "Casserole à fond épais, idéalement double fond ou cuivre",
+            "Écume les impuretés qui remontent",
+            "NE TOUILLE PAS — fais tourner la casserole sur elle-même, pas de spatule"
+          ]
+        },
+        {
+          "probleme": "Le caramel au beurre tranche",
+          "raisons": [
+            "Beurre ajouté trop froid (caramel trop froid à ce moment-là)"
+          ],
+          "solutions": [
+            "Ajoute le beurre entre 60°C et 70°C — zone parfaite d'émulsion",
+            "Rattrapage : retire du feu, réchauffe légèrement, fouette énergiquement"
+          ]
+        }
+      ],
+      "astuce-cle": {
+        "titre": "Astuce glucose : évite le massage",
+        "detail": "Ajoute jusqu'à 10% du poids total de sucre en sirop de glucose (ex : 200g sucre → 20g glucose). Anti-cristallisant naturel : empêche le sucre de recristalliser, stabilise la cuisson, caramel parfaitement lisse. Idéal débutants et pros."
+      }
+    },
+    "ganaches-cremes": {
+      "titre": "Ganaches et crèmes",
+      "problemes": [
+        {
+          "probleme": "La ganache a des bulles",
+          "raisons": [
+            "Mélangé trop vite / trop fort avec un fouet"
+          ],
+          "solutions": [
+            "Utilise une spatule ou maryse, pas de fouet",
+            "Mélange du centre vers l'extérieur, gestes circulaires et réguliers",
+            "Passe à la passette / chinois fin après la préparation"
+          ]
+        },
+        {
+          "probleme": "La ganache n'est pas lisse sur la tarte",
+          "raisons": [
+            "Coulée trop froide (déjà cristallisée)"
+          ],
+          "solutions": [
+            "Détends la ganache juste avant de la couler : 10-20s au micro-ondes en mélangeant, ou bain-marie court",
+            "Elle doit être fluide, brillante et tiède, pas chaude"
+          ]
+        },
+        {
+          "probleme": "La ganache n'est pas brillante (terne)",
+          "raisons": [
+            "Cristallisation trop brutale (mise au frigo trop vite)"
+          ],
+          "solutions": [
+            "Laisse cristalliser à température ambiante d'abord, jusqu'à ce que la ganache soit prise",
+            "Ensuite seulement, place au frais si besoin. Cristallisation lente = ganache brillante"
+          ]
+        },
+        {
+          "probleme": "La ganache est cassante",
+          "raisons": [
+            "Trop de chocolat (ou cacao trop puissant)"
+          ],
+          "solutions": [
+            "Rééquilibre le ratio : augmente la crème (+20%) ou réduis le chocolat (-10%)",
+            "Objectif : souple, fondante, crémeuse, mais qui tient parfaitement à la coupe"
+          ]
+        },
+        {
+          "probleme": "La ganache a tranché",
+          "raisons": [
+            "Crème et chocolat pas à la bonne température",
+            "Mélange trop énergique",
+            "Crème trop chaude (bouillante) ou chocolat trop chaud"
+          ],
+          "solutions": [
+            "Crème : chaude mais pas brûlante — juste frémissante",
+            "Chocolat : juste fondu, idéalement autour de 35°C",
+            "Rattrapage : attends que la ganache revienne à 35°C, puis mixe quelques secondes au Thermomix / Companion — l'émulsion se reforme"
+          ]
+        },
+        {
+          "probleme": "La crème à base d'oeufs a des grains",
+          "raisons": [
+            "Oeufs trop chauffés (coagulation)"
+          ],
+          "solutions": [
+            "Cuis à feu doux en permanence",
+            "Mélange en continu (ne lâche jamais la maryse / fouet)",
+            "Bain-marie pour les appareils sensibles (lemon curd, flan, crème anglaise)",
+            "Stoppe la cuisson immédiatement : verse dans un récipient froid dès que c'est cuit (nappe la spatule)"
+          ]
+        },
+        {
+          "probleme": "Le flan déborde à la cuisson",
+          "raisons": [
+            "Pas assez attendu avant d'enfourner (crème pas croûtée)",
+            "Trop rempli le fond de pâte",
+            "Four trop chaud"
+          ],
+          "solutions": [
+            "Laisse l'appareil à flan reposer 2-4h au frais jusqu'à ce que la surface soit légèrement sèche",
+            "Laisse 1 à 2 cm entre le haut du cercle et le niveau de la crème",
+            "Cuis à 150°C à 170°C selon l'épaisseur"
+          ]
+        },
+        {
+          "probleme": "La crème d'amande a tranché",
+          "raisons": [
+            "Beurre trop froid",
+            "Oeufs trop froids (figent le beurre)"
+          ],
+          "solutions": [
+            "Beurre pommade : souple, crémeux, pas fondu, s'écrase facilement au doigt",
+            "Oeufs à température ambiante : sors-les 1h avant, ou plonge 5 min dans eau tiède",
+            "Mélange en douceur, pas de mousse"
+          ]
+        },
+        {
+          "probleme": "La crème d'amande déborde à la cuisson",
+          "raisons": [
+            "Foisonnée (trop d'air incorporé)",
+            "Fond de tarte trop rempli"
+          ],
+          "solutions": [
+            "Travaille-la comme un simple mélange, pas une mousse",
+            "Laisse 5 à 8 mm de marge sous le bord du cercle (surtout tartes bourdaloue)"
+          ]
+        }
+      ]
+    },
+    "mousses-meringues": {
+      "titre": "Mousses et meringues",
+      "problemes": [
+        {
+          "probleme": "La chantilly ou ganache montée a tranché",
+          "raisons": [
+            "Fouetté trop vite",
+            "Fouetté trop longtemps",
+            "Crème pas assez froide (ou cuisine trop chaude)"
+          ],
+          "solutions": [
+            "Monte à petite vitesse : plus lent mais émulsion stable",
+            "Arrête au bec d'oiseau net pour chantilly, encore plus tôt pour ganache montée d'entremets (souple, brillante, ruban épais)",
+            "Crème entre 2°C et 4°C, bol et fouet froids (5 min au congélateur)"
+          ]
+        },
+        {
+          "probleme": "La chantilly ou ganache montée ne monte pas",
+          "raisons": [
+            "Trop de crème chauffée",
+            "Crème ou cuisine trop chaude",
+            "Pas assez de matière grasse (crème <30% MG)"
+          ],
+          "solutions": [
+            "Ne chauffe qu'une petite partie de la crème (juste pour dissoudre / infuser)",
+            "Garde la crème au frigo jusqu'à la dernière seconde — bol + fouet 10 min au congélateur",
+            "Utilise une crème entière minimum 30% MG — crème fleurette 30-35% ou UHT de qualité"
+          ]
+        },
+        {
+          "probleme": "Les blancs d'oeuf montés retombent",
+          "raisons": [
+            "Montés trop vite (grosses bulles instables)",
+            "Montés trop longtemps (graineux, secs, cassants)"
+          ],
+          "solutions": [
+            "Monte à petite vitesse : bulles fines, régulières, stables",
+            "Arrête au bec d'oiseau : souple pour appareils délicats, ferme pour meringue — jamais plus"
+          ]
+        },
+        {
+          "probleme": "Les blancs d'oeuf ne montent pas",
+          "raisons": [
+            "Récipient pas propre (trace de gras)",
+            "Blancs pas purs (trace de jaune)",
+            "Oeufs de mauvaise qualité (pauvres en albumine)"
+          ],
+          "solutions": [
+            "Récipient propre et dégraissé (vinaigre blanc → magique)",
+            "Sépare les oeufs soigneusement — si une goutte de jaune tombe, recommence",
+            "Utilise des oeufs plein air ou bio (en coquille ou en bidon, la qualité compte)"
+          ]
+        },
+        {
+          "probleme": "La mousse au chocolat n'est pas homogène",
+          "raisons": [
+            "Blancs trop montés (trop fermes, cassants → blocs)",
+            "Chocolat trop froid (cristallise d'un coup → paillettes)"
+          ],
+          "solutions": [
+            "Monte au bec d'oiseau : fermes, brillants, qui se tiennent, mais pas granuleux",
+            "Chocolat fluide, lisse, tiède à 35-40°C"
+          ]
+        },
+        {
+          "probleme": "Il y a de l'eau au fond de la mousse",
+          "raisons": [
+            "Blancs trop fouettés (granuleux, cassants → libèrent l'eau)",
+            "Chocolat trop chaud (explose les bulles d'air → libère l'eau)"
+          ],
+          "solutions": [
+            "Monte doucement, arrête au bec d'oiseau, jamais plus",
+            "Chocolat toujours tiède (35-40°C)",
+            "Méthode : mélange une petite portion de blancs dans le chocolat pour le détendre, puis incorpore délicatement au reste"
+          ]
+        },
+        {
+          "probleme": "La mousse d'entremets a des bulles au démoulage",
+          "raisons": [
+            "Mousse trop montée (emprisonne les bulles)",
+            "Bords du moule pas lissés"
+          ],
+          "solutions": [
+            "Monte jusqu'au bec d'oiseau très souple, presque tremblotant — la tenue vient du congélateur, pas du fouet",
+            "Après la première couche dans le moule, presse et lisse contre les rebords avec une spatule coudée, fais tout le tour, puis continue le montage"
+          ]
+        },
+        {
+          "probleme": "La crème mousseline est granuleuse",
+          "raisons": [
+            "Ingrédients pas à la même température (beurre froid → paillettes)"
+          ],
+          "solutions": [
+            "Tout à la même température, même consistance, souple",
+            "Rattrapage : fouette à vitesse élevée + chauffe légèrement la cuve avec chalumeau ou décapeur thermique. Dès que les paillettes fondent → texture redevient lisse. Attention : juste ce qu'il faut, pas plus (sinon beurre fondu = mousseline détruite)"
+          ]
+        }
+      ]
+    },
+    "entremets": {
+      "titre": "Entremets",
+      "problemes": [
+        {
+          "probleme": "L'entremets se casse la figure à la décongélation",
+          "raisons": [
+            "Mousse pas assez foisonnée (trop liquide au coulage)",
+            "Mousse manque de structure (pas assez de chocolat / gélatine)",
+            "Insert trop liquide (se déplace, brise la mousse)",
+            "Entremets mal équilibré (lourd sur léger)"
+          ],
+          "solutions": [
+            "Monte la mousse jusqu'à un ruban dense ou bec d'oiseau souple — pas trop ferme, clairement pas liquide",
+            "Vérifie scrupuleusement les quantités de gélatine ou chocolat dans la recette",
+            "Insert bien gélifié, complètement congelé avant montage, suffisamment ferme pour rester en place",
+            "Respecte la règle d'or : LE DENSE ET LE LOURD EN BAS (brownie, biscuit moelleux, praliné croustillant), LE LÉGER ET L'AÉRIEN AU-DESSUS (mousses, ganache montée, chantilly). Jamais l'inverse"
+          ]
+        },
+        {
+          "probleme": "La gelée ou le confit coule, rend de l'eau",
+          "raisons": [
+            "Insert pas assez gélifié (fruits riches en eau : framboise, fraise, mangue, agrumes)",
+            "Insert a pris le givre au congélateur"
+          ],
+          "solutions": [
+            "Insert souple mais ferme : se tient au couteau, ne coule pas, ne bave pas, ne rend pas d'eau",
+            "Augmente légèrement la gélatine, cuis un peu plus longtemps la purée (évaporer), ou ajoute du sucre (retient l'humidité)",
+            "Vérifie l'absence de givre avant montage : sèche délicatement ou refais l'insert si trop givré"
+          ]
+        }
+      ]
+    },
+    "glacages": {
+      "titre": "Glaçages miroir",
+      "problemes": [
+        {
+          "probleme": "Le glaçage coule ou se déchire",
+          "raisons": [
+            "Pas assez gélifié (recette déséquilibrée)",
+            "Entremets givré au moment du glaçage"
+          ],
+          "solutions": [
+            "Utilise une recette fiable : chocolat/cacao + sucre + crème + eau + gélatine en proportions testées",
+            "Un bon glaçage est fluide mais nappant, sans être trop liquide",
+            "Pas de givre sur l'entremets : retire-le délicatement au doigt ou au pinceau sec, glace immédiatement après"
+          ]
+        },
+        {
+          "probleme": "Le glaçage miroir est terne",
+          "raisons": [
+            "Trop chauffé (>40°C)",
+            "Entremets remis au congélateur après glaçage"
+          ],
+          "solutions": [
+            "Jamais au-dessus de 40°C : zone idéale 35°C-37°C. Au-delà, perte de brillance irréversible",
+            "Règle d'or : Glacé → frigo → dégusté. JAMAIS au congélateur une fois glacé (casse la structure, rend terne, granuleux ou cassant)"
+          ]
+        },
+        {
+          "probleme": "La couche de glaçage est trop épaisse",
+          "raisons": [
+            "Glaçage trop froid (<31°C, fige instantanément)",
+            "Forme de l'entremets retient trop (creux, cuvettes, angles prononcés)"
+          ],
+          "solutions": [
+            "Utilise le glaçage à 31-35°C : 35°C = fluide, 31°C = glaçages denses. En dessous = catastrophe",
+            "Astuce de chef : couler en UN SEUL mouvement continu, ne jamais repasser deux fois",
+            "Ou change de finition : flocage, velours, spray cacao, pochage décoratif"
+          ]
+        },
+        {
+          "probleme": "Le glaçage fait des coulures",
+          "raisons": [
+            "Trop froid au moment de l'application"
+          ],
+          "solutions": [
+            "Verse à 31°C-35°C, jamais en dessous :",
+            "< 31°C → figement instantané, coulures assurées",
+            "31°C à 33°C → parfait pour glaçages épais",
+            "33°C à 35°C → idéal pour nappage fluide"
+          ]
+        },
+        {
+          "probleme": "Le glaçage ne marque pas l'arête de l'entremets",
+          "raisons": [
+            "Glaçage trop chaud (>35°C, glisse trop)",
+            "Arête trop vive / saillante (ne retient pas le glaçage)"
+          ],
+          "solutions": [
+            "Travaille à 35°C max — en dessous il nappe, au-dessus il glisse",
+            "Adoucis l'arête avant de glacer : passe un doigt ganté ou la paume dessus, arrondis très légèrement l'angle"
+          ]
+        },
+        {
+          "probleme": "Le glaçage fait des bulles",
+          "raisons": [
+            "Mixeur plongeant pas performant (incorpore de l'air)",
+            "Glaçage trop froid au mixage (trop épais, emprisonne l'air)"
+          ],
+          "solutions": [
+            "Investis dans un bon mixeur (Bamix) : zéro bulle, émulsion parfaite",
+            "Chauffe à 40°C (fluide parfait) → mixe en penchant légèrement le mixeur (évite d'aspirer l'air) → laisse redescendre à 31-35°C avant de glacer"
+          ]
+        },
+        {
+          "probleme": "Le glaçage glisse de l'entremets",
+          "raisons": [
+            "Entremets givré (l'eau empêche l'adhérence)"
+          ],
+          "solutions": [
+            "Ne glace JAMAIS un entremets givré",
+            "Laisse-le 5-10 min à l'air libre : juste assez pour que le givre fonde, pas assez pour décongeler",
+            "Surface doit être : nette, sèche, mate",
+            "Astuce : congèle l'entremets dans une boîte hermétique pour éviter les cristaux de glace"
+          ]
+        }
+      ]
+    },
+    "enrobages": {
+      "titre": "Enrobages chocolat",
+      "problemes": [
+        {
+          "probleme": "L'enrobage se décolle de l'entremets ou du cake",
+          "raisons": [
+            "Entremets ou cake givré au moment de l'enrobage (le givre fond → eau sous l'enrobage)"
+          ],
+          "solutions": [
+            "Sors l'entremets du congélateur, vérifie le givre (blanc = givre)",
+            "Laisse 2 à 5 min à l'air libre pour que le givre fonde, sans commencer à décongeler",
+            "Surface doit être : propre, mate, légèrement figée mais sèche",
+            "Enrobe immédiatement après"
+          ]
+        },
+        {
+          "probleme": "L'enrobage fait des coulures",
+          "raisons": [
+            "Pas assez chaud (fige trop vite, glisse mal)",
+            "Pas assez fluide (chocolat noir naturellement plus épais)"
+          ],
+          "solutions": [
+            "Température idéale : 35°C pour biscuit / entremets frais (sorti du frigo), 35°C à 40°C pour cake congelé (la chaleur compense le froid)",
+            "Ajoute 5% à 10% d'huile de pépins de raisin au mélange chocolat + beurre de cacao : fluidifie, améliore l'écoulement, réduit les traces, rendu ultra propre",
+            "Huile de pépins de raisin : neutre, stable, n'altère pas le goût"
+          ]
+        }
+      ]
+    }
+  }
+}

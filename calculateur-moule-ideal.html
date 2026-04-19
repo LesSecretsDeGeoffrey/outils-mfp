@@ -15,8 +15,8 @@
   h1 .accent{color:#C8A04A;font-style:italic}
   .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:680px}
 
-  .tabs{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid rgba(26,20,16,0.1)}
-  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease}
+  .tabs{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid rgba(26,20,16,0.1);overflow-x:auto}
+  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease;white-space:nowrap}
   .tab:hover{color:#1A1410}
   .tab.active{color:#C8A04A;border-bottom-color:#C8A04A;font-weight:600}
 
@@ -61,6 +61,7 @@
   .option-card .note{font-size:12px;color:rgba(253,248,240,0.75);text-align:center;line-height:1.45;padding-top:12px;border-top:1px solid rgba(253,248,240,0.08)}
 
   .tip{background:rgba(200,160,74,0.08);padding:16px 20px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.8);line-height:1.6;border-left:3px solid #C8A04A;margin-top:28px}
+  .tip strong{color:#1A1410}
 
   .weight-display{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,32px);border-top:4px solid #C8A04A;margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
   @media (max-width:600px){.weight-display{grid-template-columns:1fr;text-align:center}}
@@ -68,6 +69,9 @@
   .weight-display p{color:rgba(253,248,240,0.75);font-size:14px}
   .big-weight{font-family:Georgia,serif;font-size:clamp(44px,6vw,60px);color:#C8A04A;line-height:1;white-space:nowrap}
   .big-weight small{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:rgba(253,248,240,0.55);margin-top:6px;text-transform:uppercase}
+
+  .prep-tip{background:#FDF8F0;border:1px dashed rgba(200,160,74,0.4);padding:14px 18px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.75);margin-top:14px;line-height:1.55}
+  .prep-tip::before{content:"💡 ";}
 
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -80,7 +84,7 @@
 
 <main>
   <h1>Le bon moule pour la <span class="accent">bonne recette</span></h1>
-  <p class="intro">Tu as une recette et tu te demandes quel moule utiliser ? Ou l'inverse : tu as un moule et tu veux savoir combien d'appareil faire ? Les 2 modes sont là</p>
+  <p class="intro">Tu as une recette de base Geoffrey et tu te demandes quel moule utiliser ? Ou l'inverse : tu as un moule et tu veux savoir combien d'appareil faire ? Les 2 modes sont là, calibrés sur les vraies proportions de la Méthode Fondations Pro</p>
 
   <div class="tabs">
     <button class="tab active" onclick="switchTab('recipe', this)">J'ai une recette → quel moule ?</button>
@@ -91,8 +95,9 @@
   <div class="panel active" id="panel-recipe">
     <div class="section">
       <h2>1. Quel type de préparation ?</h2>
-      <p class="subtitle">Chaque préparation a une densité finale différente après cuisson</p>
+      <p class="subtitle">Chaque préparation a une densité finale différente après cuisson ou dressage</p>
       <select id="prep-recipe" onchange="calculateRecipe()"></select>
+      <div class="prep-tip" id="prep-tip-recipe"></div>
     </div>
 
     <div class="section">
@@ -105,7 +110,7 @@
 
       <div id="mode-direct">
         <label>Poids total d'appareil (g)</label>
-        <input type="number" id="direct-weight" step="10" min="0" value="500" oninput="calculateRecipe()">
+        <input type="number" id="direct-weight" step="10" min="0" value="455" oninput="calculateRecipe()">
       </div>
 
       <div id="mode-ingredients" style="display:none">
@@ -124,6 +129,7 @@
       <h2>1. Quel type de préparation ?</h2>
       <p class="subtitle">Pour savoir combien d'appareil préparer</p>
       <select id="prep-mold" onchange="calculateMold()"></select>
+      <div class="prep-tip" id="prep-tip-mold"></div>
     </div>
 
     <div class="section">
@@ -134,6 +140,7 @@
         <option value="rond">Rond (cercle)</option>
         <option value="carre">Carré</option>
         <option value="rect">Rectangle / Tapis</option>
+        <option value="cake">Moule à cake</option>
       </select>
       <div id="mold-dims"></div>
       <div class="weight-display">
@@ -147,23 +154,50 @@
   </div>
 
   <div class="tip">
-    💡 <strong>Astuce Geoffrey :</strong> ces calculs sont des estimations basées sur des densités moyennes de laboratoire. Ajoute toujours 10% de marge pour être tranquille (tu peux toujours garder les chutes pour un verrine ou un test). Mieux vaut un peu trop que pas assez
+    <strong>Astuce Geoffrey :</strong> ces calculs sont calibrés sur les vraies recettes de la Méthode Fondations Pro (génoise 455g/Ø20, dacquoise 545g/Ø20, etc.). Ajoute toujours 10% de marge pour être tranquille — tu peux garder les chutes pour un verrine ou un test. Mieux vaut un peu trop que pas assez
   </div>
 </main>
 
 <script>
-// Densités finales en g/cm³ (empiriques, retour pâtisserie pro)
+// Densités finales en g/cm³ calibrées sur les recettes Geoffrey (Book Les Fondations du Chef)
+// Chaque ref : [total recette] / [volume moule de référence]
+// Ex : Génoise 455g en Ø20 × h=4.5cm → V = 1413.7 cm³ → density = 0.322
 const preparations = [
-  {id:"genoise", name:"Génoise", density:0.27, defaultH:4.5, tapisH:1, tip:"Hauteur cible : 4 à 5 cm en cercle, 1 cm en tapis roulé"},
-  {id:"dacquoise", name:"Dacquoise (amande/noisette)", density:0.42, defaultH:2, tapisH:1, tip:"Biscuit meringué dense, ne gonfle quasi pas"},
-  {id:"joconde", name:"Biscuit Joconde (tapis fin)", density:0.78, defaultH:0.8, tapisH:0.8, tip:"Toujours en tapis fin (8 mm) pour entremets roulés ou découpés"},
-  {id:"financier", name:"Financier", density:0.85, defaultH:2, tapisH:1.5, tip:"Dense, cuisson rapide, hauteur 1,5 à 2,5 cm"},
-  {id:"cake", name:"Cake classique", density:0.58, defaultH:6, tapisH:null, tip:"Moule à cake standard type 8×25×6 cm"},
-  {id:"madeleine", name:"Madeleines (à l'unité)", density:0.85, defaultH:null, tapisH:null, tip:"Compte environ 25-30 g d'appareil par madeleine", perPiece:27},
-  {id:"mousse", name:"Mousse / Entremet", density:0.40, defaultH:5, tapisH:null, tip:"Hauteur d'entremet standard 4 à 6 cm"},
-  {id:"bavaroise", name:"Bavaroise / Crème prise", density:0.50, defaultH:4, tapisH:null, tip:"Plus dense que la mousse, prend bien en moule"},
-  {id:"cremeux", name:"Crémeux (insert)", density:1.0, defaultH:1.5, tapisH:null, tip:"Insert plat pour entremet, hauteur 1 à 2 cm"},
-  {id:"pate-choux", name:"Pâte à choux (éclairs/choux)", density:0.80, defaultH:null, tapisH:null, tip:"Compte environ 30 g par choux standard, 80 g par éclair 12 cm", perPiece:30, perEclair:80}
+  // BISCUITS
+  {id:"genoise", cat:"Biscuits", name:"Génoise", density:0.322, defaultH:4.5, tapisH:1, tip:"Geoffrey : 455g pour Ø20, hauteur 4 à 5 cm en cercle, 1 cm en tapis roulé. Cuisson 180°C, 18-20 min"},
+  {id:"savoie", cat:"Biscuits", name:"Biscuit de Savoie", density:0.434, defaultH:4, tapisH:1, tip:"Geoffrey : 545g pour Ø20, léger et aéré, sans matière grasse. Cuisson 170°C, 20-25 min"},
+  {id:"dacquoise", cat:"Biscuits", name:"Dacquoise / Succès (amande ou noisette)", density:0.578, defaultH:3, tapisH:1, tip:"Geoffrey : 545g pour Ø20, biscuit meringué aux fruits secs. Cuisson 170°C, 15-18 min"},
+  {id:"financier", cat:"Biscuits", name:"Biscuit Financier", density:0.949, defaultH:2, tapisH:1.2, tip:"Geoffrey : 596g pour Ø20, dense et moelleux au beurre noisette. Cuisson 180°C, 15-18 min"},
+  {id:"sacher", cat:"Biscuits", name:"Biscuit Sacher", density:0.594, defaultH:3, tapisH:0.8, tip:"Geoffrey : 560g pour Ø20, biscuit moelleux au chocolat à la viennoise. Cuisson 170°C, 18-20 min"},
+  {id:"pain-genes", cat:"Biscuits", name:"Pain de Gênes", density:0.412, defaultH:3, tapisH:null, tip:"Geoffrey : 251g pour Ø16, très parfumé aux amandes. Cuisson 170°C, 25-30 min"},
+  {id:"trocadero", cat:"Biscuits", name:"Biscuit Trocadéro", density:0.442, defaultH:2, tapisH:null, tip:"Geoffrey : 225g pour Ø16-18, version chocolat ultra-moelleuse. Cuisson 170°C, 15-18 min"},
+  {id:"viennois", cat:"Biscuits", name:"Biscuit Viennois", density:0.411, defaultH:1, tapisH:0.8, tip:"Geoffrey : 395g pour tapis 40×30 (épaisseur 8 mm), sans MG, idéal entremets roulés. Cuisson 220°C, 8-10 min"},
+  {id:"joconde", cat:"Biscuits", name:"Biscuit Joconde", density:0.823, defaultH:0.8, tapisH:0.8, tip:"Geoffrey : 790g pour tapis 40×30 (épaisseur 8 mm), très souple, parfait pour rouler ou en inserts. Cuisson 220°C, 8-10 min"},
+  {id:"brownie", cat:"Biscuits", name:"Brownie", density:0.45, defaultH:2.5, tapisH:null, tip:"Geoffrey : 450g pour cadre 20×20, texture fondante au chocolat noir. Cuisson 170°C, 20-25 min"},
+  {id:"pate-choux-biscuit", cat:"Biscuits", name:"Biscuit Pâte à Choux (Japonais)", density:0.661, defaultH:1, tapisH:1, tip:"Geoffrey : 793g pour tapis 40×30, base de paris-brest ou entremet craquant. Cuisson 180°C, 25-30 min"},
+  {id:"madeleine", cat:"Biscuits", name:"Madeleines (à l'unité)", density:0.85, defaultH:null, tapisH:null, tip:"Geoffrey : 826g pour 18-20 madeleines, soit 45g par madeleine. Cuisson 210°C, 4 min puis 180°C 4 min", perPiece:45},
+
+  // MOUSSES / BAVAROISES
+  {id:"mousse", cat:"Mousses & inserts", name:"Mousse / Entremet aéré", density:0.40, defaultH:5, tapisH:null, tip:"Mousse à base de crème fouettée ou meringue italienne, hauteur d'entremet 4 à 6 cm"},
+  {id:"bavaroise", cat:"Mousses & inserts", name:"Bavaroise / Crème prise", density:0.50, defaultH:4, tapisH:null, tip:"Plus dense que la mousse (moins de crème fouettée), prend fermement en moule"},
+  {id:"cremeux", cat:"Mousses & inserts", name:"Crémeux (insert)", density:1.0, defaultH:1.5, tapisH:null, tip:"Insert plat pour entremet, hauteur 1 à 2 cm. Se congèle pour démouler"},
+  {id:"namelaka", cat:"Mousses & inserts", name:"Namelaka (crémeux texture)", density:0.98, defaultH:2, tapisH:null, tip:"Geoffrey : 855g (noir) / 955g (lait) / 944g (blanc), texture ultra-crémeuse, insert ou finition"},
+  {id:"confit-fruit", cat:"Mousses & inserts", name:"Confit de fruits", density:1.05, defaultH:1, tapisH:null, tip:"Geoffrey : 245g par recette, insert fruité concentré. Épaisseur 8 à 12 mm"},
+
+  // CRÈMES
+  {id:"diplomate", cat:"Crèmes", name:"Crème Diplomate", density:0.62, defaultH:3, tapisH:null, tip:"Geoffrey : 483g, crème pâtissière allégée à la crème fouettée et gélatine. Tient bien en poche"},
+  {id:"mousseline", cat:"Crèmes", name:"Crème Mousseline", density:0.70, defaultH:3, tapisH:null, tip:"Geoffrey : 510g, crème pâtissière + beurre monté. Plus ferme que la diplomate, base du Paris-Brest"},
+  {id:"patissiere", cat:"Crèmes", name:"Crème Pâtissière", density:1.02, defaultH:null, tapisH:null, tip:"Geoffrey : 380g, dense et riche. Pour fourrer choux, éclairs, tartes (pas d'utilisation en moule)"},
+
+  // GANACHES MONTÉES
+  {id:"ganache-montee", cat:"Ganaches montées", name:"Ganache montée (blanche, lait ou noire)", density:0.82, defaultH:2, tapisH:null, tip:"Geoffrey : 371g (noir) / 354g (blanc). Après 12h de repos + montage. Tient très bien en poche"},
+
+  // CAKE
+  {id:"cake", cat:"Cake", name:"Cake classique (pâte à cake)", density:0.58, defaultH:6, tapisH:null, tip:"Moule standard 25×8×6 cm. Remplir aux 2/3 car gonfle à la cuisson"},
+
+  // PÂTE À CHOUX / MACARONS (à l'unité)
+  {id:"pate-choux", cat:"À l'unité", name:"Pâte à choux (choux ou éclairs)", density:0.80, defaultH:null, tapisH:null, tip:"30g par chou standard, 80g par éclair 12 cm, 50g par mini-religieuse", perPiece:30, perEclair:80},
+  {id:"macarons", cat:"À l'unité", name:"Macarons (paire de coques)", density:1.0, defaultH:null, tapisH:null, tip:"Geoffrey : 12g par coque (6g × 2), soit 25g par macaron avec ganache. Coques Ø4 cm", perPiece:25}
 ];
 
 let ingredients = [
@@ -174,12 +208,28 @@ let ingredients = [
 
 let weightMode = 'direct';
 
-// Init dropdowns
+// Init dropdowns avec optgroups
 function initPreps() {
-  ['prep-recipe', 'prep-mold'].forEach(id => {
-    const sel = document.getElementById(id);
-    sel.innerHTML = preparations.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  const cats = {};
+  preparations.forEach(p => {
+    if (!cats[p.cat]) cats[p.cat] = [];
+    cats[p.cat].push(p);
   });
+  const html = Object.entries(cats).map(([cat, preps]) =>
+    `<optgroup label="${cat}">${preps.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}</optgroup>`
+  ).join('');
+  ['prep-recipe', 'prep-mold'].forEach(id => {
+    document.getElementById(id).innerHTML = html;
+  });
+  updatePrepTip('recipe');
+  updatePrepTip('mold');
+}
+
+function updatePrepTip(which) {
+  const sel = document.getElementById('prep-' + which);
+  const prep = preparations.find(p => p.id === sel.value);
+  const tipEl = document.getElementById('prep-tip-' + which);
+  if (prep && tipEl) tipEl.textContent = prep.tip;
 }
 
 function switchTab(name, btn) {
@@ -247,8 +297,10 @@ function svgCarre() { return '<svg viewBox="0 0 60 60" width="50" height="50"><r
 function svgRect() { return '<svg viewBox="0 0 60 60" width="50" height="50"><rect x="4" y="18" width="52" height="24"/></svg>'; }
 function svgCake() { return '<svg viewBox="0 0 60 60" width="50" height="50"><rect x="14" y="10" width="32" height="40" rx="2"/></svg>'; }
 function svgDrops() { return '<svg viewBox="0 0 60 60" width="50" height="50"><circle cx="20" cy="30" r="7"/><circle cx="40" cy="30" r="7"/></svg>'; }
+function svgMacaron() { return '<svg viewBox="0 0 60 60" width="50" height="50"><ellipse cx="30" cy="24" rx="18" ry="5"/><ellipse cx="30" cy="36" rx="18" ry="5"/><rect x="12" y="26" width="36" height="8" fill="none"/></svg>'; }
 
 function calculateRecipe() {
+  updatePrepTip('recipe');
   const prepId = document.getElementById('prep-recipe').value;
   const prep = preparations.find(p => p.id === prepId);
   const weight = getWeight();
@@ -263,10 +315,11 @@ function calculateRecipe() {
   if (prep.perPiece) {
     const pieces = Math.round(weight / prep.perPiece);
     let html = `<h3>Avec ${weight} g de ${prep.name.toLowerCase()}</h3><p class="sub">${prep.tip}</p><div class="options-grid">`;
-    html += `<div class="option-card">${svgDrops()}<div class="shape-label">À l'unité</div><div class="dim">${pieces} pièces</div><div class="dim-detail">${prep.perPiece} g × pièce</div><div class="note">${prep.name} standard</div></div>`;
+    const svg = prep.id === 'macarons' ? svgMacaron() : svgDrops();
+    html += `<div class="option-card">${svg}<div class="shape-label">À l'unité</div><div class="dim">${pieces} pièces</div><div class="dim-detail">${prep.perPiece} g × pièce</div><div class="note">${prep.name} standard</div></div>`;
     if (prep.perEclair) {
       const eclairs = Math.round(weight / prep.perEclair);
-      html += `<div class="option-card">${svgRect()}<div class="shape-label">Version éclair</div><div class="dim">${eclairs} éclairs</div><div class="dim-detail">${prep.perEclair} g × éclair 12 cm</div><div class="note">Éclairs pochés à la douille douille unie 15 mm</div></div>`;
+      html += `<div class="option-card">${svgRect()}<div class="shape-label">Version éclair</div><div class="dim">${eclairs} éclairs</div><div class="dim-detail">${prep.perEclair} g × éclair 12 cm</div><div class="note">Éclairs pochés à la douille unie 15 mm</div></div>`;
     }
     html += '</div>';
     results.innerHTML = html;
@@ -276,7 +329,7 @@ function calculateRecipe() {
   const volume = weight / prep.density; // cm³
   const options = [];
 
-  // Cercle rond (hauteur fixée)
+  // Cercle rond (hauteur par défaut)
   if (prep.defaultH) {
     const h = prep.defaultH;
     const diameter = 2 * Math.sqrt(volume / (Math.PI * h));
@@ -290,7 +343,7 @@ function calculateRecipe() {
       note: `Cercle à entremet ou à tarte Ø ${rounded} cm, hauteur ${h} cm idéale`
     });
     // Option alternative : Ø arrondi au standard le plus proche
-    const standards = [16, 18, 20, 22, 24, 26, 28];
+    const standards = [14, 16, 18, 20, 22, 24, 26, 28];
     const closestStd = standards.reduce((a,b) => Math.abs(b - rounded) < Math.abs(a - rounded) ? b : a);
     if (closestStd !== rounded) {
       const hStd = volume / (Math.PI * Math.pow(closestStd/2, 2));
@@ -323,7 +376,6 @@ function calculateRecipe() {
   if (prep.tapisH) {
     const h = prep.tapisH;
     const surfaceNeeded = volume / h; // cm²
-    // Plaques standards
     const plaques = [
       {l:40, w:30, name:"Plaque 40×30"},
       {l:60, w:40, name:"Plaque 60×40"}
@@ -337,7 +389,7 @@ function calculateRecipe() {
       detail: `Épaisseur ${h} cm, remplissage ${fillRate}%`,
       note: `${bestPlaque.name} standard, biscuit roulé ou découpé en disques`
     });
-    // Calcul surface optimale ratio 4:3
+    // Tapis sur mesure (ratio 4:3)
     const lOpti = Math.round(Math.sqrt(surfaceNeeded * 4/3));
     const wOpti = Math.round(lOpti * 3/4);
     if (lOpti <= 60 && wOpti >= 10) {
@@ -353,7 +405,6 @@ function calculateRecipe() {
 
   // Moule à cake (si cake)
   if (prep.id === 'cake') {
-    // cake standard 8×25×6 = 1200 cm³
     const std = {l:25, w:8, h:6};
     const ratio = volume / (std.l * std.w * std.h);
     const scaledL = Math.round(std.l * Math.pow(ratio, 1/3) * 10) / 10;
@@ -367,7 +418,7 @@ function calculateRecipe() {
   }
 
   let html = `<h3>Avec ${Math.round(weight)} g de ${prep.name.toLowerCase()}</h3>`;
-  html += `<p class="sub">Volume d'appareil : ${Math.round(volume)} cm³ — ${prep.tip}</p>`;
+  html += `<p class="sub">Volume d'appareil : ${Math.round(volume)} cm³ — densité ${prep.density.toFixed(2).replace('.', ',')} g/cm³</p>`;
   html += '<div class="options-grid">';
   html += options.map(o => `
     <div class="option-card">
@@ -393,16 +444,26 @@ function renderMoldDims() {
     dims = `<div class="grid2"><div><label>Côté (cm)</label><input type="number" id="md-c" step="0.5" value="18" oninput="calculateMold()"></div><div><label>Hauteur (cm)</label><input type="number" id="md-h" step="0.5" value="4.5" oninput="calculateMold()"></div></div>`;
   } else if (shape === 'rect') {
     dims = `<div class="grid2"><div><label>Longueur (cm)</label><input type="number" id="md-l" step="0.5" value="40" oninput="calculateMold()"></div><div><label>Largeur (cm)</label><input type="number" id="md-w" step="0.5" value="30" oninput="calculateMold()"></div></div><div><label>Hauteur / épaisseur (cm)</label><input type="number" id="md-h" step="0.5" value="1" oninput="calculateMold()"></div>`;
+  } else if (shape === 'cake') {
+    dims = `<div class="grid2"><div><label>Longueur (cm)</label><input type="number" id="md-l" step="0.5" value="25" oninput="calculateMold()"></div><div><label>Largeur (cm)</label><input type="number" id="md-w" step="0.5" value="8" oninput="calculateMold()"></div></div><div><label>Hauteur utile (cm) — 2/3 du moule</label><input type="number" id="md-h" step="0.5" value="4" oninput="calculateMold()"></div>`;
   }
   container.innerHTML = dims;
   calculateMold();
 }
 
 function calculateMold() {
+  updatePrepTip('mold');
   const shape = document.getElementById('mold-shape').value;
   const prepId = document.getElementById('prep-mold').value;
   const prep = preparations.find(p => p.id === prepId);
   if (!prep) return;
+
+  // Cas à l'unité : pas de volume applicable
+  if (prep.perPiece) {
+    document.getElementById('mold-weight').innerHTML = `— g<small>Choisis un autre type</small>`;
+    document.getElementById('mold-detail').textContent = `${prep.name} : compte ${prep.perPiece} g par pièce, pas de calcul de moule applicable`;
+    return;
+  }
 
   let volume = 0;
   let detail = '';
@@ -423,6 +484,12 @@ function calculateMold() {
     const h = parseFloat(document.getElementById('md-h')?.value) || 0;
     volume = l * w * h;
     detail = `Plaque ${l}×${w} cm × épaisseur ${h} cm = ${Math.round(volume)} cm³`;
+  } else if (shape === 'cake') {
+    const l = parseFloat(document.getElementById('md-l')?.value) || 0;
+    const w = parseFloat(document.getElementById('md-w')?.value) || 0;
+    const h = parseFloat(document.getElementById('md-h')?.value) || 0;
+    volume = l * w * h;
+    detail = `Cake ${l}×${w} cm × hauteur utile ${h} cm = ${Math.round(volume)} cm³`;
   }
 
   const weight = volume * prep.density;

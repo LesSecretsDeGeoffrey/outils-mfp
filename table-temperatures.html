@@ -14,8 +14,8 @@
   h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
   h1 .accent{color:#C8A04A;font-style:italic}
   .intro{color:rgba(26,20,16,0.7);margin-bottom:32px;max-width:680px}
-  .tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;border-bottom:1px solid rgba(26,20,16,0.1);padding-bottom:0}
-  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease}
+  .tabs{display:flex;gap:0;margin-bottom:32px;flex-wrap:wrap;border-bottom:1px solid rgba(26,20,16,0.1);padding-bottom:0;overflow-x:auto}
+  .tab{background:transparent;border:none;padding:14px 20px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.5);border-bottom:2px solid transparent;transition:all 0.2s ease;white-space:nowrap}
   .tab:hover{color:#1A1410}
   .tab.active{color:#C8A04A;border-bottom-color:#C8A04A;font-weight:600}
   .search-wrap{margin-bottom:28px;position:relative}
@@ -64,6 +64,17 @@
   .step .step-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);margin-bottom:4px}
   .step .step-temp{font-family:Georgia,serif;font-size:24px;color:#C8A04A}
   .warning{background:rgba(200,160,74,0.1);border-left:3px solid #C8A04A;padding:16px 20px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.8);margin-top:16px;line-height:1.55}
+  .warning strong{color:#1A1410}
+
+  .section-title{font-family:Georgia,serif;font-size:22px;font-weight:400;margin:32px 0 14px;color:#1A1410}
+  .section-title:first-of-type{margin-top:0}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:20px}
+  .info-card{background:#fff;border:1px solid rgba(26,20,16,0.1);border-left:3px solid #C8A04A;padding:20px 22px;border-radius:4px}
+  .info-card .info-title{font-family:Georgia,serif;font-size:17px;margin-bottom:6px;color:#1A1410}
+  .info-card .info-temp{font-family:'Courier New',monospace;font-size:20px;color:#C8A04A;font-weight:700;margin-bottom:8px}
+  .info-card .info-desc{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.5}
+
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -75,13 +86,14 @@
 
 <main>
   <h1>Les températures <span class="accent">clés</span> de la pâtisserie</h1>
-  <p class="intro">Crèmes, sucres cuits, chocolats de couverture — toutes les températures qui font la différence entre un ratage et une réussite</p>
+  <p class="intro">Crèmes, sucres cuits, chocolats de couverture, fours — toutes les températures qui font la différence entre un ratage et une réussite, calibrées sur la Méthode Fondations Pro</p>
 
   <div class="tabs">
     <button class="tab active" onclick="switchTab('cremes', this)">Crèmes & Appareils</button>
+    <button class="tab" onclick="switchTab('biscuits', this)">Biscuits</button>
     <button class="tab" onclick="switchTab('sucres', this)">Sucres cuits</button>
     <button class="tab" onclick="switchTab('chocolats', this)">Chocolats</button>
-    <button class="tab" onclick="switchTab('fours', this)">Fours</button>
+    <button class="tab" onclick="switchTab('ganaches', this)">Ganaches & Glaçages</button>
   </div>
 
   <div class="search-wrap">
@@ -91,68 +103,179 @@
   <!-- CRÈMES -->
   <div class="panel active" id="panel-cremes">
     <h2>Crèmes & appareils de base</h2>
-    <p class="subtitle">La température à cœur détermine la texture finale. Un thermomètre est indispensable</p>
+    <p class="subtitle">La température à cœur détermine la texture finale. Un thermomètre de précision est indispensable</p>
     <div class="table" id="table-cremes">
       <div class="row head">
         <span>Préparation</span>
         <span>Température</span>
-        <span>Point de vigilance</span>
+        <span>Point de vigilance Geoffrey</span>
       </div>
       <div class="row">
-        <div class="name">Crème anglaise<small>Nappe la cuillère, servie telle quelle ou base de glace</small></div>
-        <div class="temp">82-85°C</div>
-        <div class="note">Au-delà de 85°C les jaunes coagulent et tu obtiens des œufs brouillés. En dessous de 80°C, elle reste liquide et instable</div>
+        <div class="name">Crème anglaise<small>Nappe la cuillère, base de glaces, crémeux et bavaroises</small></div>
+        <div class="temp">82-83°C</div>
+        <div class="note">Au-delà de 85°C les jaunes coagulent et tu obtiens des œufs brouillés. En dessous de 80°C, elle reste liquide. Passe au chinois étamine systématiquement</div>
       </div>
       <div class="row">
-        <div class="name">Crème pâtissière<small>Base universelle (tartes, choux, mille-feuille)</small></div>
+        <div class="name">Crème pâtissière<small>Base universelle (tartes, choux, mille-feuille, mousseline)</small></div>
         <div class="temp">Ébullition 2 min</div>
-        <div class="note">La fécule a besoin de bouillir pour épaissir ET se stabiliser. Stop trop tôt = goût de farine crue. Trop tard = elle tranche</div>
+        <div class="note">La fécule/farine a besoin de bouillir au moins 2 min pour stabiliser l'amidon. Stop trop tôt = goût de farine crue. Trop tard = elle tranche au beurre</div>
+      </div>
+      <div class="row">
+        <div class="name">Crémeux (chocolat ou autre)<small>Base anglaise + chocolat, insert d'entremet</small></div>
+        <div class="temp">82-85°C</div>
+        <div class="note">Lier au même seuil que la crème anglaise, puis émulsionner sur le chocolat avec le mixeur plongeant. Coule à 35°C sur le cercle à insert</div>
       </div>
       <div class="row">
         <div class="name">Crème mousseline<small>Pâtissière + beurre pommade (fraisier, Paris-Brest)</small></div>
-        <div class="temp">30°C max</div>
-        <div class="note">Incorpore le beurre quand la pâtissière est à température ambiante. Trop chaude = beurre fondu, trop froide = grains</div>
+        <div class="temp">Pâtissière à 30°C</div>
+        <div class="note">Incorpore le beurre pommade quand la pâtissière est à température ambiante (ni chaude ni froide). Trop chaude = beurre fondu, trop froide = grains</div>
       </div>
       <div class="row">
         <div class="name">Crème diplomate<small>Pâtissière + gélatine + chantilly</small></div>
         <div class="temp">25-30°C</div>
-        <div class="note">Incorpore la chantilly quand la pâtissière + gélatine est à 25-30°C. Trop chaude tu fais retomber la chantilly</div>
+        <div class="note">Incorpore la chantilly quand la pâtissière + gélatine est à 25-30°C. Trop chaude tu fais retomber la chantilly. Prise au frais minimum 4h</div>
       </div>
       <div class="row">
         <div class="name">Crème bavaroise<small>Anglaise + gélatine + chantilly</small></div>
         <div class="temp">20-25°C</div>
-        <div class="note">Travaille la bavaroise entre 20 et 25°C pour garder une texture aérée. Au-dessus elle ne prend pas en bouche</div>
+        <div class="note">Travaille la bavaroise entre 20 et 25°C pour garder une texture aérée. Au-dessus elle ne tient pas, en-dessous elle fige avant l'incorporation</div>
       </div>
       <div class="row">
         <div class="name">Crème au beurre (PAB bombe)<small>Sirop 118°C sur jaunes</small></div>
         <div class="temp">Beurre à 18-22°C</div>
-        <div class="note">Le beurre doit être pommade pas fondu. Incorporé dans une PAB tiède (25°C), pas chaude sinon il fond</div>
+        <div class="note">Le beurre doit être pommade pas fondu. Incorporé dans une PAB tiède (25-28°C), pas chaude sinon il fond dans la cuve</div>
       </div>
       <div class="row">
         <div class="name">Meringue italienne<small>Sirop 118-121°C sur blancs montés</small></div>
         <div class="temp">Sirop 118°C</div>
-        <div class="note">Verse le sirop en filet sur les blancs à vitesse moyenne, puis monte en vitesse max jusqu'à refroidissement complet</div>
+        <div class="note">Verse le sirop en filet sur les blancs à vitesse moyenne, puis monte en vitesse max jusqu'à refroidissement complet (cuve tiède au toucher)</div>
       </div>
       <div class="row">
-        <div class="name">Ganache montée<small>Type chantilly au chocolat</small></div>
-        <div class="temp">Repos 4h à 4°C</div>
-        <div class="note">Mélange chaud (35°C) puis obligatoire 4h minimum au frigo avant de monter. Sinon elle tranche au fouet</div>
+        <div class="name">Meringue suisse<small>Blancs + sucre battus au bain-marie</small></div>
+        <div class="temp">55-60°C</div>
+        <div class="note">Monte les blancs et sucre au bain-marie jusqu'à 55-60°C, puis termine au batteur jusqu'à refroidissement. Très ferme, pour décors ou rochers</div>
       </div>
       <div class="row">
-        <div class="name">Chantilly<small>Crème liquide 30% + sucre</small></div>
+        <div class="name">Chantilly<small>Crème liquide 30% MG + sucre glace</small></div>
         <div class="temp">Tout à 4°C</div>
-        <div class="note">Crème, bol, fouet : tout doit être froid. Crème à plus de 10°C = pas de montage, tu fais du beurre</div>
-      </div>
-      <div class="row">
-        <div class="name">Glaçage miroir<small>À couler sur entremet</small></div>
-        <div class="temp">30-35°C</div>
-        <div class="note">Coule à 30-35°C sur un entremet congelé (-18°C). Plus chaud = trop liquide et se fait la malle. Plus froid = épais et marques</div>
+        <div class="note">Crème, cuve, fouet : tout doit être froid. Crème à plus de 10°C = pas de montage, tu fais du beurre. Stoppe dès qu'elle tient le pic</div>
       </div>
       <div class="row">
         <div class="name">Appareil à soufflé<small>Base pâtissière + blancs montés</small></div>
         <div class="temp">Pâte à 40°C</div>
         <div class="note">Incorpore les blancs dans une base à 40°C max. Plus chaud ils cuisent. Plus froid ils ne s'incorporent pas bien</div>
       </div>
+      <div class="row">
+        <div class="name">Confit de fruits (avec pectine)<small>Insert fruité pour entremet</small></div>
+        <div class="temp">Ébullition 1 min</div>
+        <div class="note">La pectine NH a besoin d'un frémissement pour s'activer. Geoffrey : 245g par recette, couler en insert 1 cm d'épaisseur</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BISCUITS -->
+  <div class="panel" id="panel-biscuits">
+    <h2>Cuissons des biscuits Geoffrey</h2>
+    <p class="subtitle">Températures et durées extraites du Book "Les Fondations du Chef". Chaleur tournante sauf mention contraire</p>
+    <div class="table" id="table-biscuits">
+      <div class="row head">
+        <span>Biscuit</span>
+        <span>Température</span>
+        <span>Durée & astuce</span>
+      </div>
+      <div class="row">
+        <div class="name">Génoise<small>Nature ou cacao, 455g pour Ø20</small></div>
+        <div class="temp">180°C</div>
+        <div class="note">18-20 min. Test du cure-dent sec. Démoule chaud et laisse refroidir sur grille. Ne pas ouvrir avant 15 min</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit de Savoie<small>Léger, sans matière grasse, 545g/Ø20</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">20-25 min. Biscuit aérien. Tapote le moule pour éviter les bulles avant enfournement</div>
+      </div>
+      <div class="row">
+        <div class="name">Dacquoise / Succès<small>Amande ou noisette, 545g/Ø20</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">15-18 min. Doit être doré en surface et moelleux à cœur. Sous-cuite elle s'effondre en refroidissant</div>
+      </div>
+      <div class="row">
+        <div class="name">Financier<small>Beurre noisette, 596g/Ø20</small></div>
+        <div class="temp">180°C</div>
+        <div class="note">15-18 min. Pour la bosse parfaite : 3 min à 200°C choc thermique puis baisser à 170°C. Pâte reposée 12h au frais</div>
+      </div>
+      <div class="row">
+        <div class="name">Madeleines<small>Beurre noisette, 826g par recette</small></div>
+        <div class="temp">210°C → 180°C</div>
+        <div class="note">4 min à 210°C pour la bosse, puis 4-5 min à 180°C. Pâte froide obligatoire dans four chaud (choc thermique)</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit Sacher<small>Moelleux au chocolat, 560g/Ø20</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">18-20 min. Biscuit viennois enrichi au chocolat fondu. Monte bien, textures moelleuse</div>
+      </div>
+      <div class="row">
+        <div class="name">Pain de Gênes<small>Très parfumé amandes, 251g/Ø16</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">25-30 min. Beurre fondu incorporé en fin. Longue cuisson car épais</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit Trocadéro<small>Version chocolat ultra-moelleuse, 225g</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">15-18 min. Excellent compagnon de ganaches montées au chocolat noir</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit Joconde<small>Tapis fin 8mm, 790g pour plaque 40×30</small></div>
+        <div class="temp">220°C</div>
+        <div class="note">8-10 min. Cuisson rapide à four chaud. Doit rester souple pour rouler ou découper en inserts</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit Viennois<small>Sans MG, tapis 40×30, 395g</small></div>
+        <div class="temp">220°C</div>
+        <div class="note">8-10 min. Texture ultra souple pour bûches roulées. À associer obligatoirement à une garniture savoureuse</div>
+      </div>
+      <div class="row">
+        <div class="name">Brownie<small>Fondant chocolat noir, 450g cadre 20×20</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">20-25 min. Légèrement sous-cuit au centre pour le fondant. Teste à 20 min (cure-dent légèrement humide OK)</div>
+      </div>
+      <div class="row">
+        <div class="name">Biscuit Pâte à Choux / Japonais<small>Base Paris-Brest, 793g pour plaque 40×30</small></div>
+        <div class="temp">180°C</div>
+        <div class="note">25-30 min. Ne pas ouvrir avant 25 min. Doit être doré et sec au toucher</div>
+      </div>
+      <div class="row">
+        <div class="name">Macarons<small>Coques lisses avec collerette</small></div>
+        <div class="temp">150°C</div>
+        <div class="note">14 min sur plaque épaisse double, chaleur tournante basse. Teste sur 1 coque témoin d'abord. Coque sèche au toucher avant d'enfourner</div>
+      </div>
+      <div class="row">
+        <div class="name">Pâte à choux<small>Choux, éclairs, Paris-Brest</small></div>
+        <div class="temp">180°C → 160°C</div>
+        <div class="note">10 min à 180°C pour pousser, puis 20-25 min à 160°C pour sécher. N'ouvre JAMAIS avant 25 min</div>
+      </div>
+      <div class="row">
+        <div class="name">Pâte sucrée / sablée<small>Fonds de tarte</small></div>
+        <div class="temp">170°C</div>
+        <div class="note">Cuisson à blanc 20-25 min avec poids, puis 5-10 min sans poids pour colorer. Badigeon blanc d'œuf en sortie pour l'étanchéité</div>
+      </div>
+      <div class="row">
+        <div class="name">Pâte feuilletée (classique ou inversée)<small>Millefeuille, galette, chausson</small></div>
+        <div class="temp">180°C</div>
+        <div class="note">25-30 min, chaleur tournante. Pour un millefeuille caramélisé : saupoudre sucre glace à mi-cuisson et remonte à 220°C 5 min</div>
+      </div>
+      <div class="row">
+        <div class="name">Meringue française<small>À sécher, pas à cuire</small></div>
+        <div class="temp">90-100°C</div>
+        <div class="note">1h30 à 2h. On ne les cuit pas, on les sèche. Porte entrouverte ou four ventilé. Croquantes à cœur</div>
+      </div>
+      <div class="row">
+        <div class="name">Cheesecake<small>Au bain-marie ou four doux</small></div>
+        <div class="temp">150°C</div>
+        <div class="note">45 min puis four éteint 1h porte fermée. Pas de fissures, pas de mi-cuit effondré</div>
+      </div>
+    </div>
+    <div class="warning">
+      🌡️ <strong>Ton four te ment</strong> : teste-le avec un thermomètre indépendant. La plupart des fours domestiques affichent 180°C mais montent à 165 ou 200°C réels. Une fois que tu connais son offset, ajuste toutes tes recettes
     </div>
   </div>
 
@@ -184,7 +307,7 @@
       <div class="stage" data-name="petit boulé">
         <div class="stage-name">Petit boulé</div>
         <div class="stage-temp">115-118°C</div>
-        <div class="stage-use">Meringue italienne, pâte à bombe, fondant</div>
+        <div class="stage-use">Meringue italienne, pâte à bombe, fondant pâtissier</div>
       </div>
       <div class="stage" data-name="gros boulé">
         <div class="stage-name">Gros boulé</div>
@@ -213,7 +336,7 @@
       </div>
     </div>
     <div class="warning">
-      ⚠️ <strong>Au-delà de 185°C</strong>, le sucre brûle et devient amer. Stoppe la cuisson en plongeant la casserole 3 secondes dans l'eau froide pour figer la température
+      ⚠️ <strong>Au-delà de 185°C</strong>, le sucre brûle et devient amer. Stoppe la cuisson en plongeant la casserole 3 secondes dans l'eau froide pour figer la température. <strong>Astuce Geoffrey :</strong> ajoute 10% du poids en glucose à ton sucre pour éviter la cristallisation
     </div>
   </div>
 
@@ -259,73 +382,87 @@
     </div>
 
     <div class="warning">
-      💡 <strong>Méthode ensemencement (la plus simple)</strong> : fais fondre 2/3 du chocolat, ajoute 1/3 en pistoles non fondues, mélange jusqu'à atteindre la température de travail. Pas besoin de tabler sur marbre
+      💡 <strong>Méthode ensemencement (la plus simple)</strong> : fais fondre 2/3 du chocolat à température de fonte, ajoute 1/3 en pistoles non fondues, mélange jusqu'à atteindre la température de travail. Pas besoin de tabler sur marbre
+    </div>
+    <div class="warning">
+      ❄️ <strong>Test de courbe</strong> : trempe la pointe d'un couteau dans ton chocolat tempéré, laisse-la 3 min à 18-20°C. Il doit durcir brillant et sec. Si mat ou collant : remonte à 50°C et recommence
     </div>
   </div>
 
-  <!-- FOURS -->
-  <div class="panel" id="panel-fours">
-    <h2>Cuissons au four</h2>
-    <p class="subtitle">Chaleur tournante sauf mention contraire. Adapte selon ton four (tous mentent de 10 à 20°C)</p>
-    <div class="table" id="table-fours">
-      <div class="row head">
-        <span>Préparation</span>
-        <span>Température</span>
-        <span>Durée / astuce</span>
+  <!-- GANACHES & GLAÇAGES -->
+  <div class="panel" id="panel-ganaches">
+    <h2>Ganaches, glaçages & émulsions</h2>
+    <p class="subtitle">Températures d'émulsion et de coulage extraites du Guide Ultime Ganaches Montées</p>
+
+    <h3 class="section-title">Ganaches (fourrage macarons, bonbons, tartes)</h3>
+    <div class="cards">
+      <div class="info-card">
+        <div class="info-title">Ganache chocolat noir</div>
+        <div class="info-temp">35-40°C</div>
+        <div class="info-desc">Crème bouillante versée en 3 fois sur le chocolat, émulsion au mixeur plongeant. Cristallisation 12h au frais avant utilisation</div>
       </div>
-      <div class="row">
-        <div class="name">Macarons<small>Coques lisses avec collerette</small></div>
-        <div class="temp">150°C</div>
-        <div class="note">14 min sur plaque épaisse double. Chaleur tournante basse. Teste sur 1 coque d'abord</div>
+      <div class="info-card">
+        <div class="info-title">Ganache chocolat au lait</div>
+        <div class="info-temp">35°C</div>
+        <div class="info-desc">Plus sensible à la chaleur que le noir. Émulsion à 35°C max, sinon le beurre de cacao se sépare</div>
       </div>
-      <div class="row">
-        <div class="name">Pâte à choux<small>Choux, éclairs, Paris-Brest</small></div>
-        <div class="temp">180°C puis 160°C</div>
-        <div class="note">10 min à 180°C pour pousser, puis 20-25 min à 160°C pour sécher. N'ouvre JAMAIS avant 25 min</div>
+      <div class="info-card">
+        <div class="info-title">Ganache chocolat blanc</div>
+        <div class="info-temp">32-35°C</div>
+        <div class="info-desc">Encore plus délicate, températures basses. L'hydratation est plus faible donc la texture dépend de la précision</div>
       </div>
-      <div class="row">
-        <div class="name">Génoise<small>Biscuit aérien type entremet</small></div>
-        <div class="temp">170°C</div>
-        <div class="note">20-25 min. Sort quand un cure-dent ressort sec. Démoule chaud et laisse refroidir sur grille</div>
-      </div>
-      <div class="row">
-        <div class="name">Dacquoise<small>Biscuit noisettes ou amandes</small></div>
-        <div class="temp">170-180°C</div>
-        <div class="note">15-18 min. Doit être doré en surface et moelleux à cœur. Sous-cuite elle s'effondre</div>
-      </div>
-      <div class="row">
-        <div class="name">Pâte sucrée / sablée<small>Fonds de tarte</small></div>
-        <div class="temp">170°C</div>
-        <div class="note">Cuisson à blanc 20-25 min avec poids. Puis 5-10 min sans poids pour colorer</div>
-      </div>
-      <div class="row">
-        <div class="name">Financiers / madeleines<small>Petits gâteaux au beurre noisette</small></div>
-        <div class="temp">200°C puis 170°C</div>
-        <div class="note">3 min à 200°C pour créer la bosse, puis 8-10 min à 170°C. Choc thermique obligatoire (pâte froide dans four chaud)</div>
-      </div>
-      <div class="row">
-        <div class="name">Cake classique<small>Quatre-quarts, cake agrumes</small></div>
-        <div class="temp">165°C</div>
-        <div class="note">45 min environ. Fends le dessus au cutter à mi-cuisson pour une belle crête régulière</div>
-      </div>
-      <div class="row">
-        <div class="name">Meringue française<small>À sécher</small></div>
-        <div class="temp">90-100°C</div>
-        <div class="note">1h30 à 2h. On ne les cuit pas, on les sèche. Porte entrouverte ou four ventilé</div>
-      </div>
-      <div class="row">
-        <div class="name">Cheesecake<small>Bain-marie ou au four doux</small></div>
-        <div class="temp">150°C</div>
-        <div class="note">45 min puis four éteint 1h porte fermée. Pas de fissures, pas de mi-cuit effondré</div>
-      </div>
-      <div class="row">
-        <div class="name">Viennoiseries feuilletées<small>Croissants, pains au chocolat</small></div>
-        <div class="temp">180-190°C</div>
-        <div class="note">18-20 min chaleur tournante. Pousse à 26-28°C avant cuisson sinon le beurre fond dans la pâte</div>
+      <div class="info-card">
+        <div class="info-title">Ganache infusée</div>
+        <div class="info-temp">35°C</div>
+        <div class="info-desc">Infuse les aromates à froid 12h ou à chaud 20 min. Filtre, complète à poids et procède à l'émulsion normale</div>
       </div>
     </div>
+
+    <h3 class="section-title">Ganaches montées (chantilly au chocolat)</h3>
+    <div class="cards">
+      <div class="info-card">
+        <div class="info-title">Émulsion à chaud</div>
+        <div class="info-temp">35-40°C</div>
+        <div class="info-desc">Chocolat fondu + crème bouillante, mixeur plongeant. Ajoute la crème froide (2/3 du total), mixeur à nouveau</div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">Repos obligatoire</div>
+        <div class="info-temp">4°C min 12h</div>
+        <div class="info-desc">Indispensable. Geoffrey : jamais moins de 12h, idéalement 24h. Les matières grasses doivent cristalliser</div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">Montage au fouet</div>
+        <div class="info-temp">Cuve à 4°C</div>
+        <div class="info-desc">Sors directement du frigo, monte à vitesse moyenne. Stoppe dès qu'elle tient le pic. Sur-montée = elle tranche</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Glaçages & finitions</h3>
+    <div class="cards">
+      <div class="info-card">
+        <div class="info-title">Glaçage miroir</div>
+        <div class="info-temp">30-35°C</div>
+        <div class="info-desc">Coule à 35°C sur un entremet congelé (-18°C). Plus chaud = trop liquide. Plus froid = marques et traces</div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">Namelaka (texture crémeux)</div>
+        <div class="info-temp">Repos 12h à 4°C</div>
+        <div class="info-desc">Émulsion chocolat blanc + lait chaud + gélatine, puis ajout crème froide. Repos obligatoire avant utilisation</div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">Nappage neutre</div>
+        <div class="info-temp">60-70°C</div>
+        <div class="info-desc">Pour glacer tartes aux fruits. Applique tiède au pinceau en fine couche. Pas de traces ni d'excès</div>
+      </div>
+      <div class="info-card">
+        <div class="info-title">Enrobage chocolat (bonbons)</div>
+        <div class="info-temp">Tempéré + 2°C</div>
+        <div class="info-desc">Pour tremper : ajuste ton chocolat tempéré à température de travail + 2°C, enrobage plus fluide sans briser la courbe</div>
+      </div>
+    </div>
+
     <div class="warning">
-      🌡️ <strong>Ton four te ment</strong> : teste-le avec un thermomètre indépendant. La plupart des fours domestiques affichent 180°C mais montent à 165 ou 200°C réels. Une fois que tu connais son offset, ajuste toutes tes recettes
+      💡 <strong>Règle d'or Geoffrey :</strong> en pâtisserie, la précision au degré près est ce qui distingue l'amateur du pro. Un thermomètre de précision (type sonde) à 20-30€ change littéralement la qualité de tes résultats. Investis-le avant tout le reste
     </div>
   </div>
 </main>
@@ -345,21 +482,23 @@ function filterTable(query) {
   const activePanel = document.querySelector('.panel.active');
   if (!activePanel) return;
 
-  // Filter table rows
   activePanel.querySelectorAll('.row').forEach(row => {
     if (row.classList.contains('head')) return;
     const text = row.textContent.toLowerCase();
     row.style.display = (!q || text.includes(q)) ? '' : 'none';
   });
 
-  // Filter stage cards
   activePanel.querySelectorAll('.stage').forEach(stage => {
     const text = stage.textContent.toLowerCase();
     stage.style.display = (!q || text.includes(q)) ? '' : 'none';
   });
 
-  // Filter chocolate cards
   activePanel.querySelectorAll('.choco-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!q || text.includes(q)) ? '' : 'none';
+  });
+
+  activePanel.querySelectorAll('.info-card').forEach(card => {
     const text = card.textContent.toLowerCase();
     card.style.display = (!q || text.includes(q)) ? '' : 'none';
   });

@@ -12,21 +12,32 @@
   .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
   main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
   h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
-  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:600px}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:640px}
   .selector{margin-bottom:32px}
   label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
   select,input{width:100%;padding:14px 18px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
   select:focus,input:focus{outline:none;border-color:#C8A04A}
-  .inputs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:32px}
+  optgroup{font-family:Georgia,serif;font-style:italic;color:#C8A04A;font-weight:600}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:20px}
+  .mode-btn{flex:1;padding:12px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .mode-btn:disabled{opacity:0.35;cursor:not-allowed}
+  .inputs-grid{display:grid;grid-template-columns:1fr;gap:20px;margin-bottom:32px}
   .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s}
   .calculate-btn:hover{background:#B08A3E}
   .result{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:32px;display:none}
   .result.visible{display:block}
-  .result h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin-bottom:24px;color:#1A1410;border-bottom:1px solid rgba(200,160,74,0.3);padding-bottom:16px}
-  .ingredient-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .result h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin-bottom:8px;color:#1A1410}
+  .result .meta{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(200,160,74,0.3)}
+  .ingredient-sub{font-family:Georgia,serif;font-size:16px;color:#1A1410;font-style:italic;margin-top:16px;margin-bottom:6px;padding-top:14px;border-top:1px dashed rgba(26,20,16,0.12)}
+  .ingredient-sub:first-child{border-top:none;padding-top:0;margin-top:0}
+  .ingredient-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
   .ingredient-row:last-child{border-bottom:none}
   .ingredient-name{font-size:15px;color:#1A1410}
-  .ingredient-qty{font-family:Georgia,serif;font-size:20px;color:#C8A04A}
+  .ingredient-qty{font-family:Georgia,serif;font-size:20px;color:#C8A04A;white-space:nowrap}
+  .total-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-top:20px;background:rgba(200,160,74,0.1);border-radius:3px}
+  .total-row .ingredient-name{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+  .total-row .ingredient-qty{font-size:22px}
   .tip{background:rgba(200,160,74,0.08);padding:20px;margin-top:24px;border-left:3px solid #C8A04A;font-size:14px;color:#1A1410;border-radius:2px}
   .tip strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -40,25 +51,78 @@
 
 <main>
   <h1>Tes grammages, <span style="color:#C8A04A;font-style:italic">adaptés à ton besoin</span></h1>
-  <p class="intro">Choisis une recette de base, indique ton besoin, obtiens les quantités exactes de chaque ingrédient</p>
+  <p class="intro">Choisis une recette, indique ton besoin (masse totale, diamètre de moule, ou nombre de pièces), obtiens les quantités exactes à la virgule près. Toutes les recettes sont celles de Geoffrey, calibrées et testées.</p>
 
   <div class="selector">
     <label for="recipe">Recette de base</label>
     <select id="recipe" onchange="updateForm()">
       <option value="">— Choisir une recette —</option>
-      <option value="cremepatissiere">Crème pâtissière</option>
-      <option value="ganachenoire">Ganache chocolat noir (montage/fourrage)</option>
-      <option value="ganacheblanche">Ganache chocolat blanc (fourrage)</option>
-      <option value="genoise">Génoise</option>
-      <option value="dacquoise">Dacquoise amande</option>
-      <option value="sablebreton">Sablé breton</option>
-      <option value="patesucree">Pâte sucrée</option>
-      <option value="patesablee">Pâte sablée</option>
-      <option value="pateachoux">Pâte à choux</option>
-      <option value="cremechantilly">Crème chantilly mascarpone</option>
-      <option value="cremeanglaise">Crème anglaise</option>
-      <option value="mousseau">Mousse au chocolat (type entremet)</option>
+      <optgroup label="Biscuits">
+        <option value="genoise-nature">Génoise nature</option>
+        <option value="genoise-cacao">Génoise cacao</option>
+        <option value="dacquoise">Biscuit Dacquoise / Succès</option>
+        <option value="financier">Biscuit Financier</option>
+        <option value="madeleine">Biscuit Madeleine</option>
+        <option value="brownie">Brownie</option>
+        <option value="savoie">Biscuit de Savoie</option>
+        <option value="sacher">Biscuit Sacher</option>
+        <option value="joconde">Biscuit Joconde</option>
+        <option value="pain-de-genes">Pain de Gênes</option>
+        <option value="viennois">Biscuit Viennois</option>
+        <option value="trocadero">Biscuit Trocadero</option>
+      </optgroup>
+      <optgroup label="Pâtes à tarte">
+        <option value="pate-sablee">Pâte Sablée</option>
+        <option value="pate-sucree">Pâte Sucrée</option>
+        <option value="sable-breton">Sablé Breton</option>
+      </optgroup>
+      <optgroup label="Pâte à choux">
+        <option value="pate-a-choux">Pâte à Choux</option>
+        <option value="craquelin">Craquelin</option>
+      </optgroup>
+      <optgroup label="Pâtes feuilletées">
+        <option value="feuilletee-classique">Pâte Feuilletée Classique</option>
+        <option value="feuilletee-inversee">Pâte Feuilletée Inversée</option>
+      </optgroup>
+      <optgroup label="Macarons">
+        <option value="meringue-italienne">Meringue Italienne (35 macarons)</option>
+        <option value="meringue-francaise">Meringue Française (35 macarons)</option>
+      </optgroup>
+      <optgroup label="Crèmes classiques">
+        <option value="creme-patissiere">Crème Pâtissière vanille</option>
+        <option value="creme-patissiere-chocolat">Crème Pâtissière chocolat</option>
+        <option value="creme-mousseline">Crème Mousseline vanille</option>
+        <option value="creme-diplomate">Crème Diplomate vanille</option>
+        <option value="cremeux-chocolat-noir">Crémeux Chocolat Noir</option>
+        <option value="cremeux-chocolat-blanc">Crémeux Chocolat Blanc</option>
+        <option value="namelaka-noir">Namelaka Chocolat Noir</option>
+        <option value="namelaka-lait">Namelaka Chocolat au Lait</option>
+        <option value="namelaka-blanc">Namelaka Chocolat Blanc</option>
+      </optgroup>
+      <optgroup label="Ganaches de fourrage">
+        <option value="ganache-noir">Ganache Chocolat Noir</option>
+        <option value="ganache-lait">Ganache Chocolat au Lait</option>
+        <option value="ganache-blanc">Ganache Chocolat Blanc</option>
+        <option value="ganache-praline">Ganache Praliné</option>
+        <option value="ganache-infusee">Ganache Infusée</option>
+      </optgroup>
+      <optgroup label="Ganaches montées">
+        <option value="gm-noir">Ganache Montée Chocolat Noir</option>
+        <option value="gm-lait">Ganache Montée Chocolat au Lait</option>
+        <option value="gm-blanc">Ganache Montée Chocolat Blanc</option>
+        <option value="gm-dulcey">Ganache Montée Chocolat Dulcey</option>
+        <option value="gm-praline">Ganache Montée Pralinée</option>
+      </optgroup>
+      <optgroup label="Autres">
+        <option value="praline">Praliné maison</option>
+        <option value="confit-fruits">Confit de Fruits</option>
+      </optgroup>
     </select>
+  </div>
+
+  <div id="modeToggle" class="mode-toggle" style="display:none">
+    <button class="mode-btn active" data-mode="mass" onclick="setMode('mass')">Masse totale (g)</button>
+    <button class="mode-btn" data-mode="diam" onclick="setMode('diam')">Diamètre (cm)</button>
   </div>
 
   <div class="inputs-grid" id="inputsGrid" style="display:none">
@@ -66,197 +130,715 @@
       <label for="input1" id="label1">Quantité</label>
       <input type="number" id="input1" min="1" value="500">
     </div>
-    <div>
-      <label for="input2" id="label2" style="display:none">Paramètre 2</label>
-      <input type="number" id="input2" min="1" value="1" style="display:none">
-    </div>
   </div>
 
   <button class="calculate-btn" onclick="calculate()" id="calcBtn" style="display:none">Calculer les quantités</button>
 
   <div class="result" id="result">
     <h2 id="resultTitle">Tes ingrédients</h2>
+    <p class="meta" id="resultMeta"></p>
     <div id="ingredients"></div>
+    <div class="total-row" id="totalRow">
+      <span class="ingredient-name">Masse totale</span>
+      <span class="ingredient-qty" id="totalQty">—</span>
+    </div>
     <div class="tip" id="tip"></div>
   </div>
 </main>
 
 <script>
+/* ============================================================
+   Recettes officielles Geoffrey — source : recettes-geoffrey.json
+   Tous les grammages sont ceux des recettes de la MFP.
+   ============================================================ */
 const recipes = {
-  cremepatissiere: {
-    name: "Crème pâtissière",
-    inputs: [{label: "Quantité finale souhaitée (g)", id: "masse", default: 500}],
-    base: 500,
+  /* ====================== BISCUITS ====================== */
+  'genoise-nature': {
+    name: "Génoise Nature",
+    category: "biscuit",
+    base: 455,
+    refDiam: 20,                 // un cercle de 20 cm = base de référence
+    modes: ['mass','diam'],
     ingredients: [
-      {name: "Lait entier", qty: 375, unit: "g"},
-      {name: "Sucre", qty: 93, unit: "g"},
-      {name: "Jaunes d'œuf", qty: 75, unit: "g (~4 jaunes)"},
-      {name: "Maïzena", qty: 37, unit: "g"},
-      {name: "Beurre (facultatif)", qty: 20, unit: "g"},
-      {name: "Gousse de vanille", qty: 1, unit: "unité"}
+      {name:"Oeufs entiers", qty:200},
+      {name:"Sucre semoule", qty:100},
+      {name:"Jaunes d'oeuf", qty:75},
+      {name:"Farine T45", qty:80}
     ],
-    tip: "Chauffe ton lait infusé jusqu'à frémissement. Verse sur le mélange jaunes/sucre/maïzena. Remets sur feu moyen 2 min après ébullition en remuant. Filme au contact et refroidis rapidement"
+    tip: "Mélange oeufs + jaunes + sucre au bain-marie jusqu'à 45-50°C sans arrêter de remuer. Monte au robot jusqu'à ruban froid. Incorpore la farine tamisée délicatement à la maryse. Cuisson 180°C, 15-20 min selon l'épaisseur."
   },
-  ganachenoire: {
-    name: "Ganache chocolat noir (fourrage/montage)",
-    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
+  'genoise-cacao': {
+    name: "Génoise Cacao",
+    category: "biscuit",
+    base: 455,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Oeufs entiers", qty:200},
+      {name:"Sucre semoule", qty:100},
+      {name:"Jaunes d'oeuf", qty:75},
+      {name:"Farine T45", qty:50},
+      {name:"Cacao en poudre", qty:30}
+    ],
+    tip: "Même méthode que la génoise nature. Remplace 30g de farine par du cacao amer : le cacao absorbe plus, tu gagnes en profondeur de goût sans assécher. Toujours tamiser ensemble farine + cacao."
+  },
+  'dacquoise': {
+    name: "Biscuit Dacquoise / Succès",
+    category: "biscuit",
+    base: 545,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Poudre de fruit à coque (amande, noisette…)", qty:115},
+      {name:"Sucre semoule (sur poudre)", qty:130},
+      {name:"Farine T45", qty:40},
+      {name:"Blancs d'oeuf", qty:190},
+      {name:"Sucre semoule (sur meringue)", qty:70}
+    ],
+    tip: "Tamise poudre + 130g sucre + farine. Monte les blancs en serrant avec les 70g restants en 3 fois (bec d'oiseau ferme, brillant). Incorpore délicatement les poudres. Cuisson 170°C, 15-18 min."
+  },
+  'financier': {
+    name: "Biscuit Financier",
+    category: "biscuit",
+    base: 596.5,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Beurre (noisette)", qty:110},
+      {name:"Blancs d'oeuf", qty:155},
+      {name:"Sucre glace", qty:155},
+      {name:"Poudre de fruit à coque", qty:110},
+      {name:"Farine T45", qty:55},
+      {name:"Fleur de sel", qty:1.5}
+    ],
+    tip: "Fais un beurre noisette (couleur blonde dorée, odeur de noisette) et filtre. Mélange poudres + blancs sans monter. Ajoute le beurre tiède (40-45°C). Pocher et cuire 180°C 12-15 min selon la taille."
+  },
+  'madeleine': {
+    name: "Biscuit Madeleine",
+    category: "biscuit",
+    base: 826,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Beurre fondu", qty:250},
+      {name:"Miel", qty:30},
+      {name:"Oeufs entiers", qty:145},
+      {name:"Lait", qty:60},
+      {name:"Sucre", qty:130},
+      {name:"Farine T55", qty:200},
+      {name:"Levure chimique", qty:11}
+    ],
+    tip: "Repos 2h minimum au frigo (idéalement toute une nuit) : c'est ce qui crée la bosse. Beurre et farine tes moules. Cuisson en 2 temps : 240°C 4 min (choc thermique = bosse), puis 190°C 4-6 min pour finir."
+  },
+  'brownie': {
+    name: "Brownie",
+    category: "biscuit",
+    base: 450,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Beurre doux", qty:100},
+      {name:"Chocolat noir", qty:120},
+      {name:"Oeufs", qty:100},
+      {name:"Sucre semoule", qty:60},
+      {name:"Farine", qty:40},
+      {name:"Fruits à coque", qty:30}
+    ],
+    tip: "Fais fondre beurre + chocolat doucement. Blanchis oeufs + sucre sans foisonner. Mélange tout, incorpore la farine puis les fruits à coque concassés. Cuisson 170°C 18-22 min : coeur encore tremblotant à la sortie."
+  },
+  'savoie': {
+    name: "Biscuit de Savoie",
+    category: "biscuit",
+    base: 545,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Jaunes d'oeuf", qty:120},
+      {name:"Sucre (sur jaunes)", qty:95},
+      {name:"Blancs d'oeuf", qty:170},
+      {name:"Sucre (sur meringue)", qty:60},
+      {name:"Farine T45", qty:50},
+      {name:"Fécule de maïs", qty:50}
+    ],
+    tip: "Biscuit léger et aérien. Monte les jaunes avec le premier sucre jusqu'au ruban. Monte les blancs en serrant. Incorpore 1/3 des blancs dans les jaunes pour détendre, puis le reste délicatement. Ajoute les poudres tamisées. 170°C 20-25 min."
+  },
+  'sacher': {
+    name: "Biscuit Sacher",
+    category: "biscuit",
+    base: 560,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Pâte d'amande 50%", qty:120},
+      {name:"Jaunes d'oeuf", qty:90},
+      {name:"Oeufs entiers", qty:50},
+      {name:"Sucre glace", qty:30},
+      {name:"Blancs d'oeuf", qty:140},
+      {name:"Sucre semoule", qty:70},
+      {name:"Beurre fondu", qty:30},
+      {name:"Farine T45", qty:30}
+    ],
+    tip: "Détends la pâte d'amande avec les jaunes tiédis, monte avec oeufs + sucre glace. Monte les blancs serrés avec le sucre semoule. Incorpore 1/3 des blancs, beurre fondu, farine tamisée puis le reste des blancs. 180°C 12-15 min."
+  },
+  'joconde': {
+    name: "Biscuit Joconde",
+    category: "biscuit",
+    base: 790,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Oeufs entiers", qty:240},
+      {name:"Poudre d'amande", qty:180},
+      {name:"Sucre glace", qty:180},
+      {name:"Farine T45", qty:50},
+      {name:"Beurre fondu", qty:40},
+      {name:"Blancs d'oeuf", qty:100}
+    ],
+    tip: "Biscuit roulé ou pour entremets. Monte oeufs + poudre d'amande + sucre glace au ruban. Monte les blancs serrés. Incorpore beurre fondu + farine tamisée, puis les blancs délicatement. Étale sur plaque, 220°C 5-7 min."
+  },
+  'pain-de-genes': {
+    name: "Pain de Gênes",
+    category: "biscuit",
+    base: 251.2,
+    refDiam: 18,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Pâte d'amande 50%", qty:115},
+      {name:"Oeufs entiers", qty:90},
+      {name:"Beurre fondu", qty:30},
+      {name:"Farine T45", qty:15},
+      {name:"Levure chimique", qty:1.2}
+    ],
+    tip: "Le secret du pain de Gênes : détendre progressivement la pâte d'amande avec les oeufs tiédis au bain-marie pour obtenir un ruban. Incorpore ensuite beurre fondu et farine tamisée. Moule beurré-fariné. 170°C 20-25 min."
+  },
+  'viennois': {
+    name: "Biscuit Viennois",
+    category: "biscuit",
+    base: 395,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Jaunes d'oeuf", qty:100},
+      {name:"Oeufs entiers", qty:50},
+      {name:"Sucre (sur jaunes)", qty:80},
+      {name:"Blancs d'oeuf", qty:100},
+      {name:"Sucre (sur meringue)", qty:30},
+      {name:"Farine T45", qty:35}
+    ],
+    tip: "Biscuit fin très souple, parfait pour bûches roulées et entremets. Monte jaunes + oeufs + sucre au ruban. Monte les blancs serrés. Incorpore 1/3 des blancs, puis la farine tamisée, puis le reste. 220°C 4-6 min."
+  },
+  'trocadero': {
+    name: "Biscuit Trocadero",
+    category: "biscuit",
+    base: 225,
+    refDiam: 16,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Blancs d'oeuf", qty:80},
+      {name:"Sucre semoule", qty:40},
+      {name:"Poudre d'amande", qty:50},
+      {name:"Sucre glace", qty:30},
+      {name:"Beurre fondu", qty:25}
+    ],
+    tip: "Biscuit amande moelleux, idéal en insert d'entremets. Monte les blancs en serrant avec le sucre semoule. Incorpore poudre d'amande + sucre glace tamisés, puis le beurre fondu tiède. 170°C 12-15 min."
+  },
+
+  /* ====================== PÂTES À TARTE ====================== */
+  'pate-sablee': {
+    name: "Pâte Sablée",
+    category: "pate-tarte",
+    base: 283,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Farine T55", qty:125},
+      {name:"Sucre semoule", qty:57},
+      {name:"Beurre doux", qty:75},
+      {name:"Oeufs", qty:25},
+      {name:"Fleur de sel", qty:1}
+    ],
+    tip: "Méthode par sablage : frotte beurre froid + farine jusqu'à texture sableuse, sans mottes. Ajoute sucre + sel + oeuf. Fraise en une seule fois, boule, film, repos 1h minimum au frigo. Étale entre 2 feuilles. Cuisson à blanc 170°C."
+  },
+  'pate-sucree': {
+    name: "Pâte Sucrée",
+    category: "pate-tarte",
+    base: 547,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Farine T55", qty:250},
+      {name:"Beurre doux froid", qty:120},
+      {name:"Sucre glace", qty:90},
+      {name:"Poudre d'amandes", qty:30},
+      {name:"Oeufs", qty:55},
+      {name:"Sel", qty:2}
+    ],
+    tip: "Méthode par crémage : beurre pommade + sucre glace + poudre amande + sel, puis oeuf, puis farine en dernier. Fraise une seule fois. Repos 2h minimum au frais. Croustillante et parfumée."
+  },
+  'sable-breton': {
+    name: "Sablé Breton",
+    category: "pate-tarte",
+    base: 520,
+    refDiam: 20,
+    modes: ['mass','diam'],
+    ingredients: [
+      {name:"Farine T55", qty:200},
+      {name:"Sucre semoule", qty:110},
+      {name:"Beurre doux", qty:140},
+      {name:"Jaunes d'oeuf", qty:60},
+      {name:"Levure chimique", qty:7},
+      {name:"Fleur de sel", qty:3}
+    ],
+    tip: "Crème beurre pommade + sucre + sel au fouet. Ajoute les jaunes puis la farine tamisée avec la levure. Repos 2h au frais. Cuis dans un cercle (il gonfle sinon). 170°C 15-18 min. Parfait en fond d'entremets."
+  },
+
+  /* ====================== PÂTE À CHOUX ====================== */
+  'pate-a-choux': {
+    name: "Pâte à Choux",
+    category: "pate-choux",
+    base: 990,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Eau", qty:160},
+      {name:"Lait entier", qty:160},
+      {name:"Beurre", qty:140},
+      {name:"Sucre", qty:20},
+      {name:"Sel", qty:4},
+      {name:"Farine T55", qty:190},
+      {name:"Oeufs entiers", qty:320}
+    ],
+    tip: "Bouillir eau + lait + beurre + sucre + sel. Hors du feu, verse la farine en une fois. Dessèche 1-2 min à feu moyen jusqu'à film gras au fond. Transvase, laisse tiédir. Incorpore les oeufs progressivement : la pâte doit former un V à la spatule. Cuisson 250°C → immédiatement descendu à 170°C, 35-40 min, sans JAMAIS ouvrir le four."
+  },
+  'craquelin': {
+    name: "Craquelin (pour choux)",
+    category: "pate-choux",
     base: 200,
+    modes: ['mass'],
     ingredients: [
-      {name: "Chocolat noir 64-70%", qty: 200, unit: "g"},
-      {name: "Crème liquide 35%", qty: 200, unit: "g"},
-      {name: "Miel ou glucose", qty: 20, unit: "g"},
-      {name: "Beurre (après refroidissement)", qty: 40, unit: "g"}
+      {name:"Beurre pommade", qty:60},
+      {name:"Sucre cassonade", qty:70},
+      {name:"Farine", qty:70}
     ],
-    tip: "Ratio 1:1 pour montage/fourrage souple. Pour un glaçage plus fluide passe à 1:1.5 (200g chocolat / 300g crème). Verse la crème chaude en 3 fois sur le chocolat haché, émulsionne au centre"
+    tip: "Mélange tout à la feuille jusqu'à obtenir une pâte homogène. Étale entre 2 feuilles à 2 mm d'épaisseur. Congèle 30 min minimum. Détaille à l'emporte-pièce et pose sur chaque chou avant cuisson : garantit des choux parfaitement ronds et croustillants."
   },
-  ganacheblanche: {
-    name: "Ganache chocolat blanc",
-    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
-    base: 200,
+
+  /* ====================== PÂTES FEUILLETÉES ====================== */
+  'feuilletee-classique': {
+    name: "Pâte Feuilletée Classique",
+    category: "feuilletee",
+    base: 554,
+    modes: ['mass'],
     ingredients: [
-      {name: "Chocolat blanc (min 30% beurre cacao)", qty: 200, unit: "g"},
-      {name: "Crème liquide 35%", qty: 100, unit: "g"},
-      {name: "Sirop de glucose", qty: 20, unit: "g"}
+      {name:"Farine T55 (détrempe)", qty:250},
+      {name:"Eau (détrempe)", qty:125},
+      {name:"Vinaigre blanc (détrempe)", qty:4},
+      {name:"Beurre de tourage", qty:175}
     ],
-    tip: "Le chocolat blanc étant plus gras, on divise la crème par 2. Utilise toujours un bon chocolat de couverture (Valrhona Ivoire, Opalys...) pas du chocolat à pâtisser industriel"
+    tip: "Détrempe : mélange farine + eau + vinaigre sans pétrir. Repos minimum 30 min au frigo, idéalement toute une nuit. Tourage : 5 ou 6 tours maximum, jamais 2 tours doubles d'affilés sans repos, max 2 tours avant repos au frigo. Cuisson 180°C 30-40 min."
   },
-  genoise: {
-    name: "Génoise",
-    inputs: [{label: "Diamètre du moule (cm)", id: "diam", default: 20}],
-    base: 20,
+  'feuilletee-inversee': {
+    name: "Pâte Feuilletée Inversée",
+    category: "feuilletee",
+    base: 700,
+    modes: ['mass'],
     ingredients: [
-      {name: "Œufs entiers", qty: 200, unit: "g (~4 œufs)"},
-      {name: "Sucre", qty: 125, unit: "g"},
-      {name: "Farine T45", qty: 125, unit: "g"},
-      {name: "Beurre fondu (facultatif)", qty: 25, unit: "g"}
+      {name:"Farine T55 (détrempe)", qty:210},
+      {name:"Eau (détrempe)", qty:90},
+      {name:"Vinaigre blanc (détrempe)", qty:3},
+      {name:"Sel (détrempe)", qty:7},
+      {name:"Beurre (détrempe)", qty:70},
+      {name:"Farine T55 (beurre manié)", qty:90},
+      {name:"Beurre (beurre manié)", qty:230}
     ],
-    tip: "Monte les œufs et sucre au bain-marie jusqu'à 50°C puis fouette jusqu'à refroidissement (ruban épais). Incorpore la farine délicatement à la maryse. Cuisson 180°C 25-30 min"
+    tip: "L'inversée enferme la détrempe dans le beurre manié : résultat plus fondant et plus régulier que la classique. Règle des tours identique : 5-6 max, jamais 2 doubles d'affilés. Idéale pour mille-feuilles et tartes fines."
   },
-  dacquoise: {
-    name: "Dacquoise amande",
-    inputs: [{label: "Diamètre du cercle (cm)", id: "diam", default: 20}],
-    base: 20,
+
+  /* ====================== MACARONS ====================== */
+  'meringue-italienne': {
+    name: "Meringue Italienne (35 macarons)",
+    category: "macarons",
+    base: 35,
+    modes: ['count'],
+    unit: "macarons",
     ingredients: [
-      {name: "Blancs d'œuf", qty: 125, unit: "g (~4 blancs)"},
-      {name: "Sucre semoule (pour meringue)", qty: 40, unit: "g"},
-      {name: "Sucre glace", qty: 100, unit: "g"},
-      {name: "Poudre d'amande", qty: 100, unit: "g"},
-      {name: "Farine T45", qty: 25, unit: "g"}
+      {name:"Sucre (sirop)", qty:150},
+      {name:"Eau (sirop)", qty:50},
+      {name:"Blancs 1 (sirop)", qty:55},
+      {name:"Poudre d'amande (TPT)", qty:150},
+      {name:"Sucre glace (TPT)", qty:150},
+      {name:"Blancs 2 (TPT)", qty:50}
     ],
-    tip: "Monte tes blancs en serrant avec le sucre semoule en 3 fois. Tamise ensemble sucre glace, poudre amande et farine. Incorpore délicatement à la maryse. Cuisson 170°C 18-22 min"
+    tip: "Cuis le sirop sucre + eau à 118°C. À 110°C, commence à monter les blancs 1. Verse le sirop en filet sur les blancs semi-montés, monte à pleine vitesse jusqu'au bec d'oiseau ferme. Mélange TPT + blancs 2 jusqu'à pâte épaisse. Incorpore 1/3 de meringue pour détendre, puis macaronne jusqu'au ruban brillant."
   },
-  sablebreton: {
-    name: "Sablé breton",
-    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
-    base: 500,
+  'meringue-francaise': {
+    name: "Meringue Française (35 macarons)",
+    category: "macarons",
+    base: 35,
+    modes: ['count'],
+    unit: "macarons",
     ingredients: [
-      {name: "Beurre demi-sel", qty: 150, unit: "g"},
-      {name: "Sucre", qty: 100, unit: "g"},
-      {name: "Jaunes d'œuf", qty: 40, unit: "g (~2 jaunes)"},
-      {name: "Farine T55", qty: 200, unit: "g"},
-      {name: "Levure chimique", qty: 4, unit: "g"},
-      {name: "Fleur de sel", qty: 2, unit: "g"}
+      {name:"Blancs d'oeuf", qty:115},
+      {name:"Sucre semoule", qty:150},
+      {name:"Poudre d'amande (TPT)", qty:150},
+      {name:"Sucre glace (TPT)", qty:150}
     ],
-    tip: "Crème le beurre pommade avec le sucre. Ajoute les jaunes puis la farine tamisée avec levure. Réserve 2h au frais. Étale entre 2 feuilles, détaille, cuis dans un cercle 170°C 15-18 min"
+    tip: "Blancs vieillis 2-3 jours à température ambiante. Monte à petite vitesse : serre progressivement avec le sucre en 3 fois jusqu'au bec d'oiseau ferme et brillant. Incorpore TPT tamisé, macaronne jusqu'au ruban. Laisse toujours croûter avant enfournement."
   },
-  patesucree: {
-    name: "Pâte sucrée",
-    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
-    base: 500,
+
+  /* ====================== CRÈMES ====================== */
+  'creme-patissiere': {
+    name: "Crème Pâtissière à la Vanille",
+    category: "creme",
+    base: 380,
+    modes: ['mass'],
     ingredients: [
-      {name: "Farine T55", qty: 250, unit: "g"},
-      {name: "Beurre doux", qty: 150, unit: "g"},
-      {name: "Sucre glace", qty: 95, unit: "g"},
-      {name: "Poudre d'amande", qty: 30, unit: "g"},
-      {name: "Œuf entier", qty: 50, unit: "g (~1 œuf)"},
-      {name: "Fleur de sel", qty: 1, unit: "g"}
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille", qty:1, unit:" gousse"},
+      {name:"Jaunes d'oeuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre", qty:20}
     ],
-    tip: "Méthode par crémage : beurre pommade + sucre glace + poudre amande + sel + œuf, puis farine. Fraise légèrement, étale, frais 2h minimum avant foncer. Cuisson à blanc 170°C"
+    tip: "Infuse les graines de vanille dans le lait bouillant, hors du feu 10 min. Blanchis jaunes + sucre + maïzena. Verse le lait chaud dessus, remets dans la casserole. Cuis 2 min après ébullition en fouettant sans arrêt. Ajoute le beurre hors du feu. Filme au contact, refroidis vite."
   },
-  patesablee: {
-    name: "Pâte sablée",
-    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
-    base: 500,
+  'creme-patissiere-chocolat': {
+    name: "Crème Pâtissière au Chocolat",
+    category: "creme",
+    base: 430,
+    modes: ['mass'],
     ingredients: [
-      {name: "Farine T55", qty: 250, unit: "g"},
-      {name: "Beurre froid", qty: 125, unit: "g"},
-      {name: "Sucre glace", qty: 80, unit: "g"},
-      {name: "Jaunes d'œuf", qty: 40, unit: "g (~2 jaunes)"},
-      {name: "Eau froide", qty: 20, unit: "g"},
-      {name: "Sel fin", qty: 2, unit: "g"}
+      {name:"Lait entier", qty:250},
+      {name:"Jaunes d'oeuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre", qty:20},
+      {name:"Chocolat noir 70%", qty:50}
     ],
-    tip: "Méthode par sablage : beurre froid + farine jusqu'à texture sableuse. Ajoute le sucre, les jaunes et l'eau. Fraise, boule, frais 1h. Étale entre 2 feuilles pour éviter la farine"
+    tip: "Même méthode que la pâtissière classique. Ajoute le chocolat haché à la fin, hors du feu : il fond dans la chaleur résiduelle. Mixe au mixeur plongeant pour parfaire l'émulsion. Filme au contact."
   },
-  pateachoux: {
-    name: "Pâte à choux",
-    inputs: [{label: "Masse totale (g)", id: "masse", default: 500}],
-    base: 500,
+  'creme-mousseline': {
+    name: "Crème Mousseline à la Vanille",
+    category: "creme",
+    base: 510,
+    modes: ['mass'],
     ingredients: [
-      {name: "Eau", qty: 125, unit: "g"},
-      {name: "Lait entier", qty: 125, unit: "g"},
-      {name: "Beurre", qty: 100, unit: "g"},
-      {name: "Sucre", qty: 5, unit: "g"},
-      {name: "Sel fin", qty: 3, unit: "g"},
-      {name: "Farine T45", qty: 125, unit: "g"},
-      {name: "Œufs entiers", qty: 220, unit: "g (~4-5 œufs)"}
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille", qty:1, unit:" gousse"},
+      {name:"Jaunes d'oeuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre 1 (dans la crème)", qty:20},
+      {name:"Beurre 2 (au foisonnage)", qty:130}
     ],
-    tip: "Bouillir eau + lait + beurre + sucre + sel. Verse la farine en une fois, dessèche 1-2 min à feu moyen. Laisse tiédir puis incorpore les œufs progressivement : la pâte doit faire un V au fouet. Cuisson 170°C 35-40 min"
+    tip: "Prépare une crème pâtissière classique avec le beurre 1. Refroidis-la complètement. Quand la pâtissière et le beurre 2 (pommade) sont à la même température (18-22°C), foisonne tout ensemble 5-8 min jusqu'à obtenir une mousseline légère et crémeuse. Règle d'or : MÊME TEMPÉRATURE, sinon ça graine."
   },
-  cremechantilly: {
-    name: "Crème chantilly mascarpone",
-    inputs: [{label: "Quantité finale souhaitée (g)", id: "masse", default: 500}],
-    base: 500,
+  'creme-diplomate': {
+    name: "Crème Diplomate à la Vanille",
+    category: "creme",
+    base: 483,
+    modes: ['mass'],
     ingredients: [
-      {name: "Crème liquide 35% (très froide)", qty: 350, unit: "g"},
-      {name: "Mascarpone (très froid)", qty: 100, unit: "g"},
-      {name: "Sucre glace", qty: 50, unit: "g"},
-      {name: "Gousse de vanille", qty: 1, unit: "unité"}
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille", qty:1, unit:" gousse"},
+      {name:"Jaunes d'oeuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre", qty:20},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Crème liquide 30% (à monter)", qty:100}
     ],
-    tip: "Tout doit être glacé : crème, mascarpone, bol, fouet. Monte à vitesse moyenne (pas maximum = bulles). Arrête dès que la chantilly fait le bec. Le mascarpone stabilise, elle tient 24h au frais"
+    tip: "Prépare la pâtissière, ajoute la gélatine hydratée à chaud. Refroidis complètement. Monte la crème liquide souple (bec d'oiseau, pas ferme). Détends la pâtissière au fouet, incorpore la crème montée délicatement à la maryse. La gélatine apporte la tenue, parfait pour garnir choux et tartes."
   },
-  cremeanglaise: {
-    name: "Crème anglaise",
-    inputs: [{label: "Quantité de lait (g)", id: "masse", default: 250}],
-    base: 250,
+  'cremeux-chocolat-noir': {
+    name: "Crémeux Chocolat Noir",
+    category: "creme",
+    base: 245,
+    modes: ['mass'],
     ingredients: [
-      {name: "Lait entier", qty: 250, unit: "g"},
-      {name: "Jaunes d'œuf", qty: 60, unit: "g (~3 jaunes)"},
-      {name: "Sucre", qty: 50, unit: "g"},
-      {name: "Gousse de vanille", qty: 0.5, unit: "unité"}
+      {name:"Lait entier", qty:70},
+      {name:"Crème liquide", qty:70},
+      {name:"Jaunes d'oeuf", qty:30},
+      {name:"Sucre", qty:15},
+      {name:"Chocolat noir", qty:60}
     ],
-    tip: "Cuis à la nappe : 82-85°C au thermomètre ou jusqu'à ce qu'elle nappe la cuillère (trait reste marqué au doigt). Filtre et refroidis immédiatement au bain-marie froid. Ne dépasse jamais 85°C ou elle tranche"
+    tip: "Prépare une anglaise : lait + crème chaude versée sur jaunes + sucre blanchis. Remets à la casserole, cuis à la nappe (82-85°C au thermomètre). Verse sur le chocolat haché en 3 fois, émulsionne au centre. Mixe. Filme au contact, 4h minimum au frigo."
   },
-  mousseau: {
-    name: "Mousse au chocolat (type entremet)",
-    inputs: [{label: "Masse de chocolat (g)", id: "choco", default: 200}],
-    base: 200,
+  'cremeux-chocolat-blanc': {
+    name: "Crémeux Chocolat Blanc",
+    category: "creme",
+    base: 271,
+    modes: ['mass'],
     ingredients: [
-      {name: "Chocolat noir 64-70%", qty: 200, unit: "g"},
-      {name: "Lait entier", qty: 100, unit: "g"},
-      {name: "Crème liquide 35% montée", qty: 300, unit: "g"},
-      {name: "Gélatine poudre", qty: 4, unit: "g"},
-      {name: "Eau (pour gélatine)", qty: 24, unit: "g"}
+      {name:"Lait entier", qty:65},
+      {name:"Crème liquide", qty:65},
+      {name:"Jaunes d'oeuf", qty:28},
+      {name:"Sucre", qty:13},
+      {name:"Chocolat blanc", qty:100}
     ],
-    tip: "Hydrate la gélatine 10 min. Chauffe le lait, ajoute la gélatine, verse sur le chocolat en 3 fois (émulsion). Attends 35-40°C puis incorpore la crème montée délicatement. Coule vite dans le moule"
+    tip: "Le chocolat blanc étant plus gras, on augmente le ratio chocolat. Anglaise classique à 82-85°C, émulsion sur le chocolat. Filme au contact, maturation 4h minimum, idéalement une nuit complète au frigo pour que ça se structure parfaitement."
+  },
+  'namelaka-noir': {
+    name: "Namelaka Chocolat Noir",
+    category: "creme",
+    base: 855,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat noir 70%", qty:250},
+      {name:"Lait entier", qty:200},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:5}
+    ],
+    tip: "Namelaka signifie 'crémeux' en japonais : texture entre ganache montée et crémeux, ultra fondante. Hydrate la gélatine. Chauffe le lait, ajoute la gélatine, verse sur le chocolat haché en 3 fois. Émulsionne. Ajoute la crème froide, mixe. Filme, 12h minimum au frigo."
+  },
+  'namelaka-lait': {
+    name: "Namelaka Chocolat au Lait",
+    category: "creme",
+    base: 955,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat au lait", qty:300},
+      {name:"Lait entier", qty:250},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:5}
+    ],
+    tip: "Version plus douce et caramélisée. Méthode identique au namelaka noir. Idéal en insert d'entremets, pochée sur tarte, ou en quenelle sur une assiette. Repos 12h absolu pour la texture."
+  },
+  'namelaka-blanc': {
+    name: "Namelaka Chocolat Blanc",
+    category: "creme",
+    base: 944,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat blanc", qty:300},
+      {name:"Lait entier", qty:240},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:4}
+    ],
+    tip: "Version la plus neutre, parfaite support de saveurs (pochée avec vanille, fève tonka, café infusé, zeste de citron…). Infuse dans le lait chaud avant d'ajouter la gélatine. 12h minimum au frigo."
+  },
+
+  /* ====================== GANACHES FOURRAGE ====================== */
+  'ganache-noir': {
+    name: "Ganache Chocolat Noir",
+    category: "ganache",
+    base: 480,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat noir 70%", qty:200},
+      {name:"Crème liquide 35%", qty:200},
+      {name:"Sirop de glucose", qty:40},
+      {name:"Beurre", qty:40}
+    ],
+    tip: "Ratio 1:1 chocolat/crème = texture ferme parfaite pour fourrage tarte ou bonbon chocolat. Crème frémissante (pas bouillante), versée en 3 fois sur le chocolat + glucose. Émulsion au centre, sans bulles. Ajoute le beurre quand la ganache est à 35-40°C."
+  },
+  'ganache-lait': {
+    name: "Ganache Chocolat au Lait",
+    category: "ganache",
+    base: 300,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat au lait", qty:200},
+      {name:"Crème liquide 35%", qty:80},
+      {name:"Sirop de glucose", qty:20}
+    ],
+    tip: "Le chocolat au lait étant plus gras et plus doux en cacao, on baisse la crème et on supprime le beurre. Texture très fondante. Idéal pour bonbons enrobés."
+  },
+  'ganache-blanc': {
+    name: "Ganache Chocolat Blanc",
+    category: "ganache",
+    base: 350,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat blanc", qty:250},
+      {name:"Crème liquide 35%", qty:100}
+    ],
+    tip: "Ratio 2.5:1 (chocolat:crème) : le chocolat blanc contient plus de matière grasse, donc moins de crème. Texture riche et sucrée. Parfait support pour infusions (tonka, safran, thé matcha, verveine)."
+  },
+  'ganache-praline': {
+    name: "Ganache Praliné",
+    category: "ganache",
+    base: 450,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat au lait", qty:150},
+      {name:"Praliné", qty:150},
+      {name:"Crème liquide 35%", qty:130},
+      {name:"Beurre", qty:20}
+    ],
+    tip: "Associe chocolat au lait + praliné pour un fourrage ultra gourmand. Fais fondre le chocolat, mélange avec le praliné. Verse la crème frémissante en 3 fois, émulsionne. Ajoute le beurre à 35°C. Laisse cristalliser avant utilisation."
+  },
+  'ganache-infusee': {
+    name: "Ganache Infusée",
+    category: "ganache",
+    base: 410,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat blanc", qty:250},
+      {name:"Crème liquide 35%", qty:150},
+      {name:"Ingrédient d'infusion (épice, herbe, thé…)", qty:10}
+    ],
+    tip: "Porte la crème à frémissement, ajoute l'ingrédient d'infusion (ex : 10g de thé matcha, fève tonka, lavande…). Couvre, infuse 15 min hors du feu. Filtre, pèse, recomplète avec crème froide pour garder le grammage. Remets à frémissement, émulsionne sur le chocolat."
+  },
+
+  /* ====================== GANACHES MONTÉES ====================== */
+  'gm-noir': {
+    name: "Ganache Montée Chocolat Noir",
+    category: "ganache-montee",
+    base: 371,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat noir", qty:100},
+      {name:"Crème liquide 1 (chauffée)", qty:100},
+      {name:"Crème liquide 2 (froide)", qty:150},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip: "Hydrate la gélatine 10 min. Porte la crème 1 à frémissement, ajoute la gélatine, verse en 3 fois sur le chocolat pour créer une émulsion. Ajoute la crème 2 froide, mixe. Filme au contact. 12h minimum au frigo avant de monter au fouet."
+  },
+  'gm-lait': {
+    name: "Ganache Montée Chocolat au Lait",
+    category: "ganache-montee",
+    base: 376,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat au lait", qty:120},
+      {name:"Crème liquide 1 (chauffée)", qty:80},
+      {name:"Crème liquide 2 (froide)", qty:170},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip: "Même méthode que la ganache montée noire. Le chocolat au lait donne une texture plus fondante. Attention au foisonnage : arrête dès que la ganache forme un ruban souple et brillant, JAMAIS au stade chantilly ferme = elle tranche."
+  },
+  'gm-blanc': {
+    name: "Ganache Montée Chocolat Blanc",
+    category: "ganache-montee",
+    base: 354,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat blanc", qty:130},
+      {name:"Crème liquide 1 (chauffée)", qty:80},
+      {name:"Crème liquide 2 (froide)", qty:140},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip: "Support neutre idéal pour infusions (vanille, café, fleur d'oranger, jasmin…). Infuse directement dans la crème 1 chaude pendant 15 min avant d'ajouter gélatine + chocolat. Repos 12h puis foisonnage souple."
+  },
+  'gm-dulcey': {
+    name: "Ganache Montée Chocolat Dulcey",
+    category: "ganache-montee",
+    base: 619.5,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat Dulcey", qty:220},
+      {name:"Crème liquide 1 (chauffée)", qty:135},
+      {name:"Crème liquide 2 (froide)", qty:260},
+      {name:"Gélatine en poudre", qty:4.5}
+    ],
+    tip: "Le Dulcey apporte des notes biscuit-caramel uniques. Méthode identique, mais Dulcey = plus de matière grasse donc plus de chocolat. Parfaite sur une tarte-citron pour contraster l'acidité."
+  },
+  'gm-praline': {
+    name: "Ganache Montée Pralinée",
+    category: "ganache-montee",
+    base: 429,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Chocolat au lait", qty:80},
+      {name:"Praliné", qty:80},
+      {name:"Crème liquide 1 (chauffée)", qty:100},
+      {name:"Crème liquide 2 (froide)", qty:160},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip: "Fais fondre chocolat + praliné. Verse la crème 1 frémissante avec gélatine en 3 fois. Émulsionne. Ajoute crème 2 froide, mixe. Repos 12h. Foisonne jusqu'à ruban épais brillant. Parfaite en garniture Paris-Brest ou entremets noisette."
+  },
+
+  /* ====================== AUTRES ====================== */
+  'praline': {
+    name: "Praliné Maison",
+    category: "autre",
+    base: 753,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Fruits à coque (noisettes/amandes)", qty:500},
+      {name:"Sucre", qty:250},
+      {name:"Sel", qty:3}
+    ],
+    tip: "Torréfie les fruits à coque 15 min à 160°C. Fais un caramel à sec avec le sucre jusqu'à couleur ambrée. Verse sur les fruits chauds, laisse figer. Concasse grossièrement puis mixe : d'abord texture sableuse, puis pâte, puis liquide. Ajoute le sel. Conserve à température ambiante."
+  },
+  'confit-fruits': {
+    name: "Confit de Fruits",
+    category: "autre",
+    base: 245,
+    modes: ['mass'],
+    ingredients: [
+      {name:"Purée de fruit", qty:200},
+      {name:"Sucre", qty:20},
+      {name:"Jus de citron", qty:20},
+      {name:"Pectine NH", qty:5}
+    ],
+    tip: "Mélange sucre + pectine à sec. Chauffe la purée à 40°C, ajoute sucre+pectine en pluie en fouettant. Porte à ébullition 1 min, ajoute le jus de citron. Coule vite dans le moule à insert. Congèle avant démoulage. Idéal en insert d'entremets fruité."
   }
 };
+
+let currentMode = 'mass';
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.mode === mode);
+  });
+  const key = document.getElementById('recipe').value;
+  if (!key) return;
+  const r = recipes[key];
+  const input1 = document.getElementById('input1');
+  const label1 = document.getElementById('label1');
+  if (mode === 'mass') {
+    label1.textContent = "Masse totale souhaitée (g)";
+    input1.value = r.base;
+    input1.step = 1;
+  } else if (mode === 'diam') {
+    label1.textContent = "Diamètre du moule (cm)";
+    input1.value = r.refDiam || 20;
+    input1.step = 1;
+  } else if (mode === 'count') {
+    label1.textContent = "Nombre de " + (r.unit || "pièces");
+    input1.value = r.base;
+    input1.step = 1;
+  }
+}
 
 function updateForm() {
   const key = document.getElementById('recipe').value;
   const grid = document.getElementById('inputsGrid');
   const btn = document.getElementById('calcBtn');
+  const toggle = document.getElementById('modeToggle');
   const result = document.getElementById('result');
   result.classList.remove('visible');
 
   if (!key) {
     grid.style.display = 'none';
     btn.style.display = 'none';
+    toggle.style.display = 'none';
     return;
   }
 
-  const recipe = recipes[key];
-  document.getElementById('label1').textContent = recipe.inputs[0].label;
-  document.getElementById('input1').value = recipe.inputs[0].default;
+  const r = recipes[key];
+  const modes = r.modes || ['mass'];
+
+  // Toggle affichage des boutons mode
+  if (modes.length > 1) {
+    toggle.style.display = 'flex';
+    toggle.querySelectorAll('.mode-btn').forEach(b => {
+      b.style.display = modes.includes(b.dataset.mode) ? 'block' : 'none';
+    });
+  } else {
+    toggle.style.display = 'none';
+  }
+
+  // Définir le mode par défaut selon les modes autorisés
+  const defaultMode = modes[0];
+  setMode(defaultMode);
+
   grid.style.display = 'grid';
   btn.style.display = 'block';
 }
@@ -265,36 +847,48 @@ function calculate() {
   const key = document.getElementById('recipe').value;
   if (!key) return;
 
-  const recipe = recipes[key];
-  const inputValue = parseFloat(document.getElementById('input1').value) || recipe.base;
+  const r = recipes[key];
+  const inputValue = parseFloat(document.getElementById('input1').value) || r.base;
   let ratio;
+  let metaText;
 
-  if (recipe.inputs[0].id === 'diam') {
-    // Surface ratio : on adapte au carré du diamètre
-    ratio = (inputValue * inputValue) / (recipe.base * recipe.base);
+  if (currentMode === 'diam') {
+    const refDiam = r.refDiam || 20;
+    ratio = (inputValue * inputValue) / (refDiam * refDiam);
+    metaText = "Cercle " + inputValue + " cm — recalibré depuis la base " + refDiam + " cm";
+  } else if (currentMode === 'count') {
+    ratio = inputValue / r.base;
+    metaText = inputValue + " " + (r.unit || "pièces") + " — recalibré depuis " + r.base;
   } else {
-    ratio = inputValue / recipe.base;
+    ratio = inputValue / r.base;
+    metaText = "Masse totale cible : " + inputValue + " g — base recette " + r.base + " g";
   }
 
   const ingredientsDiv = document.getElementById('ingredients');
   ingredientsDiv.innerHTML = '';
 
-  recipe.ingredients.forEach(ing => {
-    const qty = (ing.qty * ratio);
+  let totalMass = 0;
+  r.ingredients.forEach(ing => {
+    const qty = ing.qty * ratio;
+    const unit = ing.unit || " g";
+    // Formatting : 1 décimale si < 10, sinon arrondi entier
     const displayQty = qty < 10 ? qty.toFixed(1) : Math.round(qty);
+    if (!ing.unit || ing.unit.includes('g')) {
+      totalMass += qty;
+    }
     const row = document.createElement('div');
     row.className = 'ingredient-row';
-    row.innerHTML = `
-      <span class="ingredient-name">${ing.name}</span>
-      <span class="ingredient-qty">${displayQty} ${ing.unit}</span>
-    `;
+    row.innerHTML = '<span class="ingredient-name">' + ing.name + '</span>' +
+                    '<span class="ingredient-qty">' + displayQty + unit + '</span>';
     ingredientsDiv.appendChild(row);
   });
 
-  document.getElementById('resultTitle').textContent = recipe.name;
-  document.getElementById('tip').innerHTML = `<strong>💡 Le conseil de Geoffrey</strong>${recipe.tip}`;
+  document.getElementById('totalQty').textContent = Math.round(totalMass) + " g";
+  document.getElementById('resultTitle').textContent = r.name;
+  document.getElementById('resultMeta').textContent = metaText;
+  document.getElementById('tip').innerHTML = '<strong>Le conseil de Geoffrey</strong>' + r.tip;
   document.getElementById('result').classList.add('visible');
-  document.getElementById('result').scrollIntoView({behavior: 'smooth', block: 'start'});
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
 }
 </script>
 </body>
