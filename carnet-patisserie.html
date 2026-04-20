@@ -18,8 +18,16 @@
   .stat{background:#fff;border:1px solid rgba(26,20,16,0.1);padding:20px 24px;border-radius:4px;border-top:3px solid #C8A04A}
   .stat-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.6);margin-bottom:6px}
   .stat-value{font-family:Georgia,serif;font-size:32px;color:#1A1410}
-  .add-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:14px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;margin-bottom:32px;transition:background 0.2s}
+  .actions-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px;align-items:stretch}
+  .add-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:14px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background 0.2s}
   .add-btn:hover{background:#B08A3E}
+  .btn-ghost{background:#fff;color:#1A1410;border:1px solid rgba(26,20,16,0.15);padding:16px 24px;font-size:12px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-ghost:hover{border-color:#C8A04A;color:#C8A04A}
+  .btn-ghost .icn{font-size:14px}
+  .privacy-badge{display:flex;align-items:flex-start;gap:12px;background:rgba(138,176,96,0.10);border:1px solid rgba(138,176,96,0.30);border-left:3px solid #6B8A45;padding:14px 18px;border-radius:3px;margin-bottom:32px;font-size:13px;line-height:1.55;color:rgba(26,20,16,0.82)}
+  .privacy-badge .lock{font-size:18px;line-height:1.3;color:#6B8A45}
+  .privacy-badge strong{color:#1A1410;font-weight:700}
+  #importFile{display:none}
   .form-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(26,20,16,0.75);z-index:100;overflow-y:auto;padding:20px}
   .form-overlay.visible{display:flex;align-items:flex-start;justify-content:center}
   .form-card{background:#FDF8F0;max-width:600px;width:100%;border-radius:4px;padding:clamp(24px,4vw,40px);margin:40px auto;border-top:4px solid #C8A04A}
@@ -62,7 +70,12 @@
 
 <main>
   <h1>Ton journal <span class="accent">de progression</span></h1>
-  <p class="intro">Note chaque recette testée, tes ajustements, tes réussites, tes ratés. Toutes tes données restent dans ton navigateur (rien n'est envoyé sur le web)</p>
+  <p class="intro">Note chaque recette testée, tes ajustements, tes réussites, tes ratés</p>
+
+  <div class="privacy-badge">
+    <span class="lock">🔒</span>
+    <div><strong>100 % privé.</strong> Ton carnet est stocké sur ton appareil uniquement. Aucune donnée n'est envoyée sur internet, je n'y ai pas accès, les autres élèves non plus. Pense à <strong>exporter régulièrement</strong> si tu veux conserver une sauvegarde ou migrer sur un autre appareil</div>
+  </div>
 
   <div class="stats">
     <div class="stat">
@@ -83,7 +96,12 @@
     </div>
   </div>
 
-  <button class="add-btn" onclick="openForm()">+ Ajouter une recette</button>
+  <div class="actions-row">
+    <button class="add-btn" onclick="openForm()">+ Ajouter une recette</button>
+    <button class="btn-ghost" onclick="exportEntries()" title="Télécharger une sauvegarde JSON"><span class="icn">📤</span> Exporter</button>
+    <button class="btn-ghost" onclick="document.getElementById('importFile').click()" title="Recharger une sauvegarde JSON"><span class="icn">📥</span> Importer</button>
+    <input type="file" id="importFile" accept=".json,application/json" onchange="importEntries(event)">
+  </div>
 
   <div id="entries" class="entries"></div>
 </main>
@@ -98,7 +116,7 @@
     <label for="f_category">Catégorie</label>
     <select id="f_category">
       <option value="Tarte">Tarte</option>
-      <option value="Entremet">Entremet</option>
+      <option value="Entremets">Entremets</option>
       <option value="Choux">Choux (éclair, Paris-Brest...)</option>
       <option value="Macarons">Macarons</option>
       <option value="Biscuit">Biscuit / Gâteau</option>
@@ -217,7 +235,7 @@ function formatDate(d) {
 
 function categoryEmoji(cat) {
   const map = {
-    'Tarte':'🥧','Entremet':'🎂','Choux':'🥐','Macarons':'🍪',
+    'Tarte':'🥧','Entremets':'🎂','Choux':'🥐','Macarons':'🍪',
     'Biscuit':'🍰','Viennoiserie':'🥐','Chocolat':'🍫',
     "Dessert à l'assiette":'🍨','Crème / Base':'🥣','Autre':'✨'
   };
@@ -285,6 +303,101 @@ document.getElementById('formOverlay').addEventListener('click', (e) => {
   if (e.target.id === 'formOverlay') closeForm();
 });
 
+/* Migration : anciennes entrées "Entremet" → "Entremets" */
+function migrateEntries() {
+  const entries = getEntries();
+  let changed = false;
+  entries.forEach(e => {
+    if (e.category === 'Entremet') { e.category = 'Entremets'; changed = true; }
+  });
+  if (changed) saveEntries(entries);
+}
+
+/* Export : télécharge un JSON avec toutes les entrées (photos incluses en base64) */
+function exportEntries() {
+  const entries = getEntries();
+  if (entries.length === 0) {
+    alert("Ton carnet est vide, il n'y a rien à exporter");
+    return;
+  }
+  const payload = {
+    source: 'mfp_carnet_patisserie',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    entries
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const today = new Date().toISOString().split('T')[0];
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `carnet-patisserie-${today}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* Import : charge un fichier JSON, demande Remplacer ou Fusionner */
+function importEntries(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const imported = Array.isArray(data) ? data : data.entries;
+      if (!Array.isArray(imported)) throw new Error('structure invalide');
+      // sanity check minimal
+      const valid = imported.filter(x => x && typeof x === 'object' && x.name && x.category);
+      if (valid.length === 0) {
+        alert("Ce fichier ne contient aucune recette valide");
+        event.target.value = '';
+        return;
+      }
+      // migration catégorie
+      valid.forEach(x => { if (x.category === 'Entremet') x.category = 'Entremets'; });
+
+      const existing = getEntries();
+      let merged;
+      if (existing.length === 0) {
+        merged = valid;
+      } else {
+        const choice = confirm(
+          `Tu as déjà ${existing.length} recette(s) dans ton carnet\n\n` +
+          `OK = FUSIONNER avec les ${valid.length} recette(s) importée(s)\n` +
+          `Annuler = je choisis autre chose`
+        );
+        if (choice) {
+          // fusion par id (si dispo), sinon append
+          const seen = new Set(existing.map(x => x.id));
+          const toAdd = valid.filter(x => !seen.has(x.id));
+          merged = [...toAdd, ...existing];
+        } else {
+          const replace = confirm(
+            `REMPLACER ton carnet actuel par l'import ?\n\n` +
+            `⚠️ Tes ${existing.length} recette(s) actuelle(s) seront effacée(s)`
+          );
+          if (!replace) {
+            event.target.value = '';
+            return;
+          }
+          merged = valid;
+        }
+      }
+      saveEntries(merged);
+      event.target.value = '';
+      render();
+      alert(`Import réussi : ${valid.length} recette(s) chargée(s)`);
+    } catch (err) {
+      alert("Fichier invalide — vérifie que c'est bien un export du carnet");
+      event.target.value = '';
+    }
+  };
+  reader.readAsText(file);
+}
+
+migrateEntries();
 render();
 </script>
 </body>

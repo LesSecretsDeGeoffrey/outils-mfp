@@ -15,40 +15,56 @@
   h1 .accent{color:#C8A04A;font-style:italic}
   .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:680px}
 
+  .trust-banner{display:flex;align-items:flex-start;gap:12px;background:rgba(138,176,96,0.10);border:1px solid rgba(138,176,96,0.30);border-left:3px solid #6B8A45;padding:14px 18px;border-radius:3px;margin-bottom:32px;font-size:13px;line-height:1.55;color:rgba(26,20,16,0.82)}
+  .trust-banner .icn{font-size:18px;line-height:1.3;color:#6B8A45}
+  .trust-banner strong{color:#1A1410;font-weight:700}
+
   .rule-banner{background:rgba(200,160,74,0.08);border-left:3px solid #C8A04A;padding:16px 20px;border-radius:3px;margin-bottom:32px;font-size:13px;color:rgba(26,20,16,0.8);line-height:1.55}
   .rule-banner strong{color:#1A1410;font-family:Georgia,serif;font-size:15px;display:block;margin-bottom:4px}
 
   .step{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,3vw,28px);margin-bottom:18px;transition:all 0.3s ease}
   .step.done{border-left:4px solid #C8A04A}
-  .step-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-  .step-num{background:#1A1410;color:#C8A04A;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:12px;font-weight:700}
+  .step.locked{opacity:0.45;pointer-events:none}
+  .step-head{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+  .step-num{background:#1A1410;color:#C8A04A;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:12px;font-weight:700;flex-shrink:0}
   .step.done .step-num{background:#C8A04A;color:#1A1410}
   .step-title{font-family:Georgia,serif;font-size:20px;font-weight:400;flex:1}
   .step-badge{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(26,20,16,0.5);text-transform:uppercase}
 
   .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-  .option{background:#FDF8F0;border:1px solid rgba(26,20,16,0.1);padding:14px 16px;border-radius:3px;cursor:pointer;text-align:left;font-family:inherit;font-size:14px;color:#1A1410;transition:all 0.2s ease}
+  .option{background:#FDF8F0;border:1px solid rgba(26,20,16,0.1);padding:14px 16px;border-radius:3px;cursor:pointer;text-align:left;font-family:inherit;font-size:14px;color:#1A1410;transition:all 0.2s ease;width:100%}
   .option:hover{border-color:#C8A04A;transform:translateY(-2px)}
   .option.active{background:#1A1410;color:#FDF8F0;border-color:#C8A04A}
   .option .opt-name{display:block;font-family:Georgia,serif;font-size:16px;margin-bottom:3px}
   .option .opt-desc{display:block;font-size:11px;color:rgba(26,20,16,0.55);line-height:1.4}
   .option.active .opt-desc{color:rgba(253,248,240,0.6)}
+  .option-none{background:transparent;border:1px dashed rgba(26,20,16,0.2);font-style:italic;color:rgba(26,20,16,0.6)}
+  .option-none.active{background:#1A1410;color:rgba(253,248,240,0.85)}
 
   .recipe-card{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(32px,5vw,48px);margin-top:28px;border-top:4px solid #C8A04A;animation:fadeIn 0.4s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .recipe-card .tag{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;margin-bottom:14px;padding:5px 12px;border:1px solid rgba(200,160,74,0.3);border-radius:2px;text-transform:uppercase}
-  .recipe-card h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);font-weight:400;margin-bottom:10px;line-height:1.2}
+  .recipe-card h2{font-family:Georgia,serif;font-size:clamp(26px,3.5vw,36px);font-weight:400;margin-bottom:10px;line-height:1.2}
   .recipe-card .subtitle{color:rgba(253,248,240,0.7);font-size:15px;margin-bottom:28px;font-style:italic}
+  .meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:32px;padding:18px 0;border-top:1px solid rgba(200,160,74,0.25);border-bottom:1px solid rgba(200,160,74,0.25)}
+  .meta-cell .meta-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:2px;color:rgba(200,160,74,0.8);text-transform:uppercase;margin-bottom:4px}
+  .meta-cell .meta-value{font-family:Georgia,serif;font-size:16px;color:#FDF8F0}
 
-  .layers{margin-bottom:32px}
-  .layers h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;color:#C8A04A;font-weight:400}
-  .layer{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid rgba(253,248,240,0.08);align-items:start}
-  .layer:last-child{border-bottom:none}
-  .layer-type{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(200,160,74,0.8);min-width:90px;padding-top:3px;text-transform:uppercase}
-  .layer-name{font-family:Georgia,serif;font-size:16px;margin-bottom:4px}
-  .layer-note{font-size:13px;color:rgba(253,248,240,0.65);line-height:1.5}
+  .component{margin-bottom:28px;border-left:2px solid rgba(200,160,74,0.4);padding-left:20px}
+  .component-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+  .component-type{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;text-transform:uppercase}
+  .component-name{font-family:Georgia,serif;font-size:20px;color:#FDF8F0;margin:2px 0 4px}
+  .component-mass{font-family:Georgia,serif;font-size:14px;color:rgba(200,160,74,0.85);font-style:italic}
+  .component-desc{font-size:13px;color:rgba(253,248,240,0.6);margin-bottom:12px;line-height:1.5}
+  .ingredients{list-style:none;padding:0;margin:0}
+  .ingredients li{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px;color:rgba(253,248,240,0.85);border-bottom:1px dotted rgba(253,248,240,0.08)}
+  .ingredients li:last-child{border-bottom:none}
+  .ing-name{flex:1}
+  .ing-qty{font-family:Georgia,serif;color:#C8A04A;white-space:nowrap;padding-left:12px}
+  .component-tip{background:rgba(200,160,74,0.07);padding:10px 14px;border-radius:2px;font-size:12px;line-height:1.55;color:rgba(253,248,240,0.75);margin-top:10px;border-left:2px solid rgba(200,160,74,0.5)}
+  .component-tip strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:4px}
 
-  .method{margin-bottom:28px}
+  .method{margin:32px 0}
   .method h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;color:#C8A04A;font-weight:400}
   .method ol{padding-left:0;list-style:none;counter-reset:m}
   .method li{padding:12px 0 12px 40px;border-bottom:1px solid rgba(253,248,240,0.05);position:relative;counter-increment:m;font-size:14px;line-height:1.55;color:rgba(253,248,240,0.85)}
@@ -70,6 +86,14 @@
   .empty-recipe{background:#fff;border:1px dashed rgba(26,20,16,0.2);border-radius:4px;padding:60px 30px;text-align:center;margin-top:28px}
   .empty-recipe p{color:rgba(26,20,16,0.5);font-family:Georgia,serif;font-size:18px;font-style:italic}
 
+  @media print{
+    .topbar, .step, .rule-banner, .trust-banner, .intro, h1, .actions{display:none !important}
+    .recipe-card{background:#fff;color:#1A1410;border:1px solid #1A1410}
+    .recipe-card h2, .recipe-card .subtitle, .component-name, .method li, .ingredients li, .tips li{color:#1A1410 !important}
+    .meta-cell .meta-value{color:#1A1410}
+    .component{border-left-color:#C8A04A}
+  }
+
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -81,11 +105,16 @@
 
 <main>
   <h1>Compose ta création <span class="accent">signature</span></h1>
-  <p class="intro">Choisis un format, une saveur, une base, une crème, un insert et une finition — l'outil te génère une recette cohérente avec les méthodes, proportions et astuces de la Méthode Fondations Pro</p>
+  <p class="intro">Choisis un format, une taille, une saveur et les composants. L'outil te génère une recette complète avec les vraies recettes de la Méthode Fondations Pro, et recalcule tous les grammages selon ton moule</p>
+
+  <div class="trust-banner">
+    <span class="icn">📖</span>
+    <div><strong>100 % recettes Geoffrey.</strong> Chaque base, crème, insert utilise les vraies recettes de la MFP avec les grammages exacts, recalculés automatiquement selon la taille de ton moule. Tu retrouves la même méthode que dans tes cours Skool</div>
+  </div>
 
   <div class="rule-banner">
     <strong>La règle d'or de Geoffrey pour les entremets</strong>
-    LE DENSE ET LE LOURD EN BAS (brownie, biscuit moelleux, praliné croustillant), LE LÉGER ET L'AÉRIEN AU-DESSUS (mousses, ganache montée, chantilly). Respecte cet ordre ou l'entremet se casse à la décongélation
+    LE DENSE ET LE LOURD EN BAS (brownie, biscuit moelleux, praliné croustillant), LE LÉGER ET L'AÉRIEN AU-DESSUS (mousses, ganache montée, chantilly). Respecte cet ordre ou l'entremets se casse à la décongélation
   </div>
 
   <!-- ÉTAPE 1 : Format -->
@@ -98,50 +127,60 @@
     <div class="options" id="opts-format"></div>
   </div>
 
-  <!-- ÉTAPE 2 : Saveur principale -->
-  <div class="step" id="step-flavor">
+  <!-- ÉTAPE 2 : Taille -->
+  <div class="step locked" id="step-size">
     <div class="step-head">
       <span class="step-num">2</span>
+      <span class="step-title">Quelle taille / moule ?</span>
+      <span class="step-badge" id="badge-size">Choisis d'abord un format</span>
+    </div>
+    <div class="options" id="opts-size"></div>
+  </div>
+
+  <!-- ÉTAPE 3 : Saveur -->
+  <div class="step" id="step-flavor">
+    <div class="step-head">
+      <span class="step-num">3</span>
       <span class="step-title">Ta saveur principale</span>
       <span class="step-badge" id="badge-flavor">À choisir</span>
     </div>
     <div class="options" id="opts-flavor"></div>
   </div>
 
-  <!-- ÉTAPE 3 : Base -->
+  <!-- ÉTAPE 4 : Base -->
   <div class="step" id="step-base">
     <div class="step-head">
-      <span class="step-num">3</span>
-      <span class="step-title">La base (socle / biscuit)</span>
+      <span class="step-num">4</span>
+      <span class="step-title">La base (pâte ou biscuit)</span>
       <span class="step-badge" id="badge-base">À choisir</span>
     </div>
     <div class="options" id="opts-base"></div>
   </div>
 
-  <!-- ÉTAPE 4 : Crème -->
+  <!-- ÉTAPE 5 : Crème -->
   <div class="step" id="step-cream">
     <div class="step-head">
-      <span class="step-num">4</span>
+      <span class="step-num">5</span>
       <span class="step-title">La crème principale</span>
       <span class="step-badge" id="badge-cream">À choisir</span>
     </div>
     <div class="options" id="opts-cream"></div>
   </div>
 
-  <!-- ÉTAPE 5 : Insert -->
+  <!-- ÉTAPE 6 : Insert -->
   <div class="step" id="step-insert">
     <div class="step-head">
-      <span class="step-num">5</span>
+      <span class="step-num">6</span>
       <span class="step-title">L'insert (cœur gourmand)</span>
       <span class="step-badge" id="badge-insert">À choisir</span>
     </div>
     <div class="options" id="opts-insert"></div>
   </div>
 
-  <!-- ÉTAPE 6 : Finition -->
+  <!-- ÉTAPE 7 : Finition -->
   <div class="step" id="step-finish">
     <div class="step-head">
-      <span class="step-num">6</span>
+      <span class="step-num">7</span>
       <span class="step-title">La finition</span>
       <span class="step-badge" id="badge-finish">À choisir</span>
     </div>
@@ -149,179 +188,914 @@
   </div>
 
   <div id="output">
-    <div class="empty-recipe"><p>Ta recette signature apparaîtra ici dès que tu auras complété les 6 étapes</p></div>
+    <div class="empty-recipe"><p>Ta recette signature apparaîtra ici dès que tu auras complété les étapes</p></div>
   </div>
 </main>
 
 <script>
-const data = {
-  formats: [
-    {id:"tarte", name:"Tarte", desc:"Fond cuit + crème + fruit ou garniture"},
-    {id:"entremet", name:"Entremet", desc:"Multi-couches, mousse principale, glaçage"},
-    {id:"choux", name:"Choux / Éclair", desc:"Pâte à choux + crème + topping"},
-    {id:"cake", name:"Cake / Layer", desc:"Biscuits empilés + crème de montage"},
-    {id:"dessert", name:"Dessert à l'assiette", desc:"Composé individuel, plusieurs textures"}
+/* ============================================================
+   SOURCES DE VÉRITÉ
+   Toutes les recettes de base viennent de recettes-geoffrey.json
+   Chaque recette a une "base" (masse totale) et un "refArea" (cm² de référence).
+   La surface de référence standard est Ø 20 cm = π × 10² = 314,16 cm²
+   ============================================================ */
+
+const REF_AREA_20 = Math.PI * 100; // 314.16 cm² pour un Ø 20
+
+/* ============================================================
+   FORMATS
+   ============================================================ */
+const FORMATS = [
+  {id:"tarte", name:"Tarte", desc:"Fond cuit + garniture"},
+  {id:"entremets", name:"Entremets", desc:"Multicouches congelé avec glaçage"},
+  {id:"cake", name:"Cake / Layer", desc:"Biscuits empilés, crème de montage"},
+  {id:"choux", name:"Choux / Éclair", desc:"Pâte à choux + crème"},
+  {id:"dessert", name:"Dessert à l'assiette", desc:"Composé individuel"}
+];
+
+/* ============================================================
+   TAILLES (par format)
+   area = aire en cm² (= surface du moule, ou surface équivalente)
+   parts = nombre de parts pour le service
+   ============================================================ */
+const SIZES = {
+  tarte: [
+    {id:"t-16", name:"Cercle Ø 16 cm", area: Math.PI*64, parts:4},
+    {id:"t-18", name:"Cercle Ø 18 cm", area: Math.PI*81, parts:6},
+    {id:"t-20", name:"Cercle Ø 20 cm", area: Math.PI*100, parts:8},
+    {id:"t-22", name:"Cercle Ø 22 cm", area: Math.PI*121, parts:10},
+    {id:"t-24", name:"Cercle Ø 24 cm", area: Math.PI*144, parts:12},
+    {id:"t-long", name:"Rectangle 30×11 cm", area: 330, parts:8},
+    {id:"t-ind6", name:"6 tartelettes Ø 8", area: 6 * Math.PI*16, parts:6},
+    {id:"t-ind8", name:"8 tartelettes Ø 8", area: 8 * Math.PI*16, parts:8}
   ],
-  flavors: [
-    {id:"chocolat-noir", name:"Chocolat noir", emoji:"🍫"},
-    {id:"chocolat-lait", name:"Chocolat lait", emoji:"🍫"},
-    {id:"chocolat-blanc", name:"Chocolat blanc", emoji:"⚪"},
-    {id:"vanille", name:"Vanille", emoji:"🌱"},
-    {id:"caramel", name:"Caramel", emoji:"🍯"},
-    {id:"framboise", name:"Framboise", emoji:"🫐"},
-    {id:"fraise", name:"Fraise", emoji:"🍓"},
-    {id:"citron", name:"Citron", emoji:"🍋"},
-    {id:"passion", name:"Fruit de la passion", emoji:"🥭"},
-    {id:"noisette", name:"Noisette / Praliné", emoji:"🌰"},
-    {id:"pistache", name:"Pistache", emoji:"🟢"},
-    {id:"cafe", name:"Café", emoji:"☕"},
-    {id:"poire", name:"Poire", emoji:"🍐"}
+  entremets: [
+    {id:"e-16", name:"Cercle Ø 16 cm", area: Math.PI*64, parts:4},
+    {id:"e-18", name:"Cercle Ø 18 cm", area: Math.PI*81, parts:6},
+    {id:"e-20", name:"Cercle Ø 20 cm", area: Math.PI*100, parts:8},
+    {id:"e-22", name:"Cercle Ø 22 cm", area: Math.PI*121, parts:10},
+    {id:"e-24", name:"Cercle Ø 24 cm", area: Math.PI*144, parts:12},
+    {id:"e-c20", name:"Cadre 20×20 cm", area: 400, parts:9},
+    {id:"e-c30", name:"Cadre 30×20 cm", area: 600, parts:12},
+    {id:"e-buche", name:"Bûche 30×8 cm", area: 240, parts:8},
+    {id:"e-ind6", name:"6 individuels Ø 7", area: 6 * Math.PI*12.25, parts:6},
+    {id:"e-ind8", name:"8 individuels Ø 7", area: 8 * Math.PI*12.25, parts:8}
   ],
-  bases: [
-    // Pâtes (tartes principalement)
-    {id:"pate-sucree", name:"Pâte sucrée", desc:"Fond classique, fine et croquante", formats:["tarte","dessert"]},
-    {id:"pate-sablee", name:"Pâte sablée amande", desc:"Plus friable, plus riche en beurre", formats:["tarte","dessert"]},
-    {id:"sable-breton", name:"Sablé breton", desc:"Croustillant beurré avec fleur de sel", formats:["tarte","dessert","entremet"]},
-    {id:"feuilletee-classique", name:"Pâte feuilletée classique", desc:"5 tours doubles, base des millefeuilles et galettes", formats:["tarte","dessert"]},
-    {id:"feuilletee-inversee", name:"Pâte feuilletée inversée", desc:"Plus friable, plus feuilletée, chic", formats:["tarte","dessert"]},
-    // Biscuits Geoffrey
-    {id:"genoise", name:"Génoise (455g/Ø20)", desc:"Biscuit aérien pour fraisiers et opéras", formats:["cake","entremet"]},
-    {id:"dacquoise", name:"Dacquoise amande (545g/Ø20)", desc:"Biscuit meringué aux fruits secs", formats:["entremet","cake","dessert"]},
-    {id:"savoie", name:"Biscuit de Savoie (545g/Ø20)", desc:"Léger sans MG, absorbe les sirops", formats:["cake","dessert"]},
-    {id:"financier-biscuit", name:"Biscuit Financier (596g/Ø20)", desc:"Dense, beurre noisette, moelleux", formats:["cake","entremet","dessert"]},
-    {id:"sacher", name:"Biscuit Sacher (560g/Ø20)", desc:"Moelleux au chocolat, viennois enrichi", formats:["cake","entremet"]},
-    {id:"joconde", name:"Biscuit Joconde (790g/40×30)", desc:"Tapis fin et souple, entremets roulés", formats:["entremet","cake"]},
-    {id:"viennois", name:"Biscuit Viennois (395g/40×30)", desc:"Tapis ultra souple pour bûches roulées", formats:["entremet","cake"]},
-    {id:"pain-genes", name:"Pain de Gênes (251g/Ø16)", desc:"Très parfumé aux amandes", formats:["cake","dessert"]},
-    {id:"trocadero", name:"Biscuit Trocadéro (225g)", desc:"Version chocolat ultra-moelleuse", formats:["entremet","dessert"]},
-    {id:"brownie", name:"Brownie (450g/cadre 20×20)", desc:"Fondant chocolat noir, base intense", formats:["entremet","cake","dessert"]},
-    {id:"choux-japonais", name:"Biscuit Pâte à Choux / Japonais (793g)", desc:"Base Paris-Brest ou craquant entremet", formats:["entremet","cake","dessert"]},
-    {id:"pate-a-choux", name:"Pâte à choux", desc:"Aérée dorée, choux et éclairs", formats:["choux"]},
-    {id:"streusel", name:"Streusel / Crumble", desc:"Émiettement beurré croquant", formats:["dessert","tarte","entremet"]}
+  cake: [
+    {id:"c-cake25", name:"Moule cake 25×10 cm", area: 250, parts:8},
+    {id:"c-cake30", name:"Moule cake 30×10 cm", area: 300, parts:10},
+    {id:"c-layer18", name:"Layer cake Ø 18 cm", area: Math.PI*81, parts:8},
+    {id:"c-layer20", name:"Layer cake Ø 20 cm", area: Math.PI*100, parts:10}
   ],
-  creams: [
-    // Crèmes classiques
-    {id:"patissiere", name:"Crème Pâtissière (380g)", desc:"Base universelle — tartes, choux, millefeuille"},
-    {id:"mousseline", name:"Crème Mousseline (510g)", desc:"Pâtissière + beurre monté — fraisier, Paris-Brest"},
-    {id:"diplomate", name:"Crème Diplomate (483g)", desc:"Pâtissière + gélatine + chantilly — très aérée"},
-    {id:"chiboust", name:"Crème Chiboust", desc:"Pâtissière + meringue italienne — tarte chiboust"},
-    // Crémeux & mousses
-    {id:"cremeux-choc", name:"Crémeux chocolat (260g)", desc:"Anglaise émulsionnée sur chocolat — fondant"},
-    {id:"mousse-choc", name:"Mousse au chocolat", desc:"Aérée, intense, entremets classiques"},
-    {id:"bavaroise", name:"Bavaroise", desc:"Anglaise + gélatine + chantilly — structure"},
-    // Ganaches
-    {id:"ganache", name:"Ganache (300-480g)", desc:"Chocolat + crème — fourrage macarons, tartes"},
-    {id:"ganache-montee", name:"Ganache Montée (354-619g)", desc:"Chantilly au chocolat — tient parfaitement en poche"},
-    {id:"namelaka", name:"Namelaka (855-955g)", desc:"Ultra-crémeuse, insert ou pochage entremet"},
-    // Autres
-    {id:"chantilly-masca", name:"Chantilly mascarpone", desc:"Tenue parfaite, fraîche et riche"},
-    {id:"lemon-curd", name:"Lemon curd / Curd de fruit", desc:"Crème acidulée au beurre — tarte au citron"}
+  choux: [
+    {id:"ch-8", name:"8 choux", area: 160, parts:8, count:8},
+    {id:"ch-12", name:"12 choux", area: 240, parts:12, count:12},
+    {id:"ch-16", name:"16 choux", area: 320, parts:16, count:16},
+    {id:"ch-20", name:"20 choux", area: 400, parts:20, count:20},
+    {id:"ch-ecl8", name:"8 éclairs", area: 240, parts:8, count:8},
+    {id:"ch-ecl12", name:"12 éclairs", area: 360, parts:12, count:12},
+    {id:"ch-pb22", name:"Paris-Brest Ø 22 cm", area: Math.PI*121, parts:10}
   ],
-  inserts: [
-    {id:"confit-fruits", name:"Confit de fruits (245g)", desc:"Fruit cuit gélifié au cœur — texture fraîche"},
-    {id:"gelee", name:"Gelée / Jelly de fruit", desc:"Transparence et fraîcheur pure"},
-    {id:"compotee", name:"Compotée fraîche", desc:"Fruits cuits rapidement avec texture"},
-    {id:"praline", name:"Praliné maison (753g base)", desc:"Fruits secs caramélisés — incontournable"},
-    {id:"caramel-tendre", name:"Caramel tendre fleur de sel", desc:"Coulant salé-sucré, fondant"},
-    {id:"croustillant", name:"Croustillant praliné-feuilletine", desc:"Apporte du craquant à l'entremet"},
-    {id:"ganache-insert", name:"Ganache souple", desc:"Cœur fondant au chocolat"},
-    {id:"cremeux-insert", name:"Crémeux fruit ou chocolat", desc:"Insert onctueux, couler avant congélation"},
-    {id:"namelaka-insert", name:"Namelaka en insert", desc:"Texture unique, à poser congelé"},
-    {id:"fruits-frais", name:"Fruits frais / poêlés", desc:"Fruit brut ou juste saisi"},
-    {id:"brunoise", name:"Brunoise de fruits marinée", desc:"Petits dés parfumés, éclat"},
-    {id:"streusel-insert", name:"Streusel en couche", desc:"Craquant caché en interne"}
-  ],
-  finishes: [
-    {id:"miroir", name:"Glaçage miroir", desc:"Brillant, aspect pro — entremet"},
-    {id:"velours", name:"Spray velours", desc:"Effet velours chocolat, moderne"},
-    {id:"meringue", name:"Meringue italienne dorée", desc:"Sur tarte ou entremet au chalumeau"},
-    {id:"chantilly-fin", name:"Chantilly à la poche", desc:"Rosaces ou pointes élégantes"},
-    {id:"ganache-pochage", name:"Ganache montée pochée", desc:"Gouttes, rosaces, spirales maîtrisées"},
-    {id:"fruits-deco", name:"Fruits frais en décor", desc:"Brillance nappage neutre"},
-    {id:"tempered-choc", name:"Décor chocolat tempéré", desc:"Plaquette, volutes, texture"},
-    {id:"enrobage-choc", name:"Enrobage chocolat", desc:"Trempé cake ou biscuit — 35°C"},
-    {id:"caramel-decor", name:"Caramel tiré / filé", desc:"Fils fins pour pièce montée"},
-    {id:"feuille-or", name:"Feuille d'or et fleurs", desc:"Finition haute couture"},
-    {id:"streusel-finition", name:"Streusel craquant en finition", desc:"Sur cake ou tarte"},
-    {id:"poudre-deco", name:"Poudre (cacao, pistache, sucre glace)", desc:"Minimalisme sobre"}
+  dessert: [
+    {id:"d-6", name:"6 assiettes", area: 6 * 50, parts:6},
+    {id:"d-8", name:"8 assiettes", area: 8 * 50, parts:8},
+    {id:"d-10", name:"10 assiettes", area: 10 * 50, parts:10}
   ]
 };
 
-const state = {format:null, flavor:null, base:null, cream:null, insert:null, finish:null};
+/* ============================================================
+   SAVEURS
+   ============================================================ */
+const FLAVORS = [
+  {id:"chocolat-noir", name:"Chocolat noir", emoji:"🍫", note:"avec chocolat noir 70% (Valrhona Caraïbes ou Guanaja)"},
+  {id:"chocolat-lait", name:"Chocolat lait", emoji:"🍫", note:"avec chocolat au lait 40% (Jivara Valrhona) + pointe de fleur de sel"},
+  {id:"chocolat-blanc", name:"Chocolat blanc", emoji:"⚪", note:"avec chocolat blanc 33% (Ivoire Valrhona)"},
+  {id:"dulcey", name:"Dulcey / Blond", emoji:"🟡", note:"avec Dulcey 35% pour les notes biscuit-caramel"},
+  {id:"vanille", name:"Vanille", emoji:"🌱", note:"avec 1 à 2 gousses de vanille Bourbon infusées 20 min à 60°C couvert"},
+  {id:"caramel", name:"Caramel", emoji:"🍯", note:"avec un caramel à sec beurre salé intégré à la crème chaude"},
+  {id:"framboise", name:"Framboise", emoji:"🫐", note:"avec 30% de purée de framboise filtrée au tamis fin"},
+  {id:"fraise", name:"Fraise", emoji:"🍓", note:"avec 30% de purée de fraises Mara des bois ou Ponthier"},
+  {id:"citron", name:"Citron", emoji:"🍋", note:"avec zestes infusés dans le sucre + jus 10% de la masse"},
+  {id:"passion", name:"Fruit de la passion", emoji:"🥭", note:"avec pulpe de passion filtrée (15-20% du poids)"},
+  {id:"noisette", name:"Noisette / Praliné", emoji:"🌰", note:"avec praliné noisette 50/50 maison (30% de la masse)"},
+  {id:"pistache", name:"Pistache", emoji:"🟢", note:"avec pâte de pistache pure Sicile ou Iran (10-12% de la masse)"},
+  {id:"cafe", name:"Café", emoji:"☕", note:"avec grains de café torréfiés infusés 15 min dans la crème chaude"},
+  {id:"poire", name:"Poire", emoji:"🍐", note:"avec purée de poire William + pointe d'alcool de poire facultatif"}
+];
 
-function render(category, containerId, badgeId, items, filter) {
-  const container = document.getElementById(containerId);
-  const filtered = filter ? items.filter(filter) : items;
-  container.innerHTML = filtered.map(item => `
-    <button class="option" data-id="${item.id}" onclick="select('${category}', '${item.id}')">
-      <span class="opt-name">${item.emoji ? item.emoji + ' ' : ''}${item.name}</span>
-      ${item.desc ? `<span class="opt-desc">${item.desc}</span>` : ''}
+/* ============================================================
+   BASES — toutes issues des recettes officielles Geoffrey
+   (grammages calculateur-ratios.html : base + refArea)
+   ============================================================ */
+const BASES = {
+  // === Pâtes à tarte ===
+  'pate-sucree': {
+    name:"Pâte Sucrée", base:547, refArea:REF_AREA_20, formats:["tarte","dessert"],
+    ingredients:[
+      {name:"Farine T55", qty:250},
+      {name:"Beurre doux froid", qty:120},
+      {name:"Sucre glace", qty:90},
+      {name:"Poudre d'amandes", qty:30},
+      {name:"Œufs", qty:55},
+      {name:"Sel", qty:2}
+    ],
+    tip:"Crémage : beurre pommade + sucre glace + poudre amande + sel, puis œuf, puis farine en dernier. Fraise une seule fois. Repos 2h minimum au frais. Cuisson à blanc 170°C 20-25 min avec poids puis 5-10 min sans",
+    desc:"Croustillante et parfumée, la base classique Geoffrey"
+  },
+  'pate-sablee': {
+    name:"Pâte Sablée", base:283, refArea:REF_AREA_20, formats:["tarte","dessert"],
+    ingredients:[
+      {name:"Farine T55", qty:125},
+      {name:"Sucre semoule", qty:57},
+      {name:"Beurre doux", qty:75},
+      {name:"Œufs", qty:25},
+      {name:"Fleur de sel", qty:1}
+    ],
+    tip:"Sablage : frotte beurre froid + farine jusqu'à texture sableuse, ajoute sucre + sel + œuf. Fraise une seule fois. Repos 1h minimum. Cuisson à blanc 170°C",
+    desc:"Plus friable, plus riche en beurre"
+  },
+  'sable-breton': {
+    name:"Sablé Breton", base:520, refArea:REF_AREA_20, formats:["tarte","entremets","dessert"],
+    ingredients:[
+      {name:"Farine T55", qty:200},
+      {name:"Sucre semoule", qty:110},
+      {name:"Beurre doux", qty:140},
+      {name:"Jaunes d'œuf", qty:60},
+      {name:"Levure chimique", qty:7},
+      {name:"Fleur de sel", qty:3}
+    ],
+    tip:"Crème beurre pommade + sucre + sel au fouet. Ajoute les jaunes puis la farine + levure tamisées. Repos 2h. CUIS DANS UN CERCLE (il gonfle sinon). 170°C 15-18 min",
+    desc:"Croustillant beurré à la fleur de sel, parfait en fond d'entremets"
+  },
+  'feuilletee-classique': {
+    name:"Pâte Feuilletée Classique", base:554, refArea:REF_AREA_20, formats:["tarte","dessert"],
+    ingredients:[
+      {name:"Farine T55 (détrempe)", qty:250},
+      {name:"Eau (détrempe)", qty:125},
+      {name:"Vinaigre blanc (détrempe)", qty:4},
+      {name:"Beurre de tourage", qty:175}
+    ],
+    tip:"5 ou 6 tours maximum, jamais 2 tours doubles d'affilés sans repos, max 2 tours avant repos au frigo. Cuisson 180°C 30-40 min",
+    desc:"5 tours, base des mille-feuilles et galettes"
+  },
+  'feuilletee-inversee': {
+    name:"Pâte Feuilletée Inversée", base:700, refArea:REF_AREA_20, formats:["tarte","dessert"],
+    ingredients:[
+      {name:"Farine T55 (détrempe)", qty:210},
+      {name:"Eau (détrempe)", qty:90},
+      {name:"Vinaigre blanc (détrempe)", qty:3},
+      {name:"Sel (détrempe)", qty:7},
+      {name:"Beurre (détrempe)", qty:70},
+      {name:"Farine T55 (beurre manié)", qty:90},
+      {name:"Beurre (beurre manié)", qty:230}
+    ],
+    tip:"L'inversée enferme la détrempe dans le beurre manié : plus friable et plus régulière. Idéale mille-feuilles et tartes fines",
+    desc:"Plus friable, plus chic, pour pâtisseries fines"
+  },
+
+  // === Biscuits Geoffrey ===
+  'genoise': {
+    name:"Génoise Nature", base:455, refArea:REF_AREA_20, formats:["cake","entremets"],
+    ingredients:[
+      {name:"Œufs entiers", qty:200},
+      {name:"Sucre semoule", qty:100},
+      {name:"Jaunes d'œuf", qty:75},
+      {name:"Farine T45", qty:80}
+    ],
+    tip:"Œufs + jaunes + sucre au bain-marie jusqu'à 45-50°C sans arrêter de remuer. Monte au robot jusqu'au ruban froid. Incorpore la farine tamisée délicatement. Cuisson 180°C 15-20 min",
+    desc:"Biscuit aérien pour fraisier et opéra"
+  },
+  'genoise-cacao': {
+    name:"Génoise Cacao", base:455, refArea:REF_AREA_20, formats:["cake","entremets"],
+    ingredients:[
+      {name:"Œufs entiers", qty:200},
+      {name:"Sucre semoule", qty:100},
+      {name:"Jaunes d'œuf", qty:75},
+      {name:"Farine T45", qty:50},
+      {name:"Cacao en poudre", qty:30}
+    ],
+    tip:"Même méthode que la génoise nature. 30g de cacao remplacent 30g de farine : profondeur de goût sans assécher",
+    desc:"Version chocolatée de la génoise classique"
+  },
+  'dacquoise': {
+    name:"Biscuit Dacquoise / Succès", base:545, refArea:REF_AREA_20, formats:["entremets","cake","dessert"],
+    ingredients:[
+      {name:"Poudre de fruit à coque (amande, noisette…)", qty:115},
+      {name:"Sucre semoule (sur poudre)", qty:130},
+      {name:"Farine T45", qty:40},
+      {name:"Blancs d'œuf", qty:190},
+      {name:"Sucre semoule (sur meringue)", qty:70}
+    ],
+    tip:"Tamise poudres + sucre + farine. Monte les blancs en serrant avec les 70g restants en 3 fois (bec d'oiseau ferme, brillant). Incorpore délicatement les poudres. 170°C 15-18 min",
+    desc:"Biscuit meringué aux fruits secs, incontournable"
+  },
+  'financier': {
+    name:"Biscuit Financier", base:596.5, refArea:REF_AREA_20, formats:["cake","entremets","dessert"],
+    ingredients:[
+      {name:"Beurre (noisette)", qty:110},
+      {name:"Blancs d'œuf", qty:155},
+      {name:"Sucre glace", qty:155},
+      {name:"Poudre de fruit à coque", qty:110},
+      {name:"Farine T45", qty:55},
+      {name:"Fleur de sel", qty:1.5}
+    ],
+    tip:"Beurre noisette (couleur blonde, odeur noisette) filtré. Mélange poudres + blancs sans monter. Ajoute le beurre tiède (40-45°C). 180°C 12-15 min",
+    desc:"Dense, beurre noisette, moelleux"
+  },
+  'savoie': {
+    name:"Biscuit de Savoie", base:545, refArea:REF_AREA_20, formats:["cake","dessert"],
+    ingredients:[
+      {name:"Jaunes d'œuf", qty:120},
+      {name:"Sucre (sur jaunes)", qty:95},
+      {name:"Blancs d'œuf", qty:170},
+      {name:"Sucre (sur meringue)", qty:60},
+      {name:"Farine T45", qty:50},
+      {name:"Fécule de maïs", qty:50}
+    ],
+    tip:"Sans matière grasse, donc très fragile. Monte jaunes + sucre au ruban, blancs serrés. Incorpore 1/3 des blancs pour détendre, reste délicatement, poudres tamisées. 170°C 20-25 min",
+    desc:"Léger sans MG, absorbe les sirops"
+  },
+  'sacher': {
+    name:"Biscuit Sacher", base:560, refArea:REF_AREA_20, formats:["cake","entremets"],
+    ingredients:[
+      {name:"Pâte d'amande 50%", qty:120},
+      {name:"Jaunes d'œuf", qty:90},
+      {name:"Œufs entiers", qty:50},
+      {name:"Sucre glace", qty:30},
+      {name:"Blancs d'œuf", qty:140},
+      {name:"Sucre semoule", qty:70},
+      {name:"Beurre fondu", qty:30},
+      {name:"Farine T45", qty:30}
+    ],
+    tip:"Détends la pâte d'amande avec les jaunes tiédis, monte avec œufs + sucre glace. Monte les blancs serrés avec le sucre semoule. Incorpore 1/3 des blancs, beurre fondu, farine tamisée, reste des blancs. 180°C 12-15 min",
+    desc:"Moelleux au chocolat, viennois enrichi"
+  },
+  'joconde': {
+    name:"Biscuit Joconde", base:790, refArea:REF_AREA_20, formats:["entremets","cake"],
+    ingredients:[
+      {name:"Œufs entiers", qty:240},
+      {name:"Poudre d'amande", qty:180},
+      {name:"Sucre glace", qty:180},
+      {name:"Farine T45", qty:50},
+      {name:"Beurre fondu", qty:40},
+      {name:"Blancs d'œuf", qty:100}
+    ],
+    tip:"Monte œufs + poudre d'amande + sucre glace au ruban. Monte les blancs serrés. Incorpore beurre fondu + farine tamisée, puis les blancs délicatement. Étale sur plaque, 220°C 5-7 min",
+    desc:"Tapis fin et souple, entremets roulés"
+  },
+  'viennois': {
+    name:"Biscuit Viennois", base:395, refArea:REF_AREA_20, formats:["entremets","cake"],
+    ingredients:[
+      {name:"Jaunes d'œuf", qty:100},
+      {name:"Œufs entiers", qty:50},
+      {name:"Sucre (sur jaunes)", qty:80},
+      {name:"Blancs d'œuf", qty:100},
+      {name:"Sucre (sur meringue)", qty:30},
+      {name:"Farine T45", qty:35}
+    ],
+    tip:"Monte jaunes + œufs + sucre au ruban. Monte les blancs serrés. Incorpore 1/3 des blancs, puis la farine tamisée, puis le reste. 220°C 4-6 min",
+    desc:"Fin et ultra souple, pour bûches roulées"
+  },
+  'pain-de-genes': {
+    name:"Pain de Gênes", base:251.2, refArea:Math.PI*81, formats:["cake","dessert"],
+    ingredients:[
+      {name:"Pâte d'amande 50%", qty:115},
+      {name:"Œufs entiers", qty:90},
+      {name:"Beurre fondu", qty:30},
+      {name:"Farine T45", qty:15},
+      {name:"Levure chimique", qty:1.2}
+    ],
+    tip:"Détends progressivement la pâte d'amande avec les œufs tiédis au bain-marie jusqu'au ruban. Incorpore beurre fondu puis farine + levure tamisées. 170°C 20-25 min",
+    desc:"Très parfumé aux amandes (calibré pour Ø 18)"
+  },
+  'trocadero': {
+    name:"Biscuit Trocadero", base:225, refArea:Math.PI*64, formats:["entremets","dessert"],
+    ingredients:[
+      {name:"Blancs d'œuf", qty:80},
+      {name:"Sucre semoule", qty:40},
+      {name:"Poudre d'amande", qty:50},
+      {name:"Sucre glace", qty:30},
+      {name:"Beurre fondu", qty:25}
+    ],
+    tip:"Monte les blancs en serrant avec le sucre semoule. Incorpore poudre d'amande + sucre glace tamisés, puis le beurre fondu tiède. 170°C 12-15 min",
+    desc:"Amande moelleuse, insert d'entremets (calibré Ø 16)"
+  },
+  'brownie': {
+    name:"Brownie", base:450, refArea:REF_AREA_20, formats:["entremets","cake","dessert"],
+    ingredients:[
+      {name:"Beurre doux", qty:100},
+      {name:"Chocolat noir", qty:120},
+      {name:"Œufs", qty:100},
+      {name:"Sucre semoule", qty:60},
+      {name:"Farine", qty:40},
+      {name:"Fruits à coque", qty:30}
+    ],
+    tip:"Fonds beurre + chocolat doucement. Blanchis œufs + sucre sans foisonner. Mélange tout, incorpore la farine puis les fruits à coque concassés. 170°C 18-22 min : cœur encore tremblotant",
+    desc:"Fondant chocolat noir, base intense pour entremets"
+  },
+
+  // === Pâte à choux ===
+  'pate-a-choux': {
+    name:"Pâte à Choux", base:990, refArea:null, formats:["choux"],
+    byPiece:15, // ~15g par chou pochée en rosette
+    ingredients:[
+      {name:"Eau", qty:160},
+      {name:"Lait entier", qty:160},
+      {name:"Beurre", qty:140},
+      {name:"Sucre", qty:20},
+      {name:"Sel", qty:4},
+      {name:"Farine T55", qty:190},
+      {name:"Œufs entiers", qty:320}
+    ],
+    tip:"Bouillir eau + lait + beurre + sucre + sel. Hors du feu, verse la farine en une fois. Dessèche 1-2 min à feu moyen jusqu'à film gras au fond. Transvase, tiédis. Incorpore les œufs progressivement : la pâte doit former un V à la spatule. 250°C → immédiatement 170°C, 35-40 min SANS OUVRIR le four",
+    desc:"Aérée dorée, choux et éclairs"
+  }
+};
+
+/* ============================================================
+   CRÈMES PRINCIPALES — issues des recettes officielles Geoffrey
+   ============================================================ */
+const CREAMS = {
+  'patissiere': {
+    name:"Crème Pâtissière", base:380, refArea:REF_AREA_20, formats:["tarte","choux"],
+    flavorHint:"vanille,chocolat-noir",
+    ingredients:[
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille (si vanille)", qty:1, unit:" gousse"},
+      {name:"Jaunes d'œuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre", qty:20}
+    ],
+    tip:"Infuse les graines de vanille dans le lait bouillant, hors du feu 10 min. Blanchis jaunes + sucre + maïzena. Verse le lait chaud dessus, remets à la casserole. Cuis 2 min après ébullition en fouettant. Ajoute le beurre hors du feu. Filme au contact",
+    desc:"Base universelle — tartes, choux, mille-feuille"
+  },
+  'mousseline': {
+    name:"Crème Mousseline", base:510, refArea:REF_AREA_20, formats:["tarte","cake","choux"],
+    ingredients:[
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille", qty:1, unit:" gousse"},
+      {name:"Jaunes d'œuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre 1 (dans la crème)", qty:20},
+      {name:"Beurre 2 (au foisonnage)", qty:130}
+    ],
+    tip:"Prépare une pâtissière avec le beurre 1. Refroidis complètement. Quand pâtissière et beurre 2 (pommade) sont à la MÊME TEMPÉRATURE (18-22°C), foisonne 5-8 min. Règle d'or : même température sinon ça graine",
+    desc:"Pâtissière + beurre monté — fraisier, Paris-Brest"
+  },
+  'diplomate': {
+    name:"Crème Diplomate", base:483, refArea:REF_AREA_20, formats:["tarte","choux","cake"],
+    ingredients:[
+      {name:"Lait entier", qty:250},
+      {name:"Gousse de vanille", qty:1, unit:" gousse"},
+      {name:"Jaunes d'œuf", qty:50},
+      {name:"Sucre", qty:40},
+      {name:"Maïzena", qty:20},
+      {name:"Beurre", qty:20},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Crème liquide 30% (à monter)", qty:100}
+    ],
+    tip:"Prépare la pâtissière, ajoute la gélatine hydratée à chaud. Refroidis complètement. Monte la crème liquide souple (bec d'oiseau, pas ferme). Détends la pâtissière au fouet, incorpore la crème montée délicatement",
+    desc:"Pâtissière + gélatine + chantilly — très aérée"
+  },
+  'cremeux-noir': {
+    name:"Crémeux Chocolat Noir", base:245, refArea:Math.PI*81, formats:["tarte","entremets","dessert"],
+    ingredients:[
+      {name:"Lait entier", qty:70},
+      {name:"Crème liquide", qty:70},
+      {name:"Jaunes d'œuf", qty:30},
+      {name:"Sucre", qty:15},
+      {name:"Chocolat noir 70%", qty:60}
+    ],
+    tip:"Anglaise à la nappe (82-85°C). Verse sur le chocolat haché en 3 fois, émulsionne au centre. Mixe. Filme au contact, 4h minimum au frigo",
+    desc:"Onctueux intense (calibré Ø 18)"
+  },
+  'cremeux-blanc': {
+    name:"Crémeux Chocolat Blanc", base:271, refArea:Math.PI*81, formats:["tarte","entremets","dessert"],
+    ingredients:[
+      {name:"Lait entier", qty:65},
+      {name:"Crème liquide", qty:65},
+      {name:"Jaunes d'œuf", qty:28},
+      {name:"Sucre", qty:13},
+      {name:"Chocolat blanc", qty:100}
+    ],
+    tip:"Chocolat blanc = plus gras, donc ratio chocolat augmenté. Anglaise classique à 82-85°C, émulsion sur le chocolat. Filme au contact, maturation une nuit pour la structure",
+    desc:"Support neutre pour infusions (vanille, tonka, thé)"
+  },
+  'namelaka-noir': {
+    name:"Namelaka Chocolat Noir", base:855, refArea:REF_AREA_20, formats:["entremets","tarte","dessert"],
+    ingredients:[
+      {name:"Chocolat noir 70%", qty:250},
+      {name:"Lait entier", qty:200},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:5}
+    ],
+    tip:"Namelaka = \"crémeux\" en japonais : texture entre ganache montée et crémeux, ultra fondante. Hydrate la gélatine. Chauffe le lait, ajoute gélatine, verse sur le chocolat en 3 fois. Émulsionne. Ajoute crème froide, mixe. 12h minimum au frigo",
+    desc:"Ultra-crémeuse, pochée ou en couche"
+  },
+  'namelaka-lait': {
+    name:"Namelaka Chocolat au Lait", base:955, refArea:REF_AREA_20, formats:["entremets","tarte","dessert"],
+    ingredients:[
+      {name:"Chocolat au lait", qty:300},
+      {name:"Lait entier", qty:250},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:5}
+    ],
+    tip:"Version plus douce et caramélisée. Méthode identique au Namelaka noir. Repos 12h absolu pour la texture finale",
+    desc:"Plus douce, idéale en insert ou pochée"
+  },
+  'namelaka-blanc': {
+    name:"Namelaka Chocolat Blanc", base:944, refArea:REF_AREA_20, formats:["entremets","tarte","dessert"],
+    ingredients:[
+      {name:"Chocolat blanc", qty:300},
+      {name:"Lait entier", qty:240},
+      {name:"Crème liquide 30%", qty:400},
+      {name:"Gélatine en poudre", qty:4}
+    ],
+    tip:"La plus neutre, parfaite support de saveurs (infusion vanille, fève tonka, café, zeste citron…). Infuse dans le lait chaud avant d'ajouter la gélatine",
+    desc:"Neutre, support idéal d'infusion"
+  },
+  'ganache-montee-noir': {
+    name:"Ganache Montée Chocolat Noir", base:371, refArea:REF_AREA_20, formats:["tarte","entremets","choux","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat noir", qty:100},
+      {name:"Crème liquide 1 (chauffée)", qty:100},
+      {name:"Crème liquide 2 (froide)", qty:150},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip:"Hydrate la gélatine 10 min. Porte la crème 1 à frémissement, ajoute la gélatine, verse en 3 fois sur le chocolat. Ajoute la crème 2 froide, mixe. Filme au contact. 12h minimum avant de foisonner",
+    desc:"Chantilly chocolatée qui tient parfaitement en poche"
+  },
+  'ganache-montee-lait': {
+    name:"Ganache Montée Chocolat au Lait", base:376, refArea:REF_AREA_20, formats:["tarte","entremets","choux","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat au lait", qty:120},
+      {name:"Crème liquide 1 (chauffée)", qty:80},
+      {name:"Crème liquide 2 (froide)", qty:170},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip:"Même méthode que la version noir. Arrête le foisonnage dès que la ganache forme un ruban souple et brillant — JAMAIS au stade chantilly ferme = elle tranche",
+    desc:"Texture fondante, plus douce en cacao"
+  },
+  'ganache-montee-blanc': {
+    name:"Ganache Montée Chocolat Blanc", base:354, refArea:REF_AREA_20, formats:["tarte","entremets","choux","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat blanc", qty:130},
+      {name:"Crème liquide 1 (chauffée)", qty:80},
+      {name:"Crème liquide 2 (froide)", qty:140},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip:"Support neutre idéal pour infusions. Infuse dans la crème 1 chaude 15 min avant d'ajouter gélatine + chocolat. Repos 12h puis foisonnage souple",
+    desc:"Support neutre idéal pour infusions"
+  },
+  'ganache-montee-dulcey': {
+    name:"Ganache Montée Dulcey", base:619.5, refArea:REF_AREA_20, formats:["tarte","entremets","choux","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat Dulcey", qty:220},
+      {name:"Crème liquide 1 (chauffée)", qty:135},
+      {name:"Crème liquide 2 (froide)", qty:260},
+      {name:"Gélatine en poudre", qty:4.5}
+    ],
+    tip:"Notes biscuit-caramel uniques. Plus de chocolat car plus de matière grasse. Parfaite sur une tarte citron pour contraster l'acidité",
+    desc:"Notes biscuit-caramel, contraste parfait avec agrumes"
+  },
+  'ganache-montee-praline': {
+    name:"Ganache Montée Pralinée", base:429, refArea:REF_AREA_20, formats:["tarte","entremets","choux","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat au lait", qty:80},
+      {name:"Praliné", qty:80},
+      {name:"Crème liquide 1 (chauffée)", qty:100},
+      {name:"Crème liquide 2 (froide)", qty:160},
+      {name:"Gélatine en poudre", qty:3},
+      {name:"Eau pour gélatine", qty:18}
+    ],
+    tip:"Fais fondre chocolat + praliné. Verse la crème 1 frémissante + gélatine en 3 fois. Émulsionne. Ajoute crème 2 froide, mixe. Repos 12h. Foisonne jusqu'au ruban épais brillant",
+    desc:"Garniture Paris-Brest ou entremets noisette"
+  },
+  'ganache-fourrage-noir': {
+    name:"Ganache Fourrage Chocolat Noir", base:480, refArea:REF_AREA_20, formats:["tarte"],
+    ingredients:[
+      {name:"Chocolat noir 70%", qty:200},
+      {name:"Crème liquide 35%", qty:200},
+      {name:"Sirop de glucose", qty:40},
+      {name:"Beurre", qty:40}
+    ],
+    tip:"Ratio 1:1 chocolat/crème = texture ferme. Crème frémissante (pas bouillante), versée en 3 fois sur le chocolat + glucose. Émulsion au centre. Ajoute le beurre à 35-40°C",
+    desc:"Fourrage ferme pour tarte chocolat ou bonbon"
+  }
+};
+
+/* ============================================================
+   INSERTS — grammages calibrés pour un insert d'entremets Ø 18
+   (facteur 0.7 de l'entremets principal)
+   ============================================================ */
+const INSERTS = {
+  'none': {id:"none", name:"Aucun insert", base:0, isNone:true, desc:"Tu pars sur un entremets simple sans cœur"},
+  'confit-fruits': {
+    name:"Confit de Fruits", base:245, refArea:Math.PI*81, formats:["tarte","entremets","cake","dessert"],
+    ingredients:[
+      {name:"Purée de fruit", qty:200},
+      {name:"Sucre", qty:20},
+      {name:"Jus de citron", qty:20},
+      {name:"Pectine NH", qty:5}
+    ],
+    tip:"Mélange sucre + pectine à sec. Chauffe la purée à 40°C, ajoute sucre+pectine en pluie en fouettant. Ébullition 1 min, ajoute le jus de citron. Coule vite en insert. Congèle avant démoulage",
+    desc:"Fruit cuit gélifié (calibré insert Ø 18)"
+  },
+  'gelee-fruit': {
+    name:"Gelée de fruit", base:205, refArea:Math.PI*81, formats:["tarte","entremets","dessert"],
+    ingredients:[
+      {name:"Purée de fruit", qty:200},
+      {name:"Gélatine en poudre", qty:5}
+    ],
+    tip:"Hydrate la gélatine dans l'eau froide. Chauffe la purée à 60°C, ajoute la gélatine essorée. Coule 5-8 mm d'épaisseur dans le moule à insert, congèle",
+    desc:"Transparence et fraîcheur pure"
+  },
+  'praline-maison': {
+    name:"Praliné Maison", base:753, refArea:null, formats:["tarte","entremets","cake","choux","dessert"],
+    isPaste:true,
+    ingredients:[
+      {name:"Fruits à coque (noisettes/amandes)", qty:500},
+      {name:"Sucre", qty:250},
+      {name:"Sel", qty:3}
+    ],
+    tip:"Torréfie 15 min à 160°C. Caramel à sec à couleur ambrée, verse sur les fruits chauds, laisse figer. Concasse, puis mixe : sableux → pâte → liquide. Sel à la fin",
+    desc:"À doser 80-100g dans l'insert (en pâte ou mélangé à croustillant)"
+  },
+  'croustillant-feuillantine': {
+    name:"Croustillant Praliné-Feuillantine", base:200, refArea:REF_AREA_20, formats:["entremets","cake","dessert"],
+    ingredients:[
+      {name:"Praliné maison", qty:80},
+      {name:"Chocolat au lait fondu", qty:40},
+      {name:"Feuillantine (ou gavottes écrasées)", qty:80}
+    ],
+    tip:"Mélange praliné + chocolat fondu tiède + feuillantine. Étale fin 4-5 mm dans un cadre chemisé, direction congélateur 1h. Reste croquant même à travers la mousse",
+    desc:"Apporte du craquant à l'entremets"
+  },
+  'caramel-tendre': {
+    name:"Caramel Tendre Fleur de Sel", base:240, refArea:Math.PI*81, formats:["tarte","entremets","cake","dessert"],
+    ingredients:[
+      {name:"Sucre", qty:100},
+      {name:"Glucose", qty:20},
+      {name:"Crème liquide 35%", qty:80},
+      {name:"Beurre salé", qty:35},
+      {name:"Fleur de sel", qty:2}
+    ],
+    tip:"Caramel à sec à 170°C, décuis avec la crème chaude. Porte à 108°C. Hors du feu, ajoute beurre salé + fleur de sel. Refroidis, coule en insert fin, congèle",
+    desc:"Coulant salé-sucré, fondant"
+  },
+  'ganache-insert': {
+    name:"Ganache Souple (insert)", base:200, refArea:Math.PI*81, formats:["entremets","cake","dessert"],
+    ingredients:[
+      {name:"Chocolat (selon saveur)", qty:100},
+      {name:"Crème liquide 35%", qty:100}
+    ],
+    tip:"Porte la crème à frémissement, verse sur le chocolat en 3 fois. Émulsionne. Coule en fine couche dans le moule à insert, congèle 1h avant d'insérer au cœur de l'entremets",
+    desc:"Cœur fondant au chocolat"
+  },
+  'cremeux-noir-insert': {
+    name:"Crémeux Chocolat Noir (insert)", base:245, refArea:Math.PI*81, formats:["entremets","cake","dessert"],
+    ingredients:[
+      {name:"Lait entier", qty:70},
+      {name:"Crème liquide", qty:70},
+      {name:"Jaunes d'œuf", qty:30},
+      {name:"Sucre", qty:15},
+      {name:"Chocolat noir 70%", qty:60}
+    ],
+    tip:"Anglaise à 82-85°C sur chocolat, mixe au mixeur plongeant. Coule à 35°C dans moule à insert, congèle 2h minimum",
+    desc:"Insert crémeux intense"
+  },
+  'compotee': {
+    name:"Compotée fraîche", base:250, refArea:Math.PI*81, formats:["tarte","entremets","cake","dessert"],
+    ingredients:[
+      {name:"Fruits frais", qty:200},
+      {name:"Sucre", qty:20},
+      {name:"Zeste (citron ou orange)", qty:1, unit:" zeste"},
+      {name:"Jus de citron", qty:10}
+    ],
+    tip:"Cuis les fruits avec le sucre + zeste 5-8 min à feu vif. Laisse refroidir, coule dans le moule à insert, congèle",
+    desc:"Fruits cuits rapidement avec texture"
+  },
+  'fruits-frais': {
+    name:"Fruits frais marinés", base:200, refArea:null, formats:["tarte","entremets","cake","dessert"],
+    isRaw:true,
+    ingredients:[
+      {name:"Fruits de saison", qty:200},
+      {name:"Sucre (marinade)", qty:10},
+      {name:"Citron (marinade)", qty:5}
+    ],
+    tip:"Taille au dernier moment. Marine éventuellement 15 min avec sucre + zeste + pointe d'alcool, égoutte avant utilisation",
+    desc:"Fruit brut ou juste saisi — fraîcheur"
+  }
+};
+
+/* ============================================================
+   FINITIONS
+   ============================================================ */
+const FINISHES = [
+  {id:"miroir", name:"Glaçage miroir", desc:"Brillant, aspect pro — entremets", grammage:"~400g pour Ø 20", formats:["entremets","cake"]},
+  {id:"velours", name:"Spray velours", desc:"Effet velours chocolat moderne", grammage:"50g chocolat + 50g beurre de cacao", formats:["entremets","cake"]},
+  {id:"meringue", name:"Meringue italienne dorée", desc:"Sur tarte ou entremets au chalumeau", grammage:"200g pour Ø 20", formats:["tarte","entremets","dessert"]},
+  {id:"chantilly", name:"Chantilly mascarpone à la poche", desc:"Rosaces ou pointes élégantes", grammage:"250g pour Ø 20", formats:["tarte","cake","dessert","choux"]},
+  {id:"ganache-pochage", name:"Ganache montée pochée", desc:"Gouttes, rosaces, spirales maîtrisées", grammage:"200g pour un pochage", formats:["tarte","entremets","choux","cake","dessert"]},
+  {id:"fruits-deco", name:"Fruits frais en décor", desc:"Brillance au nappage neutre", grammage:"100-150g", formats:["tarte","entremets","cake","dessert"]},
+  {id:"tempered-choc", name:"Décor chocolat tempéré", desc:"Plaquette, volutes, texture", grammage:"100g chocolat tempéré", formats:["tarte","entremets","cake","dessert","choux"]},
+  {id:"enrobage-choc", name:"Enrobage chocolat", desc:"Trempé cake ou éclair — 35°C", grammage:"200-300g", formats:["cake","choux"]},
+  {id:"streusel-finition", name:"Streusel craquant", desc:"Sur cake ou tarte, sur le dessus", grammage:"150g", formats:["tarte","cake","dessert"]},
+  {id:"poudre", name:"Poudre décor", desc:"Cacao, sucre glace, pistache broyée", grammage:"Au tamis fin juste avant service", formats:["tarte","entremets","cake","choux","dessert"]},
+  {id:"feuille-or", name:"Feuille d'or + fleurs", desc:"Finition haute couture, avec parcimonie", grammage:"Quelques pétales au pinceau sec", formats:["tarte","entremets","cake","dessert"]}
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {format:null, size:null, flavor:null, base:null, cream:null, insert:null, finish:null};
+
+/* ============================================================
+   CALCULS DE GRAMMAGE
+   ============================================================ */
+
+// Récupère l'objet size actuel
+function currentSize() {
+  if (!state.format || !state.size) return null;
+  return SIZES[state.format].find(s => s.id === state.size);
+}
+
+// Pour une recette donnée (base ou crème) on calcule le ratio
+// en fonction de la taille choisie vs. sa surface de référence
+// minRatio évite les recettes trop petites à préparer (pâte à choux notamment)
+function computeRatio(recipe, target = 'main') {
+  const size = currentSize();
+  if (!size) return 1;
+
+  // Pâte à choux : calcul par pièce, avec minimum raisonnable (0.4 = recette pour ~24 choux)
+  if (recipe.byPiece && size.count) {
+    const r = (size.count * recipe.byPiece) / recipe.base;
+    return Math.max(r, 0.4);
+  }
+
+  // Praliné pâte / fruits bruts : pas de mise à l'échelle stricte
+  if (recipe.isPaste || recipe.isRaw) {
+    return 1;
+  }
+
+  // Dessert à l'assiette : ratio par personne
+  if (state.format === 'dessert') {
+    const portionsRef = 8; // pour Ø 20 = 8 parts
+    return size.parts / portionsRef;
+  }
+
+  // Insert : aire réduite (70% de l'aire totale)
+  if (target === 'insert') {
+    const refArea = recipe.refArea || REF_AREA_20;
+    return (size.area * 0.7) / refArea;
+  }
+
+  // Cas standard : ratio des aires
+  const refArea = recipe.refArea || REF_AREA_20;
+  return size.area / refArea;
+}
+
+// Applique le ratio et arrondit intelligemment
+function scaleIngredients(recipe, ratio) {
+  return recipe.ingredients.map(ing => {
+    const q = ing.qty * ratio;
+    let display;
+    if (ing.unit) {
+      display = Math.max(1, Math.round(q)) + ing.unit;
+    } else if (q < 10) {
+      display = q.toFixed(1) + " g";
+    } else {
+      display = Math.round(q) + " g";
+    }
+    return { name: ing.name, display };
+  });
+}
+
+function totalMass(recipe, ratio) {
+  let total = 0;
+  recipe.ingredients.forEach(ing => {
+    if (!ing.unit) total += ing.qty * ratio;
+  });
+  return Math.round(total);
+}
+
+/* ============================================================
+   RENDU DES ÉTAPES
+   ============================================================ */
+
+function renderFormats() {
+  const container = document.getElementById('opts-format');
+  container.innerHTML = FORMATS.map(f => `
+    <button class="option ${state.format === f.id ? 'active' : ''}" onclick="selectFormat('${f.id}')">
+      <span class="opt-name">${f.name}</span>
+      <span class="opt-desc">${f.desc}</span>
     </button>
   `).join('');
+  document.getElementById('badge-format').textContent = state.format ? FORMATS.find(f => f.id === state.format).name : 'À choisir';
+}
 
-  if (state[category]) {
-    const btn = container.querySelector(`[data-id="${state[category]}"]`);
-    if (btn) btn.classList.add('active');
-    const selected = items.find(i => i.id === state[category]);
-    document.getElementById(badgeId).textContent = selected ? selected.name : 'À choisir';
-  } else {
-    document.getElementById(badgeId).textContent = 'À choisir';
+function renderSizes() {
+  const container = document.getElementById('opts-size');
+  const step = document.getElementById('step-size');
+  const badge = document.getElementById('badge-size');
+
+  if (!state.format) {
+    step.classList.add('locked');
+    badge.textContent = "Choisis d'abord un format";
+    container.innerHTML = '';
+    return;
   }
+  step.classList.remove('locked');
+
+  const sizes = SIZES[state.format];
+  container.innerHTML = sizes.map(s => `
+    <button class="option ${state.size === s.id ? 'active' : ''}" onclick="selectSize('${s.id}')">
+      <span class="opt-name">${s.name}</span>
+      <span class="opt-desc">${s.parts} parts</span>
+    </button>
+  `).join('');
+  const cur = sizes.find(s => s.id === state.size);
+  badge.textContent = cur ? cur.name : 'À choisir';
+}
+
+function renderFlavors() {
+  const container = document.getElementById('opts-flavor');
+  container.innerHTML = FLAVORS.map(f => `
+    <button class="option ${state.flavor === f.id ? 'active' : ''}" onclick="selectFlavor('${f.id}')">
+      <span class="opt-name">${f.emoji} ${f.name}</span>
+    </button>
+  `).join('');
+  document.getElementById('badge-flavor').textContent = state.flavor ? FLAVORS.find(f => f.id === state.flavor).name : 'À choisir';
+}
+
+function renderBases() {
+  const container = document.getElementById('opts-base');
+  const bases = Object.entries(BASES).filter(([id, b]) => !state.format || b.formats.includes(state.format));
+  container.innerHTML = bases.map(([id, b]) => `
+    <button class="option ${state.base === id ? 'active' : ''}" onclick="selectBase('${id}')">
+      <span class="opt-name">${b.name}</span>
+      <span class="opt-desc">${b.desc}</span>
+    </button>
+  `).join('');
+  document.getElementById('badge-base').textContent = state.base ? BASES[state.base].name : 'À choisir';
+}
+
+function renderCreams() {
+  const container = document.getElementById('opts-cream');
+  const creams = Object.entries(CREAMS).filter(([id, c]) => !state.format || c.formats.includes(state.format));
+  container.innerHTML = creams.map(([id, c]) => `
+    <button class="option ${state.cream === id ? 'active' : ''}" onclick="selectCream('${id}')">
+      <span class="opt-name">${c.name}</span>
+      <span class="opt-desc">${c.desc}</span>
+    </button>
+  `).join('');
+  document.getElementById('badge-cream').textContent = state.cream ? CREAMS[state.cream].name : 'À choisir';
+}
+
+function renderInserts() {
+  const container = document.getElementById('opts-insert');
+  const items = Object.entries(INSERTS).filter(([id, i]) => i.isNone || !state.format || i.formats.includes(state.format));
+  container.innerHTML = items.map(([id, i]) => `
+    <button class="option ${i.isNone ? 'option-none' : ''} ${state.insert === id ? 'active' : ''}" onclick="selectInsert('${id}')">
+      <span class="opt-name">${i.name}</span>
+      <span class="opt-desc">${i.desc}</span>
+    </button>
+  `).join('');
+  const cur = state.insert ? INSERTS[state.insert] : null;
+  document.getElementById('badge-insert').textContent = cur ? cur.name : 'À choisir';
+}
+
+function renderFinishes() {
+  const container = document.getElementById('opts-finish');
+  const items = FINISHES.filter(f => !state.format || f.formats.includes(state.format));
+  container.innerHTML = items.map(f => `
+    <button class="option ${state.finish === f.id ? 'active' : ''}" onclick="selectFinish('${f.id}')">
+      <span class="opt-name">${f.name}</span>
+      <span class="opt-desc">${f.desc}</span>
+    </button>
+  `).join('');
+  document.getElementById('badge-finish').textContent = state.finish ? FINISHES.find(f => f.id === state.finish).name : 'À choisir';
 }
 
 function renderAll() {
-  render('format', 'opts-format', 'badge-format', data.formats);
-  render('flavor', 'opts-flavor', 'badge-flavor', data.flavors);
-  render('base', 'opts-base', 'badge-base', data.bases, b => !state.format || b.formats.includes(state.format));
-  render('cream', 'opts-cream', 'badge-cream', data.creams);
-  render('insert', 'opts-insert', 'badge-insert', data.inserts);
-  render('finish', 'opts-finish', 'badge-finish', data.finishes);
+  renderFormats();
+  renderSizes();
+  renderFlavors();
+  renderBases();
+  renderCreams();
+  renderInserts();
+  renderFinishes();
 
-  ['format','flavor','base','cream','insert','finish'].forEach(k => {
+  ['format','size','flavor','base','cream','insert','finish'].forEach(k => {
     document.getElementById('step-' + k).classList.toggle('done', !!state[k]);
   });
 
   checkComplete();
 }
 
-function select(category, id) {
-  state[category] = id;
+/* ============================================================
+   SÉLECTIONS
+   ============================================================ */
+function selectFormat(id) {
+  if (state.format !== id) state.size = null; // reset la taille si on change de format
+  state.format = id;
+  // reset des composants non compatibles
+  if (state.base && !BASES[state.base].formats.includes(id)) state.base = null;
+  if (state.cream && !CREAMS[state.cream].formats.includes(id)) state.cream = null;
+  if (state.insert && state.insert !== 'none' && !INSERTS[state.insert].formats.includes(id)) state.insert = null;
+  if (state.finish && !FINISHES.find(f => f.id === state.finish).formats.includes(id)) state.finish = null;
   renderAll();
 }
+function selectSize(id) { state.size = id; renderAll(); }
+function selectFlavor(id) { state.flavor = id; renderAll(); }
+function selectBase(id) { state.base = id; renderAll(); }
+function selectCream(id) { state.cream = id; renderAll(); }
+function selectInsert(id) { state.insert = id; renderAll(); }
+function selectFinish(id) { state.finish = id; renderAll(); }
 
 function checkComplete() {
-  const all = state.format && state.flavor && state.base && state.cream && state.insert && state.finish;
+  const all = state.format && state.size && state.flavor && state.base && state.cream && state.insert && state.finish;
   if (all) generateRecipe();
   else {
-    document.getElementById('output').innerHTML = `<div class="empty-recipe"><p>Ta recette signature apparaîtra ici dès que tu auras complété les 6 étapes</p></div>`;
+    const missing = ['format','size','flavor','base','cream','insert','finish'].filter(k => !state[k]).length;
+    document.getElementById('output').innerHTML = `<div class="empty-recipe"><p>Il te reste ${missing} étape${missing > 1 ? 's' : ''} à compléter pour voir ta recette avec les grammages exacts</p></div>`;
   }
 }
 
+/* ============================================================
+   GÉNÉRATION DE LA RECETTE FINALE
+   ============================================================ */
 function generateRecipe() {
-  const format = data.formats.find(f => f.id === state.format);
-  const flavor = data.flavors.find(f => f.id === state.flavor);
-  const base = data.bases.find(b => b.id === state.base);
-  const cream = data.creams.find(c => c.id === state.cream);
-  const insert = data.inserts.find(i => i.id === state.insert);
-  const finish = data.finishes.find(f => f.id === state.finish);
+  const format = FORMATS.find(f => f.id === state.format);
+  const size = currentSize();
+  const flavor = FLAVORS.find(f => f.id === state.flavor);
+  const base = BASES[state.base];
+  const cream = CREAMS[state.cream];
+  const insert = state.insert === 'none' ? null : INSERTS[state.insert];
+  const finish = FINISHES.find(f => f.id === state.finish);
 
-  const names = generateName(flavor, format);
-  const method = generateMethod(format, base, cream, insert, finish, flavor);
-  const tips = generateTips(format, base, cream, insert, finish, flavor);
+  // Ratios
+  const baseRatio = computeRatio(base, 'main');
+  const creamRatio = computeRatio(cream, 'main');
+  const insertRatio = insert ? computeRatio(insert, 'insert') : 0;
+
+  // Scaled ingredients
+  const baseIng = scaleIngredients(base, baseRatio);
+  const creamIng = scaleIngredients(cream, creamRatio);
+  const insertIng = insert ? scaleIngredients(insert, insertRatio) : [];
+
+  // Masses totales
+  const baseMass = totalMass(base, baseRatio);
+  const creamMass = totalMass(cream, creamRatio);
+  const insertMass = insert ? totalMass(insert, insertRatio) : 0;
+
+  // Titre
+  const title = buildTitle(format, flavor, size);
+  const subtitle = buildSubtitle(format, flavor, base, cream);
+
+  // Méthode
+  const method = buildMethod(format, size, base, cream, insert, finish, flavor);
+
+  // Tips
+  const tips = buildTips(format, flavor, base, cream, insert, finish);
+
+  // Total
+  const totalMassAll = baseMass + creamMass + insertMass;
 
   document.getElementById('output').innerHTML = `
     <div class="recipe-card">
-      <span class="tag">Ta création signature</span>
-      <h2>${names.title}</h2>
-      <p class="subtitle">${names.subtitle}</p>
+      <span class="tag">Ta création signature — recettes Geoffrey</span>
+      <h2>${title}</h2>
+      <p class="subtitle">${subtitle}</p>
 
-      <div class="layers">
-        <h3>Composition</h3>
-        <div class="layer"><span class="layer-type">Base</span><div><div class="layer-name">${base.name}</div><div class="layer-note">${base.desc}</div></div></div>
-        <div class="layer"><span class="layer-type">Crème</span><div><div class="layer-name">${cream.name} ${flavor.name.toLowerCase()}</div><div class="layer-note">${cream.desc}</div></div></div>
-        <div class="layer"><span class="layer-type">Insert</span><div><div class="layer-name">${insert.name}</div><div class="layer-note">${insert.desc}</div></div></div>
-        <div class="layer"><span class="layer-type">Finition</span><div><div class="layer-name">${finish.name}</div><div class="layer-note">${finish.desc}</div></div></div>
+      <div class="meta-grid">
+        <div class="meta-cell">
+          <div class="meta-label">Format</div>
+          <div class="meta-value">${size.name}</div>
+        </div>
+        <div class="meta-cell">
+          <div class="meta-label">Nombre de parts</div>
+          <div class="meta-value">${size.parts} parts</div>
+        </div>
+        <div class="meta-cell">
+          <div class="meta-label">Masse totale</div>
+          <div class="meta-value">~${totalMassAll} g</div>
+        </div>
+        <div class="meta-cell">
+          <div class="meta-label">Saveur</div>
+          <div class="meta-value">${flavor.emoji} ${flavor.name}</div>
+        </div>
       </div>
+
+      ${componentBlock('Base', base, baseIng, baseMass)}
+      ${componentBlock('Crème principale', cream, creamIng, creamMass, flavor)}
+      ${insert ? componentBlock('Insert', insert, insertIng, insertMass) : ''}
+      ${finishBlock(finish, size)}
 
       <div class="method">
         <h3>La méthode, étape par étape</h3>
@@ -329,8 +1103,17 @@ function generateRecipe() {
       </div>
 
       <div class="tips">
-        <h4>🎯 Les 3 points de vigilance Geoffrey</h4>
+        <h4>🎯 Les points de vigilance Geoffrey</h4>
         <ul>${tips.map(t => `<li>${t}</li>`).join('')}</ul>
+      </div>
+
+      <div class="tips" style="margin-top:24px">
+        <h4>📐 Comment lire les grammages</h4>
+        <ul>
+          <li>Chaque composant utilise la <strong>vraie recette Geoffrey</strong> de la MFP, ajustée proportionnellement à la taille de ton moule</li>
+          <li>Les inserts sont calibrés pour rentrer dans ton moule principal (≈ 2 cm de moins en diamètre)</li>
+          <li>Tu as un <a href="calculateur-ratios.html" style="color:#C8A04A;text-decoration:underline">calculateur de ratios dédié</a> si tu veux ajuster finement une recette en particulier</li>
+        </ul>
       </div>
 
       <div class="actions">
@@ -343,180 +1126,196 @@ function generateRecipe() {
   setTimeout(() => document.getElementById('output').scrollIntoView({behavior:'smooth', block:'start'}), 100);
 }
 
-function generateName(flavor, format) {
-  const templates = {
-    "tarte": [`Tarte ${flavor.name}`, `Une tarte ${flavor.name.toLowerCase()} signature — simple en apparence, précise dans l'exécution`],
-    "entremet": [`L'Entremet ${flavor.name}`, `Un entremet construit en strates pour déployer toute la gamme de textures de ta saveur principale`],
-    "choux": [`Éclair ${flavor.name}`, `Pâte à choux dorée, crème généreuse, finition maîtrisée — le chou classique revisité`],
-    "cake": [`Cake signature ${flavor.name}`, `Empilement de biscuits et crème dans un format individuel ou à partager`],
-    "dessert": [`${flavor.name} dans tous ses états`, `Un dessert à l'assiette qui multiplie les textures autour de ta saveur principale`]
-  };
-  return {title: templates[format.id][0], subtitle: templates[format.id][1]};
+function componentBlock(label, comp, ings, mass, flavor) {
+  const flavorNote = flavor && !comp.isNone ? `<div class="component-tip"><strong>Saveur ${flavor.name}</strong>${flavor.note}</div>` : '';
+  return `
+    <div class="component">
+      <div class="component-head">
+        <div>
+          <div class="component-type">${label}</div>
+          <div class="component-name">${comp.name}</div>
+          <div class="component-mass">Masse totale : ~${mass} g</div>
+        </div>
+      </div>
+      <div class="component-desc">${comp.desc}</div>
+      <ul class="ingredients">
+        ${ings.map(i => `<li><span class="ing-name">${i.name}</span><span class="ing-qty">${i.display}</span></li>`).join('')}
+      </ul>
+      ${comp.tip ? `<div class="component-tip"><strong>Méthode</strong>${comp.tip}</div>` : ''}
+      ${flavorNote}
+    </div>
+  `;
 }
 
-function generateMethod(format, base, cream, insert, finish, flavor) {
+function finishBlock(finish, size) {
+  return `
+    <div class="component">
+      <div class="component-head">
+        <div>
+          <div class="component-type">Finition</div>
+          <div class="component-name">${finish.name}</div>
+          <div class="component-mass">${finish.grammage}</div>
+        </div>
+      </div>
+      <div class="component-desc">${finish.desc}</div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   NAMING
+   ============================================================ */
+function buildTitle(format, flavor, size) {
+  const templates = {
+    "tarte": `Tarte ${flavor.name} — ${size.name}`,
+    "entremets": `L'Entremets ${flavor.name} — ${size.name}`,
+    "cake": `Cake ${flavor.name} — ${size.name}`,
+    "choux": `${flavor.name} — ${size.name}`,
+    "dessert": `${flavor.name} dans tous ses états — ${size.parts} assiettes`
+  };
+  return templates[format.id] || `${flavor.name} — ${size.name}`;
+}
+
+function buildSubtitle(format, flavor, base, cream) {
+  const templates = {
+    "tarte": `${base.name.toLowerCase()}, ${cream.name.toLowerCase()} ${flavor.name.toLowerCase()}, finition signature`,
+    "entremets": `Un entremets construit en strates pour déployer toute la gamme de textures de ${flavor.name.toLowerCase()}`,
+    "cake": `Empilement de ${base.name.toLowerCase()} + ${cream.name.toLowerCase()} ${flavor.name.toLowerCase()}`,
+    "choux": `Pâte à choux dorée garnie ${cream.name.toLowerCase()} ${flavor.name.toLowerCase()}`,
+    "dessert": `${base.name}, ${cream.name.toLowerCase()} ${flavor.name.toLowerCase()}, textures multiples`
+  };
+  return templates[format.id];
+}
+
+/* ============================================================
+   MÉTHODE
+   ============================================================ */
+function buildMethod(format, size, base, cream, insert, finish, flavor) {
   const steps = [];
 
   // J-2 / J-1
-  steps.push(`<strong>J-2 ou J-1 (ce qui a besoin de reposer) :</strong> prépare la pâte${cream.id === 'ganache-montee' || cream.id === 'namelaka' ? ', la ganache montée (12h de repos minimum)' : ''}${insert.id === 'praline' ? ', le praliné maison' : ''}${finish.id === 'miroir' ? ', le glaçage miroir (repos au frigo 12h avant utilisation)' : ''}. Les inserts doivent être complètement congelés avant montage`);
+  const toPrep = [];
+  if (['ganache-montee-noir','ganache-montee-lait','ganache-montee-blanc','ganache-montee-dulcey','ganache-montee-praline'].includes(state.cream)) toPrep.push('la ganache montée (12h de repos minimum)');
+  if (state.cream.startsWith('namelaka')) toPrep.push('la namelaka (12h au frigo)');
+  if (insert && (state.insert === 'praline-maison' || state.insert === 'croustillant-feuillantine')) toPrep.push('le praliné et le croustillant');
+  if (finish.id === 'miroir') toPrep.push('le glaçage miroir (repos 12h au frigo)');
+  if (base.name.includes('Feuilletée')) toPrep.push('la pâte feuilletée (détrempe + 5-6 tours avec repos)');
 
-  // Base
-  const baseSteps = {
-    'pate-sucree': `Réalise ta pâte sucrée en crémant beurre-sucre glace-poudre d'amande, ajoute œuf puis farine. Repos 2h au frigo, étale à 3 mm, fonce ton cercle, congèle 20 min, cuisson à blanc 170°C 20 min avec poids puis 10 min sans poids`,
-    'pate-sablee': `Réalise ta pâte sablée amande par sablage beurre froid-farine-poudre d'amande-sucre glace, ajoute œufs. Repos 2h au frigo, étale à 3 mm, fonce, congèle 20 min, cuisson 170°C 25-30 min à blanc avec poids`,
-    'sable-breton': `Réalise ton sablé breton (beurre pommade, sucre, jaunes, farine, poudre à lever, sel). Étale à 6 mm entre 2 feuilles, repos 2h, découpe à l'emporte-pièce, cuisson 170°C 15-18 min`,
-    'feuilletee-classique': `Détaille ton feuilletage classique à la taille voulue, pique à la fourchette, cuisson 180°C 25-30 min avec grille au-dessus pour maîtriser la pousse. Caramélise éventuellement au sucre glace + 220°C 5 min`,
-    'feuilletee-inversee': `Détaille ton feuilletage inversé à la taille voulue, pique à la fourchette, cuisson 180°C 25-30 min. Le feuilleté inversé pousse plus régulièrement que le classique`,
-    'genoise': `Monte 200g œufs + 125g sucre au bain-marie à 45°C, puis au batteur jusqu'au ruban. Incorpore délicatement 125g farine tamisée. Cuisson 180°C 18-20 min en Ø20. Démoule et laisse refroidir sur grille`,
-    'dacquoise': `Monte 200g blancs avec 150g sucre au bec d'oiseau. Incorpore délicatement 195g tant pour tant (poudre amande + sucre glace). Dresse en cercle Ø20 ou en tapis. Cuisson 170°C 15-18 min`,
-    'savoie': `Monte 200g jaunes avec 125g sucre jusqu'au ruban, puis 200g blancs en neige avec 125g sucre. Ajoute délicatement 125g farine tamisée. Cuisson 170°C 20-25 min en Ø20`,
-    'financier-biscuit': `Fais un beurre noisette (150g) et laisse tiédir. Mélange 150g blancs + 150g sucre glace + 100g poudre amande + 60g farine, puis incorpore le beurre noisette en filet. Pâte reposée 12h au frais. Cuisson 180°C 15-18 min`,
-    'sacher': `Crème 100g beurre + 100g sucre glace + 100g chocolat fondu + 100g jaunes. Monte 150g blancs avec 100g sucre. Incorpore blancs puis farine cacao (80g farine + 20g cacao). Cuisson 170°C 18-20 min en Ø20`,
-    'joconde': `Monte 200g œufs + 150g tant pour tant au ruban. Monte 135g blancs avec 20g sucre. Incorpore délicatement blancs puis 40g farine tamisée puis 30g beurre fondu. Étale sur tapis 40×30 à 8 mm. Cuisson 220°C 8-10 min`,
-    'viennois': `Monte 120g jaunes + 100g œufs entiers + 100g sucre glace au ruban. Monte 200g blancs avec 45g sucre au bec d'oiseau. Incorpore blancs puis 90g farine tamisée. Étale fin sur plaque 40×30. Cuisson 220°C 8-10 min`,
-    'pain-genes': `Détends 150g pâte d'amande avec 3 œufs entiers, jusqu'à obtenir un appareil lisse. Monte l'ensemble au ruban. Ajoute 20g farine + poudre à lever tamisées, puis 60g beurre fondu tiède. Cuisson 170°C 25-30 min en Ø16`,
-    'trocadero': `Monte 2 blancs avec 30g sucre. Fais un beurre noisette (75g) et laisse tiédir. Mélange 50g poudre amande + 50g sucre glace + 25g maïzena + 15g cacao. Incorpore blancs, puis beurre noisette. Cuisson 170°C 15-18 min`,
-    'brownie': `Fais fondre 150g chocolat noir 70% + 100g beurre. Mélange avec 150g sucre + 2 œufs + 50g farine. Ajoute 100g noix de pécan ou noisettes concassées. Cadre 20×20 chemisé. Cuisson 170°C 20-25 min (centre légèrement humide)`,
-    'choux-japonais': `Prépare une pâte à choux classique (panade + œufs jusqu'au V). Étale sur tapis 40×30 en couche régulière 8-10 mm. Cuisson 180°C 25-30 min sans ouvrir le four`,
-    'pate-a-choux': `Prépare ta panade (lait + beurre + sucre + sel, puis farine et dessèche). Incorpore les œufs 1 à 1 jusqu'au V au fouet. Dresse en choux ou éclairs, dorure œuf ou craquelin. Cuisson 180°C 10 min puis 160°C 25 min SANS OUVRIR`,
-    'streusel': `Sable du bout des doigts 60g beurre + 60g farine + 60g sucre cassonade + 60g poudre d'amande + pincée de sel. Émiette sur plaque, congèle 30 min, cuisson 160°C 15-18 min jusqu'à doré uniforme`
-  };
-  steps.push(`<strong>La base :</strong> ${baseSteps[base.id] || 'suivre la recette classique'}`);
-
-  // Crème with flavor
-  const flavorNotes = {
-    "chocolat-noir": "avec 40% de chocolat noir 70% pur origine (Valrhona Manjari ou Caraïbes)",
-    "chocolat-lait": "avec chocolat au lait 40% (Jivara Valrhona ou équivalent) et pointe de fleur de sel",
-    "chocolat-blanc": "avec chocolat blanc 33% (Ivoire Valrhona) pour une base neutre parfaite",
-    "vanille": "infusée avec 1 à 2 gousses de vanille fendues (Bourbon ou Madagascar), 20 min couvert à 60°C",
-    "caramel": "avec un caramel à sec beurre salé préparé en amont, intégré à la crème chaude",
-    "framboise": "avec 30% de purée de framboise filtrée (passée au tamis fin pour retirer les pépins)",
-    "fraise": "avec 30% de purée de fraises intense (Ponthier ou Mara des bois maison)",
-    "citron": "avec zestes infusés dans le sucre + jus de citron (10% de la masse)",
-    "passion": "avec pulpe de passion filtrée (15-20% du poids, saveur puissante)",
-    "noisette": "avec praliné noisette 50/50 maison (environ 30% de la masse)",
-    "pistache": "avec pâte de pistache pure 100% (Sicile ou Iran, jamais la \"crème\" avec sucre)",
-    "cafe": "infusée grains de café torréfiés dans le lait/crème chaud 15 min, puis filtre fin",
-    "poire": "avec purée de poire William + pointe d'alcool de poire facultatif"
-  };
-  steps.push(`<strong>La crème principale :</strong> réalise ta ${cream.name.toLowerCase()} ${flavorNotes[flavor.id]}. Respecte la technique classique (texture, température d'incorporation). Laisse reposer au frais`);
-
-  // Insert
-  const insertSteps = {
-    'confit-fruits': `Cuis 200g purée de fruit + 50g sucre + 5g pectine NH à frémissement 1 min. Ajoute 5g jus de citron pour activer la pectine. Coule dans moule à insert chemisé, congèle 2h minimum`,
-    'gelee': `Hydrate 5g gélatine dans l'eau froide. Chauffe la purée de fruit à 60°C, ajoute gélatine essorée. Coule 5-8 mm épaisseur dans moule à insert, congèle`,
-    'compotee': `Cuis les fruits avec 10% de leur poids en sucre + zeste, 5-8 min à feu vif. Laisse refroidir, coule dans moule à insert, congèle`,
-    'praline': `Torréfie noisettes/amandes 10-15 min à 160°C. Fais un caramel à sec à 170°C, ajoute fruits secs, débarasse sur tapis silpat. Une fois froid, mixe au robot jusqu'à consistance praliné (10-15 min, plusieurs pauses)`,
-    'caramel-tendre': `Caramel à sec à 170°C, décuis avec crème chaude 125g, beurre salé 50g, fleur de sel 2g. Porte à 108°C. Refroidis, coule en insert fin, congèle`,
-    'croustillant': `Mélange 50g praliné + 50g pâte pralinée + 50g feuilletine (ou gavottes écrasées). Étale en couche fine 4-5 mm dans cadre, direction congélateur`,
-    'ganache-insert': `Réalise une ganache souple (100g crème pour 100g chocolat), coule en fine couche dans ton moule à insert, congèle 1h avant de l'insérer au cœur de l'entremet`,
-    'cremeux-insert': `Anglaise à 82-85°C sur chocolat ou purée de fruit, mixe au mixeur plongeant. Coule à 35°C dans moule à insert, congèle 2h minimum`,
-    'namelaka-insert': `Porte 100g lait + 5g glucose à ébullition, ajoute 1g gélatine hydratée. Verse sur 170g chocolat blanc, émulsionne au mixeur plongeant. Ajoute 200g crème froide, mixe. Repos 12h au frais, coule en insert et congèle`,
-    'fruits-frais': `Taille tes fruits au dernier moment. Marine éventuellement avec 5% de sucre + zeste + pointe d'alcool, laisse 15 min au frais avant utilisation`,
-    'brunoise': `Taille en brunoise régulière 3-4 mm. Marine 30 min avec sucre + citron + éventuellement épices (vanille, cardamome). Égoutte avant usage`,
-    'streusel-insert': `Prépare le streusel au beurre noisette, cuis et concasse grossièrement. Presse dans moule d'insert à 4 mm, congèle 1h`
-  };
-  steps.push(`<strong>L'insert :</strong> ${insertSteps[insert.id] || 'prépare selon recette classique, congèle avant montage'}`);
-
-  // Montage
-  if (format.id === 'entremet') {
-    steps.push(`<strong>Le montage (à l'envers) :</strong> chemise ton moule avec rhodoïd. Coule 1/3 de mousse, dépose l'insert congelé (cœur + éventuellement croustillant), reste de mousse, et termine par le biscuit congelé (face lisse vers la mousse). Lisse à la spatule coudée. Congélateur 8h minimum avant glaçage`);
-  } else if (format.id === 'tarte') {
-    steps.push(`<strong>Le montage :</strong> dépose ton insert (si congelé et adapté) ou une fine couche au fond de ta tarte cuite refroidie, puis garnis de crème à la poche douille (spirale, rosaces ou lissé). Direction frigo 1h pour que la crème prenne`);
-  } else if (format.id === 'choux') {
-    steps.push(`<strong>Le garnissage :</strong> perce 3 trous sous le chou ou à la base de l'éclair. Garnis à la poche douille fine avec ta crème. Essuie l'excédent. Glace le dessus si éclair`);
-  } else if (format.id === 'cake') {
-    steps.push(`<strong>Le montage :</strong> pose le premier biscuit, poche régulièrement la crème en spirale depuis le centre, ajoute l'insert au centre, continue en alternance crème/biscuit. Termine par biscuit. Frigo 30 min avant finition (crumb coating ou glaçage)`);
+  if (toPrep.length > 0) {
+    steps.push(`<strong>J-2 ou J-1 :</strong> prépare ${toPrep.join(', ')}. Les inserts doivent être complètement congelés avant montage`);
   } else {
-    steps.push(`<strong>Le dressage :</strong> dresse à l'assiette en réfléchissant à la hauteur, aux couleurs, aux textures. 1 ou 2 éléments de hauteur suffisent. Décore avec parcimonie`);
+    steps.push(`<strong>J-1 :</strong> prépare la pâte${format.id === 'entremets' || format.id === 'cake' ? ' et le biscuit' : ''} (repos au frais)${insert ? '. Prépare l\'insert et congèle-le au moins 2h avant montage' : ''}`);
   }
 
-  // Finish
-  const finishSteps = {
-    'miroir': `sors l'entremet du congélateur, pose sur grille au-dessus d'un plat. Coule le miroir à 35°C d'un geste continu sans repasser. Laisse s'écouler l'excédent. Décroche les fils de glaçage avec le dos d'un couteau. Frigo jusqu'au service`,
-    'velours': `chauffe 50/50 chocolat + beurre de cacao à 40°C. Charge ton pistolet (ou bombe). Pulvérise à 20-30 cm de l'entremet CONGELÉ (-18°C), mouvement régulier, couches fines. Ajuste si besoin pour avoir un rendu uniforme`,
-    'meringue': `réalise une meringue italienne ferme (sirop 118°C sur blancs montés). Poche en rosaces ou tranchée à la spatule. Dore au chalumeau en mouvements rapides et précis, sans rester trop longtemps au même endroit`,
-    'chantilly-fin': `monte crème froide + sucre glace + vanille à texture ferme-tenant (pic qui se tient). Poche avec douille choisie. Frigo jusqu'au service`,
-    'ganache-pochage': `détends légèrement ta ganache montée si trop ferme, poche en gouttes, rosaces ou spirales avec la douille de ton choix. Garde froid jusqu'au service`,
-    'fruits-deco': `dispose les fruits frais harmoniquement. Chauffe du nappage neutre à 60°C et applique au pinceau en fine couche pour la brillance. Ne jamais tremper les fruits dans le nappage chaud`,
-    'tempered-choc': `tempère ton chocolat (voir Table des températures : noir 50°→28°→32°). Étale fin sur Rhodoïd, avant cristallisation complète découpe à l'emporte-pièce ou détaille les formes voulues`,
-    'enrobage-choc': `pour un enrobage de cake ou biscuit : chocolat + beurre de cacao fondu à 35°C, ajout de 5-10% d'huile de pépins de raisin pour fluidifier. Trempe en un seul passage net`,
-    'caramel-decor': `cuis un caramel à sec à 165°C. Trempe 2 fourchettes dos à dos, sors et balance entre 2 supports (manche de cuillères en bois) pour créer les fils. Stocke en boîte hermétique avec dessicant`,
-    'feuille-or': `applique la feuille d'or avec un pinceau sec au tout dernier moment, sur une surface non collante. Dispose avec parcimonie (élégance = retenue)`,
-    'streusel-finition': `parsème le streusel cuit sur la tarte ou le cake juste avant service (garde au sec sinon il ramollit)`,
-    'poudre-deco': `saupoudre au tamis fin juste avant service. Cacao pour contraste, sucre glace pour douceur, pistache broyée pour couleur verte`
-  };
-  steps.push(`<strong>La finition :</strong> ${finishSteps[finish.id] || 'applique ta finition selon la technique classique'}`);
+  // Base
+  steps.push(`<strong>La base — ${base.name} :</strong> ${base.tip}`);
 
-  steps.push(`<strong>Décongélation & service :</strong> sors ton entremet du congélateur 4 à 6h avant dégustation (frigo), ou 2h à température ambiante en été. Jamais en direct du congélateur à l'assiette. Les tartes et choux : simplement à bonne température (15-18°C)`);
+  // Crème avec note de saveur
+  steps.push(`<strong>La crème principale — ${cream.name} ${flavor.name.toLowerCase()} :</strong> ${cream.tip}. ${flavor.note}`);
+
+  // Insert
+  if (insert) {
+    steps.push(`<strong>L'insert — ${insert.name} :</strong> ${insert.tip}`);
+  }
+
+  // Montage selon format
+  if (format.id === 'entremets') {
+    steps.push(`<strong>Le montage (à l'envers) :</strong> chemise ton moule avec du rhodoïd. Coule 1/3 de la crème principale, dépose l'insert congelé${insert && state.insert === 'croustillant-feuillantine' ? '' : (insert ? ' + un disque de croustillant éventuel' : '')}, reste de crème, termine par le biscuit congelé (face lisse vers la crème). Lisse à la spatule coudée. Congélateur 8h minimum avant glaçage`);
+  } else if (format.id === 'tarte') {
+    steps.push(`<strong>Le montage :</strong> dépose ton insert (si congelé et adapté) ou une fine couche au fond de ta tarte cuite refroidie, puis garnis de crème à la poche douille (spirale, rosaces ou lissé). Frigo 1h pour que la crème prenne`);
+  } else if (format.id === 'choux') {
+    steps.push(`<strong>Le garnissage :</strong> perce 3 trous sous le chou ou à la base de l'éclair. Garnis à la poche douille fine avec ta crème. Essuie l'excédent`);
+  } else if (format.id === 'cake') {
+    steps.push(`<strong>Le montage :</strong> pose le premier biscuit imbibé, poche la crème en spirale depuis le centre, ajoute l'insert au centre si utilisé, continue en alternance crème/biscuit. Termine par biscuit. Frigo 30 min avant finition`);
+  } else {
+    steps.push(`<strong>Le dressage :</strong> dresse à l'assiette en réfléchissant hauteur, couleurs, textures. 1 ou 2 éléments de hauteur suffisent`);
+  }
+
+  // Finition
+  steps.push(`<strong>La finition — ${finish.name} :</strong> ${buildFinishStep(finish)}`);
+
+  // Décongélation
+  if (format.id === 'entremets' || format.id === 'cake') {
+    steps.push(`<strong>Décongélation & service :</strong> sors du congélateur 4 à 6h avant dégustation (frigo). Jamais en direct du congélateur à l'assiette`);
+  }
 
   return steps;
 }
 
-function generateTips(format, base, cream, insert, finish, flavor) {
+function buildFinishStep(finish) {
+  const fs = {
+    'miroir': "sors l'entremets du congélateur à -18°C, pose sur grille. Coule le miroir à 31-35°C d'un geste continu sans repasser. Laisse s'écouler, décroche les fils. Frigo jusqu'au service",
+    'velours': "chauffe 50/50 chocolat + beurre de cacao à 40°C. Pulvérise à 20-30 cm de l'entremets CONGELÉ (-18°C), mouvement régulier, couches fines",
+    'meringue': "meringue italienne ferme (sirop 118°C sur blancs montés). Poche en rosaces ou tranchée à la spatule. Dore au chalumeau en mouvements rapides, sans jamais rester au même endroit",
+    'chantilly': "monte crème froide + mascarpone + sucre glace + vanille à texture ferme-tenant. Poche avec la douille de ton choix",
+    'ganache-pochage': "détends légèrement la ganache montée si trop ferme, poche en gouttes, rosaces ou spirales. Garde froid jusqu'au service",
+    'fruits-deco': "dispose les fruits harmoniquement. Nappage neutre chauffé à 60°C au pinceau en fine couche pour la brillance",
+    'tempered-choc': "tempère le chocolat (voir Table des températures). Étale fin sur Rhodoïd, avant cristallisation complète détaille les formes",
+    'enrobage-choc': "chocolat + beurre de cacao fondu à 35°C + 5-10% huile de pépins de raisin pour fluidifier. Trempe en un seul passage net",
+    'streusel-finition': "parsème le streusel cuit juste avant service (sinon il ramollit)",
+    'poudre': "saupoudre au tamis fin juste avant service. Cacao pour contraste, sucre glace pour douceur",
+    'feuille-or': "applique la feuille d'or au pinceau sec au tout dernier moment, sur surface non collante. Avec parcimonie"
+  };
+  return fs[finish.id] || 'applique la finition selon la technique classique';
+}
+
+/* ============================================================
+   TIPS
+   ============================================================ */
+function buildTips(format, flavor, base, cream, insert, finish) {
   const tips = [];
 
   // Tip base
-  const baseTips = {
-    'pate-sucree': `<strong>La pâte sucrée :</strong> passe-la au congélateur 15-20 min avant cuisson. Zéro rétractation, cuisson plus homogène`,
-    'pate-sablee': `<strong>La pâte sablée :</strong> ne la travaille pas trop, sinon elle devient élastique et rétrécit. Fraise une seule fois`,
-    'sable-breton': `<strong>Le sablé breton :</strong> attention à la cuisson, il doit rester clair mais sec. Détaille à chaud à l'emporte-pièce pour des bords nets`,
-    'feuilletee-classique': `<strong>Le feuilletage :</strong> respecte les 5 tours doubles avec 30 min de repos entre chaque. Jamais de raccourci sur le feuilletage`,
-    'feuilletee-inversee': `<strong>Le feuilletage inversé :</strong> plus friable mais plus difficile à travailler. Température ambiante basse (18-20°C) obligatoire`,
-    'genoise': `<strong>La génoise :</strong> ne l'écrase pas en incorporant la farine. Mouvements enveloppants à la maryse, du dessous vers le dessus`,
-    'dacquoise': `<strong>La dacquoise :</strong> sors-la de la plaque dès la sortie du four. Si tu attends, l'humidité de la plaque ramollit le biscuit`,
-    'savoie': `<strong>Le biscuit de Savoie :</strong> sans matière grasse donc très fragile, tape le moule pour évacuer les bulles avant enfournement`,
-    'financier-biscuit': `<strong>Le biscuit financier :</strong> fais bien ton beurre noisette (couleur ambrée, arôme noisette) et laisse-le tiédir avant incorporation`,
-    'sacher': `<strong>Le Sacher :</strong> laisse tiédir le chocolat fondu avant de l'incorporer au beurre, sinon tu cuis les jaunes`,
-    'joconde': `<strong>Le Joconde :</strong> cuisson rapide à four chaud. Le biscuit doit rester souple, sinon tu perds la possibilité de rouler ou de décorer`,
-    'viennois': `<strong>Le viennois :</strong> sans MG, à utiliser rapidement ou à congeler. Associe-le obligatoirement à une garniture savoureuse`,
-    'pain-genes': `<strong>Le pain de Gênes :</strong> la pâte d'amande doit être bien détendue avant d'incorporer le reste. Sinon grumeaux`,
-    'trocadero': `<strong>Le Trocadéro :</strong> excellente base pour entremets chocolat car très moelleuse et fondante`,
-    'brownie': `<strong>Le brownie :</strong> légèrement sous-cuit au centre pour le fondant. Cure-dent légèrement humide OK`,
-    'choux-japonais': `<strong>Le biscuit japonais :</strong> ne jamais ouvrir le four avant 25 min. La pâte doit être dorée et ferme au toucher`,
-    'pate-a-choux': `<strong>La pâte à choux :</strong> n'ouvre jamais le four avant 25 min. Fais bien "dessécher" la panade dans la casserole avant les œufs`,
-    'streusel': `<strong>Le streusel :</strong> congèle l'émiettement avant cuisson pour éviter qu'il ne s'étale. Repose la pâte 30 min avant d'émietter`
-  };
-  tips.push(baseTips[base.id] || `<strong>La base :</strong> teste la cuisson avec une pointe au centre — elle doit ressortir sèche. Mieux vaut 2 min de plus que trop tôt`);
+  tips.push(`<strong>La base :</strong> ${base.tip.split('. ')[0]}`);
 
-  // Tip cream/flavor
-  const creamTips = {
+  // Tip saveur
+  const flavorTips = {
     "chocolat-noir": "Respecte ta courbe de température pour le chocolat — ganaches et mousses tranchent vite en dessous de 28°C. 35-40°C pour les ganaches",
-    "chocolat-lait": "Attention au goût sucré du chocolat au lait, ajoute toujours une pointe de sel pour structurer. Émulsion à 35°C max",
+    "chocolat-lait": "Attention au goût sucré du chocolat au lait, ajoute toujours une pointe de sel. Émulsion à 35°C max",
     "chocolat-blanc": "Le chocolat blanc fond très bas (40°C). Très sensible à la surchauffe et au contact avec l'eau (grain)",
+    "dulcey": "Le Dulcey apporte des notes biscuit-caramel — marie-le avec agrumes ou fruits rouges pour contraste",
     "vanille": "Infuse à 60°C couvert, jamais à ébullition — tu perds les arômes volatils. Racle la gousse pour les graines",
-    "caramel": "Pour un caramel à sec sans cristallisation, ajoute le sucre en 3 fois en laissant fondre entre chaque. Glucose 10% = anti-cristallisation",
+    "caramel": "Pour un caramel à sec sans cristallisation, ajoute le sucre en 3 fois en laissant fondre entre chaque",
     "framboise": "Les pépins de framboise gâchent la texture — passe ta purée au tamis fin AVANT incorporation",
     "fraise": "Les fraises rendent énormément d'eau — sale légèrement et laisse dégorger 15 min avant usage cru",
-    "citron": "Le zeste d'abord dans le sucre pour extraire les huiles essentielles, ensuite dans la crème. Jus à la fin",
-    "passion": "Dose prudent, la passion est puissante — commence à 15% du poids total et ajuste. Sans les pépins de préférence",
+    "citron": "Le zeste d'abord dans le sucre pour extraire les huiles essentielles, puis dans la crème. Jus à la fin",
+    "passion": "Dose prudent, la passion est puissante — commence à 15% du poids total et ajuste",
     "noisette": "Torréfie tes noisettes 10-15 min à 160°C avant de faire le praliné — le goût change radicalement",
-    "pistache": "Prends une pâte de pistache pure, pas une \"crème de pistache\" avec sucre et colorant. Sinon goût industriel",
+    "pistache": "Prends une pâte de pistache pure, pas une \"crème de pistache\" avec sucre et colorant industriels",
     "cafe": "Pour un goût intense, utilise du café très fort + trempage long, pas juste de la poudre dans la crème",
-    "poire": "Ajoute une pointe de jus de citron à ta purée de poire pour éviter qu'elle ne noircisse. Un soupçon d'alcool de poire booste l'arôme"
+    "poire": "Ajoute une pointe de jus de citron à la purée pour éviter qu'elle ne noircisse"
   };
-  tips.push(creamTips[flavor.id]);
+  tips.push(flavorTips[flavor.id]);
+
+  // Tip crème
+  if (cream.name.includes('Ganache Montée')) {
+    tips.push(`<strong>La ganache montée :</strong> arrête le foisonnage dès le ruban souple, JAMAIS au stade chantilly ferme — elle tranche et devient granuleuse`);
+  } else if (cream.name.includes('Namelaka')) {
+    tips.push(`<strong>La namelaka :</strong> respecte les 12h de repos au frais avant utilisation — sinon la texture n'est pas là`);
+  } else if (cream.name.includes('Mousseline')) {
+    tips.push(`<strong>La mousseline :</strong> pâtissière et beurre DOIVENT être à la même température (18-22°C) au foisonnage sinon ça graine`);
+  } else if (cream.name.includes('Pâtissière')) {
+    tips.push(`<strong>La pâtissière :</strong> cuis 2 min minimum après ébullition, sans arrêter de fouetter, sinon goût de fécule crue`);
+  }
+
+  // Tip insert
+  if (insert && insert.name.includes('Confit')) {
+    tips.push(`<strong>L'insert confit :</strong> ajoute le jus de citron APRÈS ébullition pour activer la pectine — sans quoi la texture ne se tient pas`);
+  }
 
   // Tip finition
   if (finish.id === 'miroir') {
-    tips.push(`<strong>Le glaçage miroir :</strong> température exacte 31-35°C sur un entremet à -18°C. Plus chaud = trop liquide, plus froid = marques. JAMAIS au-dessus de 40°C (terne)`);
+    tips.push(`<strong>Le glaçage miroir :</strong> température exacte 31-35°C sur entremets à -18°C. Plus chaud = trop liquide, plus froid = marques. JAMAIS au-dessus de 40°C`);
   } else if (finish.id === 'velours') {
-    tips.push(`<strong>Le velours :</strong> pulvérise sur un entremet congelé (-18°C) — impérativement, sinon le velours ne fige pas en gouttelettes`);
-  } else if (finish.id === 'meringue') {
-    tips.push(`<strong>La meringue :</strong> ne brûle JAMAIS la meringue au chalumeau — caramélise juste les pointes, la meringue doit rester blanche ailleurs`);
-  } else if (finish.id === 'ganache-pochage') {
-    tips.push(`<strong>La ganache pochée :</strong> réutilise une partie de la ganache montée prévue pour l'intérieur — cohérence de goût et économie`);
-  } else if (finish.id === 'enrobage-choc') {
-    tips.push(`<strong>L'enrobage :</strong> 35°C pour biscuit/entremet frais, 35-40°C pour cake congelé (chaleur compense le froid). Ajoute 5-10% huile pépins de raisin`);
-  } else if (finish.id === 'tempered-choc' || finish.id === 'caramel-decor') {
-    tips.push(`<strong>Les décors :</strong> prépare-les en avance et stocke au sec (chocolat) ou en boîte hermétique avec dessicant (caramel)`);
-  } else {
-    tips.push(`<strong>La finition :</strong> elle se décide AVANT de commencer, pas à la fin — sinon tu improvises et ça se voit. Prévois le décor en amont`);
+    tips.push(`<strong>Le velours :</strong> pulvérise sur un entremets congelé (-18°C) — impérativement, sinon le velours ne fige pas en gouttelettes`);
   }
 
   return tips;
 }
 
+/* ============================================================
+   RESET
+   ============================================================ */
 function reset() {
   Object.keys(state).forEach(k => state[k] = null);
   renderAll();

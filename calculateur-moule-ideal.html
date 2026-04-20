@@ -174,13 +174,13 @@ const preparations = [
   {id:"viennois", cat:"Biscuits", name:"Biscuit Viennois", density:0.411, defaultH:1, tapisH:0.8, tip:"Geoffrey : 395g pour tapis 40×30 (épaisseur 8 mm), sans MG, idéal entremets roulés. Cuisson 220°C, 8-10 min"},
   {id:"joconde", cat:"Biscuits", name:"Biscuit Joconde", density:0.823, defaultH:0.8, tapisH:0.8, tip:"Geoffrey : 790g pour tapis 40×30 (épaisseur 8 mm), très souple, parfait pour rouler ou en inserts. Cuisson 220°C, 8-10 min"},
   {id:"brownie", cat:"Biscuits", name:"Brownie", density:0.45, defaultH:2.5, tapisH:null, tip:"Geoffrey : 450g pour cadre 20×20, texture fondante au chocolat noir. Cuisson 170°C, 20-25 min"},
-  {id:"pate-choux-biscuit", cat:"Biscuits", name:"Biscuit Pâte à Choux (Japonais)", density:0.661, defaultH:1, tapisH:1, tip:"Geoffrey : 793g pour tapis 40×30, base de paris-brest ou entremet craquant. Cuisson 180°C, 25-30 min"},
+  {id:"pate-choux-biscuit", cat:"Biscuits", name:"Biscuit Pâte à Choux (Japonais)", density:0.661, defaultH:1, tapisH:1, tip:"Geoffrey : 793g pour tapis 40×30, base de paris-brest ou entremets craquant. Cuisson 180°C, 25-30 min"},
   {id:"madeleine", cat:"Biscuits", name:"Madeleines (à l'unité)", density:0.85, defaultH:null, tapisH:null, tip:"Geoffrey : 826g pour 18-20 madeleines, soit 45g par madeleine. Cuisson 210°C, 4 min puis 180°C 4 min", perPiece:45},
 
   // MOUSSES / BAVAROISES
-  {id:"mousse", cat:"Mousses & inserts", name:"Mousse / Entremet aéré", density:0.40, defaultH:5, tapisH:null, tip:"Mousse à base de crème fouettée ou meringue italienne, hauteur d'entremet 4 à 6 cm"},
+  {id:"mousse", cat:"Mousses & inserts", name:"Mousse / Entremets aéré", density:0.40, defaultH:5, tapisH:null, tip:"Mousse à base de crème fouettée ou meringue italienne, hauteur d'entremets 4 à 6 cm"},
   {id:"bavaroise", cat:"Mousses & inserts", name:"Bavaroise / Crème prise", density:0.50, defaultH:4, tapisH:null, tip:"Plus dense que la mousse (moins de crème fouettée), prend fermement en moule"},
-  {id:"cremeux", cat:"Mousses & inserts", name:"Crémeux (insert)", density:1.0, defaultH:1.5, tapisH:null, tip:"Insert plat pour entremet, hauteur 1 à 2 cm. Se congèle pour démouler"},
+  {id:"cremeux", cat:"Mousses & inserts", name:"Crémeux (insert)", density:1.0, defaultH:1.5, tapisH:null, tip:"Insert plat pour entremets, hauteur 1 à 2 cm. Se congèle pour démouler"},
   {id:"namelaka", cat:"Mousses & inserts", name:"Namelaka (crémeux texture)", density:0.98, defaultH:2, tapisH:null, tip:"Geoffrey : 855g (noir) / 955g (lait) / 944g (blanc), texture ultra-crémeuse, insert ou finition"},
   {id:"confit-fruit", cat:"Mousses & inserts", name:"Confit de fruits", density:1.05, defaultH:1, tapisH:null, tip:"Geoffrey : 245g par recette, insert fruité concentré. Épaisseur 8 à 12 mm"},
 
@@ -340,7 +340,7 @@ function calculateRecipe() {
       label: "Cercle rond",
       dim: `Ø ${rounded} cm`,
       detail: `Hauteur ${h2.toFixed(1).replace('.', ',')} cm`,
-      note: `Cercle à entremet ou à tarte Ø ${rounded} cm, hauteur ${h} cm idéale`
+      note: `Cercle à entremets ou à tarte Ø ${rounded} cm, hauteur ${h} cm idéale`
     });
     // Option alternative : Ø arrondi au standard le plus proche
     const standards = [14, 16, 18, 20, 22, 24, 26, 28];
