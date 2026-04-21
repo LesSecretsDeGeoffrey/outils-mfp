@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap 90 jours — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A;position:sticky;top:0;z-index:50}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:32px;max-width:680px}
+
+  /* Progression bar */
+  .progress-card{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(20px,3vw,28px);margin-bottom:32px;border-top:4px solid #C8A04A}
+  .progress-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .progress-title{font-family:Georgia,serif;font-size:20px;color:#C8A04A}
+  .progress-value{font-family:Georgia,serif;font-size:28px;color:#FDF8F0}
+  .progress-bar{background:rgba(253,248,240,0.1);height:10px;border-radius:5px;overflow:hidden;margin-bottom:16px}
+  .progress-fill{background:linear-gradient(90deg,#C8A04A,#E8D5A0);height:100%;width:0%;border-radius:5px;transition:width 0.4s ease}
+  .phase-indicators{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+  .phase-chip{background:rgba(253,248,240,0.06);border:1px solid rgba(200,160,74,0.2);padding:12px 14px;border-radius:3px;text-align:center}
+  .phase-chip .lab{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;color:#C8A04A;text-transform:uppercase;margin-bottom:4px}
+  .phase-chip .val{font-family:Georgia,serif;font-size:16px;color:#FDF8F0}
+  .phase-chip .pct{font-family:'Courier New',monospace;font-size:10px;color:rgba(253,248,240,0.55);margin-top:3px}
+
+  /* Niveau sélecteur */
+  .level-selector{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,3vw,28px);margin-bottom:32px}
+  .level-selector h3{font-family:Georgia,serif;font-size:18px;font-weight:400;margin-bottom:14px;color:#1A1410}
+  .level-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+  .level-opt{padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;display:flex;flex-direction:column;gap:4px}
+  .level-opt:hover{border-color:#C8A04A}
+  .level-opt.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .level-opt .lab{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:#C8A04A;text-transform:uppercase}
+  .level-opt .title{font-family:Georgia,serif;font-size:16px;color:#1A1410;font-weight:600}
+  .level-opt .desc{font-size:12px;color:rgba(26,20,16,0.65);line-height:1.5}
+
+  /* Phases */
+  .phase{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;margin-bottom:24px;overflow:hidden}
+  .phase-header{background:#1A1410;color:#FDF8F0;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #C8A04A;flex-wrap:wrap;gap:12px}
+  .phase-header .ph-meta{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;text-transform:uppercase;margin-bottom:4px}
+  .phase-header .ph-title{font-family:Georgia,serif;font-size:clamp(22px,3vw,28px);font-weight:400}
+  .phase-header .ph-progress{font-family:Georgia,serif;font-size:24px;color:#C8A04A;min-width:90px;text-align:right}
+  .phase-body{padding:0}
+
+  /* Semaines */
+  .week{border-bottom:1px solid rgba(26,20,16,0.08);padding:0}
+  .week:last-child{border-bottom:none}
+  .week-head{padding:18px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;background:#fff;transition:background 0.15s}
+  .week-head:hover{background:rgba(200,160,74,0.04)}
+  .week-head.done{background:rgba(52,120,70,0.05)}
+  .week-num{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;text-transform:uppercase;min-width:80px}
+  .week-title{flex:1;font-family:Georgia,serif;font-size:18px;color:#1A1410;line-height:1.35}
+  .week-title .subtitle{display:block;font-size:13px;color:rgba(26,20,16,0.6);font-style:italic;margin-top:2px;font-family:inherit}
+  .week-status{display:flex;align-items:center;gap:8px}
+  .week-status-icon{width:28px;height:28px;border:2px solid rgba(26,20,16,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Courier New',monospace;font-size:14px;color:transparent;transition:all 0.2s}
+  .week.done .week-status-icon{background:#C8A04A;border-color:#C8A04A;color:#fff}
+  .week-expand{font-family:'Courier New',monospace;color:#C8A04A;font-size:14px;transform:rotate(0deg);transition:transform 0.3s}
+  .week.open .week-expand{transform:rotate(90deg)}
+
+  .week-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease;background:rgba(200,160,74,0.03)}
+  .week.open .week-body{max-height:3000px}
+  .week-body-inner{padding:20px 28px 28px}
+  .week-section{margin-top:16px}
+  .week-section:first-child{margin-top:0}
+  .section-title{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;text-transform:uppercase;margin-bottom:10px;font-weight:600}
+  .week-obj{font-size:15px;color:#1A1410;line-height:1.6;padding:14px 18px;background:#fff;border-left:3px solid #C8A04A;border-radius:2px}
+  .tech-item{padding:10px 0;font-size:14px;color:#1A1410;line-height:1.55}
+  .tech-item strong{color:#1A1410;display:block;margin-bottom:2px}
+  .recipe-list{display:flex;flex-direction:column;gap:8px}
+  .recipe{display:flex;gap:12px;padding:10px 14px;background:#fff;border:1px solid rgba(26,20,16,0.06);border-radius:3px;align-items:flex-start;font-size:13px}
+  .difficulty{flex-shrink:0;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:2px;font-weight:600;min-width:80px;text-align:center}
+  .difficulty.facile{background:rgba(52,120,70,0.1);color:#2E6340}
+  .difficulty.moyen{background:rgba(200,160,74,0.15);color:#8B6820}
+  .difficulty.avance{background:rgba(180,50,50,0.1);color:#8B2525}
+  .recipe-name{flex:1;color:#1A1410;font-weight:600}
+  .recipe-desc{display:block;font-weight:400;font-size:12px;color:rgba(26,20,16,0.65);margin-top:2px}
+  .criteria{padding:10px 14px;background:rgba(253,248,240,0.7);border:1px dashed rgba(200,160,74,0.4);border-radius:3px;font-size:13px;color:#1A1410;line-height:1.6}
+  .validate-btn{background:#C8A04A;color:#fff;border:none;padding:14px 24px;font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:18px}
+  .validate-btn:hover{background:#B08A3E}
+  .validate-btn.done{background:rgba(52,120,70,0.15);color:#2E6340;cursor:default}
+  .validate-btn.done:hover{background:rgba(52,120,70,0.15)}
+
+  /* Actions */
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;margin-bottom:40px}
+  .btn-sec{background:transparent;color:rgba(26,20,16,0.7);border:1px solid rgba(26,20,16,0.2);padding:12px 20px;font-size:11px;font-family:'Courier New',monospace;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .btn-sec:hover{border-color:#C8A04A;color:#C8A04A}
+  .btn-sec.danger:hover{border-color:#b03232;color:#b03232}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Roadmap 90 jours</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>De zéro à pro en <span class="accent">13 semaines</span></h1>
+  <p class="intro">Un parcours structuré semaine par semaine pour progresser sur les vraies bases de la pâtisserie. Chaque semaine tu as un objectif, une technique à maîtriser, 3 recettes au choix selon ton niveau et un critère de réussite. Tu valides, tu passes à la suivante. En 90 jours tu es à l'aise sur les fondamentaux, les entremets et la création de desserts signature</p>
+
+  <div class="progress-card">
+    <div class="progress-header">
+      <span class="progress-title">Ta progression globale</span>
+      <span class="progress-value" id="progressValue">0 / 13 semaines</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="phase-indicators">
+      <div class="phase-chip">
+        <div class="lab">Phase 1 · Fondations</div>
+        <div class="val" id="phase1Count">0 / 5</div>
+        <div class="pct" id="phase1Pct">0 %</div>
+      </div>
+      <div class="phase-chip">
+        <div class="lab">Phase 2 · Maîtrise</div>
+        <div class="val" id="phase2Count">0 / 5</div>
+        <div class="pct" id="phase2Pct">0 %</div>
+      </div>
+      <div class="phase-chip">
+        <div class="lab">Phase 3 · Création</div>
+        <div class="val" id="phase3Count">0 / 3</div>
+        <div class="pct" id="phase3Pct">0 %</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="level-selector">
+    <h3>Ton niveau de départ</h3>
+    <div class="level-options" id="levelOptions"></div>
+    <p style="font-size:12px;color:rgba(26,20,16,0.55);margin-top:12px;font-style:italic">Ça détermine quelle recette tu cibles chaque semaine. Tu peux changer à tout moment</p>
+  </div>
+
+  <div id="phases"></div>
+
+  <div class="actions">
+    <button class="btn-sec" onclick="exportProgression()">Télécharger mon état</button>
+    <button class="btn-sec danger" onclick="resetProgression()">Tout réinitialiser</button>
+  </div>
+</main>
+
+<script>
+// ==================== DONNÉES ROADMAP ====================
+const roadmap = [
+  // === PHASE 1 : FONDATIONS (5 semaines, J1-35) ===
+  {
+    phase: 1, week: 1,
+    title: "Les crèmes anglaises et cuites à la nappe",
+    subtitle: "Le geste qui change tout",
+    objective: "Comprendre ce qu'est une crème anglaise et pourquoi elle est la base de presque tout en pâtisserie française. Savoir la cuire à 82-85°C sans la rater",
+    technique: {
+      t: "La cuisson à la nappe",
+      d: "La crème nappe la spatule et garde la trace du doigt qui trace un sillon. Si ça dépasse 85°C, les jaunes coagulent. Thermomètre à sonde obligatoire la première fois"
+    },
+    recipes: [
+      {diff:"facile", n:"Crème anglaise vanille", d:"La recette mère, 250 g de lait, 50 g de jaunes, 40 g de sucre"},
+      {diff:"moyen", n:"Crémeux chocolat noir", d:"Anglaise versée sur 60 g de chocolat, mixé, reposé 4 h"},
+      {diff:"avance", n:"Namelaka chocolat blanc", d:"Anglaise avec gélatine versée sur chocolat, maturation 12 h"}
+    ],
+    criteria: "Ta crème nappe une spatule. Aucun grumeau. Thermomètre qui affiche 82-85°C au moment où tu coupes le feu"
+  },
+  {
+    phase: 1, week: 2,
+    title: "La crème pâtissière et la famille",
+    subtitle: "Mousseline, diplomate, chiboust",
+    objective: "Maîtriser la pâtissière parfaitement lisse puis apprendre à la dériver en mousseline (beurre à la même T°), diplomate (gélatine + crème montée) et chiboust (gélatine + meringue italienne)",
+    technique: {
+      t: "La cuisson de la maïzena",
+      d: "Après ébullition, continue à fouetter 2 minutes minimum pour gélatiniser l'amidon. Avant ça, texture crayeuse. Après, texture soyeuse qui se lisse"
+    },
+    recipes: [
+      {diff:"facile", n:"Crème pâtissière vanille", d:"250 g lait, 50 g jaunes, 40 g sucre, 20 g maïzena, gousse vanille"},
+      {diff:"moyen", n:"Crème mousseline vanille", d:"Pâtissière + beurre au foisonnage à la même T°"},
+      {diff:"avance", n:"Crème diplomate", d:"Pâtissière + gélatine + crème montée souple"}
+    ],
+    criteria: "Ta pâtissière est lisse, sans grumeau, goût vanille marqué. Pour la mousseline : aucune séparation, texture mousseuse stable"
+  },
+  {
+    phase: 1, week: 3,
+    title: "Les biscuits légers fouettés",
+    subtitle: "Ruban, bec d'oiseau, incorporation",
+    objective: "Savoir monter des œufs et des blancs au bon stade, incorporer sans casser. Génoise qui lève, dacquoise qui fond",
+    technique: {
+      t: "Le ruban et le bec d'oiseau",
+      d: "Ruban (œufs + sucre) : retombe en pliant sans se rompre, signe que l'émulsion est prête. Bec d'oiseau (blancs) : pointe ferme qui se plie au bout du fouet, pas sèche, pas molle"
+    },
+    recipes: [
+      {diff:"facile", n:"Génoise nature 20 cm", d:"200 g œufs, 100 g sucre, 80 g farine. Bain-marie à 45-50°C avant montage"},
+      {diff:"moyen", n:"Dacquoise aux amandes", d:"Meringue serrée + poudres tamisées. Incorporation délicate, cuisson 170°C"},
+      {diff:"avance", n:"Biscuit Joconde", d:"Œufs montés + poudres + blancs serrés + beurre fondu. Biscuit fin pour entremets"}
+    ],
+    criteria: "Ton biscuit est homogène, moelleux, avec une mie régulière sans alvéoles grossières. Il lève correctement et ne retombe pas au refroidissement"
+  },
+  {
+    phase: 1, week: 4,
+    title: "Les pâtes à tarte",
+    subtitle: "Sablée, sucrée, sablé breton",
+    objective: "Comprendre la différence entre sablage et crémage. Savoir foncer un cercle proprement, cuire à blanc sans rétractation",
+    technique: {
+      t: "Le sablage vs le crémage",
+      d: "Sablage (pâte brisée, sablée) : beurre froid + farine frottés jusqu'à texture sableuse, puis liquide. Crémage (pâte sucrée) : beurre pommade + sucre + œuf, farine en dernier. Le crémage donne une pâte plus moelleuse et parfumée"
+    },
+    recipes: [
+      {diff:"facile", n:"Pâte sablée classique", d:"Méthode par sablage. 125 g farine, 75 g beurre, 57 g sucre, 25 g œuf"},
+      {diff:"moyen", n:"Pâte sucrée aux amandes", d:"Méthode par crémage avec poudre d'amandes. Croustillante et parfumée"},
+      {diff:"avance", n:"Sablé breton pour entremet", d:"Jaunes montés + beurre pommade + farine + levure. Cuit en cercle"}
+    ],
+    criteria: "Ta pâte se tient au fonçage, ne rétracte pas à la cuisson, tient droite dans le cercle. Bords nets et dorure homogène"
+  },
+  {
+    phase: 1, week: 5,
+    title: "La pâte à choux",
+    subtitle: "Panade, incorporation, cuisson",
+    objective: "La pâte à choux est le piège n°1 des amateurs. Cette semaine tu maîtrises le dessèchement, l'incorporation des œufs et le choc thermique en cuisson",
+    technique: {
+      t: "La panade desséchée",
+      d: "Après avoir versé la farine, continue à remuer à feu moyen pendant 1-2 minutes jusqu'à voir un film gras au fond de la casserole. Sinon la pâte est trop humide, elle ne gonfle pas"
+    },
+    recipes: [
+      {diff:"facile", n:"Pâte à choux de base", d:"160 g eau, 160 g lait, 140 g beurre, 190 g farine, 320 g œufs. Cuisson 250°C baissé immédiatement à 170°C"},
+      {diff:"moyen", n:"Choux au craquelin", d:"Ajout d'un disque de craquelin congelé sur chaque chou avant cuisson"},
+      {diff:"avance", n:"Paris-Brest individuels", d:"Couronne de choux avec craquelin + crème mousseline pralinée"}
+    ],
+    criteria: "Tes choux gonflent en cuisson et restent gonflés après refroidissement. Intérieur creux, extérieur doré et cassant. Pas d'affaissement"
+  },
+
+  // === PHASE 2 : MAÎTRISE TECHNIQUE (5 semaines, J36-70) ===
+  {
+    phase: 2, week: 6,
+    title: "Les macarons",
+    subtitle: "Meringue italienne, macaronnage, croûtage",
+    objective: "Sortir des macarons avec collerette régulière, coque lisse, intérieur creux. Comprendre pourquoi ça rate et pourquoi ça réussit",
+    technique: {
+      t: "Le macaronnage au ruban",
+      d: "Détendre les poudres avec la meringue jusqu'à ce que la pâte forme un ruban brillant qui retombe en nappe continue. Sur-macaronner = coques plates. Sous-macaronner = coques bosselées"
+    },
+    recipes: [
+      {diff:"facile", n:"Macarons meringue française", d:"Blancs vieillis 2-3 jours + sucre monté serré + TPT. Méthode la plus simple"},
+      {diff:"moyen", n:"Macarons meringue italienne", d:"Sirop 118°C versé sur blancs montés. Technique pro, plus stable"},
+      {diff:"avance", n:"Macarons bicolores avec ganache montée infusée", d:"Deux coques colorées, ganache chocolat blanc infusée au thé matcha"}
+    ],
+    criteria: "Collerette régulière à la base de chaque coque. Intérieur creux. Surface lisse sans craquelure. Pieds identiques sur toute la fournée"
+  },
+  {
+    phase: 2, week: 7,
+    title: "Les ganaches et l'émulsion",
+    subtitle: "Fourrage, montée, infusion",
+    objective: "Comprendre l'émulsion au centre du bol (lait versé en 3 fois sur chocolat). Savoir monter une ganache après repos 12 h sans la trancher",
+    technique: {
+      t: "L'émulsion en 3 versements",
+      d: "Verse le liquide chaud sur le chocolat en 3 fois, émulsionne au centre du bol entre chaque. Tu vois apparaître un cœur brillant qui s'agrandit. C'est ça la vraie émulsion, pas une simple incorporation"
+    },
+    recipes: [
+      {diff:"facile", n:"Ganache chocolat noir 1:1", d:"200 g chocolat + 200 g crème + 40 g glucose + 40 g beurre. Fourrage tarte"},
+      {diff:"moyen", n:"Ganache montée chocolat noir", d:"Crème 1 chaude sur chocolat + crème 2 froide. Repos 12 h. Foisonnage souple"},
+      {diff:"avance", n:"Ganache infusée fève tonka", d:"Infusion 15 min dans la crème chaude avant émulsion. Repos, foisonnage"}
+    ],
+    criteria: "Ganache lisse et brillante sans bulles. La ganache montée forme un ruban souple au foisonnage, pas une chantilly ferme"
+  },
+  {
+    phase: 2, week: 8,
+    title: "Les inserts et les gélifiants",
+    subtitle: "Pectine NH, gélatine, confit",
+    objective: "Savoir choisir le bon gélifiant selon la texture voulue. Faire des inserts qui tiennent leur place dans la mousse sans être trop durs",
+    technique: {
+      t: "Le dosage pectine NH",
+      d: "10-12 g par kilo de purée pour un confit qui se démoule. Toujours mélanger la pectine à sec avec le sucre avant de la verser en pluie sur la purée à 40°C, puis ébullition 1 min"
+    },
+    recipes: [
+      {diff:"facile", n:"Confit de framboise", d:"Purée + sucre + pectine NH + jus de citron. Congelé en cercle insert"},
+      {diff:"moyen", n:"Crémeux passion", d:"Anglaise + chocolat blanc + purée passion + gélatine. Texture ultra fondante"},
+      {diff:"avance", n:"Triple insert mangue-passion-vanille", d:"Confit mangue dans crémeux passion dans crémeux vanille. Congélation étagée"}
+    ],
+    criteria: "Ton insert se démoule proprement, garde sa forme, fond en bouche sans être caoutchouteux. La texture correspond à ce que tu as visé"
+  },
+  {
+    phase: 2, week: 9,
+    title: "Les entremets et le montage envers",
+    subtitle: "Mousse, assemblage, congélation",
+    objective: "Savoir monter un entremet complet en envers (mousse → insert → biscuit) dans un moule silicone. Congeler 12 h minimum",
+    technique: {
+      t: "Le montage envers",
+      d: "Coule 1/3 de mousse dans le moule. Pose l'insert congelé centré et pressé légèrement pour éviter les bulles d'air en dessous. Recoule un peu de mousse. Pose le biscuit par-dessus, lisse à la spatule. Congèle"
+    },
+    recipes: [
+      {diff:"facile", n:"Entremet chocolat vanille 18 cm", d:"Mousse chocolat + crémeux vanille + dacquoise amandes"},
+      {diff:"moyen", n:"Royal chocolat praliné", d:"Mousse chocolat + insert praliné + croustillant feuillantine + dacquoise"},
+      {diff:"avance", n:"Entremet mangue-passion-vanille", d:"Mousse vanille + triple insert fruité + sablé breton. 3 textures 3 saveurs"}
+    ],
+    criteria: "Ton entremet a des couches nettes à la coupe. L'insert est parfaitement centré. Aucune bulle d'air ni affaissement après décongélation"
+  },
+  {
+    phase: 2, week: 10,
+    title: "Les glaçages et finitions",
+    subtitle: "Miroir, velours, nappage",
+    objective: "Tu dois maîtriser au moins un glaçage miroir brillant et savoir l'appliquer sur un entremet surgelé sans perler ni couler",
+    technique: {
+      t: "La T° d'utilisation à 35°C",
+      d: "Le glaçage miroir se coule à 35°C exact sur un entremet SURGELÉ à cœur. Plus chaud, il coule trop fin. Plus froid, il fige avant de couvrir. Thermomètre à sonde obligatoire"
+    },
+    recipes: [
+      {diff:"facile", n:"Nappage brillant neutre chaud", d:"Préparation commerce, appliqué à 30°C au pinceau"},
+      {diff:"moyen", n:"Glaçage miroir chocolat noir", d:"Sucre + glucose + chocolat + gélatine + lait concentré. Repos 24 h"},
+      {diff:"avance", n:"Glaçage miroir coloré effet marbré", d:"2 couleurs coulées simultanément et mixées à la spatule sur l'entremet"}
+    ],
+    criteria: "Ton glaçage couvre l'entremet en une seule fois, sans traces ni coulures excessives. Brillance parfaite qui dure. Pas de perlage au frigo"
+  },
+
+  // === PHASE 3 : CRÉATION (3 semaines, J71-90) ===
+  {
+    phase: 3, week: 11,
+    title: "Le tempérage du chocolat",
+    subtitle: "Courbes, chablon, décors",
+    objective: "Tempérer du chocolat noir, lait, blanc. Comprendre la courbe (fonte / cristallisation / travail). Faire des décors qui claquent, brillent, se cassent net",
+    technique: {
+      t: "La courbe chocolat noir 50-28-31°C",
+      d: "Fonte au bain-marie à 50°C. Refroidissement par ensemencement (ajout de pistoles non fondues) jusqu'à 28°C. Remontée douce à 31°C pour travail. Chaque écart = perte de brillance"
+    },
+    recipes: [
+      {diff:"facile", n:"Pistoles trempées aux noisettes", d:"Chocolat tempéré coulé sur noisettes torréfiées. Décor facile pour entremet"},
+      {diff:"moyen", n:"Décors chocolat détaillés", d:"Chocolat tempéré étalé sur feuille guitare, détaillé à l'emporte-pièce juste avant cristallisation"},
+      {diff:"avance", n:"Tablette aux éclats", d:"Chocolat tempéré moulé en tablette avec fruits secs caramélisés. Cassant, brillant, contraction parfaite"}
+    ],
+    criteria: "Ton chocolat est brillant (miroir sur la surface), cassant (cassure nette), se contracte (se démoule tout seul). Aucun voile blanc après 24 h"
+  },
+  {
+    phase: 3, week: 12,
+    title: "La composition d'une création signature",
+    subtitle: "Accords, contrastes, niveaux",
+    objective: "Créer ta propre recette en partant d'un ingrédient principal. Construire 4 textures cohérentes (croustillant, moelleux, crémeux, fondant) et équilibrer les saveurs",
+    technique: {
+      t: "La règle des 4 textures",
+      d: "Un dessert pro a toujours au moins 4 textures : croustillant (pâte sablée, feuillantine, tuile) + moelleux (biscuit) + crémeux (insert, crémeux, namelaka) + fondant (mousse, ganache montée). Si une manque, l'expérience tombe à plat"
+    },
+    recipes: [
+      {diff:"facile", n:"Tarte signature 3 textures", d:"Pâte sucrée + crémeux + fruits frais. Cohérence couleur et goût"},
+      {diff:"moyen", n:"Entremet autour d'un ingrédient (ex : yuzu)", d:"Mousse, insert, biscuit et décor autour d'une même famille aromatique"},
+      {diff:"avance", n:"Création 5 textures avec accord inattendu", d:"Exemple : chocolat + carotte rôtie + orange sanguine + noisette + poivre Timut"}
+    ],
+    criteria: "Ton dessert a 4 textures distinctes. Les saveurs dialoguent sans qu'une écrase les autres. Quelqu'un qui goûte sait ce que tu as voulu raconter"
+  },
+  {
+    phase: 3, week: 13,
+    title: "La mise en scène et la photo",
+    subtitle: "Dressage, éclairage, narration",
+    objective: "Savoir dresser une assiette pro, photographier tes créations en lumière naturelle, raconter l'histoire derrière la recette",
+    technique: {
+      t: "La règle des tiers et du contraste",
+      d: "Divise ton cadre en 3 verticalement et horizontalement. Pose ton sujet sur une intersection. Fond mat sombre + dessert clair = contraste fort. Lumière naturelle latérale à 45° = volume et texture visibles"
+    },
+    recipes: [
+      {diff:"facile", n:"1 entremet photographié sous 3 angles", d:"Vue de dessus, vue profil, vue à la coupe. Même lumière"},
+      {diff:"moyen", n:"Mise en scène thématique", d:"Ton dessert + ingrédients bruts autour + textile + ambiance cohérente"},
+      {diff:"avance", n:"Création photographiée + storytelling Instagram", d:"5 photos série + carrousel + légende qui raconte la démarche créative"}
+    ],
+    criteria: "Tes photos font envie en 2 secondes. On voit les textures, les volumes, la lumière. L'histoire est claire sans avoir à lire un texte"
+  }
+];
+
+// ==================== LOGIQUE ====================
+let state = loadState();
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('mfp-roadmap-state');
+    if (s) return JSON.parse(s);
+  } catch(e){}
+  return {level:'debutant', done:{}};
+}
+
+function saveState() {
+  try { localStorage.setItem('mfp-roadmap-state', JSON.stringify(state)); } catch(e){}
+}
+
+// Sélecteur niveau
+const levels = [
+  {id:'debutant', title:"Débutant", desc:"Tu découvres. Cible les recettes faciles en priorité"},
+  {id:'intermediaire', title:"Intermédiaire", desc:"Tu connais les bases. Cible les recettes moyennes"},
+  {id:'avance', title:"Avancé", desc:"Tu veux progresser vers le niveau pro. Cible les recettes avancées"}
+];
+
+function renderLevels() {
+  const container = document.getElementById('levelOptions');
+  container.innerHTML = levels.map(l =>
+    '<div class="level-opt '+(state.level===l.id?'active':'')+'" onclick="setLevel(\''+l.id+'\')">' +
+      '<span class="lab">'+(l.id==='debutant'?'NIVEAU 1':l.id==='intermediaire'?'NIVEAU 2':'NIVEAU 3')+'</span>' +
+      '<span class="title">'+l.title+'</span>' +
+      '<span class="desc">'+l.desc+'</span>' +
+    '</div>'
+  ).join('');
+}
+
+function setLevel(id) {
+  state.level = id;
+  saveState();
+  renderLevels();
+  renderPhases();
+}
+
+function renderPhases() {
+  const container = document.getElementById('phases');
+  const phases = [
+    {num:1, title:"Phase 1 · Fondations", subtitle:"Jours 1 à 35", meta:"5 SEMAINES · CRÈMES, BISCUITS, PÂTES DE BASE"},
+    {num:2, title:"Phase 2 · Maîtrise technique", subtitle:"Jours 36 à 70", meta:"5 SEMAINES · MACARONS, GANACHES, ENTREMETS, GLAÇAGES"},
+    {num:3, title:"Phase 3 · Création", subtitle:"Jours 71 à 90", meta:"3 SEMAINES · CHOCOLAT, COMPOSITION, MISE EN SCÈNE"}
+  ];
+  container.innerHTML = phases.map(p => {
+    const weeks = roadmap.filter(w => w.phase === p.num);
+    const done = weeks.filter(w => state.done[w.week]).length;
+    return '<div class="phase">' +
+      '<div class="phase-header">' +
+        '<div>' +
+          '<div class="ph-meta">'+p.meta+'</div>' +
+          '<div class="ph-title">'+p.title+'</div>' +
+        '</div>' +
+        '<div class="ph-progress">'+done+' / '+weeks.length+'</div>' +
+      '</div>' +
+      '<div class="phase-body">' +
+        weeks.map(w => renderWeek(w)).join('') +
+      '</div>' +
+    '</div>';
+  }).join('');
+  updateProgress();
+}
+
+function renderWeek(w) {
+  const isDone = !!state.done[w.week];
+  const level = state.level || 'debutant';
+  const targetRecipe = w.recipes.find(r =>
+    (level==='debutant' && r.diff==='facile') ||
+    (level==='intermediaire' && r.diff==='moyen') ||
+    (level==='avance' && r.diff==='avance')
+  ) || w.recipes[0];
+
+  return '<div class="week '+(isDone?'done':'')+'" data-week="'+w.week+'">' +
+    '<div class="week-head" onclick="toggleWeek('+w.week+')">' +
+      '<div class="week-num">Semaine '+w.week+'</div>' +
+      '<div class="week-title">'+w.title+'<span class="subtitle">'+w.subtitle+'</span></div>' +
+      '<div class="week-status">' +
+        '<div class="week-status-icon">✓</div>' +
+        '<span class="week-expand">›</span>' +
+      '</div>' +
+    '</div>' +
+    '<div class="week-body">' +
+      '<div class="week-body-inner">' +
+        '<div class="week-section">' +
+          '<div class="section-title">Objectif de la semaine</div>' +
+          '<div class="week-obj">'+w.objective+'</div>' +
+        '</div>' +
+        '<div class="week-section">' +
+          '<div class="section-title">La technique clé</div>' +
+          '<div class="tech-item"><strong>'+w.technique.t+'</strong>'+w.technique.d+'</div>' +
+        '</div>' +
+        '<div class="week-section">' +
+          '<div class="section-title">Tes recettes au choix — cible ton niveau ('+level+')</div>' +
+          '<div class="recipe-list">' +
+            w.recipes.map(r => {
+              const isTarget = r === targetRecipe;
+              return '<div class="recipe"'+(isTarget?' style="border-color:#C8A04A;background:rgba(200,160,74,0.05)"':'')+'>' +
+                '<span class="difficulty '+r.diff+'">'+(r.diff==='facile'?'Facile':r.diff==='moyen'?'Moyen':'Avancé')+(isTarget?' ★':'')+'</span>' +
+                '<span class="recipe-name">'+r.n+'<span class="recipe-desc">'+r.d+'</span></span>' +
+              '</div>';
+            }).join('') +
+          '</div>' +
+        '</div>' +
+        '<div class="week-section">' +
+          '<div class="section-title">Critère de réussite</div>' +
+          '<div class="criteria">'+w.criteria+'</div>' +
+        '</div>' +
+        '<button class="validate-btn '+(isDone?'done':'')+'" onclick="toggleDone('+w.week+', event)">' +
+          (isDone ? '✓ Semaine validée' : 'Valider ma semaine') +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function toggleWeek(num) {
+  const el = document.querySelector('[data-week="'+num+'"]');
+  el.classList.toggle('open');
+}
+
+function toggleDone(num, e) {
+  e.stopPropagation();
+  if (state.done[num]) delete state.done[num];
+  else state.done[num] = Date.now();
+  saveState();
+  renderPhases();
+  // Réouvre la semaine
+  setTimeout(() => {
+    const el = document.querySelector('[data-week="'+num+'"]');
+    if (el) el.classList.add('open');
+  }, 10);
+}
+
+function updateProgress() {
+  const total = roadmap.length;
+  const done = Object.keys(state.done).length;
+  document.getElementById('progressValue').textContent = done + ' / ' + total + ' semaines';
+  document.getElementById('progressFill').style.width = (done/total*100) + '%';
+
+  const phases = [1,2,3];
+  phases.forEach(p => {
+    const weeks = roadmap.filter(w => w.phase === p);
+    const d = weeks.filter(w => state.done[w.week]).length;
+    document.getElementById('phase'+p+'Count').textContent = d + ' / ' + weeks.length;
+    document.getElementById('phase'+p+'Pct').textContent = Math.round(d/weeks.length*100) + ' %';
+  });
+}
+
+function resetProgression() {
+  if (!confirm('Tu veux vraiment tout réinitialiser ? Ta progression sera perdue')) return;
+  state = {level: state.level, done:{}};
+  saveState();
+  renderPhases();
+}
+
+function exportProgression() {
+  const total = roadmap.length;
+  const done = Object.keys(state.done).length;
+  const lines = [
+    "Ma Roadmap 90 jours — Les Secrets De Geoffrey",
+    "====================================",
+    "",
+    "Niveau : " + state.level,
+    "Progression : " + done + " / " + total + " semaines validées (" + Math.round(done/total*100) + " %)",
+    "Date : " + new Date().toLocaleDateString('fr-FR'),
+    ""
+  ];
+  roadmap.forEach(w => {
+    const mark = state.done[w.week] ? '[x]' : '[ ]';
+    lines.push(mark + ' Semaine ' + w.week + ' — ' + w.title);
+  });
+  const blob = new Blob([lines.join('\n')], {type:'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'roadmap-90-jours-' + new Date().toISOString().slice(0,10) + '.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Init
+renderLevels();
+renderPhases();
+</script>
+</body>
+</html>
