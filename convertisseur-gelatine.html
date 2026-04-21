@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertisseur gélatine — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:920px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:640px}
+  .form-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
+  input[type="number"],select{width:100%;padding:14px 18px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  input:focus,select:focus{outline:none;border-color:#C8A04A}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+  .mode-btn{flex:1;min-width:140px;padding:12px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:600px){.two-cols{grid-template-columns:1fr}}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+  .result{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:32px;display:none}
+  .result.visible{display:block}
+  .result h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin-bottom:8px;color:#1A1410}
+  .result .meta{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(200,160,74,0.3)}
+  .equiv-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .equiv-row:last-child{border-bottom:none}
+  .equiv-label{font-size:15px;color:#1A1410}
+  .equiv-label small{display:block;font-size:12px;color:rgba(26,20,16,0.55);margin-top:2px}
+  .equiv-qty{font-family:Georgia,serif;font-size:22px;color:#C8A04A;white-space:nowrap;font-weight:600}
+  .equiv-qty small{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:#1A1410;display:block;text-align:right;margin-top:2px}
+  .hydration-box{background:rgba(200,160,74,0.08);padding:20px;margin-top:24px;border-left:3px solid #C8A04A;border-radius:2px}
+  .hydration-box strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
+  .hydration-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+  .warning{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:16px;border-radius:2px;font-size:13px;color:#8B5A20}
+  .info-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px}
+  .info-card{background:rgba(26,20,16,0.03);padding:18px;border-radius:3px;border:1px solid rgba(26,20,16,0.08)}
+  .info-card h4{font-family:Georgia,serif;font-size:15px;color:#1A1410;margin-bottom:6px;font-weight:600}
+  .info-card p{font-size:13px;color:rgba(26,20,16,0.7);line-height:1.55}
+  .info-card .bloom{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:#C8A04A;text-transform:uppercase;margin-top:6px;display:block}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Convertisseur gélatine</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Feuilles, poudre, bloom. <span class="accent">T'as ce qu'il faut</span></h1>
+  <p class="intro">Ta recette dit "4 feuilles de gélatine or" et t'as de la poudre 200 bloom. L'outil te sort la quantité exacte, l'eau d'hydratation, et te dit à quelle température l'incorporer. Aucune approximation</p>
+
+  <div class="form-section">
+    <label>Ce que tu as sous la main</label>
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-type="feuille" onclick="setType('feuille')">Feuilles de gélatine</button>
+      <button class="mode-btn" data-type="poudre" onclick="setType('poudre')">Gélatine en poudre</button>
+    </div>
+
+    <div class="two-cols">
+      <div>
+        <label for="qty" id="qtyLabel">Nombre de feuilles</label>
+        <input type="number" id="qty" min="0" step="0.5" value="4">
+      </div>
+      <div>
+        <label for="bloom" id="bloomLabel">Qualité (bloom)</label>
+        <select id="bloom">
+          <option value="140">Bronze — 140 bloom</option>
+          <option value="160">Argent — 160 bloom</option>
+          <option value="200" selected>Or — 200 bloom (standard)</option>
+          <option value="250">Platine — 250 bloom (pro)</option>
+        </select>
+      </div>
+    </div>
+    <p style="font-size:13px;color:rgba(26,20,16,0.55);margin-top:12px;font-style:italic" id="qtyHint">Toute feuille standard pèse 2 g, quelle que soit sa qualité (bronze, argent, or ou platine). C'est le bloom qui change le pouvoir gélifiant, pas la masse</p>
+  </div>
+
+  <button class="calculate-btn" onclick="convert()">Convertir</button>
+
+  <div class="result" id="result">
+    <h2>Tes équivalences</h2>
+    <p class="meta" id="resultMeta"></p>
+
+    <div id="equivList"></div>
+
+    <div class="hydration-box">
+      <strong>Hydratation avant utilisation</strong>
+      <div class="hydration-row" id="hydrationRow">
+        <span>Eau froide pour réhydrater</span>
+        <span style="font-family:Georgia,serif;color:#C8A04A" id="hydrationQty">—</span>
+      </div>
+      <p style="font-size:13px;margin-top:10px;color:rgba(26,20,16,0.75)" id="hydrationTips"></p>
+    </div>
+
+    <div class="warning">
+      <strong style="display:block;margin-bottom:4px">À savoir</strong>
+      L'agar-agar ne remplace pas la gélatine. Différents principes de gélification (gélatine = animal, thermoréversible / agar-agar = végétal, thermo-irréversible). Les textures ne sont pas identiques et les températures d'incorporation non plus. Cet outil traite uniquement la gélatine
+    </div>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <h4>Hydratation</h4>
+        <p>Trempe les feuilles 10 min dans l'eau TRÈS froide. Pour la poudre, verse-la en pluie dans 6 fois son poids en eau froide et laisse gonfler 10 min. Essore les feuilles, égoutte la poudre gonflée avant d'incorporer</p>
+      </div>
+      <div class="info-card">
+        <h4>Température d'incorporation</h4>
+        <p>Entre 50 et 60°C dans un liquide chaud. Jamais en ébullition (ça détruit le pouvoir gélifiant au-delà de 85°C). Dans un appareil froid : fais fondre la gélatine hydratée 10 sec au micro-ondes puis incorpore rapidement</p>
+      </div>
+      <div class="info-card">
+        <h4>Prise au frigo</h4>
+        <p>4h minimum pour une prise correcte, 12h pour un résultat stable. La texture continue à se structurer jusqu'à 24h après. Ne jamais congeler une préparation fraîchement gélifiée avant prise complète</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+let currentType = 'feuille';
+
+function setType(t) {
+  currentType = t;
+  document.querySelectorAll('.mode-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.type === t);
+  });
+  const label = document.getElementById('qtyLabel');
+  const hint = document.getElementById('qtyHint');
+  const qty = document.getElementById('qty');
+  if (t === 'feuille') {
+    label.textContent = "Nombre de feuilles";
+    qty.step = "0.5";
+    qty.value = 4;
+    hint.textContent = "Toute feuille standard pèse 2 g, quelle que soit sa qualité (bronze, argent, or ou platine). C'est le bloom qui change le pouvoir gélifiant, pas la masse";
+  } else {
+    label.textContent = "Grammes de poudre";
+    qty.step = "0.1";
+    qty.value = 8;
+    hint.textContent = "Ratio 1:1 en masse avec les feuilles au même bloom. 2 g de poudre or 200 bloom équivaut à 1 feuille or (2 g)";
+  }
+}
+
+function convert() {
+  const qty = parseFloat(document.getElementById('qty').value) || 0;
+  const bloom = parseInt(document.getElementById('bloom').value);
+  if (qty <= 0) { alert('Entre une quantité supérieure à 0'); return; }
+
+  // Ref = 200 bloom (or)
+  const refBloom = 200;
+  // Masse équivalente en gramme 200 bloom
+  // Pour les feuilles : on considère 2g par feuille standard quel que soit le bloom (les feuilles pro pèsent 2g peu importe la force)
+  // La compensation se fait par le nombre de feuilles : feuille argent 160 = moins puissante, donc il en faut plus en masse
+  let massGrams200; // équivalent en g à 200 bloom
+  if (currentType === 'feuille') {
+    const massActual = qty * 2; // chaque feuille pèse 2g
+    massGrams200 = massActual * (bloom / refBloom);
+  } else {
+    // Poudre en g
+    massGrams200 = qty * (bloom / refBloom);
+  }
+
+  // Équivalents dans chaque type, à chaque qualité
+  const blooms = [
+    {val:140, nom:"Bronze", pro:"commun dans les supermarchés, moins cher"},
+    {val:160, nom:"Argent", pro:"très répandu en France"},
+    {val:200, nom:"Or", pro:"standard pro, référence de la plupart des recettes"},
+    {val:250, nom:"Platine", pro:"puissant, tenue parfaite, rare"}
+  ];
+
+  const equivDiv = document.getElementById('equivList');
+  equivDiv.innerHTML = '';
+
+  // Pour chaque bloom, calcule l'équivalent en feuilles ET en poudre
+  blooms.forEach(b => {
+    const massRealAtBloom = massGrams200 * (refBloom / b.val); // masse nécessaire à ce bloom
+    const nbFeuilles = massRealAtBloom / 2;
+    const massPoudre = massRealAtBloom;
+
+    // Titre du bloc
+    const title = document.createElement('h3');
+    title.style.fontFamily = "Georgia, serif";
+    title.style.fontSize = "16px";
+    title.style.color = "#1A1410";
+    title.style.fontWeight = "600";
+    title.style.marginTop = "18px";
+    title.style.marginBottom = "4px";
+    title.style.paddingTop = "14px";
+    title.style.borderTop = "1px dashed rgba(26,20,16,0.12)";
+    title.innerHTML = "Qualité " + b.nom + " <span style='font-family:Courier New,monospace;font-size:10px;letter-spacing:1.5px;color:#C8A04A;font-weight:400'>— "+b.val+" BLOOM</span>";
+    if (b.val === 200) title.innerHTML += " <span style='font-family:Courier New,monospace;font-size:10px;letter-spacing:1.5px;color:#C8A04A;font-weight:400;background:rgba(200,160,74,0.15);padding:2px 6px;border-radius:2px;margin-left:6px'>STANDARD</span>";
+    equivDiv.appendChild(title);
+
+    const note = document.createElement('p');
+    note.style.fontSize = "12px";
+    note.style.color = "rgba(26,20,16,0.55)";
+    note.style.marginBottom = "8px";
+    note.style.fontStyle = "italic";
+    note.textContent = b.pro;
+    equivDiv.appendChild(note);
+
+    // Feuilles
+    const rowF = document.createElement('div');
+    rowF.className = 'equiv-row';
+    const nbFeuillesDisplay = nbFeuilles < 2 ? nbFeuilles.toFixed(2) : (Math.round(nbFeuilles * 2) / 2).toFixed(1);
+    rowF.innerHTML =
+      '<span class="equiv-label">En feuilles<small>feuilles de 2 g chacune</small></span>' +
+      '<span class="equiv-qty">'+nbFeuillesDisplay+'<small>feuilles ('+massRealAtBloom.toFixed(1)+' g)</small></span>';
+    equivDiv.appendChild(rowF);
+
+    // Poudre
+    const rowP = document.createElement('div');
+    rowP.className = 'equiv-row';
+    rowP.innerHTML =
+      '<span class="equiv-label">En poudre<small>ratio 1:1 en masse avec les feuilles au même bloom</small></span>' +
+      '<span class="equiv-qty">'+massPoudre.toFixed(1)+'<small>grammes</small></span>';
+    equivDiv.appendChild(rowP);
+  });
+
+  // Eau d'hydratation (pour la version "or" de référence)
+  const massOr = massGrams200;
+  let waterFeuilles, waterPoudre;
+  waterFeuilles = massOr * 5; // feuilles trempage ratio 5
+  waterPoudre = massOr * 6;   // poudre gonflage ratio 6
+
+  const hydrationRow = document.getElementById('hydrationRow');
+  const waterDisplay = currentType === 'feuille'
+    ? waterFeuilles.toFixed(0) + ' g (soit ~' + (waterFeuilles/5).toFixed(1) + ' fois le poids de gélatine)'
+    : waterPoudre.toFixed(0) + ' g (6x le poids de poudre)';
+  hydrationRow.innerHTML = '<span>Eau froide pour réhydrater ta gélatine</span><span style="font-family:Georgia,serif;color:#C8A04A;font-size:18px">'+waterDisplay+'</span>';
+
+  const tipsHydration = currentType === 'feuille'
+    ? "Trempe les feuilles une par une dans un bol d'eau très froide pendant 10 min. Les feuilles absorbent naturellement l'eau nécessaire. Essore-les en les pressant légèrement avant incorporation."
+    : "Verse la poudre EN PLUIE dans l'eau froide (jamais l'inverse, sinon grumeaux). Laisse gonfler 10 min sans remuer. Fais fondre 10 sec au micro-ondes avant incorporation si tu l'ajoutes dans un appareil froid.";
+  document.getElementById('hydrationTips').textContent = tipsHydration;
+
+  // Meta
+  const typeLabel = currentType === 'feuille' ? qty + " feuille" + (qty>1?"s":"") : qty + " g de poudre";
+  document.getElementById('resultMeta').textContent = "Base : "+typeLabel+" en "+blooms.find(b => b.val === bloom).nom.toLowerCase()+" "+bloom+" bloom";
+
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+</script>
+</body>
+</html>

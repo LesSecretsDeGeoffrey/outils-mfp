@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur coût portion — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .layout{display:grid;grid-template-columns:1fr 360px;gap:28px}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}}
+  .section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,3vw,28px);margin-bottom:20px}
+  .section h2{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:16px;color:#1A1410;padding-bottom:10px;border-bottom:1px solid rgba(200,160,74,0.3)}
+  label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin:10px 0 6px;font-weight:600}
+  input,select{width:100%;padding:10px 14px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:14px;font-family:inherit;color:#1A1410;border-radius:3px}
+  input:focus,select:focus{outline:none;border-color:#C8A04A}
+  .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:500px){.two-cols{grid-template-columns:1fr}}
+
+  /* Ligne ingrédient */
+  .ing-row{display:grid;grid-template-columns:2.2fr 0.9fr 0.9fr 1.1fr auto;gap:8px;align-items:end;margin-bottom:8px;padding-bottom:10px;border-bottom:1px dashed rgba(26,20,16,0.08)}
+  @media (max-width:700px){.ing-row{grid-template-columns:1fr 1fr 1fr;grid-template-areas:"n n r" "q u p" "p p p";gap:6px}
+    .ing-row .ing-name{grid-area:n}.ing-row .ing-qty{grid-area:q}.ing-row .ing-unit{grid-area:u}.ing-row .ing-price{grid-area:p}.ing-row .ing-remove{grid-area:r;justify-self:end}}
+  .ing-row:last-child{border-bottom:none}
+  .ing-row label{margin-top:0;font-size:9px}
+  .ing-row .ing-cost-show{font-family:Georgia,serif;font-size:16px;color:#C8A04A;text-align:right;padding:10px 0;font-weight:600}
+  .btn-remove{background:transparent;border:none;color:rgba(26,20,16,0.35);font-size:22px;cursor:pointer;padding:6px 8px;line-height:1}
+  .btn-remove:hover{color:#b03232}
+  .btn-add{background:transparent;color:#C8A04A;border:1px dashed rgba(200,160,74,0.5);padding:12px;width:100%;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;border-radius:3px;margin-top:8px}
+  .btn-add:hover{background:rgba(200,160,74,0.08);border-style:solid}
+  .btn-preset{background:transparent;color:rgba(26,20,16,0.6);border:1px solid rgba(26,20,16,0.12);padding:10px;width:100%;cursor:pointer;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border-radius:3px;margin-top:6px}
+  .btn-preset:hover{color:#C8A04A;border-color:#C8A04A}
+
+  /* Sidebar résultat */
+  .sidebar{position:sticky;top:20px;align-self:flex-start}
+  .result-card{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:28px;border-top:4px solid #C8A04A}
+  .result-card h2{font-family:Georgia,serif;font-size:20px;margin-bottom:16px;color:#C8A04A;padding:0;border:none}
+  .result-meta{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(253,248,240,0.5);margin-bottom:10px}
+  .result-name{font-family:Georgia,serif;font-size:18px;margin-bottom:20px;font-style:italic;color:#FDF8F0}
+  .result-line{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(253,248,240,0.08);font-size:13px;color:rgba(253,248,240,0.8)}
+  .result-line .value{font-family:'Courier New',monospace;color:#FDF8F0;font-size:15px}
+  .result-big{background:rgba(200,160,74,0.15);padding:24px;margin:20px -28px -28px;border-top:2px solid #C8A04A}
+  .result-big .lab{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px;text-align:center}
+  .result-big .val{font-family:Georgia,serif;font-size:40px;color:#C8A04A;text-align:center;line-height:1}
+  .result-big .hint{font-size:12px;color:rgba(253,248,240,0.7);text-align:center;margin-top:8px}
+
+  .empty{text-align:center;padding:32px;color:rgba(253,248,240,0.5);font-style:italic;font-size:13px}
+
+  /* Repartition breakdown */
+  .breakdown{margin-top:20px;padding:20px;background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px}
+  .breakdown h3{font-family:Georgia,serif;font-size:17px;color:#1A1410;font-weight:400;margin-bottom:14px}
+  .bd-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px;border-bottom:1px solid rgba(26,20,16,0.05)}
+  .bd-row:last-child{border-bottom:none}
+  .bd-bar{flex:1;height:6px;background:rgba(200,160,74,0.15);border-radius:3px;margin:0 14px;overflow:hidden}
+  .bd-bar-fill{height:100%;background:#C8A04A;border-radius:3px;transition:width 0.3s ease}
+  .bd-name{min-width:130px}
+  .bd-pct{font-family:'Courier New',monospace;font-size:11px;color:#C8A04A;min-width:50px;text-align:right}
+
+  .tips{background:rgba(200,160,74,0.08);padding:18px 20px;border-left:3px solid #C8A04A;border-radius:2px;font-size:13px;color:#1A1410;line-height:1.6;margin-top:16px}
+  .tips strong{display:block;color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Calculateur coût portion</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Combien te coûte <span class="accent">vraiment une part</span></h1>
+  <p class="intro">Pas le prix de vente : le coût matière réel. Rentre tes ingrédients (base de prix pré-remplie), le nombre de parts, obtiens le coût à l'unité. Pour comparer tes recettes, optimiser tes marges, savoir ce que tu gagnes vraiment</p>
+
+  <div class="layout">
+    <div>
+      <div class="section">
+        <h2>Ta recette</h2>
+        <div class="two-cols">
+          <div>
+            <label for="recipeName">Nom de la recette</label>
+            <input type="text" id="recipeName" placeholder="Ex : Tarte citron meringuée" value="Ma recette">
+          </div>
+          <div>
+            <label for="portions">Nombre de portions</label>
+            <input type="number" id="portions" min="1" value="8" oninput="compute()">
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Les ingrédients</h2>
+        <div id="ingredients"></div>
+        <button class="btn-add" onclick="addIngredient()">+ Ajouter un ingrédient</button>
+        <button class="btn-preset" onclick="loadPresetTarte()">→ Remplir avec une tarte citron meringuée type</button>
+      </div>
+
+      <div class="breakdown" id="breakdown" style="display:none">
+        <h3>Répartition du coût matière</h3>
+        <div id="breakdownList"></div>
+      </div>
+
+      <div class="tips" id="tips"></div>
+    </div>
+
+    <div class="sidebar">
+      <div class="result-card">
+        <h2>Coût de ta recette</h2>
+        <p class="result-meta">Calcul en direct</p>
+        <p class="result-name" id="recipeLabel">Ma recette</p>
+
+        <div id="results">
+          <div class="result-line">
+            <span>Coût total matière</span>
+            <span class="value" id="totalCost">0,00 €</span>
+          </div>
+          <div class="result-line">
+            <span>Nombre de portions</span>
+            <span class="value" id="totalPortions">8</span>
+          </div>
+          <div class="result-line">
+            <span>Poids total approx.</span>
+            <span class="value" id="totalWeight">0 g</span>
+          </div>
+          <div class="result-line">
+            <span>Coût / 100 g</span>
+            <span class="value" id="costPer100">0,00 €</span>
+          </div>
+        </div>
+
+        <div class="result-big">
+          <div class="lab">Coût par portion</div>
+          <div class="val" id="costPerPortion">0,00 €</div>
+          <div class="hint" id="marginHint">Ajoute tes ingrédients pour calculer</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding:18px;background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;font-size:13px;color:rgba(26,20,16,0.75);line-height:1.6">
+        <strong style="color:#C8A04A;font-family:Courier New,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px">Prix conseillé de vente</strong>
+        Pour vendre en amateur : <strong>coût × 3</strong> (marge matière 33%). En boutique pro : <strong>coût × 4 à 5</strong> pour couvrir charges, main-d'œuvre et marge. Besoin du prix de vente complet avec charges détaillées ? Utilise plutôt l'outil <a href="calculateur-prix-vente.html" style="color:#C8A04A;text-decoration:underline">Calcul prix de vente</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Base de prix moyens constatés France 2026, classés par catégorie
+const priceDB = {
+  // Farines et poudres (€/kg)
+  "Farine T45": {price:1.80, unit:"kg"},
+  "Farine T55": {price:1.60, unit:"kg"},
+  "Farine T65": {price:1.80, unit:"kg"},
+  "Maïzena / fécule": {price:3.00, unit:"kg"},
+  "Poudre d'amande": {price:16.00, unit:"kg"},
+  "Poudre de noisette": {price:22.00, unit:"kg"},
+  "Poudre de pistache": {price:38.00, unit:"kg"},
+  "Cacao amer en poudre": {price:18.00, unit:"kg"},
+  "Sucre glace": {price:2.20, unit:"kg"},
+  "Levure chimique": {price:18.00, unit:"kg"},
+
+  // Sucres (€/kg)
+  "Sucre semoule": {price:1.50, unit:"kg"},
+  "Sucre cassonade": {price:2.20, unit:"kg"},
+  "Sucre muscovado": {price:9.00, unit:"kg"},
+  "Sirop de glucose": {price:5.00, unit:"kg"},
+  "Sucre inverti (trimoline)": {price:8.00, unit:"kg"},
+  "Miel": {price:12.00, unit:"kg"},
+  "Dextrose": {price:7.00, unit:"kg"},
+
+  // Matières grasses (€/kg)
+  "Beurre doux": {price:10.00, unit:"kg"},
+  "Beurre demi-sel": {price:10.50, unit:"kg"},
+  "Beurre tourage 84%": {price:14.00, unit:"kg"},
+  "Huile neutre (tournesol)": {price:2.80, unit:"kg"},
+
+  // Produits laitiers (€/L ou €/kg)
+  "Lait entier": {price:1.30, unit:"L"},
+  "Lait demi-écrémé": {price:1.10, unit:"L"},
+  "Crème liquide 30%": {price:7.00, unit:"L"},
+  "Crème liquide 35%": {price:8.00, unit:"L"},
+  "Crème épaisse": {price:6.50, unit:"L"},
+  "Mascarpone": {price:14.00, unit:"kg"},
+  "Fromage blanc": {price:3.50, unit:"kg"},
+  "Ricotta": {price:10.00, unit:"kg"},
+
+  // Œufs (€/unité, œuf moyen ~55g)
+  "Œuf entier (55 g)": {price:0.35, unit:"unité"},
+  "Jaune d'œuf (20 g)": {price:0.35, unit:"unité"},
+  "Blanc d'œuf (30 g)": {price:0.35, unit:"unité"},
+
+  // Chocolats (€/kg)
+  "Chocolat noir 70% Valrhona": {price:28.00, unit:"kg"},
+  "Chocolat noir 64%": {price:22.00, unit:"kg"},
+  "Chocolat noir 55%": {price:18.00, unit:"kg"},
+  "Chocolat au lait 40%": {price:22.00, unit:"kg"},
+  "Chocolat blanc": {price:20.00, unit:"kg"},
+  "Chocolat Dulcey": {price:32.00, unit:"kg"},
+  "Praliné amande-noisette 50%": {price:28.00, unit:"kg"},
+
+  // Fruits (€/kg)
+  "Fraises fraîches": {price:12.00, unit:"kg"},
+  "Framboises fraîches": {price:20.00, unit:"kg"},
+  "Purée de framboise": {price:18.00, unit:"kg"},
+  "Purée de fruits de la passion": {price:28.00, unit:"kg"},
+  "Purée de mangue": {price:14.00, unit:"kg"},
+  "Purée de fraise": {price:12.00, unit:"kg"},
+  "Citrons (jus)": {price:6.00, unit:"L"},
+  "Citrons (zeste)": {price:0.50, unit:"unité"},
+  "Pommes": {price:3.50, unit:"kg"},
+  "Poires": {price:4.50, unit:"kg"},
+  "Rhubarbe fraîche": {price:6.50, unit:"kg"},
+
+  // Gélifiants et texture (€/kg ou €/unité)
+  "Gélatine en feuilles (or)": {price:0.25, unit:"unité"},
+  "Gélatine en poudre": {price:80.00, unit:"kg"},
+  "Pectine NH": {price:120.00, unit:"kg"},
+  "Pectine jaune": {price:70.00, unit:"kg"},
+  "Agar-agar": {price:60.00, unit:"kg"},
+
+  // Arômes et épices (€/unité ou €/kg)
+  "Gousse de vanille": {price:3.50, unit:"unité"},
+  "Extrait de vanille": {price:0.80, unit:"dose 10ml"},
+  "Fève tonka (unité)": {price:1.50, unit:"unité"},
+  "Cannelle moulue": {price:35.00, unit:"kg"},
+  "Safran (pincée)": {price:0.80, unit:"dose"},
+  "Fleur de sel": {price:18.00, unit:"kg"},
+
+  // Divers
+  "Feuillantine": {price:18.00, unit:"kg"},
+  "Pistoles de couverture": {price:22.00, unit:"kg"},
+  "Noisettes entières": {price:18.00, unit:"kg"},
+  "Amandes effilées": {price:16.00, unit:"kg"}
+};
+
+let rows = 0;
+
+function addIngredient(preset = null) {
+  const id = ++rows;
+  const container = document.getElementById('ingredients');
+  const div = document.createElement('div');
+  div.className = 'ing-row';
+  div.dataset.id = id;
+
+  const ingredientNames = Object.keys(priceDB);
+  let optionsHtml = '<option value="">— Ingrédient —</option>';
+  // Grouper par catégorie visuelle simple
+  const categories = {
+    "Farines et poudres": ["Farine T45","Farine T55","Farine T65","Maïzena / fécule","Poudre d'amande","Poudre de noisette","Poudre de pistache","Cacao amer en poudre","Sucre glace","Levure chimique"],
+    "Sucres": ["Sucre semoule","Sucre cassonade","Sucre muscovado","Sirop de glucose","Sucre inverti (trimoline)","Miel","Dextrose"],
+    "Matières grasses": ["Beurre doux","Beurre demi-sel","Beurre tourage 84%","Huile neutre (tournesol)"],
+    "Produits laitiers": ["Lait entier","Lait demi-écrémé","Crème liquide 30%","Crème liquide 35%","Crème épaisse","Mascarpone","Fromage blanc","Ricotta"],
+    "Œufs": ["Œuf entier (55 g)","Jaune d'œuf (20 g)","Blanc d'œuf (30 g)"],
+    "Chocolats": ["Chocolat noir 70% Valrhona","Chocolat noir 64%","Chocolat noir 55%","Chocolat au lait 40%","Chocolat blanc","Chocolat Dulcey","Praliné amande-noisette 50%"],
+    "Fruits": ["Fraises fraîches","Framboises fraîches","Purée de framboise","Purée de fruits de la passion","Purée de mangue","Purée de fraise","Citrons (jus)","Citrons (zeste)","Pommes","Poires","Rhubarbe fraîche"],
+    "Gélifiants": ["Gélatine en feuilles (or)","Gélatine en poudre","Pectine NH","Pectine jaune","Agar-agar"],
+    "Arômes et épices": ["Gousse de vanille","Extrait de vanille","Fève tonka (unité)","Cannelle moulue","Safran (pincée)","Fleur de sel"],
+    "Divers": ["Feuillantine","Pistoles de couverture","Noisettes entières","Amandes effilées"]
+  };
+  Object.keys(categories).forEach(cat => {
+    optionsHtml += '<optgroup label="'+cat+'">';
+    categories[cat].forEach(name => {
+      optionsHtml += '<option value="'+name+'">'+name+'</option>';
+    });
+    optionsHtml += '</optgroup>';
+  });
+  optionsHtml += '<option value="__custom__">+ Ingrédient personnalisé</option>';
+
+  div.innerHTML =
+    '<div class="ing-name">' +
+      '<label>Ingrédient</label>' +
+      '<select onchange="onIngredientSelect(this, '+id+')">'+optionsHtml+'</select>' +
+      '<input type="text" placeholder="Nom de l\'ingrédient" style="display:none;margin-top:6px" class="custom-name">' +
+    '</div>' +
+    '<div class="ing-qty">' +
+      '<label>Quantité</label>' +
+      '<input type="number" min="0" step="0.1" placeholder="0" oninput="compute()">' +
+    '</div>' +
+    '<div class="ing-unit">' +
+      '<label>Unité</label>' +
+      '<select onchange="compute()">' +
+        '<option value="g">g</option>' +
+        '<option value="kg">kg</option>' +
+        '<option value="ml">ml</option>' +
+        '<option value="L">L</option>' +
+        '<option value="unite">unité(s)</option>' +
+      '</select>' +
+    '</div>' +
+    '<div class="ing-price">' +
+      '<label>Prix (€ / kg ou L ou u.)</label>' +
+      '<input type="number" min="0" step="0.01" placeholder="0,00" oninput="compute()">' +
+    '</div>' +
+    '<button class="btn-remove ing-remove" onclick="this.closest(\'.ing-row\').remove(); compute()" title="Supprimer">×</button>';
+
+  container.appendChild(div);
+
+  if (preset) {
+    const select = div.querySelector('.ing-name select');
+    const qtyInput = div.querySelector('.ing-qty input');
+    const unitSelect = div.querySelector('.ing-unit select');
+    const priceInput = div.querySelector('.ing-price input');
+
+    select.value = preset.name;
+    onIngredientSelect(select, id);
+    qtyInput.value = preset.qty;
+    unitSelect.value = preset.unit;
+    // Force update price after onSelect autofill
+    setTimeout(() => {
+      if (preset.price !== undefined) priceInput.value = preset.price;
+      compute();
+    }, 10);
+  }
+}
+
+function onIngredientSelect(select, id) {
+  const row = select.closest('.ing-row');
+  const customInput = row.querySelector('.custom-name');
+  const priceInput = row.querySelector('.ing-price input');
+  const unitSelect = row.querySelector('.ing-unit select');
+  const qtyLabel = row.querySelector('.ing-qty label');
+
+  if (select.value === '__custom__') {
+    customInput.style.display = 'block';
+    priceInput.value = '';
+  } else if (select.value === '') {
+    customInput.style.display = 'none';
+    priceInput.value = '';
+  } else {
+    customInput.style.display = 'none';
+    const item = priceDB[select.value];
+    priceInput.value = item.price.toFixed(2);
+    // Adapter l'unité par défaut
+    if (item.unit === 'kg') unitSelect.value = 'g';
+    else if (item.unit === 'L') unitSelect.value = 'ml';
+    else if (item.unit === 'unité' || item.unit === 'dose 10ml' || item.unit === 'dose') unitSelect.value = 'unite';
+    compute();
+  }
+}
+
+function compute() {
+  const portions = parseInt(document.getElementById('portions').value) || 1;
+  const rows = document.querySelectorAll('.ing-row');
+  let totalCost = 0;
+  let totalWeight = 0;
+  const breakdown = [];
+
+  rows.forEach(row => {
+    const select = row.querySelector('.ing-name select');
+    const customInput = row.querySelector('.custom-name');
+    const qty = parseFloat(row.querySelector('.ing-qty input').value) || 0;
+    const unit = row.querySelector('.ing-unit select').value;
+    const price = parseFloat(row.querySelector('.ing-price input').value) || 0;
+
+    let name = select.value === '__custom__' ? (customInput.value || 'Ingrédient perso') : select.value;
+    if (!name || !qty || !price) return;
+
+    // Conversion pour le calcul
+    let cost = 0;
+    let weightG = 0;
+    // Si prix en €/kg, l'unité de référence est kg
+    // Si prix en €/L, l'unité de référence est L
+    // Si prix en €/unité, l'unité de référence est unité
+    const dbItem = priceDB[name];
+    const priceUnit = dbItem ? dbItem.unit : 'kg'; // défaut kg pour les perso
+
+    if (unit === 'g') { cost = (qty / 1000) * price; weightG = qty; }
+    else if (unit === 'kg') { cost = qty * price; weightG = qty * 1000; }
+    else if (unit === 'ml') { cost = (qty / 1000) * price; weightG = qty; /* ~densité 1 pour liquides */ }
+    else if (unit === 'L') { cost = qty * price; weightG = qty * 1000; }
+    else if (unit === 'unite') {
+      if (priceUnit === 'unité' || priceUnit === 'dose 10ml' || priceUnit === 'dose') {
+        cost = qty * price;
+      } else {
+        cost = qty * price;
+      }
+      // Poids œuf moyen
+      if (name === "Œuf entier (55 g)") weightG = qty * 55;
+      else if (name === "Jaune d'œuf (20 g)") weightG = qty * 20;
+      else if (name === "Blanc d'œuf (30 g)") weightG = qty * 30;
+      else if (name === "Gélatine en feuilles (or)") weightG = qty * 2;
+      else if (name === "Gousse de vanille") weightG = qty * 3;
+      else weightG = 0;
+    }
+
+    totalCost += cost;
+    totalWeight += weightG;
+    if (cost > 0) breakdown.push({name, cost, pct:0});
+  });
+
+  // Calcul pourcentages
+  breakdown.forEach(b => b.pct = totalCost > 0 ? (b.cost / totalCost) * 100 : 0);
+  breakdown.sort((a,b) => b.cost - a.cost);
+
+  // Affichage
+  document.getElementById('totalCost').textContent = totalCost.toFixed(2).replace('.', ',') + " €";
+  document.getElementById('totalPortions').textContent = portions;
+  document.getElementById('totalWeight').textContent = Math.round(totalWeight) + " g";
+  document.getElementById('costPer100').textContent = totalWeight > 0 ? ((totalCost / totalWeight) * 100).toFixed(2).replace('.', ',') + " €" : "0,00 €";
+
+  const perPortion = portions > 0 ? totalCost / portions : 0;
+  document.getElementById('costPerPortion').textContent = perPortion.toFixed(2).replace('.', ',') + " €";
+
+  // Hint avec prix conseillé
+  const hint = document.getElementById('marginHint');
+  if (perPortion > 0) {
+    const amateurPrice = (perPortion * 3).toFixed(2).replace('.', ',');
+    const proPrice = (perPortion * 4).toFixed(2).replace('.', ',');
+    hint.innerHTML = "Prix conseillé : <strong style='color:#FDF8F0'>"+amateurPrice+" €</strong> (×3) amateur · <strong style='color:#FDF8F0'>"+proPrice+" €</strong> (×4) pro";
+  } else {
+    hint.textContent = "Ajoute tes ingrédients pour calculer";
+  }
+
+  // Recipe label
+  const name = document.getElementById('recipeName').value || "Ma recette";
+  document.getElementById('recipeLabel').textContent = name + " — " + portions + " portion" + (portions>1?'s':'');
+
+  // Breakdown
+  const bdDiv = document.getElementById('breakdown');
+  const bdList = document.getElementById('breakdownList');
+  if (breakdown.length > 0) {
+    bdDiv.style.display = 'block';
+    bdList.innerHTML = breakdown.map(b =>
+      '<div class="bd-row">' +
+        '<span class="bd-name">'+b.name+'</span>' +
+        '<div class="bd-bar"><div class="bd-bar-fill" style="width:'+b.pct+'%"></div></div>' +
+        '<span class="bd-pct">'+b.pct.toFixed(0)+' %</span>' +
+        '<span style="font-family:Courier New,monospace;font-size:12px;color:#1A1410;min-width:55px;text-align:right">'+b.cost.toFixed(2).replace('.', ',')+' €</span>' +
+      '</div>'
+    ).join('');
+  } else {
+    bdDiv.style.display = 'none';
+  }
+
+  // Tips contextuels
+  const tips = document.getElementById('tips');
+  if (breakdown.length === 0) {
+    tips.style.display = 'none';
+  } else {
+    tips.style.display = 'block';
+    const top = breakdown[0];
+    let msg = '<strong>Ce que les chiffres disent</strong>';
+    if (top.pct > 50) {
+      msg += "<strong style='display:inline;font-family:inherit;letter-spacing:0;font-size:13px;text-transform:none;color:#1A1410'>"+top.name+"</strong> représente "+top.pct.toFixed(0)+"% de ton coût. Si tu cherches à baisser le prix de revient, c'est là qu'il faut jouer : soit baisser la quantité, soit trouver un équivalent moins cher (ex : chocolat 55% à 18€/kg au lieu de 70% Valrhona à 28€/kg).";
+    } else if (top.pct > 30) {
+      msg += "<strong style='display:inline;font-family:inherit;letter-spacing:0;font-size:13px;text-transform:none;color:#1A1410'>"+top.name+"</strong> est ton poste principal ("+top.pct.toFixed(0)+"%). Répartition plutôt équilibrée, recette bien calibrée côté coût.";
+    } else {
+      msg += "Ton coût est bien réparti (aucun ingrédient ne dépasse 30%). Recette équilibrée économiquement. Tu gagnes en diversifiant les saveurs sans exploser le prix.";
+    }
+    if (perPortion < 1) {
+      msg += " Coût par portion excellent ("+perPortion.toFixed(2).replace('.', ',')+" €), marge confortable garantie.";
+    } else if (perPortion > 5) {
+      msg += " Portion premium ("+perPortion.toFixed(2).replace('.', ',')+" €). Prix de vente à aligner : minimum "+ (perPortion * 3).toFixed(0) +" € pour couvrir la matière + charges.";
+    }
+    tips.innerHTML = msg;
+  }
+}
+
+function loadPresetTarte() {
+  // Nettoie d'abord
+  document.getElementById('ingredients').innerHTML = '';
+  document.getElementById('recipeName').value = "Tarte citron meringuée";
+  document.getElementById('portions').value = 8;
+
+  // Ajoute les ingrédients d'une tarte citron meringuée 8 parts
+  const preset = [
+    // Pâte sucrée
+    {name:"Farine T55", qty:250, unit:"g"},
+    {name:"Beurre doux", qty:120, unit:"g"},
+    {name:"Sucre glace", qty:90, unit:"g"},
+    {name:"Poudre d'amande", qty:30, unit:"g"},
+    {name:"Œuf entier (55 g)", qty:1, unit:"unite"},
+    // Crème citron
+    {name:"Œuf entier (55 g)", qty:3, unit:"unite"},
+    {name:"Sucre semoule", qty:150, unit:"g"},
+    {name:"Citrons (jus)", qty:120, unit:"ml"},
+    {name:"Citrons (zeste)", qty:2, unit:"unite"},
+    {name:"Beurre doux", qty:150, unit:"g"},
+    // Meringue italienne
+    {name:"Blanc d'œuf (30 g)", qty:3, unit:"unite"},
+    {name:"Sucre semoule", qty:150, unit:"g"}
+  ];
+  preset.forEach(p => addIngredient(p));
+  compute();
+}
+
+document.getElementById('recipeName').addEventListener('input', compute);
+
+// Init : une ligne vide
+addIngredient();
+</script>
+</body>
+</html>

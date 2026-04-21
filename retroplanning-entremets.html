@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rétroplanning entremets — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:640px}
+  .form-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .form-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
+  input[type="date"],input[type="time"],select{width:100%;padding:14px 18px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  input[type="date"]:focus,input[type="time"]:focus,select:focus{outline:none;border-color:#C8A04A}
+  .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:600px){.two-cols{grid-template-columns:1fr}}
+  .checkbox-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .check-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none}
+  .check-card:hover{border-color:#C8A04A}
+  .check-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .check-card input{margin:0;accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .check-card span{font-size:14px;color:#1A1410}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+  .result{margin-top:40px;display:none}
+  .result.visible{display:block}
+  .result-header{background:#1A1410;color:#FDF8F0;padding:clamp(20px,4vw,32px);border-radius:4px 4px 0 0;border-bottom:3px solid #C8A04A}
+  .result-header .meta{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .result-header h2{font-family:Georgia,serif;font-size:clamp(22px,3vw,28px);font-weight:400;line-height:1.3}
+  .day-block{background:#fff;border:1px solid rgba(26,20,16,0.1);border-top:none;padding:0}
+  .day-block:last-of-type{border-radius:0 0 4px 4px}
+  .day-header{background:rgba(200,160,74,0.08);padding:18px 24px;border-bottom:1px solid rgba(200,160,74,0.2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  .day-label{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;font-weight:600}
+  .day-date{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-style:italic}
+  .tasks{padding:12px 0}
+  .task{display:flex;gap:20px;padding:16px 24px;border-bottom:1px solid rgba(26,20,16,0.06);align-items:flex-start}
+  .task:last-child{border-bottom:none}
+  .task-time{font-family:Georgia,serif;font-size:17px;color:#C8A04A;min-width:90px;flex-shrink:0;font-weight:600}
+  .task-body{flex:1}
+  .task-title{font-size:15px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .task-detail{font-size:13px;color:rgba(26,20,16,0.65);line-height:1.55}
+  .task-duration{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-top:6px;padding:3px 8px;background:rgba(200,160,74,0.1);border-radius:2px}
+  .tip-final{background:rgba(200,160,74,0.08);padding:24px;margin-top:24px;border-left:3px solid #C8A04A;border-radius:2px}
+  .tip-final strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
+  .empty-state{padding:32px;text-align:center;color:rgba(26,20,16,0.5);font-style:italic}
+  .warning{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:16px;border-radius:2px;font-size:13px;color:#8B5A20}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Rétroplanning entremets</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>T'as un entremet à servir. <span class="accent">Quand tu commences ?</span></h1>
+  <p class="intro">Dis-moi la date, l'heure du service et ce que ton entremet contient. Je te sors le planning complet à l'heure près, du J-3 au dressage final. Fini les "merde, j'aurais dû commencer hier"</p>
+
+  <div class="form-section">
+    <h3>Le service</h3>
+    <div class="two-cols">
+      <div>
+        <label for="serviceDate">Date du service</label>
+        <input type="date" id="serviceDate">
+      </div>
+      <div>
+        <label for="serviceTime">Heure du service</label>
+        <input type="time" id="serviceTime" value="14:00">
+      </div>
+    </div>
+    <div style="margin-top:18px">
+      <label for="decongelation">Temps de décongélation au frigo</label>
+      <select id="decongelation">
+        <option value="4">4 heures (petits entremets individuels)</option>
+        <option value="6" selected>6 heures (entremet 18-22 cm, recommandé)</option>
+        <option value="8">8 heures (entremet 24-26 cm ou buche)</option>
+        <option value="12">Toute une nuit (le plus sécurisant)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Les composants de ton entremet</h3>
+
+    <label style="margin-top:4px">Biscuit</label>
+    <div class="checkbox-grid" id="grid-biscuit">
+      <label class="check-card"><input type="radio" name="biscuit" value="dacquoise"><span>Dacquoise / Succès</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="genoise"><span>Génoise</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="financier"><span>Financier</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="sacher"><span>Sacher / Joconde</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="croustillant"><span>Croustillant feuilletine</span></label>
+      <label class="check-card active"><input type="radio" name="biscuit" value="aucun" checked><span>Aucun biscuit</span></label>
+    </div>
+
+    <label style="margin-top:22px">Insert intérieur</label>
+    <div class="checkbox-grid" id="grid-insert">
+      <label class="check-card"><input type="radio" name="insert" value="confit"><span>Confit de fruits</span></label>
+      <label class="check-card"><input type="radio" name="insert" value="cremeux"><span>Crémeux / Namelaka</span></label>
+      <label class="check-card"><input type="radio" name="insert" value="praline"><span>Praliné coulant</span></label>
+      <label class="check-card"><input type="radio" name="insert" value="caramel"><span>Caramel onctueux</span></label>
+      <label class="check-card"><input type="radio" name="insert" value="mousse-fruit"><span>Mousse de fruit</span></label>
+      <label class="check-card active"><input type="radio" name="insert" value="aucun" checked><span>Aucun insert</span></label>
+    </div>
+
+    <label style="margin-top:22px">Mousse principale</label>
+    <div class="checkbox-grid" id="grid-mousse">
+      <label class="check-card active"><input type="radio" name="mousse" value="chocolat" checked><span>Mousse chocolat</span></label>
+      <label class="check-card"><input type="radio" name="mousse" value="fruit"><span>Mousse de fruit</span></label>
+      <label class="check-card"><input type="radio" name="mousse" value="vanille"><span>Bavaroise vanille</span></label>
+      <label class="check-card"><input type="radio" name="mousse" value="cheesecake"><span>Mousse cheesecake</span></label>
+    </div>
+
+    <label style="margin-top:22px">Finition extérieure</label>
+    <div class="checkbox-grid" id="grid-finition">
+      <label class="check-card active"><input type="radio" name="finition" value="miroir" checked><span>Glaçage miroir</span></label>
+      <label class="check-card"><input type="radio" name="finition" value="velours"><span>Effet velours (spray)</span></label>
+      <label class="check-card"><input type="radio" name="finition" value="nappage"><span>Nappage neutre</span></label>
+      <label class="check-card"><input type="radio" name="finition" value="aucun"><span>Brut (pas de finition)</span></label>
+    </div>
+
+    <label style="margin-top:22px">Options</label>
+    <div class="checkbox-grid">
+      <label class="check-card"><input type="checkbox" id="opt-praline-maison"><span>Praliné maison</span></label>
+      <label class="check-card"><input type="checkbox" id="opt-decor-choco"><span>Décor chocolat tempéré</span></label>
+      <label class="check-card"><input type="checkbox" id="opt-fruits-frais"><span>Décor fruits frais</span></label>
+      <label class="check-card"><input type="checkbox" id="opt-imbibage"><span>Imbibage du biscuit</span></label>
+    </div>
+  </div>
+
+  <button class="calculate-btn" onclick="computePlanning()">Calculer mon planning</button>
+
+  <div class="result" id="result">
+    <div class="result-header">
+      <p class="meta" id="resultMeta">Service</p>
+      <h2 id="resultTitle">Ton rétroplanning</h2>
+    </div>
+    <div id="timeline"></div>
+  </div>
+</main>
+
+<script>
+// Set date default to 3 days from today
+(function(){
+  const today = new Date();
+  today.setDate(today.getDate() + 3);
+  const iso = today.toISOString().slice(0,10);
+  document.getElementById('serviceDate').value = iso;
+  document.getElementById('serviceDate').min = new Date().toISOString().slice(0,10);
+})();
+
+// Gestion visuelle des check-cards
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+    // Pour les radios : enlever active sur tous les cards du même group
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(i => {
+        i.closest('.check-card').classList.remove('active');
+      });
+    }
+    // Pour les checkbox et la radio sélectionnée : toggle active
+    if (e.target.checked) {
+      e.target.closest('.check-card').classList.add('active');
+    } else {
+      e.target.closest('.check-card').classList.remove('active');
+    }
+  }
+});
+
+const JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+function formatDate(d) {
+  return JOURS[d.getDay()] + ' ' + d.getDate() + ' ' + MOIS[d.getMonth()];
+}
+function formatTime(d) {
+  const h = String(d.getHours()).padStart(2,'0');
+  const m = String(d.getMinutes()).padStart(2,'0');
+  return h + 'h' + m;
+}
+function addHours(date, h) { return new Date(date.getTime() - h*3600*1000); }
+function sameDay(a, b) { return a.toDateString() === b.toDateString(); }
+
+function computePlanning() {
+  const dateStr = document.getElementById('serviceDate').value;
+  const timeStr = document.getElementById('serviceTime').value;
+  if (!dateStr || !timeStr) { alert('Renseigne la date et l\'heure du service'); return; }
+
+  const service = new Date(dateStr + 'T' + timeStr);
+  const decong = parseInt(document.getElementById('decongelation').value);
+  const biscuit = document.querySelector('input[name="biscuit"]:checked').value;
+  const insert = document.querySelector('input[name="insert"]:checked').value;
+  const mousse = document.querySelector('input[name="mousse"]:checked').value;
+  const finition = document.querySelector('input[name="finition"]:checked').value;
+  const pralineMaison = document.getElementById('opt-praline-maison').checked;
+  const decorChoco = document.getElementById('opt-decor-choco').checked;
+  const fruitsFrais = document.getElementById('opt-fruits-frais').checked;
+  const imbibage = document.getElementById('opt-imbibage').checked;
+
+  // --- Timing backwards ---
+  // J = service. Moment de sortie frigo = heure service (ou quelques min avant pour dressage assiette)
+  // Début décongélation frigo = service - decong
+  const debutDecong = addHours(service, decong);
+
+  // Glaçage / velours : juste avant la décongélation sur entremet encore surgelé
+  // Prévoir 45 min (chauffe glaçage à 35°C, démoulage, coulage, fige)
+  let momentFinition = null;
+  if (finition === 'miroir' || finition === 'velours') {
+    momentFinition = addHours(debutDecong, 0.75);
+  }
+
+  // Congélation complète minimum 4h. On place le montage 4h avant le glaçage (ou avant la décongélation si pas de glaçage)
+  const fincongel = momentFinition || debutDecong;
+  const montage = addHours(fincongel, 4);
+
+  // Mousse + montage (compter 1h30)
+  const debutMousse = addHours(montage, 1.5);
+
+  // --- Répartition par jour ---
+  const tasks = [];
+
+  // J-3 : praliné maison + décor chocolat (à faire à l'avance)
+  if (pralineMaison) {
+    const d = addHours(service, 72);
+    d.setHours(10,0,0,0);
+    tasks.push({time: d, title:"Praliné maison", detail:"Torréfie les fruits à coque 15 min à 160°C. Caramel à sec ambré versé dessus. Laisse figer, concasse puis mixe jusqu'à texture liquide (15-20 min au mixeur). Conserve à température ambiante dans un bocal.", duration:"1h30"});
+  }
+  if (decorChoco) {
+    const d = addHours(service, 72);
+    d.setHours(14,0,0,0);
+    tasks.push({time: d, title:"Décor chocolat tempéré", detail:"Tempère ton chocolat (noir : 50-28-31°C / lait : 45-27-29°C / blanc : 40-26-28°C). Coule sur feuille guitare, détaille avant cristallisation complète. Conserve à 18°C sec.", duration:"1h"});
+  }
+
+  // J-2 matin : biscuit (sauf si aucun)
+  if (biscuit !== 'aucun') {
+    const d = addHours(service, 48);
+    d.setHours(9,0,0,0);
+    const tips = {
+      'dacquoise':"Tamise poudre + sucre + farine. Meringue serrée (70g de sucre sur la meringue). Incorpore aux poudres délicatement. 170°C 15-18 min. Emballe hermétiquement une fois froid.",
+      'genoise':"Œufs + jaunes + sucre au bain-marie 45-50°C. Monte au ruban froid. Incorpore farine tamisée à la maryse. 180°C 15-20 min. Filme une fois refroidi.",
+      'financier':"Beurre noisette filtré. Mélange poudres + blancs + beurre tiède. Poche et cuis 180°C 12-15 min. Se conserve très bien 48h.",
+      'sacher':"Pâte d'amande détendue avec jaunes, monte avec œufs + sucre glace. Meringue serrée. Incorpore beurre + farine puis meringue. 180°C 12-15 min.",
+      'croustillant':"Chocolat fondu + praliné + feuillantine. Étale sur feuille silpat à 3-4 mm. Congèle avant détaillage. Se garde une semaine au frigo emballé."
+    };
+    tasks.push({time: d, title:"Biscuit : "+({dacquoise:"Dacquoise",genoise:"Génoise",financier:"Financier",sacher:"Sacher/Joconde",croustillant:"Croustillant feuillantine"}[biscuit]), detail:tips[biscuit], duration:"1h"});
+  }
+
+  // J-2 après-midi : insert (sauf si aucun)
+  if (insert !== 'aucun') {
+    const d = addHours(service, 48);
+    d.setHours(15,0,0,0);
+    const tips = {
+      'confit':"Chauffe la purée à 40°C. Ajoute sucre+pectine NH en pluie, 1 min à ébullition. Jus de citron. Coule dans moule insert, surgèle au moins 3h, idéalement une nuit.",
+      'cremeux':"Anglaise 82-85°C, versée sur chocolat haché en 3 fois. Émulsionne, mixe. Coule dans moule insert. Surgèle minimum 4h, idéalement une nuit.",
+      'praline':"Ramollis gélatine. Crème frémissante + gélatine versée sur praliné + chocolat. Émulsionne. Coule dans moule insert. Surgèle 4h minimum.",
+      'caramel':"Caramel à sec blond. Déglace avec crème chaude (attention projections). Beurre + sel. Refroidis à 35°C, coule dans moule insert. Surgèle minimum 4h.",
+      'mousse-fruit':"Purée tiède + gélatine réhydratée. Refroidis à 22°C. Incorpore crème montée souple. Coule dans moule insert, surgèle minimum 4h."
+    };
+    tasks.push({time: d, title:"Insert : "+({confit:"Confit de fruits",cremeux:"Crémeux chocolat",praline:"Praliné coulant",caramel:"Caramel onctueux","mousse-fruit":"Mousse de fruit"}[insert]), detail:tips[insert] + " Une fois démoulé l'insert reste au congélateur jusqu'au montage.", duration:"1h"});
+  }
+
+  // J-1 matin : glaçage miroir (si miroir) -- à préparer 24h avant utilisation
+  if (finition === 'miroir') {
+    const d = new Date(momentFinition);
+    d.setDate(d.getDate() - 1);
+    tasks.push({time: d, title:"Préparation du glaçage miroir", detail:"Sucre + glucose + eau à 103°C. Verse sur lait concentré + chocolat blanc + colorant. Gélatine hydratée. Mixe sans incorporer d'air (mixeur plongeant incliné). Filme au contact, repos au frigo 24h avant utilisation : c'est ce qui donne la brillance parfaite.", duration:"30 min"});
+  }
+
+  // J-1 après-midi : mousse + montage + congélation
+  {
+    const tipsMousse = {
+      'chocolat':"Ganache chocolat + gélatine. Refroidis à 28-30°C. Incorpore crème montée souple (bec d'oiseau, pas ferme) en 3 fois. Ne jamais monter ferme la crème, sinon ça tranche au montage.",
+      'fruit':"Purée de fruit + sucre + gélatine tiède à 30°C. Incorpore crème montée souple. Coule vite : la gélatine commence à figer.",
+      'vanille':"Crème anglaise vanille + gélatine. Refroidis à 22°C sous peine de tranchage. Incorpore crème montée souple délicatement.",
+      'cheesecake':"Mascarpone + fromage frais + sucre glace détendu. Ajoute gélatine tiède et zestes si besoin. Incorpore crème montée souple. Coule immédiatement."
+    };
+    tasks.push({time: debutMousse, title:"Mousse "+({chocolat:"chocolat",fruit:"de fruit",vanille:"bavaroise vanille",cheesecake:"cheesecake"}[mousse])+" + montage", detail: tipsMousse[mousse] + " Montage envers : coule 1/3 de mousse dans le moule, pose l'insert congelé centré et pressé légèrement, recoule un peu de mousse, pose le biscuit par-dessus, lisse à la spatule.", duration:"1h30"});
+
+    const congel = new Date(debutMousse); congel.setMinutes(congel.getMinutes() + 90);
+    tasks.push({time: congel, title:"Congélation", detail: "Surgèle toute la nuit jusqu'au glaçage. Minimum 4h mais l'entremet doit être totalement surgelé à cœur pour résister au glaçage sans fondre. Couvre avec une cloche pour éviter le givrage.", duration: decong === 12 ? "toute la nuit" : "4h minimum"});
+  }
+
+  // J : glaçage / velours / nappage / dressage
+  if (finition === 'miroir') {
+    const chauffe = new Date(momentFinition); chauffe.setMinutes(chauffe.getMinutes() - 30);
+    tasks.push({time: chauffe, title:"Réchauffe du glaçage miroir", detail:"Sors le glaçage du frigo. Passe-le 20-30 sec au micro-ondes par pulsations, mélange doucement. Mixeur plongeant incliné sans bulles. Température d'utilisation : 35°C exact au thermomètre.", duration:"30 min"});
+    tasks.push({time: momentFinition, title:"Démoulage et glaçage", detail:"Sors l'entremet du congélateur, démoule sur grille posée sur plat creux (récupère le surplus). Coule le glaçage à 35°C en un seul geste du centre vers l'extérieur. Attends 30 sec, racle le dessous à la spatule. Transfère délicatement sur le plat de service définitif.", duration:"30 min"});
+  } else if (finition === 'velours') {
+    tasks.push({time: momentFinition, title:"Spray effet velours", detail:"Sors l'entremet du congélateur. Fais chauffer ton spray velours à 45°C (bain-marie). Pulvérise à 20-30 cm de distance en pluie fine. L'entremet DOIT être surgelé sinon le spray ne prend pas. Transfère sur le plat de service.", duration:"15 min"});
+  } else if (finition === 'nappage') {
+    tasks.push({time: debutDecong, title:"Décongélation + nappage", detail:"Sors l'entremet du congélateur, démoule, place sur grille. Couvre au pinceau ou à la spatule d'un nappage neutre réchauffé à 30°C. Transfère sur le plat de service, direction le frigo pour décongeler.", duration:"20 min"});
+  } else {
+    tasks.push({time: debutDecong, title:"Sortie du congélateur + décongélation frigo", detail:"Sors l'entremet, démoule, place sur plat de service, direction le frigo pour décongélation douce.", duration:"5 min"});
+  }
+
+  if (fruitsFrais) {
+    const d = addHours(service, 1);
+    tasks.push({time: d, title:"Ajout des fruits frais + décor", detail:"Les fruits se posent juste avant le service pour rester brillants et fermes. Lustre avec un peu de nappage neutre chaud pour l'effet pro. Ajoute les décors chocolat, feuille d'or, éclats de praliné.", duration:"15 min"});
+  }
+
+  // Début de la décongélation si elle n'est pas déjà couverte par la finition
+  if (finition === 'miroir' || finition === 'velours') {
+    tasks.push({time: debutDecong, title:"Placement au frigo pour décongélation", detail:"L'entremet glacé est placé au frigo sur son plat de service. "+decong+"h minimum avant le service pour décongélation à cœur. NE PAS décongeler à température ambiante : ça fait perler le glaçage.", duration: decong+"h"});
+  }
+
+  tasks.push({time: service, title:"Service !", detail:"Découpe avec un couteau fin passé sous l'eau chaude et essuyé entre chaque part. Tes invités vont halluciner.", duration:"—"});
+
+  // --- Tri chronologique ---
+  tasks.sort((a,b) => a.time - b.time);
+
+  // --- Regroupement par jour ---
+  const byDay = new Map();
+  tasks.forEach(t => {
+    const k = t.time.toDateString();
+    if (!byDay.has(k)) byDay.set(k, {date: t.time, tasks: []});
+    byDay.get(k).tasks.push(t);
+  });
+
+  // --- Label J-n ---
+  const serviceDay = new Date(service); serviceDay.setHours(0,0,0,0);
+
+  // --- Render ---
+  const timeline = document.getElementById('timeline');
+  timeline.innerHTML = '';
+  byDay.forEach(day => {
+    const d = new Date(day.date); d.setHours(0,0,0,0);
+    const diffDays = Math.round((serviceDay - d) / (1000*3600*24));
+    const label = diffDays === 0 ? "Jour J" : "J - " + diffDays;
+
+    const block = document.createElement('div');
+    block.className = 'day-block';
+    block.innerHTML =
+      '<div class="day-header">' +
+        '<span class="day-label">'+label+'</span>' +
+        '<span class="day-date">'+formatDate(day.date)+'</span>' +
+      '</div>' +
+      '<div class="tasks">' +
+        day.tasks.map(t =>
+          '<div class="task">' +
+            '<div class="task-time">'+formatTime(t.time)+'</div>' +
+            '<div class="task-body">' +
+              '<div class="task-title">'+t.title+'</div>' +
+              '<div class="task-detail">'+t.detail+'</div>' +
+              '<span class="task-duration">'+t.duration+'</span>' +
+            '</div>' +
+          '</div>'
+        ).join('') +
+      '</div>';
+    timeline.appendChild(block);
+  });
+
+  // Ajoute conseil final
+  const tip = document.createElement('div');
+  tip.className = 'tip-final';
+  tip.innerHTML = '<strong>Le conseil de Geoffrey</strong>' +
+    "Ce planning est un rétroplanning de sécurité : il donne des créneaux larges. Tu peux décaler les étapes de 1-2 jours en avance si tu préfères travailler à froid (le biscuit et l'insert se gardent 48h de plus au congélateur sans problème). Ce qui ne bouge jamais : glaçage miroir repos 24h obligatoire, entremet SURGELÉ au moment du glaçage, décongélation au frigo uniquement.";
+  timeline.appendChild(tip);
+
+  // Header meta
+  document.getElementById('resultMeta').textContent = "Service : " + formatDate(service) + " à " + formatTime(service);
+  document.getElementById('resultTitle').textContent = "Ton rétroplanning minute par minute";
+
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+</script>
+</body>
+</html>

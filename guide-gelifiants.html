@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide des gélifiants — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+  .mode-btn{flex:1;min-width:180px;padding:14px 20px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .mode-section{display:none}
+  .mode-section.active{display:block}
+
+  /* Mode 1 : fiches par gélifiant */
+  .gelifiant-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+  .gel-btn{background:#fff;border:1px solid rgba(26,20,16,0.12);border-radius:4px;padding:18px 20px;cursor:pointer;text-align:left;transition:all 0.2s;font-family:inherit}
+  .gel-btn:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,0.06)}
+  .gel-btn.active{border-color:#C8A04A;background:rgba(200,160,74,0.08)}
+  .gel-name{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .gel-origin{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:10px}
+  .gel-tag{display:inline-block;font-size:11px;color:rgba(26,20,16,0.65);padding:3px 8px;background:rgba(26,20,16,0.05);border-radius:2px;margin:2px 4px 2px 0}
+
+  .fiche{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:24px;display:none}
+  .fiche.visible{display:block}
+  .fiche-header{border-bottom:2px solid #C8A04A;padding-bottom:20px;margin-bottom:24px}
+  .fiche-header h2{font-family:Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:400;color:#1A1410;margin-bottom:4px}
+  .fiche-header .sub{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A}
+  .fiche-row{display:grid;grid-template-columns:180px 1fr;gap:20px;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  @media (max-width:600px){.fiche-row{grid-template-columns:1fr;gap:4px}}
+  .fiche-row:last-of-type{border-bottom:none}
+  .fiche-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;padding-top:2px}
+  .fiche-value{font-size:14px;color:#1A1410;line-height:1.6}
+  .fiche-value strong{color:#1A1410;font-family:Georgia,serif}
+  .usages-list{margin-top:20px}
+  .usage-item{display:flex;gap:14px;padding:12px 0;align-items:flex-start;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .usage-item:last-child{border-bottom:none}
+  .usage-dot{width:6px;height:6px;background:#C8A04A;border-radius:50%;flex-shrink:0;margin-top:8px}
+  .usage-body{flex:1;font-size:14px}
+  .usage-body strong{display:block;margin-bottom:2px;color:#1A1410}
+  .usage-body span{color:rgba(26,20,16,0.7)}
+  .pitfall{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#8B5A20}
+  .pitfall strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+
+  /* Mode 2 : assistant */
+  .quiz-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .quiz-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  .choix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .choix-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;font-size:14px}
+  .choix-card:hover{border-color:#C8A04A}
+  .choix-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .choix-card input{accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+
+  .reco{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,36px);margin-top:24px;display:none;border-top:3px solid #C8A04A}
+  .reco.visible{display:block}
+  .reco .label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .reco h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);color:#C8A04A;margin-bottom:16px;font-weight:400}
+  .reco .why{font-size:15px;color:rgba(253,248,240,0.85);margin-bottom:24px;line-height:1.65}
+  .reco-block{background:rgba(253,248,240,0.05);padding:18px 20px;border-radius:3px;margin-bottom:12px;border-left:3px solid #C8A04A}
+  .reco-block h4{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .reco-block p{font-size:14px;color:#FDF8F0;line-height:1.55}
+  .alt-card{background:rgba(253,248,240,0.03);padding:14px 18px;border-radius:3px;margin-top:10px;font-size:13px;color:rgba(253,248,240,0.8)}
+  .alt-card strong{color:#C8A04A;display:block;margin-bottom:2px;font-family:Georgia,serif}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Guide des gélifiants</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Gélatine, agar-agar, pectine, kappa. <span class="accent">Quoi et quand</span></h1>
+  <p class="intro">7 gélifiants, 7 textures, 7 dosages différents. Consulte la fiche complète d'un gélifiant ou laisse-moi t'orienter selon ce que tu cherches. Fini les bouillies qui ne prennent pas et les inserts en plastique</p>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('fiches')">Les fiches par gélifiant</button>
+    <button class="mode-btn" onclick="setMode('assistant')">Aide-moi à choisir</button>
+  </div>
+
+  <!-- Mode 1 : Fiches -->
+  <div class="mode-section active" id="mode-fiches">
+    <div class="gelifiant-grid" id="gelifiantGrid"></div>
+    <div class="fiche" id="fiche"></div>
+  </div>
+
+  <!-- Mode 2 : Assistant -->
+  <div class="mode-section" id="mode-assistant">
+    <div class="quiz-section">
+      <h3>1. Ton application</h3>
+      <div class="choix-grid" id="appGrid">
+        <label class="choix-card active"><input type="radio" name="app" value="insert" checked><span>Insert d'entremet</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="confit"><span>Confit / coulis tranché</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="glacage"><span>Glaçage miroir</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="nappage"><span>Nappage neutre</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="patedefruit"><span>Pâte de fruits</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="panacotta"><span>Panna cotta / flan</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="mousse"><span>Mousse / bavaroise</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="assiette"><span>Dessert à l'assiette</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>2. La texture que tu veux</h3>
+      <div class="choix-grid">
+        <label class="choix-card active"><input type="radio" name="tex" value="fondante" checked><span>Fondante, se tient mais pas élastique</span></label>
+        <label class="choix-card"><input type="radio" name="tex" value="ferme"><span>Ferme, tranche nette</span></label>
+        <label class="choix-card"><input type="radio" name="tex" value="cassante"><span>Cassante, sucre dur</span></label>
+        <label class="choix-card"><input type="radio" name="tex" value="souple"><span>Souple, élastique, rebondit</span></label>
+        <label class="choix-card"><input type="radio" name="tex" value="nappante"><span>Nappante, coule légèrement</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>3. Tes contraintes</h3>
+      <div class="choix-grid">
+        <label class="choix-card"><input type="checkbox" id="vegan"><span>Vegan / végétarien strict</span></label>
+        <label class="choix-card"><input type="checkbox" id="acide"><span>Fruits très acides (agrumes, fruits rouges)</span></label>
+        <label class="choix-card"><input type="checkbox" id="rechauffe"><span>Sera réchauffé plus tard</span></label>
+        <label class="choix-card"><input type="checkbox" id="froid"><span>Servi glacé / congelé</span></label>
+      </div>
+    </div>
+
+    <button class="calculate-btn" onclick="assistant()">Me recommander le gélifiant</button>
+
+    <div class="reco" id="reco">
+      <p class="label" id="recoLabel">Recommandation</p>
+      <h2 id="recoName">—</h2>
+      <p class="why" id="recoWhy">—</p>
+
+      <div class="reco-block">
+        <h4>Dosage recommandé</h4>
+        <p id="recoDose">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>Méthode d'activation</h4>
+        <p id="recoActivation">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>À éviter</h4>
+        <p id="recoEviter">—</p>
+      </div>
+
+      <div id="recoAlternatives"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const gelifiants = {
+  'gelatine': {
+    name: "Gélatine",
+    origin: "Protéines animales (porc ou bœuf)",
+    tags: ["Thermoréversible","Non vegan","Standard"],
+    textureType: "Fondante, tremblotante",
+    thermoreversible: "Oui. Refond à 35-40°C, se ressolidifie en refroidissant. Parfaite pour les préparations à servir froides qui peuvent être retravaillées",
+    activation: "Hydrater 10 min dans eau froide (feuilles ou poudre), puis fondre dans un liquide à 50-60°C. Jamais en ébullition (perte de pouvoir gélifiant au-delà de 85°C)",
+    dosage: "6 à 20 g par kilo d'appareil selon la tenue voulue. Classique : 12 g par litre pour un crémeux, 16 g pour une bavaroise, 20 g pour une mousse tranchable",
+    usages: [
+      {t:"Mousses et bavaroises", d:"Ratio 12-16 g par kilo. Incorpore à 30°C max dans la base, avant d'ajouter la crème montée"},
+      {t:"Crémeux et namelaka", d:"4-5 g par kilo. Apporte juste la tenue sans figer"},
+      {t:"Glaçage miroir", d:"14-16 g par kilo de glaçage. Combinée à la crème et au chocolat blanc"},
+      {t:"Confits tranchés", d:"10-14 g par kilo de purée selon l'acidité"}
+    ],
+    pitfall: "N'incorpore JAMAIS dans un liquide bouillant, la gélatine se détruit au-delà de 85°C. Ne pas congeler avant prise complète (rupture de texture)",
+    score: {insert:4, confit:3, glacage:5, nappage:3, patedefruit:1, panacotta:5, mousse:5, assiette:4}
+  },
+  'agar-agar': {
+    name: "Agar-agar",
+    origin: "Algues rouges (Gelidium, Gracilaria)",
+    tags: ["Thermo-irréversible","Vegan","Puissant"],
+    textureType: "Ferme, tranche nette, un peu cassante",
+    thermoreversible: "Non, irréversible. Une fois pris, ne refond pas à 60°C (seulement au-delà de 90°C). Ne peut pas être retravaillé",
+    activation: "Porter à ébullition 1-2 min minimum dans le liquide (obligatoire, sinon pas de gélification). Prise dès 35-40°C, très rapide",
+    dosage: "2 à 4 g par litre. Très concentré, dose au gramme près. 2 g = tenue souple / 4 g = tenue ferme tranchable",
+    usages: [
+      {t:"Confits et gels tranchés", d:"3-4 g par litre. Parfait pour les pâtes à tartiner vegan ou confits acidulés"},
+      {t:"Flans et crémeux vegan", d:"3 g par litre. Texture proche du flan pâtissier classique"},
+      {t:"Nappage pour tartes", d:"2 g par litre. Prise rapide, fige en 5 min sur les fruits"},
+      {t:"Perles / sphérification", d:"1-2 g par 100 ml. Pour caviar de fruits ou déco moléculaire"}
+    ],
+    pitfall: "N'est PAS un remplaçant de la gélatine. La texture est complètement différente (ferme/cassante vs fondante). Incompatible avec certains fruits crus (kiwi, ananas, papaye) qui contiennent des enzymes destructrices",
+    score: {insert:2, confit:5, glacage:1, nappage:4, patedefruit:1, panacotta:3, mousse:2, assiette:4}
+  },
+  'pectine-nh': {
+    name: "Pectine NH",
+    origin: "Dérivée des fruits (pommes, agrumes)",
+    tags: ["Thermoréversible","Vegan","Spécialisée fruits"],
+    textureType: "Nappante, moelleuse, brillante",
+    thermoreversible: "Oui (spécificité de la NH). Peut être refondue et retravaillée, contrairement aux autres pectines",
+    activation: "Mélanger à sec avec du sucre (anti-agglomération), verser en pluie sur purée à 40°C, porter à ébullition 1 min. Prise dès 50°C",
+    dosage: "8 à 14 g par kilo de purée selon l'acidité. 10 g pour un confit standard, 14 g pour un confit tranché qui se démoule",
+    usages: [
+      {t:"Confits d'entremets", d:"10-12 g par kilo. Prise nette qui garde sa place dans la mousse"},
+      {t:"Glaçage fruit", d:"8-10 g par kilo. Nappage brillant sans rigidité"},
+      {t:"Marmelades et confitures", d:"6-8 g par kilo. Texture souple et tartinable"},
+      {t:"Inserts coulants maîtrisés", d:"8 g par kilo. Tenue mais reste coulant à la découpe"}
+    ],
+    pitfall: "Sans sucre + acide, la pectine ne gélifie pas correctement. Si purée pauvre en sucre, ajouter 20% de sucre et 5% de jus de citron. Ne pas mélanger la pectine pure dans le liquide chaud sans sucre (grumeaux garantis)",
+    score: {insert:5, confit:5, glacage:3, nappage:5, patedefruit:4, panacotta:2, mousse:1, assiette:3}
+  },
+  'pectine-jaune': {
+    name: "Pectine jaune (rapid set)",
+    origin: "Dérivée des fruits, HM (high methoxyl)",
+    tags: ["Thermo-irréversible","Vegan","Pâtes de fruits"],
+    textureType: "Ferme, tenue définitive, coupe propre",
+    thermoreversible: "Non, prise définitive. Impossible de la retravailler après refroidissement",
+    activation: "Mélanger à sec avec sucre, verser sur purée chaude, porter à 105-107°C (thermomètre obligatoire). Ajouter l'acide (citrique ou tartrique) en fin de cuisson",
+    dosage: "10 à 16 g par kilo pour pâtes de fruits. 12 g = standard. Obligatoirement accompagné de 4-6 g d'acide citrique en fin de cuisson",
+    usages: [
+      {t:"Pâtes de fruits", d:"12-16 g par kilo. LE seul usage vraiment pertinent"},
+      {t:"Confitures très fermes", d:"10-12 g par kilo, cuisson à 105°C"}
+    ],
+    pitfall: "Spécialisée pâtes de fruits. N'utilise PAS pour un insert ou un coulis, la texture sera trop dure. Sans acidité en fin de cuisson, la prise sera molle",
+    score: {insert:1, confit:2, glacage:0, nappage:1, patedefruit:5, panacotta:0, mousse:0, assiette:1}
+  },
+  'kappa': {
+    name: "Kappa (carraghénane)",
+    origin: "Algues rouges",
+    tags: ["Thermo-irréversible","Vegan","Texture ferme"],
+    textureType: "Ferme, tranche très nette, légèrement cassante",
+    thermoreversible: "Non. Refond au-delà de 85°C mais texture altérée après re-prise",
+    activation: "Mélanger à sec dans le sucre, incorporer dans liquide à 70°C minimum, porter à ébullition 1 min. Prise dès 50°C",
+    dosage: "3 à 8 g par litre. Texture très variable : 3 g = nappage / 5 g = flan / 8 g = tranche",
+    usages: [
+      {t:"Flans vegan", d:"5-6 g par litre de lait végétal. Texture flan pâtissier classique"},
+      {t:"Gelées démoulables", d:"7-8 g par litre pour tenir debout après démoulage"},
+      {t:"Substitut agar plus doux", d:"3-4 g par litre pour une prise moins cassante"}
+    ],
+    pitfall: "Sensible au sel (durcit), au calcium (renforce la prise). Ne pas utiliser avec des laits riches en calcium sans ajuster. Peu fondant en bouche, texture très technique",
+    score: {insert:3, confit:3, glacage:2, nappage:3, patedefruit:1, panacotta:4, mousse:2, assiette:4}
+  },
+  'iota': {
+    name: "Iota (carraghénane)",
+    origin: "Algues rouges",
+    tags: ["Semi-réversible","Vegan","Élastique"],
+    textureType: "Souple, élastique, légèrement rebondissante",
+    thermoreversible: "Partiellement. Refond à haute température mais la texture originale n'est pas retrouvée après re-prise",
+    activation: "Mélanger à sec dans le sucre, incorporer dans liquide à 70°C minimum, porter à frémissement. Prise à 40-45°C",
+    dosage: "5 à 15 g par litre selon la texture visée",
+    usages: [
+      {t:"Panna cotta vegan", d:"6-8 g par litre de crème végétale. Texture tremblotante souple"},
+      {t:"Gels souples et élastiques", d:"10-12 g par litre"},
+      {t:"Finition lactée", d:"5 g par litre pour un yaourt/flan léger"}
+    ],
+    pitfall: "Texture moins appréciée en pâtisserie classique (effet 'bonbon'). Nécessite du calcium pour bien gélifier (crème > lait végétal). Se combine bien avec la kappa pour texturer plus finement",
+    score: {insert:2, confit:2, glacage:2, nappage:3, patedefruit:1, panacotta:5, mousse:2, assiette:3}
+  },
+  'xanthane': {
+    name: "Gomme xanthane",
+    origin: "Fermentation bactérienne (Xanthomonas campestris)",
+    tags: ["Épaississant","Vegan","Ne gélifie pas"],
+    textureType: "Épaississante, non gélifiante. Donne du corps à froid comme à chaud",
+    thermoreversible: "Stable à toute température, pH et salinité. Ne fige pas",
+    activation: "Disperser directement dans le liquide froid ou chaud au mixeur plongeant. Action immédiate. Laisser reposer 30 min pour la pleine puissance",
+    dosage: "1 à 5 g par litre. Très puissante, dose au centigramme. 2 g/L = épaississement léger / 5 g/L = sauce nappante",
+    usages: [
+      {t:"Sauces et coulis", d:"2-3 g par litre. Épaississement sans cuisson"},
+      {t:"Stabilisation de crème", d:"0,5-1 g par litre. Empêche la séparation des coulis aux fruits"},
+      {t:"Texture de pâtes sans gluten", d:"3-5 g par kilo de farine. Remplace partiellement le gluten"},
+      {t:"Glaçages à froid", d:"2-3 g par litre pour tenue sans prise rigide"}
+    ],
+    pitfall: "N'est PAS un gélifiant. Ne fige pas un produit, seulement l'épaissit. Texture baveuse/filante si surdosée",
+    score: {insert:0, confit:1, glacage:2, nappage:4, patedefruit:0, panacotta:0, mousse:1, assiette:2}
+  }
+};
+
+function setMode(m) {
+  document.querySelectorAll('.mode-btn').forEach((b,i) => {
+    b.classList.toggle('active', (m==='fiches' && i===0) || (m==='assistant' && i===1));
+  });
+  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('mode-'+m).classList.add('active');
+}
+
+// Grille des fiches
+const grid = document.getElementById('gelifiantGrid');
+Object.keys(gelifiants).forEach(key => {
+  const g = gelifiants[key];
+  const btn = document.createElement('button');
+  btn.className = 'gel-btn';
+  btn.onclick = () => showFiche(key);
+  btn.innerHTML =
+    '<div class="gel-name">'+g.name+'</div>' +
+    '<div class="gel-origin">'+g.origin+'</div>' +
+    '<div>'+g.tags.map(t => '<span class="gel-tag">'+t+'</span>').join('')+'</div>';
+  grid.appendChild(btn);
+});
+
+function showFiche(key) {
+  document.querySelectorAll('.gel-btn').forEach((b,i) => {
+    b.classList.toggle('active', Object.keys(gelifiants)[i] === key);
+  });
+  const g = gelifiants[key];
+  const html =
+    '<div class="fiche-header">' +
+      '<div class="sub">'+g.origin+'</div>' +
+      '<h2>'+g.name+'</h2>' +
+    '</div>' +
+    '<div class="fiche-row"><div class="fiche-label">Texture</div><div class="fiche-value"><strong>'+g.textureType+'</strong></div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Thermoréversible</div><div class="fiche-value">'+g.thermoreversible+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Activation</div><div class="fiche-value">'+g.activation+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Dosage</div><div class="fiche-value">'+g.dosage+'</div></div>' +
+    '<div class="usages-list">' +
+      '<h3 style="font-family:Georgia,serif;font-size:18px;margin:18px 0 12px;color:#1A1410">Usages recommandés</h3>' +
+      g.usages.map(u => '<div class="usage-item"><div class="usage-dot"></div><div class="usage-body"><strong>'+u.t+'</strong><span>'+u.d+'</span></div></div>').join('') +
+    '</div>' +
+    '<div class="pitfall"><strong>Pièges à éviter</strong>'+g.pitfall+'</div>';
+
+  const fiche = document.getElementById('fiche');
+  fiche.innerHTML = html;
+  fiche.classList.add('visible');
+  fiche.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Gestion visuelle quiz
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(i => {
+        i.closest('.choix-card').classList.remove('active');
+      });
+    }
+    if (e.target.checked) {
+      e.target.closest('.choix-card').classList.add('active');
+    } else {
+      e.target.closest('.choix-card').classList.remove('active');
+    }
+  }
+});
+
+function assistant() {
+  const app = document.querySelector('input[name="app"]:checked').value;
+  const tex = document.querySelector('input[name="tex"]:checked').value;
+  const vegan = document.getElementById('vegan').checked;
+  const acide = document.getElementById('acide').checked;
+  const rechauffe = document.getElementById('rechauffe').checked;
+  const froid = document.getElementById('froid').checked;
+
+  // Score pour chaque gélifiant
+  const scores = {};
+  Object.keys(gelifiants).forEach(k => {
+    const g = gelifiants[k];
+    let s = g.score[app] || 0;
+
+    // Bonus texture
+    if (tex === 'fondante' && (k === 'gelatine' || k === 'pectine-nh')) s += 2;
+    if (tex === 'ferme' && (k === 'agar-agar' || k === 'kappa' || k === 'pectine-jaune')) s += 2;
+    if (tex === 'cassante' && (k === 'pectine-jaune' || k === 'kappa')) s += 2;
+    if (tex === 'souple' && (k === 'iota' || k === 'gelatine')) s += 2;
+    if (tex === 'nappante' && (k === 'pectine-nh' || k === 'xanthane')) s += 2;
+
+    // Contraintes éliminatoires
+    if (vegan && k === 'gelatine') s = 0;
+    if (rechauffe && (k === 'agar-agar' || k === 'pectine-jaune')) s -= 3;
+
+    // Bonus acide
+    if (acide && (k === 'pectine-nh' || k === 'pectine-jaune' || k === 'agar-agar')) s += 1;
+    if (acide && k === 'kappa') s -= 1;
+
+    // Froid congelé
+    if (froid && k === 'gelatine') s -= 1;
+    if (froid && k === 'pectine-nh') s += 1;
+
+    scores[k] = Math.max(0, s);
+  });
+
+  // Tri par score
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const winner = sorted[0][0];
+  const runnerUp = sorted.filter(([k,s]) => s > 0).slice(1, 3);
+
+  const g = gelifiants[winner];
+
+  // Construction du "why"
+  const reasons = [];
+  if (tex === 'ferme' && ['agar-agar','kappa','pectine-jaune'].includes(winner)) reasons.push("tu veux une texture ferme qui tranche net");
+  if (tex === 'fondante' && ['gelatine','pectine-nh'].includes(winner)) reasons.push("tu veux une texture fondante en bouche");
+  if (vegan && winner !== 'gelatine') reasons.push("tu as besoin d'un gélifiant vegan");
+  if (rechauffe && ['gelatine','pectine-nh','iota'].includes(winner)) reasons.push("tu vas retravailler à chaud après prise");
+  if (acide && ['pectine-nh','pectine-jaune','agar-agar'].includes(winner)) reasons.push("ta préparation est très acide, il faut un gélifiant qui tient face à ça");
+  if (app === 'patedefruit' && winner === 'pectine-jaune') reasons.push("c'est LE gélifiant spécialisé pâtes de fruits, les autres n'y arriveront pas");
+  if (app === 'glacage' && winner === 'gelatine') reasons.push("le glaçage miroir classique demande de la gélatine pour la brillance et la tenue");
+  if (app === 'insert' && winner === 'pectine-nh') reasons.push("un insert dans un entremet demande une pectine NH pour tenir sa place sans être trop dure");
+
+  const why = reasons.length > 0 ? "C'est le meilleur choix parce que " + reasons.join(", ") + "." : "Meilleur équilibre entre ton application, la texture visée et tes contraintes.";
+
+  document.getElementById('recoName').textContent = g.name;
+  document.getElementById('recoWhy').textContent = why;
+  document.getElementById('recoDose').textContent = g.dosage;
+  document.getElementById('recoActivation').textContent = g.activation;
+  document.getElementById('recoEviter').textContent = g.pitfall;
+
+  // Alternatives
+  const altDiv = document.getElementById('recoAlternatives');
+  if (runnerUp.length > 0) {
+    altDiv.innerHTML = '<h4 style="font-family:Courier New,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-top:24px;margin-bottom:10px">Alternatives à considérer</h4>' +
+      runnerUp.map(([k,s]) => {
+        const alt = gelifiants[k];
+        return '<div class="alt-card"><strong>'+alt.name+'</strong>'+alt.textureType+'</div>';
+      }).join('');
+  } else {
+    altDiv.innerHTML = '';
+  }
+
+  const reco = document.getElementById('reco');
+  reco.classList.add('visible');
+  reco.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Ouvre la première fiche par défaut
+showFiche('gelatine');
+</script>
+</body>
+</html>

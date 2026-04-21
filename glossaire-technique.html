@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossaire technique pâtisserie — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A;position:sticky;top:0;z-index:50}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1200px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.2}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:32px;max-width:680px;font-size:15px}
+
+  .search-wrap{position:sticky;top:65px;background:#FDF8F0;padding:16px 0;z-index:40;margin-bottom:16px;border-bottom:1px solid rgba(26,20,16,0.08)}
+  .search-input{width:100%;padding:16px 20px;font-size:16px;border:1px solid rgba(26,20,16,0.15);border-radius:4px;background:#fff;font-family:inherit;color:#1A1410;transition:border-color 0.2s}
+  .search-input:focus{outline:none;border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.1)}
+  .search-input::placeholder{color:rgba(26,20,16,0.4)}
+
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .filter-chip{padding:8px 14px;background:#fff;border:1px solid rgba(26,20,16,0.12);border-radius:20px;cursor:pointer;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.7);transition:all 0.15s}
+  .filter-chip:hover{border-color:#C8A04A;color:#1A1410}
+  .filter-chip.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+
+  .counter{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);margin-bottom:20px}
+  .counter strong{color:#C8A04A}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+  .card{background:#fff;border:1px solid rgba(26,20,16,0.08);border-radius:4px;padding:22px 24px;cursor:pointer;transition:all 0.2s;position:relative;display:flex;flex-direction:column}
+  .card:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,20,16,0.06)}
+  .card.expanded{border-color:#C8A04A;background:#fff}
+
+  .card-cat{display:inline-block;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:10px;align-self:flex-start}
+  .cat-techniques{background:rgba(200,160,74,0.15);color:#8B6A20}
+  .cat-textures{background:rgba(139,110,180,0.12);color:#5B3E8A}
+  .cat-materiel{background:rgba(95,130,160,0.12);color:#3E5F80}
+  .cat-cuissons-sucre{background:rgba(200,100,60,0.12);color:#8B3E20}
+  .cat-cuissons-creme{background:rgba(220,160,90,0.15);color:#8B5A20}
+  .cat-chocolat{background:rgba(120,80,50,0.15);color:#5C3A1E}
+  .cat-base{background:rgba(80,120,90,0.12);color:#2E5A3E}
+
+  .card-name{font-family:Georgia,serif;font-size:20px;color:#1A1410;font-weight:400;margin-bottom:8px;line-height:1.25}
+  .card-def{font-size:14px;color:rgba(26,20,16,0.78);line-height:1.6;margin-bottom:12px}
+
+  .card-tip{display:none;margin-top:auto;padding-top:12px;border-top:1px dashed rgba(200,160,74,0.4);font-size:13px;color:#8B6A20;font-style:italic}
+  .card.expanded .card-tip{display:block}
+  .card-tip strong{display:block;font-style:normal;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:4px;font-weight:400}
+
+  .card-tip-hint{margin-top:auto;padding-top:12px;border-top:1px solid rgba(200,160,74,0.2);font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;display:flex;align-items:center;gap:6px}
+  .card.expanded .card-tip-hint{display:none}
+  .card-tip-hint:before{content:"+";width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #C8A04A;border-radius:50%;font-size:11px;font-family:inherit}
+
+  .empty{text-align:center;padding:60px 20px;color:rgba(26,20,16,0.5);font-size:15px}
+  .empty strong{display:block;font-family:Georgia,serif;font-size:22px;color:#1A1410;margin-bottom:8px}
+
+  mark{background:rgba(200,160,74,0.25);color:inherit;padding:0 2px;border-radius:2px}
+
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr}
+    .search-wrap{top:63px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Glossaire technique</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>90+ mots de pâtisserie. <span class="accent">Leur vraie signification</span></h1>
+  <p class="intro">Tu lis une recette, tu tombes sur "macaronner jusqu'au ruban", "cuire à la nappe", "tempérer à 31". Tu fais semblant de savoir et tu rates. Ici, chaque terme explique le geste exact, la température précise et l'astuce qui change tout</p>
+
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput" placeholder="Cherche un mot (macaronner, ruban, pommade, chinois...)" autocomplete="off">
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="filter-chip active" data-cat="all">Toutes les catégories</button>
+    <button class="filter-chip" data-cat="techniques">Techniques</button>
+    <button class="filter-chip" data-cat="textures">Textures</button>
+    <button class="filter-chip" data-cat="materiel">Matériel</button>
+    <button class="filter-chip" data-cat="cuissons-sucre">Cuissons du sucre</button>
+    <button class="filter-chip" data-cat="cuissons-creme">Cuissons crème</button>
+    <button class="filter-chip" data-cat="chocolat">Chocolat</button>
+    <button class="filter-chip" data-cat="base">Termes de base</button>
+  </div>
+
+  <p class="counter"><strong id="counter">—</strong> <span id="counterTotal"></span></p>
+
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty" style="display:none">
+    <strong>Aucun terme trouvé</strong>
+    <span>Essaie un autre mot ou change de catégorie</span>
+  </div>
+</main>
+
+<script>
+const termes = [
+  // TECHNIQUES
+  {n:"Macaronner", c:"techniques", d:"Détendre les poudres amandes/sucre glace avec la meringue jusqu'au ruban brillant qui retombe en nappe continue. Le geste : racler le fond, remonter, écraser contre les bords, jusqu'à obtenir une pâte lisse et coulante", t:"Sur-macaronner = macarons plats qui s'étalent. Sous-macaronner = macarons bosselés avec des pointes. Arrête-toi quand le ruban forme un 8 qui s'efface en 10 secondes"},
+  {n:"Tourage", c:"techniques", d:"Plier beurre + détrempe en feuillets successifs pour la pâte feuilletée. Chaque tour multiplie le nombre de couches de beurre. Un tour simple = 3 couches, un tour double = 4 couches", t:"5 à 6 tours maximum, jamais 2 tours doubles consécutifs sans 30 min de repos au frais. Au-delà, le beurre fusionne avec la pâte et tu perds le feuilletage"},
+  {n:"Chemiser", c:"techniques", d:"Tapisser un moule de papier sulfurisé, de beurre-farine ou de sucre pour éviter que la préparation n'accroche. Indispensable pour génoises, entremets moulés, fonds de tarte", t:"Pour un cercle à entremet, utilise du rhodoïd : démoulage net sans abîmer les bords"},
+  {n:"Sabler", c:"techniques", d:"Frotter le beurre froid avec la farine entre les doigts jusqu'à obtenir une texture sableuse sans mottes grasses. Base des pâtes sablées et brisées", t:"Beurre sorti du frigo 10 min avant, pas pommade. Travaille vite pour ne pas le faire fondre — si tes mains sont chaudes, passe-les sous l'eau froide"},
+  {n:"Abaisser", c:"techniques", d:"Étaler une pâte au rouleau à l'épaisseur voulue. 2-3 mm pour une tarte, 4-5 mm pour un sablé breton, 8 mm pour un feuilletage inversé", t:"Toujours sur pâte bien reposée 2h au frais. Une pâte qui se rétracte = pâte pas assez reposée, le gluten tire"},
+  {n:"Fraser", c:"techniques", d:"Écraser la pâte avec la paume de main sur le plan de travail pour homogénéiser sans pétrir. Geste spécifique des pâtes sablées et brisées qui ne doivent jamais être pétries", t:"2 à 3 frasages suffisent. Au-delà, tu développes le gluten et ta pâte sera élastique au lieu d'être friable"},
+  {n:"Foncer", c:"techniques", d:"Placer une pâte étalée dans un moule ou un cercle en épousant le fond et les bords sans étirer. Piquer le fond à la fourchette pour éviter que la pâte ne gonfle à la cuisson", t:"Laisse dépasser 1 cm de pâte en haut du cercle, coupe au couteau après cuisson pour un bord net et droit"},
+  {n:"Crémer", c:"techniques", d:"Travailler le beurre pommade avec le sucre à la feuille du robot jusqu'à obtenir une texture mousseuse, claire et aérée. Base des cookies, cakes et sablés", t:"Beurre à 18-22°C obligatoire. Trop froid = grains qui ne se mélangent pas. Trop chaud = beurre qui se sépare et ne retient pas l'air"},
+  {n:"Blanchir", c:"techniques", d:"Fouetter jaunes d'œufs + sucre jusqu'à ce que le mélange devienne pâle, mousseux et double de volume. Préparation de la crème anglaise et de la pâtissière", t:"Incorpore le sucre dès que tu casses les jaunes. Si tu laisses les jaunes seuls avec le sucre sans fouetter, le sucre les brûle et fait des grumeaux"},
+  {n:"Monter", c:"techniques", d:"Battre au fouet pour incorporer de l'air dans une préparation : blancs en neige, crème montée, ganache montée, meringue", t:"Crème bien froide (4°C), cul-de-poule bien froid, fouet bien froid. Si la crème est tiède, elle ne montera jamais"},
+  {n:"Foisonner", c:"techniques", d:"Synonyme de monter, spécifique à la pâtisserie pro. Introduire de l'air dans un appareil pour créer une texture aérienne (ganache montée, mousse, crème au beurre)", t:"Pour une ganache montée, foisonne à vitesse moyenne, pas maximale. Vitesse max = trop d'air = texture granuleuse"},
+  {n:"Détendre", c:"techniques", d:"Mélanger une petite quantité de masse aérée (meringue, crème montée) dans une masse plus dense (pâte, chocolat fondu) pour égaliser les textures avant l'incorporation finale", t:"Détends toujours avec 1/3 de la masse aérée. Mélange énergiquement, c'est ce tiers qu'on sacrifie. Les 2/3 restants s'incorporent délicatement à la maryse"},
+  {n:"Pocher", c:"techniques", d:"Dresser une préparation (crème, ganache, meringue) à la poche à douille sur plaque, fond de tarte ou biscuit. Geste de base du dressage pro", t:"Remplis la poche aux 2/3 maximum. Chasse l'air en poussant la crème vers la douille avant de serrer le haut de la poche"},
+  {n:"Dresser", c:"techniques", d:"Former une préparation sur plaque ou dans un moule, à la poche, à la spatule ou à la cuillère. Macarons, choux, biscuit cuillère, éclairs se dressent", t:"Pour des macarons réguliers, imprime un gabarit sous ton papier sulfurisé : cercles de 3,5 cm espacés de 2 cm"},
+  {n:"Glacer", c:"techniques", d:"Couvrir un entremet ou une pâtisserie d'un glaçage (miroir chocolat, rocher, fondant, royal) pour la finition brillante ou opaque", t:"Glaçage miroir = 30-35°C sur entremet congelé. Trop chaud il coule, trop froid il fait des traces. Verse en une seule fois au centre, jamais en plusieurs passages"},
+  {n:"Napper", c:"techniques", d:"Recouvrir une pâtisserie d'une sauce ou d'un coulis en fine couche homogène. Plus liquide qu'un glaçage, plus généreux qu'un simple trait décoratif", t:"Un nappage doit être tiède (30°C) et légèrement sirupeux. Utilise un pinceau plat pour les fruits sur tarte, laisse couler pour les entremets"},
+  {n:"Tamiser", c:"techniques", d:"Passer les poudres (farine, sucre glace, cacao, amande) au tamis pour éliminer les grumeaux et aérer. Obligatoire pour macarons, génoise, biscuit", t:"Pour macarons, tamise 2 fois amande + sucre glace ensemble. 1 seul tamisage = risque de grumeaux qui font éclater les coques"},
+  {n:"Tempérer", c:"techniques", d:"Pré-cristalliser le chocolat en le chauffant puis refroidissant puis réchauffant selon une courbe précise. Indispensable pour brillance, cassant et contraction (démoulage facile)", t:"Courbe noir : 50°C puis 28°C puis 31°C. Lait : 45 puis 26 puis 29°C. Blanc : 40 puis 26 puis 28°C. Un degré d'écart et ton bonbon reste collé au moule"},
+  {n:"Tabler", c:"techniques", d:"Travailler le chocolat sur un marbre froid pour le refroidir rapidement pendant le tempérage. Technique traditionnelle remplacée en amateur par l'ensemencement", t:"Verse 2/3 du chocolat fondu sur le marbre, étale à la palette, ramène au centre avec la corne. Température cible = 27°C au toucher (lèvre fraîche)"},
+  {n:"Infuser", c:"techniques", d:"Parfumer un liquide (lait, crème, sirop) avec un ingrédient aromatique (vanille, thé, zeste, herbes) à chaud 10-20 min ou à froid 12h", t:"Infusion à froid = arômes plus fins, plus subtils. Vanille à froid dans la crème 24h = explosion de parfum, essaie pour les ganaches"},
+  {n:"Émulsionner", c:"techniques", d:"Mélanger deux phases non-miscibles (eau + gras) en une texture homogène stable. Ganache, mayonnaise, glaçage miroir sont des émulsions", t:"Pour une ganache lisse, émulsionne au mixeur plongeant sans faire de bulles : pointe immergée, pas de va-et-vient, laisse tourner au même endroit"},
+  {n:"Imbiber", c:"techniques", d:"Humidifier un biscuit (génoise, joconde, cuillère) avec un sirop parfumé pour apporter moelleux et arôme. Base des entremets et des layer cakes", t:"Sirop tiède à 35°C qui pénètre mieux qu'un sirop froid. Pinceau plat, quantité : 80-100 g de sirop par disque de biscuit de 20 cm"},
+  {n:"Chablonner", c:"techniques", d:"Enduire une surface (biscuit, bonbon) d'une fine couche de chocolat tempéré pour imperméabiliser ou créer un fond rigide. Empêche le biscuit de s'humidifier", t:"Chablon = 1-2 mm d'épaisseur max. Trop épais = base trop cassante à la découpe de l'entremet"},
+  {n:"Cristalliser", c:"techniques", d:"Phénomène de transition liquide à solide : sucre cuit qui fige, chocolat qui prend, gélatine qui gélifie. Dépend de la température et du temps de repos", t:"Un chocolat tempéré cristallise en 2-3 min sur feuille. Une ganache cristallise 12h minimum au frais avant foisonnement"},
+  {n:"Corner", c:"techniques", d:"Racler le fond et les parois d'un récipient avec une corne (triangle plastique) ou une maryse pour ne rien perdre de la préparation", t:"Geste quotidien du pâtissier pro. Cornage de la cuve après chaque étape = zéro perte + pas de zones non mélangées"},
+  {n:"Siroper", c:"techniques", d:"Imbiber un biscuit ou une brioche avec un sirop chaud ou froid. Synonyme d'imbiber, plus spécifique aux biscuits pour entremets", t:"Pour un baba au rhum, siropage à 40-50°C pendant 2-3 min de trempage. Le biscuit absorbe mieux tiède"},
+  {n:"Fleurer", c:"techniques", d:"Saupoudrer de farine un plan de travail, une pâte ou un moule pour empêcher l'adhérence. Geste plus léger que fariner", t:"Fleurage au tamis ou passoire fine = couche homogène ultra-fine. Trop de farine = pâte qui se dessèche et durcit à la cuisson"},
+  {n:"Bouler", c:"techniques", d:"Former une boule de pâte lisse et régulière en la roulant entre les paumes ou sur le plan de travail. Préparatoire au foncage ou au repos", t:"Bouler toujours avant de filmer et reposer. Pâte en boule = pâte qui se détend uniformément et ne se déforme pas à l'étalage"},
+  {n:"Tourner", c:"techniques", d:"Retourner la pâte feuilletée après un tour pour répartir le beurre uniformément. À chaque tour, on pivote la pâte de 90°", t:"Marque tes tours avec l'empreinte des doigts (1 doigt = 1 tour). Tu sauras toujours où tu en es même après une pause au frigo"},
+  {n:"Ensemencer", c:"techniques", d:"Méthode de tempérage du chocolat en ajoutant 1/3 de chocolat non fondu dans le chocolat chaud pour provoquer la bonne cristallisation. Méthode la plus simple en amateur", t:"Fais fondre 2/3 du chocolat à 50°C, ajoute le dernier tiers en pistoles, mixe, laisse descendre à 31°C. Tempérage sans marbre"},
+
+  // TEXTURES
+  {n:"Bec d'oiseau", c:"textures", d:"Texture idéale des blancs montés ou de la crème montée qui forme une pointe ferme qui se replie au bout du fouet comme un bec. Stade parfait entre mou et ferme", t:"Si la pointe se casse = trop montée, risque de grainer. Si elle retombe à plat = pas assez montée. Le bec doit tenir 3 secondes puis s'incliner"},
+  {n:"Ruban", c:"textures", d:"Texture d'un mélange œufs + sucre blanchis qui, quand tu le soulèves au fouet, retombe en se pliant en ruban continu sans se rompre. Indicateur clé pour génoise, biscuit", t:"Ruban qui tient 10 secondes à la surface avant de s'enfoncer = parfait. S'il s'efface en 3 sec = sous-monté. S'il reste rigide = trop monté, ton biscuit sera sec"},
+  {n:"À la nappe", c:"textures", d:"Texture d'une crème anglaise cuite à 82-85°C : elle nappe une spatule en bois et garde la trace nette quand tu traces un sillon avec le doigt", t:"Si le sillon se referme = crème pas assez cuite (70-78°C). Si tu vois des grumeaux = tu as dépassé 85°C, les œufs ont coagulé"},
+  {n:"Pommade", c:"textures", d:"Texture d'un beurre à 18-22°C qui se travaille facilement à la feuille ou à la spatule sans couler. Base de la crème au beurre, des sablés, des crémages", t:"Beurre qui garde la forme du doigt quand tu appuies sans s'écraser = pommade parfaite. Ressort = encore trop ferme. Marque trop profonde = trop mou"},
+  {n:"Noisette (beurre)", c:"textures", d:"Beurre fondu chauffé jusqu'à coloration blonde et parfum de noisette grillée. Les matières solides du lait caramélisent au fond de la casserole à 150°C environ", t:"Dès que tu sens l'odeur de noisette grillée, retire du feu immédiatement et verse dans un récipient froid. 10 secondes de trop = beurre brûlé amer"},
+
+  // CUISSONS SUCRE
+  {n:"Nappé (sucre)", c:"cuissons-sucre", d:"Stade de cuisson du sucre à 100-104°C : sirop qui nappe l'écumoire d'une fine pellicule. Premier stade, utilisé pour les sirops légers et punchs", t:"À ce stade, le sucre ne cristallise pas encore au refroidissement. Pour glaçages fruits, sirop à 104°C"},
+  {n:"Filé", c:"cuissons-sucre", d:"Sucre cuit à 105-107°C : forme un fil fin qui se casse entre pouce et index mouillés. Utilisé pour confitures classiques", t:"Test du fil = plonge une cuillère dans sucre chaud, laisse couler entre 2 doigts mouillés. Si fil de 2-3 cm qui casse = tu y es"},
+  {n:"Petit perlé", c:"cuissons-sucre", d:"Sucre cuit à 108-110°C : petites perles régulières apparaissent à la surface. Utilisé pour glaces de cuisine et fondants", t:"Les bulles deviennent rondes et brillantes comme des perles. Ne tourne pas avec la cuillère, laisse cuire tranquille"},
+  {n:"Grand perlé", c:"cuissons-sucre", d:"Sucre cuit à 111-115°C : grosses perles régulières en surface. Stade intermédiaire vers le boulé", t:"À ce stade, un fil tiré à la cuillère forme un filament épais qui peut atteindre 20 cm sans casser"},
+  {n:"Petit boulé", c:"cuissons-sucre", d:"Sucre cuit à 116-125°C : plongé dans l'eau froide, forme une boule molle qui s'écrase entre les doigts. Meringue italienne à 118-121°C", t:"LE stade clé du pâtissier. À 118°C, verse en filet sur les blancs qui moussent. À 121°C tu as la meringue italienne brillante qui tient 3 jours"},
+  {n:"Grand boulé", c:"cuissons-sucre", d:"Sucre cuit à 126-135°C : boule ferme dans l'eau froide. Utilisé pour crèmes au beurre à la meringue italienne renforcée et nougats mous", t:"Pour bombe glacée parisienne, sirop à 130°C versé sur jaunes. Donne un pâte à bombe aérienne et stable"},
+  {n:"Petit cassé", c:"cuissons-sucre", d:"Sucre cuit à 136-140°C : dans l'eau froide, se casse entre les dents en étant encore souple. Base des nougats durs", t:"À ce stade, la couleur commence à passer du transparent à légèrement jaune. Surveille, 5°C de plus et tu es au grand cassé"},
+  {n:"Grand cassé", c:"cuissons-sucre", d:"Sucre cuit à 146-155°C : se casse net comme du verre dans l'eau froide. Base des sucres tirés, des nids de sucre, des décors soufflés", t:"Au-delà de 150°C, le sucre commence à jaunir. Stoppe la cuisson en plongeant la casserole 3 secondes dans l'eau froide"},
+  {n:"Caramel", c:"cuissons-sucre", d:"Sucre cuit à 155-180°C : ambré à brun. Plus on pousse, plus c'est foncé et amer. Caramel blond 160°C, ambré 170°C, brun 180°C", t:"Au-delà de 180°C le caramel devient amer et acre. Pour un caramel au beurre salé : 170°C puis décuis avec crème chaude + fleur de sel"},
+
+  // CUISSONS CREME
+  {n:"À la nappe (cuisson)", c:"cuissons-creme", d:"Cuisson d'une crème anglaise à 82-85°C jusqu'à ce qu'elle nappe la spatule. La base des crèmes anglaises, des crémeux, des bases à entremet", t:"Thermomètre obligatoire. Sans thermomètre, test du sillon : trace avec le doigt sur la spatule, si ça reste net = c'est prêt"},
+  {n:"Frémissement", c:"cuissons-creme", d:"Liquide qui frémit à 85-95°C environ : petites bulles sur les bords, pas de gros bouillonnement. Stade idéal pour infusions et pochages délicats", t:"À ce stade, une crème infusée conserve ses arômes volatils. Ébullition franche = tu perds 30% des arômes fins"},
+  {n:"Ébullition", c:"cuissons-creme", d:"Liquide à 100°C, grosses bulles qui remontent. Obligatoire pour pectine NH, agar-agar, crème pâtissière", t:"Un liquide qui bout doit bouillir au centre pas juste sur les bords. Remue au fouet pour homogénéiser la température"},
+  {n:"Première ébullition", c:"cuissons-creme", d:"Moment précis où le liquide commence à bouillir franchement avec bulles au centre. Signal pour ajouter un appareil ou verser sur un autre élément", t:"Pour crème pâtissière : verse la crème en première ébullition sur les jaunes blanchis, puis remets tout sur feu moyen"},
+  {n:"Flasher", c:"cuissons-creme", d:"Chauffer très rapidement à 85°C pour pasteuriser sans dénaturer. Technique pro pour les ganaches et les bases crémeuses", t:"Flash à 85°C tue 99% des germes sans cuire les protéines. Utile pour les recettes longue conservation"},
+  {n:"Cuisson crème pâtissière", c:"cuissons-creme", d:"Après incorporation des jaunes et amidon, cuire 2 min minimum après première ébullition pour gélatiniser complètement l'amidon et éviter le goût de farine", t:"Moins de 2 min = crème qui a un goût de farine crue. Plus de 3 min = tu risques de trop épaissir et de faire des grumeaux d'amidon"},
+
+  // MATERIEL
+  {n:"Chinois", c:"materiel", d:"Passoire conique à maille fine pour filtrer crèmes, sirops, coulis. Élimine grumeaux, morceaux de gousse de vanille, pépins de fruits", t:"Chinois étamine (tissu fin) pour les crèmes anglaises = lisse absolue. Chinois métal pour sirops et coulis"},
+  {n:"Maryse", c:"materiel", d:"Spatule souple en silicone avec manche, pour incorporer délicatement sans casser les mousses et les crèmes montées", t:"Maryse souple = pour incorporer. Spatule rigide = pour mélanger et corner. Les 2 sont indispensables"},
+  {n:"Corne", c:"materiel", d:"Triangle rigide en plastique pour corner, étaler, décoller pâtes et préparations. Outil d'économie du pâtissier, rien ne reste dans la cuve", t:"Corne arrondie d'un côté pour corner, côté droit pour couper/portionner. 2€ l'unité, acheté une fois, tu ne peux plus t'en passer"},
+  {n:"Spatule coudée", c:"materiel", d:"Spatule lame fine en inox avec un coude juste avant le manche. Pour lisser glaçages, ganaches, entremets avec précision sans se tacher les doigts", t:"Taille 15-20 cm pour entremets individuels, 25-30 cm pour grands. Toujours mouillée à l'eau chaude pour un lissage miroir"},
+  {n:"Palette", c:"materiel", d:"Spatule lisse en inox sans coude, droite du manche à la lame. Pour lissage ultra-fin, étalage de ganaches sur biscuit, tempérage", t:"Palette triangulaire pour bord de plaque, palette longue pour lisser entremets. Complémentaire de la spatule coudée"},
+  {n:"Poche à douille", c:"materiel", d:"Cône en plastique ou tissu pour dresser crèmes, ganaches, pâtes à choux. Jetable ou réutilisable selon préférence", t:"Poches jetables polyéthylène 46 cm = standard pro. Découpe la pointe SELON le diamètre de ta douille, pas plus large sinon fuite"},
+  {n:"Douille", c:"materiel", d:"Embout en inox qui se place dans la poche : lisse (ronde), cannelée (étoilée), Saint-Honoré (V), Petit-Four (fine). Détermine la forme du dressage", t:"Douille 10 mm lisse = polyvalente (macarons, choux, ganache). Cannelée 8 dents = roses de meringue. Saint-Honoré = décor de tartes pro"},
+  {n:"Silpat", c:"materiel", d:"Tapis de cuisson en silicone renforcé de fibre de verre, antiadhésif, réutilisable. Remplace le papier sulfurisé pour macarons, tuiles, nougats", t:"Silpat = base plus humide que papier sulfu = macarons plus larges, collerettes plus nettes. Investis dans un 40x30 cm pour ton four"},
+  {n:"Tapis relief", c:"materiel", d:"Tapis silicone avec motifs en relief qui s'impriment sur le biscuit (joconde, dacquoise) à la cuisson. Donne un visuel pro aux entremets", t:"Étale la pâte sur le tapis AVANT cuisson, lisse à la spatule. Le relief reste marqué après démoulage à froid"},
+  {n:"Thermomètre à sonde", c:"materiel", d:"Thermomètre à pointe métallique reliée à un boîtier digital. Indispensable pour tempérage, sucres cuits, crème anglaise, ganaches", t:"Thermomètre 30-250°C minimum. Laser infrarouge = imprécis pour crèmes (mesure surface). Sonde immergée = la seule fiable"},
+  {n:"Guitare", c:"materiel", d:"Cadre à fils tendus parallèles, espacés de 1 à 3 cm, pour découper plaques de ganache, pâte d'amande, nougat en bandes parfaitement régulières", t:"Passe la préparation bien prise (4h au frais) dans la guitare en une seule pression. Nettoie les fils à l'alcool entre chaque coupe"},
+  {n:"Cercle à entremet", c:"materiel", d:"Anneau inox sans fond de hauteur 4,5-5 cm pour monter des entremets. Diamètres 16, 18, 20, 24 cm courants. Cuisson et montage dedans", t:"Chemise toujours avec rhodoïd à l'intérieur = démoulage parfait sans décoller l'entremet. Cercle directement = bords abîmés"},
+  {n:"Cadre", c:"materiel", d:"Équivalent rectangulaire ou carré du cercle à entremet. Pour entremets en parts multiples, pavés, bûches droites", t:"Cadre 40x30 cm = standard pro pour couper 12-16 parts. Place sur plaque avec rhodoïd en fond pour démoulage net"},
+  {n:"Tamis", c:"materiel", d:"Passoire fine pour alléger et dégrumeler les poudres : farine, sucre glace, cacao, poudre d'amande", t:"Maille de 0,5 à 1 mm. Pour tant pour tant macarons, passe-le 2 fois dans un tamis 0,8 mm"},
+  {n:"Microplane", c:"materiel", d:"Râpe très fine à lames chimiques, pour zester agrumes sans prendre la partie blanche amère, râper muscade, gingembre, chocolat", t:"Investis dans une Microplane Zester, pas une râpe classique. La différence de finesse change complètement le rendu d'un zeste"},
+  {n:"Robot pâtissier", c:"materiel", d:"Robot planétaire avec 3 accessoires : fouet (blancs, crème), feuille (crémage, pâtes sablées), crochet (pâtes levées, brioches)", t:"KitchenAid Artisan 4,8 L = minimum recommandé. Kenwood Chef XL si tu fais de grosses quantités. Le moteur fait la différence sur 10 ans"},
+  {n:"Cul-de-poule", c:"materiel", d:"Bol inox à fond arrondi, bord étroit, pour monter blancs, crèmes, mélanger. Forme qui permet au fouet d'atteindre toute la masse", t:"Diamètre 22-26 cm pour 4-6 œufs. Inox garde la fraîcheur = meilleur foisonnement. Évite plastique qui retient les graisses"},
+  {n:"Rhodoïd", c:"materiel", d:"Bande de plastique transparente rigide, pour chemiser cercles et cadres à entremet. Démoulage parfait et visuel net", t:"Hauteur 4,5 cm pour entremet standard, 6 cm pour pièce haute. Rouleau 50 m dure 1 an. À couper à la longueur du cercle + 2 cm"},
+  {n:"Mixeur plongeant", c:"materiel", d:"Mixeur vertical à tête rotative, pour émulsionner ganaches, glaçages miroir, coulis sans incorporer d'air. Le meilleur allié pour une ganache lisse", t:"Pointe immergée complètement, jamais de mouvement de haut en bas. Fais tourner au même endroit 30 sec, déplace en restant immergé"},
+  {n:"Balance de précision", c:"materiel", d:"Balance au 0,1 g près pour peser les ingrédients précis en petite quantité : gélatine, agar, pectine, levure chimique", t:"Dose à 0,1 g = obligatoire pour gélifiants et additifs. Une balance classique 1 g de précision te fera rater tes gels"},
+
+  // CHOCOLAT
+  {n:"Tempérage", c:"chocolat", d:"Processus de cristallisation contrôlée du beurre de cacao selon une courbe de température précise : fonte, refroidissement, remontée. Obtenir brillance, cassant, contraction", t:"Tempérage raté = chocolat mat, blanchi, qui reste collé au moule. Tempérage réussi = brillance miroir, cassant net, démoulage auto"},
+  {n:"Courbe (chocolat)", c:"chocolat", d:"Les 3 températures à respecter pour tempérer selon le type de chocolat : noir 50-28-31°C, lait 45-26-29°C, blanc 40-26-28°C", t:"Mémorise une seule courbe : celle du chocolat que tu utilises le plus. Affiche-la sur le frigo, tu la consulteras à chaque tempérage"},
+  {n:"Pistoles", c:"chocolat", d:"Pastilles de chocolat de couverture prêtes à l'emploi, format plat pour fondre rapidement et régulièrement. Alternative aux tablettes à casser", t:"Pistoles Valrhona, Callebaut, Barry : qualité pro sans casser de tablette. Pratiques pour ensemencement = dose précise facile"},
+  {n:"Couverture", c:"chocolat", d:"Chocolat avec minimum 31% de beurre de cacao (contre 20% pour un chocolat de dégustation). Fluidité optimale pour enrobage, moulage, tempérage", t:"Regarde toujours le pourcentage de beurre de cacao sur l'étiquette pro. En-dessous de 31%, tu ne pourras pas tempérer correctement"},
+  {n:"Ensemencement", c:"chocolat", d:"Méthode de tempérage amateur : faire fondre 2/3 du chocolat à 50°C, ajouter le dernier tiers en pistoles non fondues pour déclencher la bonne cristallisation", t:"Méthode la plus simple pour démarrer. Demande juste un thermomètre. 3 minutes d'ensemencement = tempérage propre sans marbre"},
+  {n:"Précristallisation", c:"chocolat", d:"Synonyme de tempérage. Terme plus technique qui décrit précisément l'action : amener le beurre de cacao dans sa forme cristalline stable avant utilisation", t:"Sans précristallisation, ton chocolat reste tempéré mais les cristaux sont instables = blanchiment en 3 jours"},
+  {n:"Cristallisation bêta", c:"chocolat", d:"La bonne forme cristalline du beurre de cacao (5 sur 6 formes possibles). Donne cassant net, brillance, contraction qui permet le démoulage auto", t:"Les cristaux bêta fondent à 34°C. Si ton chocolat fond plus bas (25-30°C au toucher), il a d'autres cristaux = tempérage raté, recommence"},
+  {n:"Blanchiment (fat bloom)", c:"chocolat", d:"Voile blanc ou marbrure sur le chocolat causée par migration du beurre de cacao en surface. Dû à un mauvais tempérage ou à un choc thermique", t:"Blanchiment = défaut visuel pas sanitaire. Se mange mais fait tache sur une vitrine. Prévention : tempérage propre + stockage à 16-18°C stable"},
+
+  // TERMES DE BASE
+  {n:"Appareil", c:"base", d:"Préparation de base composée de plusieurs éléments mélangés : appareil à biscuit, appareil à flan, appareil à soufflé. Terme générique du pâtissier", t:"Appareil = mélange avant cuisson. Masse = après cuisson/foisonnement. Terminologie pro à acquérir pour lire les recettes techniques"},
+  {n:"Ganache", c:"base", d:"Émulsion de chocolat et de crème chaude, parfois enrichie de beurre. Base universelle : nappage, fourrage, bonbons, glaçage. Ratio classique 1:1 chocolat/crème", t:"Ganache qui tranche = émulsion cassée. Récupère au mixeur plongeant + 1 cuillère de crème chaude. Texture retrouvée en 30 secondes"},
+  {n:"Ganache montée", c:"base", d:"Ganache refroidie 12h minimum puis foisonnée au fouet pour incorporer de l'air. Texture aérienne idéale pour fourrer macarons, choux, entremets", t:"Ratio classique 1:2 (chocolat:crème). 1:3 pour ganache montée légère type chantilly. Surtout pas moins de 12h de repos avant foisonnement"},
+  {n:"Crémeux", c:"base", d:"Émulsion de crème anglaise et de chocolat, avec ou sans gélatine. Texture plus dense qu'une ganache, plus fondante qu'un flan. Utilisé en insert d'entremet", t:"Crémeux chocolat = 500 g crème anglaise + 180 g chocolat noir + 1,5 g gélatine. Prise au frais 4h, utilisable en insert ou en verrine"},
+  {n:"Namelaka", c:"base", d:"Crémeux japonais à base de lait, crème, chocolat et gélatine. Texture ultra-fondante, crémeuse, presque mousseuse. Plus légère qu'un crémeux classique", t:"Namelaka = 200 g lait + 4 g gélatine + 340 g chocolat blanc + 400 g crème froide. 12h de repos obligatoire avant utilisation"},
+  {n:"Bavaroise", c:"base", d:"Crème anglaise enrichie de gélatine et allégée à la crème montée. Base des entremets traditionnels, texture fondante-ferme qui tranche net", t:"Bavaroise = 500 g anglaise + 12-16 g gélatine + 500 g crème montée. Incorpore la crème quand l'anglaise est à 25-28°C, pas plus chaud sinon ça retombe"},
+  {n:"Praliné", c:"base", d:"Pâte obtenue en mixant des fruits à coque caramélisés (amande, noisette). 50% fruits + 50% sucre caramélisé, puis mixé jusqu'à pâte fluide et lisse", t:"Mixage long 15-20 min au robot type Magimix. Praliné fait maison = 10x meilleur qu'industriel. Conservation 3 mois au frais dans pot hermétique"},
+  {n:"Pralin", c:"base", d:"Fruits à coque caramélisés et concassés, non mixés. Texture croustillante, utilisé en décor ou en inclusion dans biscuits, entremets, glaces", t:"Pralin = texture, praliné = pâte. Ne confonds pas les 2, les recettes ne sont pas interchangeables"},
+  {n:"Sirop de base", c:"base", d:"Mélange eau + sucre cuit. Densité mesurée en °brix ou °baumé. Sirop 30°B = 1 kg sucre + 1 L eau, base des sorbets et imbibages", t:"Sirop simple 30°B (1:1) pour imbibages. Sirop plus concentré 35°B (1,2:1) pour sorbets. Mesure à l'hydromètre ou au réfractomètre"},
+  {n:"Brix", c:"base", d:"Unité de mesure du taux de sucre dans un liquide. 1°Brix = 1 g de sucre pour 100 g de solution. Les sorbets tournent autour de 28-32°Brix", t:"Réfractomètre digital = 30€ sur Amazon. Indispensable si tu fais des sorbets maison, tu ajustes le sucre précisément pour une texture parfaite"},
+  {n:"Dacquoise", c:"base", d:"Biscuit léger à base de meringue française et de poudre d'amande (ou noisette). Texture moelleuse, très utilisé en base d'entremet", t:"Ratio classique : 100 g blancs + 80 g sucre + 80 g tant pour tant amande. Cuisson 170°C 12-15 min sur silpat"},
+  {n:"Joconde", c:"base", d:"Biscuit fin moelleux à base d'œufs entiers, tant pour tant amande et un peu de farine. Utilisé en roulage ou en plaque pour entremets", t:"Plaque de joconde cuite 6-7 min à 230°C = biscuit souple qui se roule ou se découpe. Base des opéras et roulés"}
+];
+
+// Render
+const grid = document.getElementById('grid');
+const empty = document.getElementById('empty');
+const counter = document.getElementById('counter');
+const counterTotal = document.getElementById('counterTotal');
+const searchInput = document.getElementById('searchInput');
+const filters = document.getElementById('filters');
+
+let activeCat = 'all';
+let activeSearch = '';
+
+function catLabel(c) {
+  const m = {techniques:'Technique', textures:'Texture', materiel:'Matériel', 'cuissons-sucre':'Cuisson du sucre', 'cuissons-creme':'Cuisson crème', chocolat:'Chocolat', base:'Terme de base'};
+  return m[c] || c;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function highlight(text, q) {
+  if (!q) return escapeHtml(text);
+  const escaped = escapeHtml(text);
+  const escQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return escaped.replace(new RegExp('('+escQ+')', 'gi'), '<mark>$1</mark>');
+}
+
+function render() {
+  const q = activeSearch.trim().toLowerCase();
+  const filtered = termes.filter(t => {
+    if (activeCat !== 'all' && t.c !== activeCat) return false;
+    if (!q) return true;
+    return (t.n.toLowerCase().includes(q) || t.d.toLowerCase().includes(q) || t.t.toLowerCase().includes(q));
+  });
+
+  if (filtered.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+  } else {
+    grid.style.display = 'grid';
+    empty.style.display = 'none';
+  }
+
+  grid.innerHTML = filtered.map((t,i) => `
+    <div class="card" data-idx="${i}" onclick="this.classList.toggle('expanded')">
+      <span class="card-cat cat-${t.c}">${catLabel(t.c)}</span>
+      <div class="card-name">${highlight(t.n, q)}</div>
+      <div class="card-def">${highlight(t.d, q)}</div>
+      <div class="card-tip-hint">Astuce de pro</div>
+      <div class="card-tip"><strong>Astuce de pro</strong>${highlight(t.t, q)}</div>
+    </div>
+  `).join('');
+
+  counter.textContent = filtered.length;
+  counterTotal.textContent = filtered.length === termes.length ? `termes au total` : `termes sur ${termes.length}`;
+}
+
+searchInput.addEventListener('input', e => {
+  activeSearch = e.target.value;
+  render();
+});
+
+filters.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-chip');
+  if (!btn) return;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCat = btn.dataset.cat;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>

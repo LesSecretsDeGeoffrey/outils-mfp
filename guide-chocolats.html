@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide des chocolats — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+  .mode-btn{flex:1;min-width:180px;padding:14px 20px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .mode-section{display:none}
+  .mode-section.active{display:block}
+
+  /* Mode 1 : fiches par chocolat */
+  .choco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+  .choco-btn{background:#fff;border:1px solid rgba(26,20,16,0.12);border-radius:4px;padding:18px 20px;cursor:pointer;text-align:left;transition:all 0.2s;font-family:inherit}
+  .choco-btn:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,0.06)}
+  .choco-btn.active{border-color:#C8A04A;background:rgba(200,160,74,0.08)}
+  .choco-name{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .choco-origin{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:10px}
+  .choco-tag{display:inline-block;font-size:11px;color:rgba(26,20,16,0.65);padding:3px 8px;background:rgba(26,20,16,0.05);border-radius:2px;margin:2px 4px 2px 0}
+
+  .fiche{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:24px;display:none}
+  .fiche.visible{display:block}
+  .fiche-header{border-bottom:2px solid #C8A04A;padding-bottom:20px;margin-bottom:24px}
+  .fiche-header h2{font-family:Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:400;color:#1A1410;margin-bottom:4px}
+  .fiche-header .sub{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A}
+  .fiche-row{display:grid;grid-template-columns:180px 1fr;gap:20px;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  @media (max-width:600px){.fiche-row{grid-template-columns:1fr;gap:4px}}
+  .fiche-row:last-of-type{border-bottom:none}
+  .fiche-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;padding-top:2px}
+  .fiche-value{font-size:14px;color:#1A1410;line-height:1.6}
+  .fiche-value strong{color:#1A1410;font-family:Georgia,serif}
+  .temp-curve{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+  .temp-step{background:rgba(200,160,74,0.1);border:1px solid rgba(200,160,74,0.3);padding:8px 12px;border-radius:3px;font-family:Georgia,serif;font-size:15px;color:#1A1410;min-width:80px;text-align:center}
+  .temp-step .temp-lab{display:block;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;color:#C8A04A;margin-bottom:2px;text-transform:uppercase}
+  .fluidity{display:flex;gap:4px;align-items:center}
+  .drop{width:14px;height:18px;background:#C8A04A;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 18'%3E%3Cpath d='M7 0C4 5 0 9 0 13a7 7 0 0 0 14 0C14 9 10 5 7 0Z'/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 18'%3E%3Cpath d='M7 0C4 5 0 9 0 13a7 7 0 0 0 14 0C14 9 10 5 7 0Z'/%3E%3C/svg%3E") no-repeat center/contain}
+  .drop.off{background:rgba(26,20,16,0.15)}
+  .fluidity-note{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(26,20,16,0.6);margin-left:8px;text-transform:uppercase}
+  .usages-list{margin-top:20px}
+  .usage-item{display:flex;gap:14px;padding:12px 0;align-items:flex-start;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .usage-item:last-child{border-bottom:none}
+  .usage-dot{width:6px;height:6px;background:#C8A04A;border-radius:50%;flex-shrink:0;margin-top:8px}
+  .usage-body{flex:1;font-size:14px}
+  .usage-body strong{display:block;margin-bottom:2px;color:#1A1410}
+  .usage-body span{color:rgba(26,20,16,0.7)}
+  .pitfall{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#8B5A20}
+  .pitfall strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+
+  /* Mode 2 : assistant */
+  .quiz-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .quiz-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  .choix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .choix-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;font-size:14px}
+  .choix-card:hover{border-color:#C8A04A}
+  .choix-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .choix-card input{accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+
+  .reco{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,36px);margin-top:24px;display:none;border-top:3px solid #C8A04A}
+  .reco.visible{display:block}
+  .reco .label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .reco h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);color:#C8A04A;margin-bottom:16px;font-weight:400}
+  .reco .why{font-size:15px;color:rgba(253,248,240,0.85);margin-bottom:24px;line-height:1.65}
+  .reco-block{background:rgba(253,248,240,0.05);padding:18px 20px;border-radius:3px;margin-bottom:12px;border-left:3px solid #C8A04A}
+  .reco-block h4{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .reco-block p{font-size:14px;color:#FDF8F0;line-height:1.55}
+  .alt-card{background:rgba(253,248,240,0.03);padding:14px 18px;border-radius:3px;margin-top:10px;font-size:13px;color:rgba(253,248,240,0.8)}
+  .alt-card strong{color:#C8A04A;display:block;margin-bottom:2px;font-family:Georgia,serif}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Guide des chocolats</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Noir, lait, blond, blanc, Ruby. <span class="accent">Le bon chocolat pour le bon usage</span></h1>
+  <p class="intro">12 chocolats référencés, 12 dosages, 12 courbes de tempérage. Consulte la fiche complète d'un chocolat ou laisse-moi t'orienter selon ton application, ton profil de goût et tes contraintes. Fini les ganaches qui tranchent et les décors qui blanchissent</p>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('fiches')">Les fiches par chocolat</button>
+    <button class="mode-btn" onclick="setMode('assistant')">Aide-moi à choisir</button>
+  </div>
+
+  <!-- Mode 1 : Fiches -->
+  <div class="mode-section active" id="mode-fiches">
+    <div class="choco-grid" id="chocoGrid"></div>
+    <div class="fiche" id="fiche"></div>
+  </div>
+
+  <!-- Mode 2 : Assistant -->
+  <div class="mode-section" id="mode-assistant">
+    <div class="quiz-section">
+      <h3>1. Ton application</h3>
+      <div class="choix-grid" id="appGrid">
+        <label class="choix-card active"><input type="radio" name="app" value="ganache-fourrage" checked><span>Ganache fourrage</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="ganache-montee"><span>Ganache montée</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="mousse"><span>Mousse au chocolat</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="glacage"><span>Glaçage miroir</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="enrobage"><span>Enrobage bonbon</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="decor"><span>Décor tempéré</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="insert"><span>Insert crémeux</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="biscuit"><span>Biscuit (brownie, cake)</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>2. Profil de goût recherché</h3>
+      <div class="choix-grid">
+        <label class="choix-card active"><input type="radio" name="gout" value="intense" checked><span>Cacao intense, amer</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="equilibre"><span>Équilibré, cacao franc</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="doux"><span>Doux, rond</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="lacte"><span>Lacté, gourmand</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="caramelise"><span>Caramélisé, biscuité</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="fruite"><span>Fruité, acidulé</span></label>
+        <label class="choix-card"><input type="radio" name="gout" value="neutre"><span>Sans arôme fort (support)</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>3. Tes contraintes</h3>
+      <div class="choix-grid">
+        <label class="choix-card"><input type="checkbox" id="debutant"><span>Débutant, pas de tempérage</span></label>
+        <label class="choix-card"><input type="checkbox" id="supermarche"><span>Dispo en supermarché</span></label>
+        <label class="choix-card"><input type="checkbox" id="pro"><span>Qualité pro recherchée</span></label>
+        <label class="choix-card"><input type="checkbox" id="budget"><span>Budget serré</span></label>
+      </div>
+    </div>
+
+    <button class="calculate-btn" onclick="assistant()">Me recommander le chocolat</button>
+
+    <div class="reco" id="reco">
+      <p class="label" id="recoLabel">Recommandation</p>
+      <h2 id="recoName">—</h2>
+      <p class="why" id="recoWhy">—</p>
+
+      <div class="reco-block">
+        <h4>Dosage pour ton usage</h4>
+        <p id="recoDose">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>Courbe de tempérage</h4>
+        <p id="recoTemperage">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>À éviter</h4>
+        <p id="recoEviter">—</p>
+      </div>
+
+      <div id="recoAlternatives"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const chocolats = {
+  'noir-100': {
+    name: "Noir 100% extra-amer",
+    origin: "Valrhona Noir extra-amer",
+    tags: ["Noir","100% cacao","Amer puissant"],
+    cacao: "100% cacao",
+    mg: "~52% matière grasse",
+    fluidity: 2,
+    fluidityLabel: "Peu fluide, pâteux",
+    temperage: {t1:"50°C", t2:"28°C", t3:"31°C"},
+    profil: "Amertume dominante, tanins marqués, zéro sucre. Goût cru du cacao",
+    usages: [
+      {t:"Ganaches ultra intenses", d:"40% de chocolat pour 60% de crème. Dose forte, à marier avec du 70% pour arrondir"},
+      {t:"Sauces chocolat", d:"20% dans un sirop, cuire 2 min. Brillance et profondeur sans sucre ajouté"},
+      {t:"Correcteur de couverture", d:"5-10% pour baisser le sucre d'une couverture au lait ou noir 55%"},
+      {t:"Boisson chocolat chaud signature", d:"15 g par 200 ml de lait entier + 15 g de sucre"}
+    ],
+    pitfall: "N'est PAS fait pour être mangé seul en tempérage. Trop amer pour la plupart des palais. Pas de sucre = goût déséquilibré si utilisé pur. Toujours couper avec une couverture plus douce",
+    score: {"ganache-fourrage":3, "ganache-montee":2, mousse:2, glacage:1, enrobage:1, decor:1, insert:3, biscuit:3},
+    profilMatch: {intense:5, equilibre:1, doux:0, lacte:0, caramelise:0, fruite:0, neutre:0}
+  },
+  'noir-70-guanaja': {
+    name: "Noir 70% Guanaja",
+    origin: "Valrhona",
+    tags: ["Noir","70% cacao","Référence pro"],
+    cacao: "70% cacao",
+    mg: "~42% matière grasse",
+    fluidity: 3,
+    fluidityLabel: "Fluidité moyenne",
+    temperage: {t1:"50°C", t2:"29°C", t3:"31°C"},
+    profil: "Amertume franche, notes grillées, longueur en bouche. La référence des chocolatiers",
+    usages: [
+      {t:"Ganaches classiques", d:"50% chocolat pour 50% crème. Ratio 1:1, ganache souple et intense"},
+      {t:"Mousses au chocolat", d:"35% sur le poids total d'appareil. Texture aérée sans masquer le cacao"},
+      {t:"Tempérage décors", d:"Courbe 50-29-31°C. Décors brillants et cassants, peu sensibles au blanchiment"},
+      {t:"Tartes chocolat", d:"60% dans un crémeux pour tarte. Équilibre amer/sucre parfait"},
+      {t:"Bonbons fourrés", d:"Ganache 55% chocolat / 45% crème + 10% beurre pour trancher"}
+    ],
+    pitfall: "La surchauffe au-delà de 55°C au bain-marie détruit la structure cristalline. Pour la ganache, ne jamais verser la crème glacée sur le chocolat fondu (chocs thermiques = dissociation)",
+    score: {"ganache-fourrage":5, "ganache-montee":5, mousse:5, glacage:4, enrobage:5, decor:5, insert:5, biscuit:4},
+    profilMatch: {intense:4, equilibre:5, doux:2, lacte:0, caramelise:0, fruite:1, neutre:0}
+  },
+  'noir-64-manjari': {
+    name: "Noir 64% Manjari",
+    origin: "Valrhona — origine Madagascar",
+    tags: ["Noir","64% cacao","Fruité acidulé"],
+    cacao: "64% cacao",
+    mg: "~39% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide, souple",
+    temperage: {t1:"50°C", t2:"29°C", t3:"31°C"},
+    profil: "Acidité de fruits rouges, notes de framboise et cerise. Plus vif et fruité que le Guanaja",
+    usages: [
+      {t:"Ganaches fruitées", d:"50/50 chocolat/crème + 30% purée fruits rouges sur poids chocolat. Fait ressortir l'acidité naturelle"},
+      {t:"Bonbons fourrés au fruit", d:"Intérieur framboise ou passion, enrobage Manjari. Profil aromatique qui se renforce"},
+      {t:"Tartes au chocolat et fruits", d:"60% dans la ganache tarte + fruits rouges frais"},
+      {t:"Entremets fruits noirs", d:"Mousse Manjari + insert cassis ou mûre. Le chocolat amplifie le fruit"}
+    ],
+    pitfall: "Ne pas associer avec des arômes puissants qui masquent son fruité (vanille intense, café fort, caramel foncé). Sensible à la cristallisation, respecter la courbe au degré près",
+    score: {"ganache-fourrage":5, "ganache-montee":4, mousse:4, glacage:3, enrobage:4, decor:4, insert:5, biscuit:3},
+    profilMatch: {intense:3, equilibre:4, doux:3, lacte:0, caramelise:0, fruite:5, neutre:0}
+  },
+  'noir-55-equatoriale': {
+    name: "Noir 55% Équatoriale",
+    origin: "Valrhona",
+    tags: ["Noir","55% cacao","Équilibré doux"],
+    cacao: "55% cacao",
+    mg: "~37% matière grasse",
+    fluidity: 5,
+    fluidityLabel: "Très fluide",
+    temperage: {t1:"50°C", t2:"28°C", t3:"31°C"},
+    profil: "Rond, cacao doux, sucre présent sans être lourd. Le chocolat noir grand public par excellence",
+    usages: [
+      {t:"Enrobage bonbons", d:"Très fluide, couvre fin sans croûte épaisse. Idéal pour masquer un fourrage délicat"},
+      {t:"Ganaches douces", d:"60% chocolat / 40% crème. Ganache onctueuse accessible à tous les palais"},
+      {t:"Mousse grand public", d:"30% sur appareil. Texture crémeuse, amertume légère"},
+      {t:"Tablettes maison", d:"Tempérage 50-28-31°C. Se démoule facilement, brillance durable"},
+      {t:"Fond de tarte chocolat rapide", d:"100 g fondu sur fond sablé, laisse prendre au frais"}
+    ],
+    pitfall: "Moins intéressant en ganache intense (trop sucré). Ne pas espérer un goût cacao profond, l'Équatoriale est un chocolat plaisir, pas un chocolat technique pour amateurs de cacao brut",
+    score: {"ganache-fourrage":3, "ganache-montee":3, mousse:4, glacage:4, enrobage:5, decor:4, insert:3, biscuit:4},
+    profilMatch: {intense:1, equilibre:3, doux:5, lacte:1, caramelise:0, fruite:0, neutre:1}
+  },
+  'lait-40-jivara': {
+    name: "Lait 40% Jivara",
+    origin: "Valrhona",
+    tags: ["Lait","40% cacao","Référence lait"],
+    cacao: "40% cacao",
+    mg: "~40% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide",
+    temperage: {t1:"45°C", t2:"26°C", t3:"29°C"},
+    profil: "Notes de malt et caramel léger, lait entier dominant. La référence du chocolat au lait pro",
+    usages: [
+      {t:"Ganaches lactées", d:"60% chocolat / 40% crème. Ratio lait plus chocolat que noir (moins de cacao = plus de masse)"},
+      {t:"Bonbons lait", d:"Enrobage Jivara sur intérieur praliné ou gianduja. Mariage classique"},
+      {t:"Décors tempérés", d:"Courbe 45-26-29°C. Respecter strictement les températures, le lait blanchit facilement"},
+      {t:"Crémeux lait", d:"25% dans un crémeux vanille ou caramel"},
+      {t:"Barres chocolatées maison", d:"Lait + rice crispies + praliné"}
+    ],
+    pitfall: "Tempérage plus exigeant que le noir (fenêtre de travail plus étroite à 29°C). Blanchit vite si mal tempéré. Ne jamais chauffer au-delà de 48°C (le lait brûle les protéines)",
+    score: {"ganache-fourrage":4, "ganache-montee":5, mousse:3, glacage:3, enrobage:5, decor:5, insert:4, biscuit:3},
+    profilMatch: {intense:0, equilibre:1, doux:3, lacte:5, caramelise:3, fruite:0, neutre:0}
+  },
+  'lait-46-bahibe': {
+    name: "Lait 46% Bahibé",
+    origin: "Valrhona — origine République Dominicaine",
+    tags: ["Lait","46% cacao","Lait intense"],
+    cacao: "46% cacao",
+    mg: "~40% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide",
+    temperage: {t1:"45°C", t2:"27°C", t3:"29°C"},
+    profil: "Lait plus cacaoté, notes de banane et touche acidulée. Le compromis lait/noir",
+    usages: [
+      {t:"Ganaches au lait intenses", d:"55% chocolat / 45% crème. Garde le goût cacao même en version lactée"},
+      {t:"Tablettes", d:"Courbe 45-27-29°C. Tablettes nature ou avec inclusions (noisettes, fruits secs)"},
+      {t:"Mousse lait cacaotée", d:"30% sur appareil. Plus de caractère qu'une mousse Jivara standard"},
+      {t:"Bonbons palet lait", d:"Ganache Bahibé + enrobage noir 70%. Contraste lait gourmand / noir intense"}
+    ],
+    pitfall: "Profil plus marqué = masque les arômes délicats (vanille, fleurs). Réserver aux associations puissantes (fruit à coque, caramel, fruits exotiques)",
+    score: {"ganache-fourrage":5, "ganache-montee":4, mousse:4, glacage:3, enrobage:4, decor:4, insert:4, biscuit:3},
+    profilMatch: {intense:1, equilibre:3, doux:2, lacte:4, caramelise:2, fruite:2, neutre:0}
+  },
+  'blanc-ivoire': {
+    name: "Blanc 35% Ivoire",
+    origin: "Valrhona",
+    tags: ["Blanc","Support aromatique","35% beurre de cacao"],
+    cacao: "0% cacao / 35% beurre de cacao",
+    mg: "~40% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide",
+    temperage: {t1:"40°C", t2:"26°C", t3:"28°C"},
+    profil: "Lacté, doux, vanille naturelle. Pas de cacao = support aromatique qui laisse passer toutes les saveurs",
+    usages: [
+      {t:"Ganaches infusées", d:"60% chocolat / 40% crème infusée (thé, café, épice, agrume). Le blanc porte les arômes sans les masquer"},
+      {t:"Ganaches montées", d:"1 part chocolat / 1 part crème chaude / 2 parts crème froide. Texture la plus aérienne avec le blanc"},
+      {t:"Glaçages miroir", d:"Base blanc + nappage + gélatine. Peut être coloré en toute couleur propre"},
+      {t:"Infusion aromatique", d:"Chauffer 20 min dans crème avec l'aromate avant d'émulsionner le chocolat"},
+      {t:"Namelaka", d:"30% chocolat / 30% lait / 40% crème + 2 g de gélatine par kilo"}
+    ],
+    pitfall: "Tempérage le plus sensible (fenêtre 26-28°C, très étroite). Surchauffe au-delà de 42°C = grains et matière grasse qui ressort. Ne pas confondre avec les 'chocolats blancs' supermarché qui contiennent des huiles végétales hydrogénées (pas du vrai chocolat)",
+    score: {"ganache-fourrage":4, "ganache-montee":5, mousse:3, glacage:5, enrobage:3, decor:4, insert:5, biscuit:3},
+    profilMatch: {intense:0, equilibre:0, doux:4, lacte:4, caramelise:1, fruite:2, neutre:5}
+  },
+  'dulcey-32': {
+    name: "Dulcey 32% (blond caramélisé)",
+    origin: "Valrhona",
+    tags: ["Blond","Caramélisé","Biscuité"],
+    cacao: "0% cacao / 32% beurre de cacao",
+    mg: "~40% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide",
+    temperage: {t1:"45°C", t2:"26°C", t3:"29°C"},
+    profil: "Biscuit breton, caramel blond, notes de lait cuit. Obtenu par caramélisation du blanc. Signature aromatique unique",
+    usages: [
+      {t:"Ganaches biscuit-caramel", d:"60% chocolat / 40% crème. Texture type speculoos fondu"},
+      {t:"Inserts pour entremets", d:"Crémeux Dulcey : 25% chocolat dans une base crème anglaise + 2 g gélatine/kilo"},
+      {t:"Contraste avec acidité", d:"Marier avec fruits acidulés (passion, citron, pomme). Le sucre caramélisé équilibre l'acide"},
+      {t:"Ganache montée Dulcey", d:"1:3 comme le blanc, mousse épaisse et gourmande"},
+      {t:"Tablettes ou rochers", d:"Avec noisettes entières ou grué de cacao torréfié"}
+    ],
+    pitfall: "Tempérage identique au blanc mais fenêtre un peu plus tolérante. Goût très typé = ne pas combiner avec d'autres caramels (surcharge). Se marie mal avec les chocolats noirs puissants (conflit aromatique)",
+    score: {"ganache-fourrage":4, "ganache-montee":5, mousse:3, glacage:3, enrobage:4, decor:4, insert:5, biscuit:4},
+    profilMatch: {intense:0, equilibre:0, doux:3, lacte:3, caramelise:5, fruite:1, neutre:1}
+  },
+  'ruby': {
+    name: "Ruby 47%",
+    origin: "Callebaut / Barry Callebaut",
+    tags: ["Rose naturel","Fruité","Acidulé"],
+    cacao: "47% cacao (fève Ruby sélectionnée)",
+    mg: "~36% matière grasse",
+    fluidity: 3,
+    fluidityLabel: "Fluidité moyenne",
+    temperage: {t1:"45°C", t2:"27°C", t3:"29°C"},
+    profil: "Couleur rose naturelle, profil de fruits rouges acidulés. Non cacaoté au goût, aucun colorant ajouté",
+    usages: [
+      {t:"Décor rose naturel", d:"Tempérage 45-27-29°C. Couleur rose authentique sans colorant, parfait Saint-Valentin"},
+      {t:"Ganaches fruitées", d:"60% chocolat / 40% crème + 20% purée fruits rouges sur poids chocolat"},
+      {t:"Macarons Ruby", d:"Ganache Ruby pure ou avec framboise. Le rose tient à la découpe"},
+      {t:"Barres rose", d:"Avec inclusions de framboise lyophilisée pour renforcer le fruité"}
+    ],
+    pitfall: "Plus cher que le blanc et moins polyvalent. Profil aromatique fragile, ne pas chauffer au-delà de 48°C. Incompatible avec vanille puissante (tue le fruit). La couleur rose peut virer au gris si surchauffe ou mauvaise cristallisation",
+    score: {"ganache-fourrage":4, "ganache-montee":3, mousse:2, glacage:3, enrobage:3, decor:5, insert:3, biscuit:2},
+    profilMatch: {intense:0, equilibre:0, doux:2, lacte:1, caramelise:0, fruite:5, neutre:1}
+  },
+  'caramelia-36': {
+    name: "Caramélia 36%",
+    origin: "Valrhona",
+    tags: ["Lait caramélisé","Caramel lacté","Doux"],
+    cacao: "36% cacao",
+    mg: "~40% matière grasse",
+    fluidity: 4,
+    fluidityLabel: "Fluide",
+    temperage: {t1:"45°C", t2:"26°C", t3:"29°C"},
+    profil: "Caramel au lait, beurre salé léger, cacao très discret. Le lait version caramel intense",
+    usages: [
+      {t:"Ganaches caramel", d:"55% chocolat / 45% crème. Rend redondant l'ajout de caramel liquide"},
+      {t:"Inserts entremets", d:"Crémeux Caramélia pour cœur coulant dans un entremets vanille ou pomme"},
+      {t:"Bonbons salted caramel", d:"Ganache Caramélia + fleur de sel. Classique américain en version chocolat"},
+      {t:"Ganache montée", d:"1:3 pour mousse caramel aérée, topping de cake"}
+    ],
+    pitfall: "Similaire au Dulcey mais plus lacté et moins biscuité. Ne pas cumuler avec du caramel liquide (trop sucré). Profil doux = à marier avec pommes, poires, vanille, pas avec fruits très acides",
+    score: {"ganache-fourrage":4, "ganache-montee":4, mousse:3, glacage:3, enrobage:4, decor:3, insert:5, biscuit:3},
+    profilMatch: {intense:0, equilibre:0, doux:4, lacte:4, caramelise:5, fruite:0, neutre:1}
+  },
+  'gianduja': {
+    name: "Gianduja",
+    origin: "Chocolat au lait + pâte de noisette",
+    tags: ["Fourrage","Noisette","Non tempéré"],
+    cacao: "~30% cacao",
+    mg: "~40% matière grasse",
+    fluidity: 3,
+    fluidityLabel: "Pâteux à température ambiante",
+    temperage: {t1:"Pas de tempérage", t2:"—", t3:"—"},
+    profil: "Noisette grillée dominante, lait et sucre. Fondant en bouche, figure entre 18-22°C",
+    usages: [
+      {t:"Fourrage rocher", d:"Gianduja ramolli + noisettes concassées + enrobage noir 70%. Classique piémontais"},
+      {t:"Ganaches gourmandes noisette", d:"40% gianduja / 40% chocolat noir 64% / 20% crème"},
+      {t:"Bonbons palet noisette", d:"Gianduja pur coulé en cadre + enrobage lait 40%"},
+      {t:"Insert praliné", d:"Couche fine dans un entremets praliné ou café"}
+    ],
+    pitfall: "N'est PAS un chocolat de couverture, pas de tempérage possible. Figure à basse température, fond dans les mains à 22°C. Ne jamais essayer de faire des décors tempérés avec. Réserver en usage fourrage ou ganache",
+    score: {"ganache-fourrage":5, "ganache-montee":3, mousse:2, glacage:0, enrobage:0, decor:0, insert:5, biscuit:3},
+    profilMatch: {intense:0, equilibre:1, doux:3, lacte:3, caramelise:2, fruite:0, neutre:0}
+  },
+  'nestle-dessert': {
+    name: "Nestlé Dessert (ménage)",
+    origin: "Supermarché, grande distribution",
+    tags: ["Grand public","Dépannage","Non tempérable"],
+    cacao: "52% cacao",
+    mg: "~30% matière grasse",
+    fluidity: 2,
+    fluidityLabel: "Peu fluide (manque de beurre de cacao)",
+    temperage: {t1:"Non recommandé", t2:"—", t3:"—"},
+    profil: "Cacao standard avec sucre élevé, manque de beurre de cacao. Fonctionne en fondant et cuisson, pas en chocolaterie fine",
+    usages: [
+      {t:"Fondant au chocolat", d:"200 g pour 4 personnes + 3 œufs + 100 g beurre + 80 g sucre. OK en cuisson"},
+      {t:"Brownie classique", d:"200 g fondu au beurre. Cuit à cœur fudge, tient très bien"},
+      {t:"Moelleux chocolat", d:"Pour appareil cake ou muffin. Rapport qualité/prix correct en cuisson"},
+      {t:"Dépannage ganache rapide", d:"50/50 chocolat/crème. Résultat OK pour une ganache de glaçage cake, pas pour bonbon"}
+    ],
+    pitfall: "Impossible à tempérer correctement (manque de beurre de cacao + présence de lécithine abondante). À éviter en décoration, enrobage, tablette. Si tu veux faire des bonbons ou des décors, investis dans une couverture Valrhona ou Callebaut. Pour la cuisson pâtisserie, c'est un produit honnête",
+    score: {"ganache-fourrage":2, "ganache-montee":1, mousse:2, glacage:1, enrobage:0, decor:0, insert:2, biscuit:5},
+    profilMatch: {intense:1, equilibre:2, doux:2, lacte:0, caramelise:0, fruite:0, neutre:2}
+  }
+};
+
+function setMode(m) {
+  document.querySelectorAll('.mode-btn').forEach((b,i) => {
+    b.classList.toggle('active', (m==='fiches' && i===0) || (m==='assistant' && i===1));
+  });
+  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('mode-'+m).classList.add('active');
+}
+
+// Grille des fiches
+const grid = document.getElementById('chocoGrid');
+Object.keys(chocolats).forEach(key => {
+  const c = chocolats[key];
+  const btn = document.createElement('button');
+  btn.className = 'choco-btn';
+  btn.onclick = () => showFiche(key);
+  btn.innerHTML =
+    '<div class="choco-name">'+c.name+'</div>' +
+    '<div class="choco-origin">'+c.origin+'</div>' +
+    '<div>'+c.tags.map(t => '<span class="choco-tag">'+t+'</span>').join('')+'</div>';
+  grid.appendChild(btn);
+});
+
+function buildFluidityBar(level) {
+  let html = '<div class="fluidity">';
+  for (let i=1; i<=5; i++) {
+    html += '<span class="drop'+(i<=level ? '' : ' off')+'"></span>';
+  }
+  html += '<span class="fluidity-note">'+level+'/5</span></div>';
+  return html;
+}
+
+function showFiche(key) {
+  document.querySelectorAll('.choco-btn').forEach((b,i) => {
+    b.classList.toggle('active', Object.keys(chocolats)[i] === key);
+  });
+  const c = chocolats[key];
+
+  let temperageHtml;
+  if (c.temperage.t1 === "Pas de tempérage" || c.temperage.t1 === "Non recommandé") {
+    temperageHtml = '<em style="color:rgba(26,20,16,0.6)">'+c.temperage.t1+'</em>';
+  } else {
+    temperageHtml = '<div class="temp-curve">' +
+      '<div class="temp-step"><span class="temp-lab">Fonte</span>'+c.temperage.t1+'</div>' +
+      '<div class="temp-step"><span class="temp-lab">Cristallisation</span>'+c.temperage.t2+'</div>' +
+      '<div class="temp-step"><span class="temp-lab">Travail</span>'+c.temperage.t3+'</div>' +
+    '</div>';
+  }
+
+  const html =
+    '<div class="fiche-header">' +
+      '<div class="sub">'+c.origin+'</div>' +
+      '<h2>'+c.name+'</h2>' +
+    '</div>' +
+    '<div class="fiche-row"><div class="fiche-label">Profil aromatique</div><div class="fiche-value"><strong>'+c.profil+'</strong></div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Cacao</div><div class="fiche-value">'+c.cacao+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Matière grasse</div><div class="fiche-value">'+c.mg+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Fluidité</div><div class="fiche-value">'+buildFluidityBar(c.fluidity)+'<div style="font-size:13px;color:rgba(26,20,16,0.7);margin-top:4px">'+c.fluidityLabel+'</div></div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Courbe tempérage</div><div class="fiche-value">'+temperageHtml+'</div></div>' +
+    '<div class="usages-list">' +
+      '<h3 style="font-family:Georgia,serif;font-size:18px;margin:18px 0 12px;color:#1A1410">Usages recommandés</h3>' +
+      c.usages.map(u => '<div class="usage-item"><div class="usage-dot"></div><div class="usage-body"><strong>'+u.t+'</strong><span>'+u.d+'</span></div></div>').join('') +
+    '</div>' +
+    '<div class="pitfall"><strong>Pièges à éviter</strong>'+c.pitfall+'</div>';
+
+  const fiche = document.getElementById('fiche');
+  fiche.innerHTML = html;
+  fiche.classList.add('visible');
+  fiche.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Gestion visuelle quiz
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(i => {
+        i.closest('.choix-card').classList.remove('active');
+      });
+    }
+    if (e.target.checked) {
+      e.target.closest('.choix-card').classList.add('active');
+    } else {
+      e.target.closest('.choix-card').classList.remove('active');
+    }
+  }
+});
+
+function assistant() {
+  const app = document.querySelector('input[name="app"]:checked').value;
+  const gout = document.querySelector('input[name="gout"]:checked').value;
+  const debutant = document.getElementById('debutant').checked;
+  const supermarche = document.getElementById('supermarche').checked;
+  const pro = document.getElementById('pro').checked;
+  const budget = document.getElementById('budget').checked;
+
+  // Score pour chaque chocolat
+  const scores = {};
+  Object.keys(chocolats).forEach(k => {
+    const c = chocolats[k];
+    let s = c.score[app] || 0;
+    s += (c.profilMatch[gout] || 0) * 1.2;
+
+    // Contraintes
+    if (debutant) {
+      // Favoriser ceux qui ne demandent pas de tempérage
+      if (k === 'gianduja') s += 2;
+      if (k === 'nestle-dessert') s += 2;
+      // Pénaliser ceux qui ont le tempérage le plus technique
+      if (k === 'blanc-ivoire' || k === 'dulcey-32' || k === 'ruby') s -= 2;
+    }
+
+    if (supermarche) {
+      // Seul le Nestlé Dessert est vraiment en supermarché
+      if (k === 'nestle-dessert') s += 4;
+      else s -= 2;
+    }
+
+    if (pro) {
+      // Valorise les couvertures pro
+      if (k === 'nestle-dessert') s = 0;
+      if (['noir-70-guanaja','noir-64-manjari','lait-40-jivara','blanc-ivoire','dulcey-32'].includes(k)) s += 2;
+    }
+
+    if (budget) {
+      if (k === 'nestle-dessert') s += 3;
+      if (k === 'ruby') s -= 2;
+      if (k === 'noir-64-manjari') s -= 1;
+    }
+
+    // Exclusions dures selon l'usage
+    if (app === 'decor' && (k === 'gianduja' || k === 'nestle-dessert')) s = 0;
+    if (app === 'enrobage' && (k === 'gianduja' || k === 'nestle-dessert')) s = 0;
+    if (app === 'glacage' && k === 'gianduja') s = 0;
+
+    scores[k] = Math.max(0, s);
+  });
+
+  // Tri par score
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const winner = sorted[0][0];
+  const runnerUp = sorted.filter(([k,s]) => s > 0).slice(1, 3);
+
+  const c = chocolats[winner];
+
+  // Construction du "why"
+  const reasons = [];
+  const appLabels = {
+    "ganache-fourrage":"une ganache de fourrage",
+    "ganache-montee":"une ganache montée",
+    mousse:"une mousse",
+    glacage:"un glaçage miroir",
+    enrobage:"un enrobage de bonbon",
+    decor:"un décor tempéré",
+    insert:"un insert crémeux",
+    biscuit:"un biscuit"
+  };
+  reasons.push("pour "+appLabels[app]+" c'est le chocolat qui coche le plus de cases");
+
+  if (gout === 'intense' && ['noir-100','noir-70-guanaja'].includes(winner)) reasons.push("tu cherches un cacao intense et amer");
+  if (gout === 'equilibre' && winner === 'noir-70-guanaja') reasons.push("c'est LA référence pro pour un cacao franc et équilibré");
+  if (gout === 'doux' && ['noir-55-equatoriale','lait-40-jivara','caramelia-36'].includes(winner)) reasons.push("tu veux un profil doux et rond");
+  if (gout === 'lacte' && ['lait-40-jivara','lait-46-bahibe','caramelia-36'].includes(winner)) reasons.push("tu cherches un profil lacté et gourmand");
+  if (gout === 'caramelise' && ['dulcey-32','caramelia-36'].includes(winner)) reasons.push("tu veux un goût caramélisé biscuité");
+  if (gout === 'fruite' && ['noir-64-manjari','ruby'].includes(winner)) reasons.push("le profil fruité acidulé est ce que tu cherches");
+  if (gout === 'neutre' && winner === 'blanc-ivoire') reasons.push("tu veux un support aromatique neutre qui laisse passer les arômes");
+
+  if (debutant && ['gianduja','nestle-dessert','noir-70-guanaja','lait-40-jivara'].includes(winner)) reasons.push("il reste accessible quand on débute");
+  if (supermarche && winner === 'nestle-dessert') reasons.push("tu le trouves en supermarché dans toute la France");
+  if (pro && ['noir-70-guanaja','noir-64-manjari','blanc-ivoire','dulcey-32','lait-40-jivara'].includes(winner)) reasons.push("c'est une couverture pro reconnue en chocolaterie");
+  if (budget && winner === 'nestle-dessert') reasons.push("c'est l'option la plus économique");
+
+  const why = "C'est le meilleur choix parce que " + reasons.join(", ") + ".";
+
+  // Dosage spécifique à l'usage
+  const usage = c.usages.find(u => {
+    const map = {
+      "ganache-fourrage":["ganache","fourr","tart"],
+      "ganache-montee":["mont"],
+      mousse:["mousse"],
+      glacage:["glaç","miroir","namelaka"],
+      enrobage:["enrob","bonbon"],
+      decor:["décor","temp","tablette"],
+      insert:["insert","crémeux","cremeux"],
+      biscuit:["brownie","fondant","moelleux","biscuit"]
+    };
+    const keywords = map[app] || [];
+    return keywords.some(kw => u.t.toLowerCase().includes(kw) || u.d.toLowerCase().includes(kw));
+  }) || c.usages[0];
+
+  const dose = usage.t + " : " + usage.d;
+
+  // Tempérage
+  let temperageText;
+  if (c.temperage.t1 === "Pas de tempérage" || c.temperage.t1 === "Non recommandé") {
+    temperageText = c.temperage.t1 + ". Ce chocolat ne se tempère pas comme une couverture classique";
+  } else {
+    temperageText = "Fonte à " + c.temperage.t1 + ", descente à " + c.temperage.t2 + ", remontée de travail à " + c.temperage.t3;
+  }
+
+  document.getElementById('recoName').textContent = c.name;
+  document.getElementById('recoWhy').textContent = why;
+  document.getElementById('recoDose').textContent = dose;
+  document.getElementById('recoTemperage').textContent = temperageText;
+  document.getElementById('recoEviter').textContent = c.pitfall;
+
+  // Alternatives
+  const altDiv = document.getElementById('recoAlternatives');
+  if (runnerUp.length > 0) {
+    altDiv.innerHTML = '<h4 style="font-family:Courier New,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-top:24px;margin-bottom:10px">Alternatives à considérer</h4>' +
+      runnerUp.map(([k,s]) => {
+        const alt = chocolats[k];
+        return '<div class="alt-card"><strong>'+alt.name+'</strong>'+alt.profil+'</div>';
+      }).join('');
+  } else {
+    altDiv.innerHTML = '';
+  }
+
+  const reco = document.getElementById('reco');
+  reco.classList.add('visible');
+  reco.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Ouvre la première fiche par défaut
+showFiche('noir-70-guanaja');
+</script>
+</body>
+</html>

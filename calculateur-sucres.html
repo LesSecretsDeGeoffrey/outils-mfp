@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur sucres interchangeables — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .form-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .form-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
+  input[type="number"],select{width:100%;padding:14px 18px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  input:focus,select:focus{outline:none;border-color:#C8A04A}
+  optgroup{font-family:Georgia,serif;font-style:italic;color:#C8A04A;font-weight:600}
+  .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:600px){.two-cols{grid-template-columns:1fr}}
+  .arrow-row{text-align:center;font-family:Georgia,serif;color:#C8A04A;font-size:22px;margin:14px 0;font-style:italic}
+  .context-row{margin-top:18px}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+  .result{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:32px;display:none}
+  .result.visible{display:block}
+  .result h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin-bottom:8px;color:#1A1410}
+  .result .meta{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(200,160,74,0.3)}
+  .big-result{text-align:center;padding:28px 20px;background:rgba(200,160,74,0.08);border-radius:4px;margin-bottom:24px}
+  .big-result .from{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.6);margin-bottom:8px}
+  .big-result .qty{font-family:Georgia,serif;font-size:clamp(32px,5vw,52px);color:#C8A04A;line-height:1;margin-bottom:8px}
+  .big-result .sugar-name{font-size:16px;color:#1A1410;font-style:italic}
+  .alert-section{margin-top:24px}
+  .alert-section h3{font-family:Georgia,serif;font-size:18px;margin-bottom:14px;color:#1A1410}
+  .alert{display:flex;gap:12px;padding:14px 16px;margin-bottom:10px;border-radius:3px;align-items:flex-start;font-size:14px}
+  .alert-icon{font-family:'Courier New',monospace;font-size:11px;font-weight:bold;letter-spacing:1.5px;flex-shrink:0;margin-top:2px;min-width:50px}
+  .alert-body{flex:1;line-height:1.55}
+  .alert-body strong{display:block;margin-bottom:2px}
+  .alert.ok{background:rgba(52,120,70,0.08);color:#2E6340;border-left:3px solid #4A8560}
+  .alert.warn{background:#FEF3E2;color:#8B5A20;border-left:3px solid #E8A33C}
+  .alert.danger{background:rgba(180,50,50,0.08);color:#8B2525;border-left:3px solid #B43232}
+  .alert.info{background:rgba(200,160,74,0.08);color:#1A1410;border-left:3px solid #C8A04A}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:24px}
+  .stat{background:rgba(26,20,16,0.03);padding:14px;border-radius:3px;border:1px solid rgba(26,20,16,0.08)}
+  .stat-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;color:#C8A04A;text-transform:uppercase;margin-bottom:4px}
+  .stat-value{font-family:Georgia,serif;font-size:17px;color:#1A1410;font-weight:600}
+  .tip{background:rgba(200,160,74,0.08);padding:20px;margin-top:24px;border-left:3px solid #C8A04A;font-size:14px;color:#1A1410;border-radius:2px}
+  .tip strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Calculateur sucres interchangeables</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Remplacer un sucre <span class="accent">sans tout casser</span></h1>
+  <p class="intro">Tu veux remplacer le saccharose par du miel, tester le sucre inverti dans tes financiers, mettre du glucose dans tes ganaches ? Chaque sucre a son pouvoir sucrant, son effet sur l'humidité et sa cuisson. L'outil ajuste la quantité et te prévient des pièges avant que tu passes à la casserole</p>
+
+  <div class="form-section">
+    <h3>Le sucre de départ (recette d'origine)</h3>
+    <div class="two-cols">
+      <div>
+        <label for="sucreFrom">Sucre d'origine</label>
+        <select id="sucreFrom">
+          <option value="saccharose" selected>Sucre blanc (saccharose)</option>
+          <option value="cassonade">Cassonade</option>
+          <option value="muscovado">Muscovado</option>
+          <option value="rapadura">Rapadura / sucre complet</option>
+          <option value="glace">Sucre glace</option>
+          <option value="invertised">Sucre inverti (trimoline)</option>
+          <option value="glucose">Sirop de glucose</option>
+          <option value="miel">Miel</option>
+          <option value="erable">Sirop d'érable</option>
+          <option value="dextrose">Dextrose</option>
+          <option value="isomalt">Isomalt</option>
+        </select>
+      </div>
+      <div>
+        <label for="qtyFrom">Quantité (grammes)</label>
+        <input type="number" id="qtyFrom" min="1" value="100">
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-row">↓</div>
+
+  <div class="form-section">
+    <h3>Le sucre de remplacement</h3>
+    <div>
+      <label for="sucreTo">Je remplace par…</label>
+      <select id="sucreTo">
+        <option value="saccharose">Sucre blanc (saccharose)</option>
+        <option value="cassonade">Cassonade</option>
+        <option value="muscovado">Muscovado</option>
+        <option value="rapadura">Rapadura / sucre complet</option>
+        <option value="glace">Sucre glace</option>
+        <option value="invertised" selected>Sucre inverti (trimoline)</option>
+        <option value="glucose">Sirop de glucose</option>
+        <option value="miel">Miel</option>
+        <option value="erable">Sirop d'érable</option>
+        <option value="dextrose">Dextrose</option>
+        <option value="isomalt">Isomalt</option>
+      </select>
+    </div>
+    <div class="context-row">
+      <label for="context">Tu l'utilises dans quoi ?</label>
+      <select id="context">
+        <option value="biscuit">Biscuit / génoise / moelleux</option>
+        <option value="creme">Crème pâtissière / crémeux / mousse</option>
+        <option value="ganache">Ganache / ganache montée</option>
+        <option value="glace">Glace / sorbet</option>
+        <option value="sirop">Sirop / imbibage / caramel</option>
+        <option value="meringue">Meringue / macarons</option>
+        <option value="autre">Autre</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="calculate-btn" onclick="calculate()">Calculer le remplacement</button>
+
+  <div class="result" id="result">
+    <h2>Ta conversion</h2>
+    <p class="meta" id="resultMeta"></p>
+
+    <div class="big-result">
+      <p class="from">Tu remplaces par</p>
+      <p class="qty" id="bigQty">—</p>
+      <p class="sugar-name" id="bigName">—</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-label">Pouvoir sucrant</div>
+        <div class="stat-value" id="stat-ps">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Hygroscopie</div>
+        <div class="stat-value" id="stat-hygro">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Impact couleur</div>
+        <div class="stat-value" id="stat-couleur">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Conservation</div>
+        <div class="stat-value" id="stat-conservation">—</div>
+      </div>
+    </div>
+
+    <div class="alert-section" id="alerts"></div>
+
+    <div class="tip" id="tip"></div>
+  </div>
+</main>
+
+<script>
+// Pouvoir sucrant relatif (saccharose = 100)
+// Hygro 1-5 (capacité à retenir l'humidité)
+// Couleur 0-3 (0 = neutre, 3 = très foncé)
+// Conservation 1-5 (durée de conservation du produit fini)
+const sugars = {
+  saccharose: {
+    nom:"Sucre blanc",
+    ps: 100, hygro:2, couleur:0, conservation:3,
+    role:"référence neutre. Structure, cristallisation, dorure, conservation correcte.",
+    usage:{biscuit:"ok", creme:"ok", ganache:"ok", glace:"ok", sirop:"ok", meringue:"ok", autre:"ok"}
+  },
+  cassonade: {
+    nom:"Cassonade",
+    ps: 100, hygro:3, couleur:1, conservation:3,
+    role:"sucre de canne brun. Apporte un léger goût de rhum/caramel et une couleur dorée.",
+    usage:{biscuit:"ok", creme:"careful", ganache:"ok", glace:"ok", sirop:"ok", meringue:"no", autre:"ok"}
+  },
+  muscovado: {
+    nom:"Muscovado",
+    ps: 100, hygro:4, couleur:3, conservation:4,
+    role:"sucre de canne non raffiné, riche en mélasse. Goût intense caramel-réglisse, couleur très foncée.",
+    usage:{biscuit:"ok", creme:"careful", ganache:"ok", glace:"careful", sirop:"ok", meringue:"no", autre:"ok"}
+  },
+  rapadura: {
+    nom:"Rapadura / sucre complet",
+    ps: 90, hygro:3, couleur:2, conservation:3,
+    role:"sucre de canne intégral, goût fort de mélasse. Moins sucrant que le blanc.",
+    usage:{biscuit:"ok", creme:"careful", ganache:"ok", glace:"careful", sirop:"ok", meringue:"no", autre:"ok"}
+  },
+  glace: {
+    nom:"Sucre glace",
+    ps: 100, hygro:2, couleur:0, conservation:3,
+    role:"saccharose moulu + amidon. Texture plus fine, dissolution rapide, apporte légèreté aux textures crémeuses.",
+    usage:{biscuit:"ok", creme:"ok", ganache:"no", glace:"no", sirop:"no", meringue:"ok", autre:"ok"}
+  },
+  invertised: {
+    nom:"Sucre inverti (trimoline)",
+    ps: 125, hygro:5, couleur:0, conservation:5,
+    role:"mélange glucose+fructose sous forme de pâte. Retient l'humidité, évite la cristallisation, prolonge le moelleux.",
+    usage:{biscuit:"ok", creme:"ok", ganache:"ok", glace:"ok", sirop:"ok", meringue:"careful", autre:"ok"}
+  },
+  glucose: {
+    nom:"Sirop de glucose",
+    ps: 50, hygro:5, couleur:0, conservation:4,
+    role:"sirop visqueux non cristallisable. Donne du moelleux, empêche la cristallisation des sucres cuits.",
+    usage:{biscuit:"careful", creme:"ok", ganache:"ok", glace:"ok", sirop:"ok", meringue:"careful", autre:"ok"}
+  },
+  miel: {
+    nom:"Miel",
+    ps: 110, hygro:5, couleur:1, conservation:5,
+    role:"sucre naturel avec goût marqué. Hygroscopique, colore à la cuisson (dorure poussée), apporte du parfum.",
+    usage:{biscuit:"ok", creme:"careful", ganache:"careful", glace:"careful", sirop:"ok", meringue:"no", autre:"ok"}
+  },
+  erable: {
+    nom:"Sirop d'érable",
+    ps: 70, hygro:4, couleur:1, conservation:4,
+    role:"sirop naturel 66% sucre. Apport liquide important, parfum marqué, couleur ambrée.",
+    usage:{biscuit:"careful", creme:"careful", ganache:"no", glace:"careful", sirop:"ok", meringue:"no", autre:"careful"}
+  },
+  dextrose: {
+    nom:"Dextrose",
+    ps: 70, hygro:3, couleur:0, conservation:3,
+    role:"glucose pur en poudre. Abaisse le point de congélation, essentiel pour les glaces à texture souple.",
+    usage:{biscuit:"careful", creme:"ok", ganache:"careful", glace:"ok", sirop:"careful", meringue:"careful", autre:"ok"}
+  },
+  isomalt: {
+    nom:"Isomalt",
+    ps: 50, hygro:1, couleur:0, conservation:5,
+    role:"sucre de remplacement non hygroscopique. Idéal pour le sucre tiré/coulé et les décors qui ne fondent pas.",
+    usage:{biscuit:"no", creme:"no", ganache:"no", glace:"no", sirop:"careful", meringue:"no", autre:"careful"}
+  }
+};
+
+const hygroLabel = n => ["très sec","faible","moyenne","élevée","très élevée","maximale"][n];
+const couleurLabel = n => ["neutre","légèrement doré","doré","très foncé"][n];
+const conservationLabel = n => ["faible","correcte","correcte","bonne","très bonne","maximale"][n];
+
+function calculate() {
+  const from = document.getElementById('sucreFrom').value;
+  const to = document.getElementById('sucreTo').value;
+  const qty = parseFloat(document.getElementById('qtyFrom').value) || 0;
+  const context = document.getElementById('context').value;
+
+  if (qty <= 0) { alert('Entre une quantité supérieure à 0'); return; }
+  if (from === to) {
+    alert('Tu as choisi le même sucre de départ et de remplacement');
+    return;
+  }
+
+  const sFrom = sugars[from];
+  const sTo = sugars[to];
+
+  // Conversion basée sur le pouvoir sucrant équivalent
+  const newQty = qty * (sFrom.ps / sTo.ps);
+
+  // Affichage principal
+  document.getElementById('bigQty').textContent = newQty.toFixed(newQty < 10 ? 1 : 0) + " g";
+  document.getElementById('bigName').textContent = sTo.nom;
+  document.getElementById('resultMeta').textContent = "Remplacement : " + qty + " g de " + sFrom.nom.toLowerCase() + " → " + sTo.nom.toLowerCase();
+
+  // Stats
+  document.getElementById('stat-ps').textContent = sTo.ps + " %";
+  document.getElementById('stat-hygro').textContent = hygroLabel(sTo.hygro);
+  document.getElementById('stat-couleur').textContent = couleurLabel(sTo.couleur);
+  document.getElementById('stat-conservation').textContent = conservationLabel(sTo.conservation);
+
+  // Alertes
+  const alerts = document.getElementById('alerts');
+  alerts.innerHTML = '<h3>Ce que ça change dans ta recette</h3>';
+
+  // Compatibilité avec le contexte
+  const compat = sTo.usage[context];
+  if (compat === 'no') {
+    alerts.innerHTML += '<div class="alert danger"><div class="alert-icon">STOP</div><div class="alert-body"><strong>Combinaison à éviter</strong>'+sTo.nom+' fonctionne mal dans '+contextLabel(context)+'. Choisis un autre sucre ou une autre application</div></div>';
+  } else if (compat === 'careful') {
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">ATTENTION</div><div class="alert-body"><strong>Remplacement partiel recommandé</strong>'+sTo.nom+' peut perturber l\'équilibre de '+contextLabel(context)+'. Remplace maximum 30-40% du sucre total, pas la totalité</div></div>';
+  } else {
+    alerts.innerHTML += '<div class="alert ok"><div class="alert-icon">OK</div><div class="alert-body"><strong>Combinaison compatible</strong>'+sTo.nom+' fonctionne bien dans '+contextLabel(context)+'. Applique la conversion telle quelle</div></div>';
+  }
+
+  // Pouvoir sucrant écart
+  const psDiff = sTo.ps - sFrom.ps;
+  if (Math.abs(psDiff) >= 20) {
+    const sens = psDiff > 0 ? "plus sucrant" : "moins sucrant";
+    alerts.innerHTML += '<div class="alert info"><div class="alert-icon">PS</div><div class="alert-body"><strong>Pouvoir sucrant très différent</strong>'+sTo.nom+' est '+sens+' que '+sFrom.nom+'. La conversion a déjà ajusté la quantité pour garder la même sensation sucrée en bouche. Ne recalcule pas à l\'oeil</div></div>';
+  }
+
+  // Hygroscopie
+  const hygroDiff = sTo.hygro - sFrom.hygro;
+  if (hygroDiff >= 2) {
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">H2O</div><div class="alert-body"><strong>Plus d\'humidité retenue</strong>Le produit fini sera plus moelleux et conservera mieux, mais peut rendre les biscuits collants ou détremper les fonds de tarte. Dans un gâteau cuit : réduis le liquide de 5-10%</div></div>';
+  } else if (hygroDiff <= -2) {
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">SEC</div><div class="alert-body"><strong>Produit plus sec</strong>Tu perds en moelleux et conservation. Pense à bien emballer une fois refroidi et consomme dans les 48h</div></div>';
+  }
+
+  // Couleur
+  const couleurDiff = sTo.couleur - sFrom.couleur;
+  if (couleurDiff >= 2) {
+    alerts.innerHTML += '<div class="alert info"><div class="alert-icon">TEINT</div><div class="alert-body"><strong>Résultat plus foncé</strong>Couleur attendue : '+couleurLabel(sTo.couleur)+'. Si tu vises une pâte ou une crème claire, choisis un autre sucre</div></div>';
+  }
+
+  // Formes liquides (glucose, miel, érable) dans une recette sèche
+  const liquidSugars = ['glucose','miel','erable'];
+  if (liquidSugars.includes(to) && !liquidSugars.includes(from)) {
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">LIQ</div><div class="alert-body"><strong>Tu passes d\'un sucre sec à un sucre liquide</strong>Réduis le liquide de ta recette d\'environ 20% du poids du nouveau sucre (ex : 100 g de miel = -20 g de lait ou d\'eau). Sinon pâte trop liquide</div></div>';
+  }
+  if (liquidSugars.includes(from) && !liquidSugars.includes(to)) {
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">SEC</div><div class="alert-body"><strong>Tu passes d\'un sucre liquide à un sucre sec</strong>Ajoute 20% du poids du nouveau sucre en liquide (eau, lait ou crème selon la recette). Sinon pâte trop sèche</div></div>';
+  }
+
+  // Isomalt spécifique
+  if (to === 'isomalt') {
+    alerts.innerHTML += '<div class="alert info"><div class="alert-icon">NOTE</div><div class="alert-body"><strong>Isomalt = usage technique</strong>Sert au sucre tiré, coulé, soufflé. Ne pas consommer en grande quantité (effet laxatif). Non recommandé en substitution classique du saccharose dans les pâtisseries courantes</div></div>';
+  }
+
+  // Astuce générale selon la combinaison
+  const tipDiv = document.getElementById('tip');
+  tipDiv.innerHTML = '<strong>Le conseil de Geoffrey</strong>' + buildTip(from, to, context);
+
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function contextLabel(c) {
+  return {
+    biscuit:"les biscuits ou génoises",
+    creme:"les crèmes et mousses",
+    ganache:"les ganaches",
+    glace:"les glaces ou sorbets",
+    sirop:"les sirops et caramels",
+    meringue:"les meringues ou macarons",
+    autre:"cette application"
+  }[c];
+}
+
+function buildTip(from, to, context) {
+  // Tips custom pour combinaisons fréquentes
+  if (to === 'invertised' && context === 'ganache') return "La trimoline dans une ganache = texture plus fondante qui ne tranche pas, conservation x2. Ratio pro : remplace 10 à 30% du sucre total, pas plus. Au-dessus, la ganache devient trop molle.";
+  if (to === 'glucose' && context === 'ganache') return "Le glucose dans une ganache empêche la cristallisation sur la longueur. 40 g pour 200 g de chocolat = ratio de base. Chauffé avec la crème, versé sur le chocolat en émulsion.";
+  if (to === 'miel' && context === 'biscuit') return "Le miel remplace parfaitement le saccharose dans les madeleines, les pains d'épices, les financiers. Apporte goût et moelleux. Attention : couleur plus foncée, cuisson 10°C de moins pour éviter le brunissement.";
+  if (to === 'invertised' && context === 'biscuit') return "La trimoline dans un cake = moelleux garanti pendant 5-7 jours au lieu de 2. Remplace 20-30% du sucre total. Les pros l'utilisent dans tous leurs cakes de vitrine.";
+  if (to === 'dextrose' && context === 'glace') return "Le dextrose est indispensable dans une bonne recette de glace maison. Il abaisse le point de congélation, la glace reste souple à -18°C au lieu d'être bloc de marbre. Ratio : 5-10% du sucre total.";
+  if (to === 'glucose' && context === 'sirop') return "Glucose dans un sirop ou un caramel = zéro cristallisation, brillance parfaite. 10-20% du poids de saccharose suffit pour stabiliser.";
+  if (to === 'miel' && context === 'ganache') return "Le miel dans une ganache donne un goût très marqué qui peut dominer le chocolat. Teste avec 10% du sucre total max, sauf si tu veux une ganache miel assumée.";
+  if (to === 'cassonade' && context === 'biscuit') return "La cassonade apporte une note caramel-rhum très agréable dans les cookies, crumbles, pains d'épices. Remplacement 1:1 sans ajustement liquide. Couleur plus dorée.";
+  if (to === 'muscovado' && context === 'biscuit') return "Muscovado = goût extrême, couleur foncée, texture hyper moelleuse. Parfait dans les brownies, cookies caramel, pains d'épices. Attention : domine vite.";
+
+  // Tip générique
+  return "Conversion basée sur le pouvoir sucrant relatif (saccharose = 100). La quantité a été ajustée pour conserver la même intensité sucrée. Teste toujours sur une petite quantité avant d'adapter une recette signature.";
+}
+</script>
+</body>
+</html>

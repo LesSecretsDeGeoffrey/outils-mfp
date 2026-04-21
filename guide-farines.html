@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide des farines — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+  .mode-btn{flex:1;min-width:180px;padding:14px 20px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .mode-section{display:none}
+  .mode-section.active{display:block}
+
+  /* Mode 1 : fiches par farine */
+  .farine-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+  .far-btn{background:#fff;border:1px solid rgba(26,20,16,0.12);border-radius:4px;padding:18px 20px;cursor:pointer;text-align:left;transition:all 0.2s;font-family:inherit}
+  .far-btn:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,0.06)}
+  .far-btn.active{border-color:#C8A04A;background:rgba(200,160,74,0.08)}
+  .far-name{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .far-origin{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:10px}
+  .far-tag{display:inline-block;font-size:11px;color:rgba(26,20,16,0.65);padding:3px 8px;background:rgba(26,20,16,0.05);border-radius:2px;margin:2px 4px 2px 0}
+
+  .fiche{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:24px;display:none}
+  .fiche.visible{display:block}
+  .fiche-header{border-bottom:2px solid #C8A04A;padding-bottom:20px;margin-bottom:24px}
+  .fiche-header h2{font-family:Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:400;color:#1A1410;margin-bottom:4px}
+  .fiche-header .sub{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A}
+  .fiche-row{display:grid;grid-template-columns:180px 1fr;gap:20px;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  @media (max-width:600px){.fiche-row{grid-template-columns:1fr;gap:4px}}
+  .fiche-row:last-of-type{border-bottom:none}
+  .fiche-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;padding-top:2px}
+  .fiche-value{font-size:14px;color:#1A1410;line-height:1.6}
+  .fiche-value strong{color:#1A1410;font-family:Georgia,serif}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:6px}
+  .spec-box{background:rgba(200,160,74,0.08);border:1px solid rgba(200,160,74,0.2);border-radius:3px;padding:10px 12px}
+  .spec-box .sp-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-bottom:2px}
+  .spec-box .sp-value{font-family:Georgia,serif;font-size:16px;color:#1A1410;font-weight:600}
+  .usages-list{margin-top:20px}
+  .usage-item{display:flex;gap:14px;padding:12px 0;align-items:flex-start;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .usage-item:last-child{border-bottom:none}
+  .usage-dot{width:6px;height:6px;background:#C8A04A;border-radius:50%;flex-shrink:0;margin-top:8px}
+  .usage-body{flex:1;font-size:14px}
+  .usage-body strong{display:block;margin-bottom:2px;color:#1A1410}
+  .usage-body span{color:rgba(26,20,16,0.7)}
+  .pitfall{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#8B5A20}
+  .pitfall strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+  .remplace{background:rgba(200,160,74,0.08);border-left:3px solid #C8A04A;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#1A1410}
+  .remplace strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A}
+
+  /* Mode 2 : assistant */
+  .quiz-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .quiz-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  .choix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .choix-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;font-size:14px}
+  .choix-card:hover{border-color:#C8A04A}
+  .choix-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .choix-card input{accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+
+  .reco{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,36px);margin-top:24px;display:none;border-top:3px solid #C8A04A}
+  .reco.visible{display:block}
+  .reco .label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .reco h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);color:#C8A04A;margin-bottom:16px;font-weight:400}
+  .reco .why{font-size:15px;color:rgba(253,248,240,0.85);margin-bottom:24px;line-height:1.65}
+  .reco-block{background:rgba(253,248,240,0.05);padding:18px 20px;border-radius:3px;margin-bottom:12px;border-left:3px solid #C8A04A}
+  .reco-block h4{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .reco-block p{font-size:14px;color:#FDF8F0;line-height:1.55}
+  .alt-card{background:rgba(253,248,240,0.03);padding:14px 18px;border-radius:3px;margin-top:10px;font-size:13px;color:rgba(253,248,240,0.8)}
+  .alt-card strong{color:#C8A04A;display:block;margin-bottom:2px;font-family:Georgia,serif}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Guide des farines</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>T45, T55, gruau, Manitoba. <span class="accent">Laquelle pour quoi</span></h1>
+  <p class="intro">11 farines, 11 comportements différents. Une T45 à la place d'une T45 gruau et ta brioche s'effondre. Une T55 à la place d'une T45 et tes macarons deviennent cartonneux. Consulte la fiche détaillée d'une farine ou laisse-moi t'orienter selon ta recette</p>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('fiches')">Les fiches par farine</button>
+    <button class="mode-btn" onclick="setMode('assistant')">Aide-moi à choisir</button>
+  </div>
+
+  <!-- Mode 1 : Fiches -->
+  <div class="mode-section active" id="mode-fiches">
+    <div class="farine-grid" id="farineGrid"></div>
+    <div class="fiche" id="fiche"></div>
+  </div>
+
+  <!-- Mode 2 : Assistant -->
+  <div class="mode-section" id="mode-assistant">
+    <div class="quiz-section">
+      <h3>1. Ton application</h3>
+      <div class="choix-grid" id="appGrid">
+        <label class="choix-card active"><input type="radio" name="app" value="macaron" checked><span>Macaron</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="sablee"><span>Pâte sablée ou sucrée</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="viennoiserie"><span>Viennoiserie (brioche, croissant)</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="choux"><span>Pâte à choux</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="feuilletee"><span>Pâte feuilletée</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="cake"><span>Cake, moelleux</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="genoise"><span>Génoise, biscuit léger</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="painmie"><span>Pain de mie ou brioché</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="painrustique"><span>Pain rustique</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="sansgluten"><span>Sans gluten</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>2. Le niveau d'absorption souhaité</h3>
+      <div class="choix-grid">
+        <label class="choix-card active"><input type="radio" name="abs" value="fine" checked><span>Pâte fine et légère</span></label>
+        <label class="choix-card"><input type="radio" name="abs" value="equilibre"><span>Pâte équilibrée</span></label>
+        <label class="choix-card"><input type="radio" name="abs" value="rustique"><span>Pâte rustique avec du corps</span></label>
+        <label class="choix-card"><input type="radio" name="abs" value="elastique"><span>Pâte très élastique (brioches levées)</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>3. Tes contraintes</h3>
+      <div class="choix-grid">
+        <label class="choix-card"><input type="checkbox" id="sansglu"><span>Sans gluten</span></label>
+        <label class="choix-card"><input type="checkbox" id="supermarche"><span>Disponible en supermarché</span></label>
+        <label class="choix-card"><input type="checkbox" id="pro"><span>Recherche qualité pro</span></label>
+        <label class="choix-card"><input type="checkbox" id="budget"><span>Budget serré</span></label>
+      </div>
+    </div>
+
+    <button class="calculate-btn" onclick="assistant()">Me recommander la farine</button>
+
+    <div class="reco" id="reco">
+      <p class="label" id="recoLabel">Recommandation</p>
+      <h2 id="recoName">—</h2>
+      <p class="why" id="recoWhy">—</p>
+
+      <div class="reco-block">
+        <h4>Dosage et utilisation</h4>
+        <p id="recoDose">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>Pourquoi elle marche pour ça</h4>
+        <p id="recoActivation">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>À éviter</h4>
+        <p id="recoEviter">—</p>
+      </div>
+
+      <div id="recoAlternatives"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const farines = {
+  't45': {
+    name: "T45",
+    origin: "Farine de blé tamisée fine",
+    tags: ["Polyvalente fine","Supermarché","Très blanche"],
+    cendres: "0,45%",
+    proteines: "9-11%",
+    absorption: "Moyenne",
+    force: "W130-160",
+    textureType: "Fine, blanche, faible en gluten. Donne des pâtes légères et tendres",
+    comportement: "La plus tamisée et la plus raffinée. Peu de gluten, peu de corps, résultat aérien. Se garde 9 à 12 mois en sachet fermé",
+    usages: [
+      {t:"Macarons", d:"Non utilisée dans les macarons (poudre d'amande + sucre glace), mais idéale si recette demande un peu de farine tamisée (variantes)"},
+      {t:"Crêpes et pancakes", d:"100% T45. Donne une texture souple qui ne se déchire pas"},
+      {t:"Génoise et biscuit léger", d:"100% T45 tamisée. Structure aérienne obligatoire pour la montée au four"},
+      {t:"Biscuits fins (langues de chat, tuiles)", d:"100% T45. Évite la texture cartonnée"},
+      {t:"Sauces, béchamel, roux", d:"T45 pour un lié sans grumeaux"}
+    ],
+    remplace: "Peut remplacer la T55 dans les recettes où on cherche plus de légèreté (génoise, crêpes). Ne remplace JAMAIS une T45 gruau dans les viennoiseries",
+    pitfall: "Ne JAMAIS utiliser en viennoiserie levée (brioche, croissant) : le gluten est trop faible, la pâte s'effondre. En pâte à choux, certains préfèrent T55 pour plus de corps",
+    score: {macaron:5, sablee:3, viennoiserie:1, choux:3, feuilletee:2, cake:4, genoise:5, painmie:1, painrustique:1, sansgluten:0}
+  },
+  't45-gruau': {
+    name: "T45 gruau / force",
+    origin: "Farine de blé haute qualité boulangère",
+    tags: ["Viennoiseries","Pro","Fort gluten"],
+    cendres: "0,45%",
+    proteines: "11-13%",
+    absorption: "Forte",
+    force: "W280-350",
+    textureType: "Fine comme la T45 classique mais avec un gluten puissant. Développe beaucoup de corps",
+    comportement: "Farine de blé sélectionné (gruau = grain dur), tamisée comme la T45 mais beaucoup plus protéinée. Le gluten tient les longues pousses sans s'affaisser",
+    usages: [
+      {t:"Brioche pur beurre", d:"100% T45 gruau. Permet une mie filante et des longues pousses sans effondrement"},
+      {t:"Croissant et pâte levée feuilletée", d:"100% T45 gruau, parfois 50/50 avec T55 force"},
+      {t:"Kouglof, panettone léger, babas", d:"100% T45 gruau, force W indispensable pour supporter beurre et oeufs"},
+      {t:"Pain blanc à mie fine (pain de mie)", d:"100% ou 70/30 avec T55"}
+    ],
+    remplace: "Remplace parfaitement la T55 force dans la plupart des viennoiseries. Peut remplacer la T45 classique dans les viennoiseries mais PAS dans les génoises (trop de corps)",
+    pitfall: "Ne pas confondre avec la T45 classique : elles ont le même taux de cendres mais une force complètement différente. Une T45 classique dans une brioche donne une mie qui tombe. En supermarché, vérifier la mention 'gruau' ou 'spéciale brioche'",
+    score: {macaron:0, sablee:1, viennoiserie:5, choux:2, feuilletee:3, cake:2, genoise:1, painmie:5, painrustique:3, sansgluten:0}
+  },
+  't55': {
+    name: "T55",
+    origin: "Farine de blé polyvalente standard",
+    tags: ["Polyvalente","Supermarché","LA farine pâtisserie"],
+    cendres: "0,55%",
+    proteines: "10-12%",
+    absorption: "Moyenne",
+    force: "W160-220",
+    textureType: "Polyvalente, équilibrée. Assez de gluten pour tenir, pas trop pour rester fondante",
+    comportement: "La farine universelle française. Balance parfaite entre légèreté et corps. Si tu ne devais en avoir qu'une dans ton placard, c'est celle-là",
+    usages: [
+      {t:"Pâte sablée et pâte sucrée", d:"100% T55. LE choix standard pour tartes, sablés, fonds de tarte"},
+      {t:"Pâte brisée", d:"100% T55. Corps suffisant pour rouler sans se casser"},
+      {t:"Cake, quatre-quarts, moelleux", d:"100% T55 tamisée. Évite les trous et garde la mie serrée"},
+      {t:"Pâte à choux", d:"100% T55 (certains préfèrent T45, question d'école). T55 donne plus de corps à la pâte"},
+      {t:"Pâte feuilletée (détrempe)", d:"100% T55 classique ou mélange 50/50 T45+T55"}
+    ],
+    remplace: "Remplace la T45 dans les pâtes où on veut plus de corps. Remplace la T65 si on veut un goût plus neutre",
+    pitfall: "Ne pas utiliser en viennoiserie longue pousse (pas assez de force). Ne pas utiliser en génoise (trop de corps, la mousse d'oeufs retombe)",
+    score: {macaron:2, sablee:5, viennoiserie:2, choux:5, feuilletee:5, cake:5, genoise:3, painmie:2, painrustique:2, sansgluten:0}
+  },
+  't65': {
+    name: "T65",
+    origin: "Farine de tradition française",
+    tags: ["Boulangerie","Goût marqué","Supermarché"],
+    cendres: "0,65%",
+    proteines: "11-12%",
+    absorption: "Moyenne-forte",
+    force: "W180-230",
+    textureType: "Un peu plus colorée que la T55, goût plus prononcé, légèrement plus rustique",
+    comportement: "Farine de tradition, sans additifs autorisés par décret français. Goût de blé plus présent. Souvent utilisée en boulangerie artisanale",
+    usages: [
+      {t:"Pain au levain", d:"100% T65 ou 70/30 avec T80. Base classique du pain de tradition"},
+      {t:"Brioche rustique (brioche de boulanger)", d:"100% T65 pour un goût plus typé qu'avec la T55"},
+      {t:"Fougasse, focaccia", d:"100% T65. Le goût de blé marqué fait la différence"},
+      {t:"Biscuits plus rustiques", d:"100% T65. Donne du caractère aux sablés bretons par exemple"}
+    ],
+    remplace: "Peut remplacer la T55 quand on veut un goût plus prononcé. Ne remplace pas la T80 en termes de rusticité",
+    pitfall: "Pas idéale en pâtisserie fine (macarons, génoises, cake) où on cherche neutralité de goût et texture très tendre",
+    score: {macaron:0, sablee:3, viennoiserie:3, choux:2, feuilletee:2, cake:3, genoise:1, painmie:3, painrustique:4, sansgluten:0}
+  },
+  't80': {
+    name: "T80",
+    origin: "Farine semi-complète bise",
+    tags: ["Semi-complète","Rustique","Santé"],
+    cendres: "0,80%",
+    proteines: "11-13%",
+    absorption: "Forte",
+    force: "W200-250",
+    textureType: "Légèrement beige, goût de blé plus présent, petits éclats de son",
+    comportement: "Farine bise qui garde une partie du son. Plus de caractère, plus de fibres, absorption d'eau plus élevée. Souvent utilisée en mélange",
+    usages: [
+      {t:"Pain semi-complet", d:"50/50 T80 et T55 pour un pain qui a du corps sans être trop dense"},
+      {t:"Pain de campagne", d:"50/50 T80 et T65. Alvéolage irrégulier, goût puissant"},
+      {t:"Crackers et biscottes", d:"100% T80 pour une texture craquante et goûteuse"},
+      {t:"Sablés rustiques (sarrasin, épeautre)", d:"Mélanger 50% T80 + 50% T55 pour garder un peu de rusticité"}
+    ],
+    remplace: "Peut remplacer partiellement la T55 (max 30% en pâtisserie) pour donner un goût plus typé. Ne remplace pas la T110 qui est plus complète",
+    pitfall: "Trop rustique pour la pâtisserie fine. Utilisée pure, donne des biscuits denses et grossiers. À doser avec précaution en mélange",
+    score: {macaron:0, sablee:2, viennoiserie:2, choux:1, feuilletee:1, cake:2, genoise:0, painmie:3, painrustique:5, sansgluten:0}
+  },
+  't110': {
+    name: "T110",
+    origin: "Farine complète",
+    tags: ["Complète","Santé","Magasin bio"],
+    cendres: "1,10%",
+    proteines: "12-14%",
+    absorption: "Forte",
+    force: "W200-280",
+    textureType: "Beige soutenue, grain visible, goût très prononcé",
+    comportement: "Farine complète qui garde le son et le germe. Beaucoup de fibres, bonne absorption, goût intense. Souvent réservée à la boulangerie santé",
+    usages: [
+      {t:"Pain complet", d:"70% T110 + 30% T55 pour éviter un pain trop dense"},
+      {t:"Pain de campagne rustique", d:"50/50 T110 et T65"},
+      {t:"Biscuits complets santé", d:"100% T110 ou 50/50 avec T55 selon densité voulue"},
+      {t:"Pâtisseries rustiques (crumbles, tartes rustiques)", d:"30-50% T110 en mélange avec T55"}
+    ],
+    remplace: "Remplace avantageusement la T80 quand on veut encore plus de fibres et de goût. Peut remplacer la T150 si on veut un peu moins de rusticité",
+    pitfall: "En pure, beaucoup trop lourde pour la pâtisserie. Toujours mélanger avec une farine plus blanche. Absorbe énormément d'eau, adapter l'hydratation",
+    score: {macaron:0, sablee:1, viennoiserie:1, choux:0, feuilletee:0, cake:1, genoise:0, painmie:2, painrustique:5, sansgluten:0}
+  },
+  't150': {
+    name: "T150",
+    origin: "Farine intégrale",
+    tags: ["Intégrale","Santé","Magasin bio"],
+    cendres: "1,50%",
+    proteines: "13-15%",
+    absorption: "Très forte",
+    force: "W230-300",
+    textureType: "Très sombre, granuleuse, tout le grain conservé",
+    comportement: "L'intégrale : rien n'est enlevé du grain. Texture la plus rustique, goût le plus puissant, richesse nutritionnelle maximale",
+    usages: [
+      {t:"Pain intégral", d:"50/50 avec T55 minimum, sinon la mie sera trop dense"},
+      {t:"Biscuits intégraux (style galettes nordiques)", d:"100% T150 ou en mélange avec sarrasin"},
+      {t:"Pâtisserie rustique santé", d:"20-30% T150 en mélange avec T55 pour booster goût et fibres"}
+    ],
+    remplace: "La plus complète de la gamme. Ne remplace rien, elle est complémentaire. À utiliser en mélange uniquement",
+    pitfall: "Utilisée pure en pâtisserie, résultat compact et étouffant. Très hydrophile : si tu substitues, augmente le liquide de 15 à 20%",
+    score: {macaron:0, sablee:0, viennoiserie:0, choux:0, feuilletee:0, cake:1, genoise:0, painmie:1, painrustique:4, sansgluten:0}
+  },
+  'manitoba': {
+    name: "Farine Manitoba / grande force",
+    origin: "Type 00 italienne, W300+",
+    tags: ["Très grande force","Panettone","Pro"],
+    cendres: "Variable (type 00)",
+    proteines: "14-16%",
+    absorption: "Extrême",
+    force: "W300-450",
+    textureType: "Ultra-blanche, ultra-tamisée, gluten exceptionnel. Très élastique, presque caoutchouteuse quand on pétrit",
+    comportement: "Le top de la force boulangère. Supporte des pousses de 48 à 72 heures sans s'effondrer. Obligatoire pour les gros pains levés riches en beurre et oeufs",
+    usages: [
+      {t:"Panettone, colomba, pandoro", d:"100% Manitoba. Sans elle, la mie ne tient pas les 8-12 heures de pousse"},
+      {t:"Brioches longues fermentations (style suisse, pandoro)", d:"100% Manitoba ou 70/30 avec T45 gruau"},
+      {t:"Pâtes à pizza longue pousse (48-72h)", d:"100% Manitoba ou mélange avec T55"},
+      {t:"Pâtes très riches en beurre/sucre", d:"Quand la recette dépasse 40% beurre, Manitoba obligatoire"}
+    ],
+    remplace: "Remplace la T45 gruau quand on veut monter encore plus en force. Aucune farine ne la remplace pour le panettone traditionnel",
+    pitfall: "Impossible à trouver en supermarché classique, se cherche dans les rayons pro, épiceries italiennes ou en ligne. Inadaptée aux pâtisseries courtes pousses : trop de corps, texture élastique indésirable",
+    score: {macaron:0, sablee:0, viennoiserie:4, choux:0, feuilletee:2, cake:0, genoise:0, painmie:4, painrustique:2, sansgluten:0}
+  },
+  'sarrasin': {
+    name: "Farine de sarrasin",
+    origin: "Graine de sarrasin (ou blé noir, pseudo-céréale)",
+    tags: ["Sans gluten","Goût rustique","Magasin bio"],
+    cendres: "Élevée",
+    proteines: "8-10%",
+    absorption: "Variable",
+    force: "Nulle (pas de gluten)",
+    textureType: "Grise, granuleuse, goût très marqué presque amer, notes de noisette grillée",
+    comportement: "Pas de gluten : ne peut pas structurer seule une pâte levée. Utilisée pour son goût caractéristique et comme farine sans gluten en mélange",
+    usages: [
+      {t:"Crêpes et galettes bretonnes", d:"100% sarrasin avec eau et sel. Recette traditionnelle"},
+      {t:"Financiers au sarrasin", d:"50/50 sarrasin et poudre d'amande. Goût unique"},
+      {t:"Sablés rustiques", d:"30-50% sarrasin en mélange avec T55. Donne du caractère"},
+      {t:"Substitut partiel sans gluten", d:"20-30% sarrasin dans un mix sans gluten (avec riz, maïs)"}
+    ],
+    remplace: "Ne remplace pas une farine de blé pour la structure. Remplace avantageusement une partie de la T55 pour un goût plus rustique en pâtisserie",
+    pitfall: "Seule, impossible de faire lever une pâte. Goût très prononcé qui ne plaît pas à tous, à doser avec précaution. Ne pas confondre sans gluten et digestible : riche en fibres, peut être lourd",
+    score: {macaron:0, sablee:3, viennoiserie:0, choux:0, feuilletee:0, cake:2, genoise:1, painmie:0, painrustique:2, sansgluten:4}
+  },
+  'riz': {
+    name: "Farine de riz",
+    origin: "Grains de riz moulus (blanc ou complet)",
+    tags: ["Sans gluten","Neutre","Supermarché"],
+    cendres: "Faible",
+    proteines: "6-8%",
+    absorption: "Faible à moyenne",
+    force: "Nulle (pas de gluten)",
+    textureType: "Très blanche, très fine, goût très neutre. Peut donner un effet un peu sableux si utilisée seule",
+    comportement: "Base classique des mix sans gluten. Neutre en goût, texture fine, mais pas de structure élastique. Toujours à combiner avec des féculents et un liant (gomme xanthane, psyllium)",
+    usages: [
+      {t:"Mix sans gluten maison", d:"40-50% farine de riz + 25% fécule de maïs + 25% fécule de pomme de terre + 1% gomme xanthane"},
+      {t:"Biscuits légers sans gluten", d:"70% riz + 30% poudre d'amande pour structure"},
+      {t:"Pain sans gluten", d:"En mélange avec sarrasin, maïs, psyllium. Jamais seule"},
+      {t:"Tempura et friture", d:"100% farine de riz pour un enrobage ultra-croustillant"}
+    ],
+    remplace: "Ne remplace pas une farine de blé seule. Remplace en mélange avec d'autres farines sans gluten",
+    pitfall: "Utilisée seule en pâtisserie, effet sableux et sec garanti. Nécessite obligatoirement un liant (xanthane, psyllium, oeuf) pour tenir. Attention à la farine de riz complet, plus lourde",
+    score: {macaron:1, sablee:1, viennoiserie:0, choux:0, feuilletee:0, cake:1, genoise:1, painmie:0, painrustique:0, sansgluten:5}
+  },
+  'seigle': {
+    name: "Farine de seigle",
+    origin: "Grains de seigle (T85 à T170)",
+    tags: ["Tradition nordique","Goût puissant","Magasin bio"],
+    cendres: "Variable (0,85 à 1,70%)",
+    proteines: "8-10%",
+    absorption: "Forte",
+    force: "Faible (gluten de mauvaise qualité panifiable)",
+    textureType: "Grise à gris-brun, texture dense, goût puissant légèrement acidulé",
+    comportement: "Peu de gluten panifiable : donne toujours un pain dense, jamais aéré. Mais goût unique, conservation exceptionnelle (pain qui se garde 1 semaine)",
+    usages: [
+      {t:"Pain de seigle tradition", d:"70% seigle + 30% T65 pour garder un minimum d'aération. 100% seigle = pain très dense type scandinave"},
+      {t:"Pain d'épices", d:"100% seigle avec miel, épices. Recette traditionnelle alsacienne"},
+      {t:"Entremets tradition nordique (kladdkaka sombre, gâteaux de Noël)", d:"30-50% seigle en mélange avec T55"},
+      {t:"Crackers et pains plats", d:"100% seigle avec graines, pour une texture craquante"}
+    ],
+    remplace: "Remplace en partie une T65/T80 dans un pain pour plus de goût. Ne remplace pas une T55 en pâtisserie fine (trop dense)",
+    pitfall: "Très hygroscopique, adapter l'hydratation. Ne lève pas comme un pain de blé : ne pas attendre une mie aérée. Goût marqué qui domine, à doser en pâtisserie",
+    score: {macaron:0, sablee:1, viennoiserie:1, choux:0, feuilletee:0, cake:2, genoise:0, painmie:1, painrustique:4, sansgluten:0}
+  }
+};
+
+function setMode(m) {
+  document.querySelectorAll('.mode-btn').forEach((b,i) => {
+    b.classList.toggle('active', (m==='fiches' && i===0) || (m==='assistant' && i===1));
+  });
+  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('mode-'+m).classList.add('active');
+}
+
+// Grille des fiches
+const grid = document.getElementById('farineGrid');
+Object.keys(farines).forEach(key => {
+  const f = farines[key];
+  const btn = document.createElement('button');
+  btn.className = 'far-btn';
+  btn.onclick = () => showFiche(key);
+  btn.innerHTML =
+    '<div class="far-name">'+f.name+'</div>' +
+    '<div class="far-origin">'+f.origin+'</div>' +
+    '<div>'+f.tags.map(t => '<span class="far-tag">'+t+'</span>').join('')+'</div>';
+  grid.appendChild(btn);
+});
+
+function showFiche(key) {
+  document.querySelectorAll('.far-btn').forEach((b,i) => {
+    b.classList.toggle('active', Object.keys(farines)[i] === key);
+  });
+  const f = farines[key];
+  const specsHtml =
+    '<div class="specs-grid">' +
+      '<div class="spec-box"><div class="sp-label">Cendres</div><div class="sp-value">'+f.cendres+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Protéines</div><div class="sp-value">'+f.proteines+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Absorption</div><div class="sp-value">'+f.absorption+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Force W</div><div class="sp-value">'+f.force+'</div></div>' +
+    '</div>';
+
+  const html =
+    '<div class="fiche-header">' +
+      '<div class="sub">'+f.origin+'</div>' +
+      '<h2>'+f.name+'</h2>' +
+    '</div>' +
+    '<div class="fiche-row"><div class="fiche-label">Caractéristiques</div><div class="fiche-value">'+specsHtml+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Texture et goût</div><div class="fiche-value"><strong>'+f.textureType+'</strong></div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Comportement</div><div class="fiche-value">'+f.comportement+'</div></div>' +
+    '<div class="usages-list">' +
+      '<h3 style="font-family:Georgia,serif;font-size:18px;margin:18px 0 12px;color:#1A1410">Usages recommandés</h3>' +
+      f.usages.map(u => '<div class="usage-item"><div class="usage-dot"></div><div class="usage-body"><strong>'+u.t+'</strong><span>'+u.d+'</span></div></div>').join('') +
+    '</div>' +
+    '<div class="remplace"><strong>Ce qu\'elle remplace</strong>'+f.remplace+'</div>' +
+    '<div class="pitfall"><strong>Pièges à éviter</strong>'+f.pitfall+'</div>';
+
+  const fiche = document.getElementById('fiche');
+  fiche.innerHTML = html;
+  fiche.classList.add('visible');
+  fiche.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Gestion visuelle quiz
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(i => {
+        i.closest('.choix-card').classList.remove('active');
+      });
+    }
+    if (e.target.checked) {
+      e.target.closest('.choix-card').classList.add('active');
+    } else {
+      e.target.closest('.choix-card').classList.remove('active');
+    }
+  }
+});
+
+function assistant() {
+  const app = document.querySelector('input[name="app"]:checked').value;
+  const abs = document.querySelector('input[name="abs"]:checked').value;
+  const sansglu = document.getElementById('sansglu').checked;
+  const supermarche = document.getElementById('supermarche').checked;
+  const pro = document.getElementById('pro').checked;
+  const budget = document.getElementById('budget').checked;
+
+  // Score pour chaque farine
+  const scores = {};
+  Object.keys(farines).forEach(k => {
+    const f = farines[k];
+    let s = f.score[app] || 0;
+
+    // Bonus absorption / pâte voulue
+    if (abs === 'fine' && (k === 't45' || k === 'riz')) s += 2;
+    if (abs === 'equilibre' && (k === 't55' || k === 't65')) s += 2;
+    if (abs === 'rustique' && (k === 't80' || k === 't110' || k === 't150' || k === 'seigle')) s += 2;
+    if (abs === 'elastique' && (k === 't45-gruau' || k === 'manitoba')) s += 3;
+
+    // Contraintes éliminatoires
+    if (sansglu && !(k === 'sarrasin' || k === 'riz')) s = 0;
+    if (supermarche && (k === 'manitoba' || k === 't110' || k === 't150' || k === 'seigle' || k === 'sarrasin')) s -= 2;
+    if (pro && (k === 't45-gruau' || k === 'manitoba')) s += 2;
+    if (budget && k === 'manitoba') s -= 3;
+    if (budget && (k === 't55' || k === 't45')) s += 1;
+
+    scores[k] = Math.max(0, s);
+  });
+
+  // Tri par score
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const winner = sorted[0][0];
+  const runnerUp = sorted.filter(([k,s]) => s > 0).slice(1, 3);
+
+  const f = farines[winner];
+
+  // Dosage spécifique selon application
+  const dosages = {
+    macaron: "En macarons traditionnels la farine n'entre pas dans les coques (seulement poudre d'amande + sucre glace). Si ta recette demande un peu de farine tamisée pour les coques, c'est T45 obligatoire (10 à 20 g max)",
+    sablee: "100% T55 pour une pâte sablée classique. 250 g farine pour 125 g beurre + 50 g sucre + 1 oeuf",
+    viennoiserie: "100% T45 gruau pour brioche ou croissant. Pousse 12 à 24h minimum pour développer la mie filante",
+    choux: "100% T55 (ou T45 selon l'école). 125 g farine pour 250 g liquide + 100 g beurre + 4 oeufs",
+    feuilletee: "100% T55 pour la détrempe. Certains pros ajoutent 10-20% de T45 gruau pour plus d'élasticité au tourage",
+    cake: "100% T55 tamisée. Ratio classique : 200 g farine + 200 g beurre + 200 g sucre + 4 oeufs + 1 sachet levure chimique",
+    genoise: "100% T45 tamisée obligatoire. 120 g farine pour 4 oeufs + 120 g sucre. Incorporation délicate pour ne pas casser la mousse",
+    painmie: "100% T45 gruau ou 70/30 T45 gruau + T55. Pousse longue pour une mie serrée type anglais",
+    painrustique: "Mélange 50% T80 + 50% T65 (ou 30% T110 + 70% T65). Levain ou poolish pour développer le goût",
+    sansgluten: "Mix sans gluten maison : 40% farine de riz + 25% fécule maïs + 25% fécule pomme de terre + 1% gomme xanthane + 5% psyllium pour structure"
+  };
+  const dosage = dosages[app] || "Se référer à la fiche détaillée pour le dosage précis selon ta recette";
+
+  // Construction du "why"
+  const reasons = [];
+  if (app === 'macaron' && winner === 't45') reasons.push("les macarons exigent une farine avec peu de gluten, sinon les coques deviennent cartonneuses");
+  if (app === 'viennoiserie' && (winner === 't45-gruau' || winner === 'manitoba')) reasons.push("la brioche et le croissant ont besoin de gluten fort pour supporter le beurre et les longues pousses");
+  if (app === 'sablee' && winner === 't55') reasons.push("la T55 est LA farine universelle de pâtisserie, juste assez de corps pour rouler sans se casser");
+  if (app === 'cake' && winner === 't55') reasons.push("la T55 donne une mie serrée sans être cartonneuse, parfaite pour les cakes");
+  if (app === 'genoise' && winner === 't45') reasons.push("la T45 tamisée est obligatoire pour une génoise : sans gluten qui bloque la mousse d'oeufs");
+  if (app === 'painrustique' && ['t80','t110','t150','seigle'].includes(winner)) reasons.push("un pain rustique a besoin de caractère et de fibres que les farines semi-complètes apportent");
+  if (app === 'sansgluten' && (winner === 'riz' || winner === 'sarrasin')) reasons.push("c'est une base sans gluten qu'il faut mélanger avec d'autres farines/féculents");
+  if (sansglu && (winner === 'riz' || winner === 'sarrasin')) reasons.push("tu exiges du sans gluten strict");
+  if (pro && (winner === 't45-gruau' || winner === 'manitoba')) reasons.push("tu cherches la qualité pro, ces farines dépassent largement les farines de supermarché");
+  if (abs === 'elastique' && (winner === 't45-gruau' || winner === 'manitoba')) reasons.push("tu veux une pâte très élastique, la force W du gluten est déterminante");
+
+  const why = reasons.length > 0 ? "C'est le meilleur choix parce que " + reasons.join(", ") + "." : "Meilleur équilibre entre ton application, la pâte visée et tes contraintes.";
+
+  document.getElementById('recoName').textContent = f.name;
+  document.getElementById('recoWhy').textContent = why;
+  document.getElementById('recoDose').textContent = dosage;
+  document.getElementById('recoActivation').textContent = f.comportement;
+  document.getElementById('recoEviter').textContent = f.pitfall;
+
+  // Alternatives
+  const altDiv = document.getElementById('recoAlternatives');
+  if (runnerUp.length > 0) {
+    altDiv.innerHTML = '<h4 style="font-family:Courier New,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-top:24px;margin-bottom:10px">Alternatives à considérer</h4>' +
+      runnerUp.map(([k,s]) => {
+        const alt = farines[k];
+        return '<div class="alt-card"><strong>'+alt.name+'</strong>'+alt.textureType+'</div>';
+      }).join('');
+  } else {
+    altDiv.innerHTML = '';
+  }
+
+  const reco = document.getElementById('reco');
+  reco.classList.add('visible');
+  reco.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Ouvre la première fiche par défaut
+showFiche('t45');
+</script>
+</body>
+</html>
