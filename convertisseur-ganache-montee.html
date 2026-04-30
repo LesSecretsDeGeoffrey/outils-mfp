@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertisseur de ganache montée — MFP</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:720px}
+
+  .chocs{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(16px,3vw,28px);align-items:stretch;margin-bottom:28px}
+  @media (max-width:800px){.chocs{grid-template-columns:1fr;gap:18px}.arrow{transform:rotate(90deg);padding:0}.arrow-badge{margin:0}}
+
+  .card{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,3vw,28px)}
+  .card-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .card-title{font-family:Georgia,serif;font-size:20px;margin-bottom:20px;font-weight:400}
+
+  label{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin:14px 0 6px;font-weight:600}
+  .optional{color:rgba(26,20,16,0.45);text-transform:none;letter-spacing:0.5px;font-size:10px;margin-left:6px;font-weight:400;font-family:-apple-system,sans-serif}
+  input{width:100%;padding:10px 14px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:14px;font-family:inherit;color:#1A1410;border-radius:3px}
+  input:focus{outline:none;border-color:#C8A04A}
+  .input-with-unit{position:relative}
+  .input-with-unit .unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'Courier New',monospace;font-size:12px;color:rgba(26,20,16,0.45);pointer-events:none}
+  .input-with-unit input{padding-right:48px}
+
+  .helper{font-family:-apple-system,sans-serif;font-size:11px;color:rgba(26,20,16,0.55);margin-top:4px;font-style:italic}
+
+  .cacao-slider{margin-top:10px}
+  .cacao-slider input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:rgba(26,20,16,0.12);border-radius:2px;outline:none;padding:0;border:none;margin-top:10px}
+  .cacao-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;background:#C8A04A;border-radius:50%;cursor:pointer;border:2px solid #FDF8F0;box-shadow:0 0 0 1px #C8A04A}
+  .cacao-slider input[type=range]::-moz-range-thumb{width:22px;height:22px;background:#C8A04A;border-radius:50%;cursor:pointer;border:2px solid #FDF8F0;box-shadow:0 0 0 1px #C8A04A}
+  .cacao-value{font-family:'Courier New',monospace;font-size:13px;letter-spacing:1px;color:#1A1410;font-weight:700;margin-top:8px}
+  .cacao-value strong{color:#C8A04A;font-size:18px;margin-right:4px}
+  .cacao-hints{display:flex;justify-content:space-between;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1px;color:rgba(26,20,16,0.4);margin-top:6px}
+
+  .arrow{display:flex;align-items:center;justify-content:center;padding:0 8px}
+  .arrow-badge{background:#C8A04A;color:#1A1410;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;padding:8px 14px;border-radius:30px;text-transform:uppercase;font-weight:700}
+
+  .result-card{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:28px;border-top:4px solid #C8A04A}
+  .result-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;margin-bottom:22px}
+  @media (max-width:600px){.result-head{grid-template-columns:1fr;text-align:center}}
+  .result-card h3{font-family:Georgia,serif;font-size:20px;color:#C8A04A;margin-bottom:6px;font-weight:400}
+  .result-card .result-intro{color:rgba(253,248,240,0.75);font-size:14px;line-height:1.5}
+  .delta-value{font-family:Georgia,serif;font-size:clamp(40px,6vw,56px);color:#C8A04A;line-height:1;white-space:nowrap;text-align:right}
+  .delta-value small{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:rgba(253,248,240,0.55);margin-top:6px;text-transform:uppercase;text-align:right}
+  @media (max-width:600px){.delta-value,.delta-value small{text-align:center}}
+
+  .msg{padding:14px 18px;border-radius:3px;font-size:13px;line-height:1.55;border-left:3px solid;font-family:inherit}
+  .msg.ok{background:rgba(138,176,96,0.12);border-color:#8AB060;color:#FDF8F0}
+  .msg.warn{background:rgba(200,160,74,0.15);border-color:#C8A04A;color:#FDF8F0}
+  .msg.alert{background:rgba(196,90,66,0.15);border-color:#C45A42;color:#FDF8F0}
+
+  .section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,32px);margin-bottom:24px}
+  .section h2{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-bottom:8px}
+  .section .subtitle{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:20px}
+
+  .results-table{width:100%;border-collapse:collapse}
+  .results-table th{text-align:left;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.55);padding:10px 12px;font-weight:600;border-bottom:1px solid rgba(26,20,16,0.1)}
+  .results-table th:last-child{text-align:right}
+  .results-table td{padding:14px 12px;border-bottom:1px dashed rgba(26,20,16,0.08);vertical-align:middle}
+  .results-table td:last-child{text-align:right}
+  .results-table tr:last-child td{border-bottom:none}
+  .ing-name{font-family:Georgia,serif;font-size:16px;color:#1A1410}
+  .ing-name small{display:block;font-family:-apple-system,sans-serif;font-size:11px;color:rgba(26,20,16,0.5);margin-top:2px;font-style:italic}
+  .orig-val{font-family:'Courier New',monospace;font-size:14px;color:rgba(26,20,16,0.6)}
+  .new-val{font-family:'Courier New',monospace;font-size:16px;color:#C8A04A;font-weight:700;background:#FDF8F0;border:1px solid rgba(200,160,74,0.3);padding:8px 14px;border-radius:3px;display:inline-block;min-width:80px;text-align:center}
+  .delta-tag{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;padding:3px 8px;border-radius:2px;margin-left:8px;vertical-align:middle}
+  .delta-tag.up{background:rgba(196,90,66,0.12);color:#C45A42}
+  .delta-tag.down{background:rgba(138,176,96,0.12);color:#6B8A45}
+  .delta-tag.same{background:rgba(26,20,16,0.08);color:rgba(26,20,16,0.5)}
+
+  .ratios{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  @media (max-width:600px){.ratios{grid-template-columns:1fr}}
+  .ratio-box{background:#FDF8F0;border:1px solid rgba(200,160,74,0.25);border-radius:3px;padding:16px 20px}
+  .ratio-box .ratio-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.55);margin-bottom:6px}
+  .ratio-box .ratio-big{font-family:Georgia,serif;font-size:26px;color:#1A1410;font-weight:400}
+  .ratio-box .ratio-big .gold{color:#C8A04A}
+
+  .tip{background:rgba(200,160,74,0.08);padding:16px 20px;border-radius:3px;font-size:13px;color:rgba(26,20,16,0.8);line-height:1.6;border-left:3px solid #C8A04A;margin-top:18px}
+
+  .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  @media (max-width:600px){.tips-grid{grid-template-columns:1fr}}
+  .tip-mini{background:rgba(200,160,74,0.06);padding:14px 16px;border-radius:3px;font-size:12px;line-height:1.55;color:rgba(26,20,16,0.78);border-left:2px solid #C8A04A}
+  .tip-mini strong{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:4px;font-weight:700}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Convertisseur de ganache montée</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Change de chocolat sans <span class="accent">rater ta ganache montée</span></h1>
+  <p class="intro">Ta recette est pour un chocolat 70% et t'as du 55% sous la main ? Rentre les infos, l'outil recalcule la crème chaude et la crème froide pour garder la même tenue au foisonnement</p>
+
+  <!-- INPUTS -->
+  <div class="chocs">
+    <!-- Recette d'origine -->
+    <div class="card">
+      <div class="card-label">Ta recette d'origine</div>
+      <div class="card-title">Recette de base</div>
+
+      <label>Chocolat</label>
+      <div class="input-with-unit">
+        <input type="number" step="1" min="0" id="choco-orig" value="200">
+        <span class="unit">g</span>
+      </div>
+
+      <label>Crème chaude <span class="optional">— pour l'émulsion</span></label>
+      <div class="input-with-unit">
+        <input type="number" step="1" min="0" id="creme-chaude-orig" value="200">
+        <span class="unit">g</span>
+      </div>
+      <div class="helper">Versée sur le chocolat pour faire l'émulsion</div>
+
+      <label>Crème froide <span class="optional">— pour le foisonnement</span></label>
+      <div class="input-with-unit">
+        <input type="number" step="1" min="0" id="creme-froide-orig" value="400">
+        <span class="unit">g</span>
+      </div>
+      <div class="helper">Ajoutée à froid après l'émulsion, monte au fouet 12h plus tard</div>
+
+      <label>Gélatine <span class="optional">— optionnel, pour entremets</span></label>
+      <div class="input-with-unit">
+        <input type="number" step="0.5" min="0" id="gelatine-orig" value="0">
+        <span class="unit">g</span>
+      </div>
+
+      <label>% cacao du chocolat de la recette</label>
+      <div class="cacao-slider">
+        <input type="range" min="30" max="100" step="1" value="70" id="cacao-orig" oninput="calculate()">
+        <div class="cacao-value"><strong id="cacao-orig-val">70</strong>% de cacao</div>
+        <div class="cacao-hints"><span>30%</span><span>65%</span><span>100%</span></div>
+      </div>
+    </div>
+
+    <div class="arrow"><span class="arrow-badge">→ vers</span></div>
+
+    <!-- Nouveau chocolat -->
+    <div class="card">
+      <div class="card-label">Ton nouveau chocolat</div>
+      <div class="card-title">Celui que tu as sous la main</div>
+
+      <label>% cacao de ton chocolat</label>
+      <div class="cacao-slider">
+        <input type="range" min="30" max="100" step="1" value="55" id="cacao-new" oninput="calculate()">
+        <div class="cacao-value"><strong id="cacao-new-val">55</strong>% de cacao</div>
+        <div class="cacao-hints"><span>30%</span><span>65%</span><span>100%</span></div>
+      </div>
+
+      <div class="tip" style="margin-top:24px">
+        💡 Plus le cacao est élevé, plus le chocolat absorbe de liquide. Pour une ganache montée, il faut adapter <strong>les deux crèmes</strong> proportionnellement pour garder le même ratio choc/total et la même capacité de foisonnement
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTAT -->
+  <div class="result-card">
+    <div class="result-head">
+      <div>
+        <h3>Ta ganache montée ajustée</h3>
+        <p class="result-intro" id="result-intro">Change les % de cacao pour voir la conversion</p>
+      </div>
+      <div class="delta-value" id="delta-value">±0 %<small id="delta-sub">Écart de cacao</small></div>
+    </div>
+    <div id="msg-box" class="msg ok">Rentre tes valeurs pour voir le résultat</div>
+  </div>
+
+  <!-- TABLEAU INGRÉDIENTS -->
+  <div class="section">
+    <h2>Ta nouvelle recette</h2>
+    <p class="subtitle">Applique ces grammages avec ton chocolat. La texture sera fidèle au foisonnement, à condition de respecter les 12h de cristallisation au frigo</p>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th>Ingrédient</th>
+          <th>Recette d'origine</th>
+          <th>Nouvelle recette</th>
+        </tr>
+      </thead>
+      <tbody id="results-body"></tbody>
+    </table>
+
+    <div class="ratios">
+      <div class="ratio-box">
+        <div class="ratio-label">Ratio choc : crème totale — origine</div>
+        <div class="ratio-big" id="ratio-orig">1 : 3</div>
+      </div>
+      <div class="ratio-box">
+        <div class="ratio-label">Ratio choc : crème totale — ajusté</div>
+        <div class="ratio-big" id="ratio-new">1 : <span class="gold">3</span></div>
+      </div>
+    </div>
+
+    <div class="tips-grid">
+      <div class="tip-mini">
+        <strong>Repos minimum</strong>
+        12 heures au frigo, filmé au contact. Sans ça, le foisonnement échoue, ta ganache reste liquide
+      </div>
+      <div class="tip-mini">
+        <strong>Émulsion d'abord</strong>
+        Verse la crème chaude sur le chocolat haché, attends 30 secondes, puis émulsionne au centre à la maryse jusqu'à brillance
+      </div>
+      <div class="tip-mini">
+        <strong>Crème froide après</strong>
+        Une fois l'émulsion stable, ajoute la crème froide en filet, mélange à la maryse — pas au fouet à ce stade
+      </div>
+      <div class="tip-mini">
+        <strong>Foisonnement maîtrisé</strong>
+        Sortie du frigo, fouet à vitesse moyenne. Stoppe à la première texture mousse stable — au-delà tu graines
+      </div>
+    </div>
+
+    <div class="tip">
+      💡 <strong>Astuce Geoffrey :</strong> sur une ganache montée, l'enjeu c'est la stabilité au foisonnement. Si ton nouveau chocolat est très foncé (>75%), bascule 20-30 g de crème froide en supplément pour compenser la rigidité supplémentaire. Avec un chocolat blanc, ajoute un peu de gélatine pour aider la mousse à tenir
+    </div>
+  </div>
+</main>
+
+<script>
+const el = (id) => document.getElementById(id);
+
+function fmtInt(n) { return Math.round(n).toLocaleString('fr-FR'); }
+function fmtFloat(n) { return n.toFixed(1).replace('.', ','); }
+function fmtRatio(n) {
+  if (!isFinite(n) || n <= 0) return '—';
+  return n.toFixed(2).replace('.', ',');
+}
+function signedPct(n) {
+  const r = Math.round(n);
+  if (r === 0) return '±0 %';
+  return (r > 0 ? '+' : '') + r + ' %';
+}
+
+function calculate() {
+  const chocoOrig = parseFloat(el('choco-orig').value) || 0;
+  const cremeChaudeOrig = parseFloat(el('creme-chaude-orig').value) || 0;
+  const cremeFroideOrig = parseFloat(el('creme-froide-orig').value) || 0;
+  const gelatineOrig = parseFloat(el('gelatine-orig').value) || 0;
+  const cacaoOrig = parseFloat(el('cacao-orig').value) || 0;
+  const cacaoNew = parseFloat(el('cacao-new').value) || 0;
+
+  // Mise à jour valeurs sliders
+  el('cacao-orig-val').textContent = cacaoOrig;
+  el('cacao-new-val').textContent = cacaoNew;
+
+  const delta = cacaoOrig - cacaoNew; // positif si nouveau plus doux → diminuer crème
+  const deltaAbs = Math.abs(delta);
+
+  // Calculs (même logique que ganache classique : facteur 1.3% par point de cacao)
+  // Appliqué proportionnellement aux 2 crèmes
+  const factor = 1 - delta * 0.013;
+  const cremeChaudeNew = Math.round(cremeChaudeOrig * factor);
+  const cremeFroideNew = Math.round(cremeFroideOrig * factor);
+
+  // Gélatine : ne change pas avec le cacao (lien hydrique fixe)
+  const gelatineNew = gelatineOrig;
+
+  const chocoNew = chocoOrig;
+
+  // Delta header
+  const signDelta = cacaoNew - cacaoOrig;
+  el('delta-value').innerHTML = `${signedPct(signDelta)}<small>Écart de cacao</small>`;
+
+  // Intro texte
+  let introText;
+  if (deltaAbs < 0.5) {
+    introText = `Ton chocolat a le même % de cacao que celui de la recette, aucun ajustement nécessaire`;
+  } else if (signDelta < 0) {
+    introText = `Ton chocolat est ${fmtInt(deltaAbs)} points plus foncé — l'outil ${cremeChaudeNew + cremeFroideNew > cremeChaudeOrig + cremeFroideOrig ? 'augmente' : 'diminue'} les crèmes pour compenser`;
+  } else {
+    introText = `Ton chocolat est ${fmtInt(deltaAbs)} points plus doux — l'outil ${cremeChaudeNew + cremeFroideNew > cremeChaudeOrig + cremeFroideOrig ? 'augmente' : 'diminue'} les crèmes pour compenser`;
+  }
+  el('result-intro').textContent = introText;
+
+  // Message
+  const msgBox = el('msg-box');
+  if (deltaAbs > 25) {
+    msgBox.className = 'msg alert';
+    msgBox.innerHTML = `<strong>Gros écart de cacao —</strong> teste avec une petite quantité d'abord. Sur ganache montée, un écart >25 points peut compromettre la stabilité du foisonnement. Si la mousse retombe, ajoute 1g de gélatine par 200g de crème la fois suivante`;
+  } else if (deltaAbs > 15) {
+    msgBox.className = 'msg warn';
+    msgBox.innerHTML = `<strong>Écart notable —</strong> le foisonnement sera proche mais pas identique. Surveille la texture au montage et stoppe dès que la mousse tient au fouet — ne pas sur-fouetter`;
+  } else if (deltaAbs > 0.5) {
+    msgBox.className = 'msg ok';
+    msgBox.innerHTML = `<strong>Écart faible —</strong> la conversion est fiable, foisonnement sécurisé après 12h de repos`;
+  } else {
+    msgBox.className = 'msg ok';
+    msgBox.innerHTML = `<strong>Aucun écart —</strong> tu utilises le même % de cacao que la recette, rien à changer`;
+  }
+
+  // Tableau ingrédients
+  const tag = (orig, nouv, isFloat) => {
+    if (orig === 0 && nouv === 0) return '';
+    const diff = nouv - orig;
+    if (diff === 0 || (isFloat && Math.abs(diff) < 0.05)) return `<span class="delta-tag same">±0</span>`;
+    const cls = diff > 0 ? 'up' : 'down';
+    const formatted = isFloat ? fmtFloat(Math.abs(diff)) : fmtInt(Math.abs(diff));
+    return `<span class="delta-tag ${cls}">${diff > 0 ? '+' : '−'}${formatted} g</span>`;
+  };
+
+  const rows = [
+    { name: 'Chocolat', sub: 'inchangé — c\'est ton ingrédient de base', orig: chocoOrig, nouv: chocoNew, unit: 'g' },
+    { name: 'Crème chaude', sub: 'pour l\'émulsion sur le chocolat', orig: cremeChaudeOrig, nouv: cremeChaudeNew, unit: 'g' },
+    { name: 'Crème froide', sub: 'pour le foisonnement après repos', orig: cremeFroideOrig, nouv: cremeFroideNew, unit: 'g' }
+  ];
+  if (gelatineOrig > 0) {
+    rows.push({ name: 'Gélatine', sub: 'inchangée — non liée au cacao', orig: gelatineOrig, nouv: gelatineNew, unit: 'g', isFloat: true });
+  }
+
+  el('results-body').innerHTML = rows.map(r => {
+    const formattedOrig = r.isFloat ? fmtFloat(r.orig) : fmtInt(r.orig);
+    const formattedNew = r.isFloat ? fmtFloat(r.nouv) : fmtInt(r.nouv);
+    return `
+      <tr>
+        <td><div class="ing-name">${r.name}<small>${r.sub}</small></div></td>
+        <td><span class="orig-val">${formattedOrig} ${r.unit}</span></td>
+        <td><span class="new-val">${formattedNew} ${r.unit}</span>${tag(r.orig, r.nouv, r.isFloat)}</td>
+      </tr>
+    `;
+  }).join('');
+
+  // Ratios choc:crème totale (chaude + froide)
+  const cremeTotaleOrig = cremeChaudeOrig + cremeFroideOrig;
+  const cremeTotaleNew = cremeChaudeNew + cremeFroideNew;
+  el('ratio-orig').innerHTML = `1 : ${fmtRatio(cremeTotaleOrig / (chocoOrig || 1))}`;
+  el('ratio-new').innerHTML = `1 : <span class="gold">${fmtRatio(cremeTotaleNew / (chocoNew || 1))}</span>`;
+}
+
+// Recalcule sur chaque input
+['choco-orig', 'creme-chaude-orig', 'creme-froide-orig', 'gelatine-orig', 'cacao-orig', 'cacao-new'].forEach(id => {
+  el(id).addEventListener('input', calculate);
+});
+
+// Init
+calculate();
+</script>
+</body>
+</html>
