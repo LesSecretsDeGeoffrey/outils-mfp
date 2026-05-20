@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guide des gélifiants — MFP</title>
+<title>Guide des gélifiants — Les Secrets De Geoffrey</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
@@ -100,7 +100,7 @@
     <div class="quiz-section">
       <h3>1. Ton application</h3>
       <div class="choix-grid" id="appGrid">
-        <label class="choix-card active"><input type="radio" name="app" value="insert" checked><span>Insert d'entremet</span></label>
+        <label class="choix-card active"><input type="radio" name="app" value="insert" checked><span>Insert d'entremets</span></label>
         <label class="choix-card"><input type="radio" name="app" value="confit"><span>Confit / coulis tranché</span></label>
         <label class="choix-card"><input type="radio" name="app" value="glacage"><span>Glaçage miroir</span></label>
         <label class="choix-card"><input type="radio" name="app" value="nappage"><span>Nappage neutre</span></label>
@@ -393,7 +393,7 @@ function assistant() {
   if (acide && ['pectine-nh','pectine-jaune','agar-agar'].includes(winner)) reasons.push("ta préparation est très acide, il faut un gélifiant qui tient face à ça");
   if (app === 'patedefruit' && winner === 'pectine-jaune') reasons.push("c'est LE gélifiant spécialisé pâtes de fruits, les autres n'y arriveront pas");
   if (app === 'glacage' && winner === 'gelatine') reasons.push("le glaçage miroir classique demande de la gélatine pour la brillance et la tenue");
-  if (app === 'insert' && winner === 'pectine-nh') reasons.push("un insert dans un entremet demande une pectine NH pour tenir sa place sans être trop dure");
+  if (app === 'insert' && winner === 'pectine-nh') reasons.push("un insert dans un entremets demande une pectine NH pour tenir sa place sans être trop dure");
 
   const why = reasons.length > 0 ? "C'est le meilleur choix parce que " + reasons.join(", ") + "." : "Meilleur équilibre entre ton application, la texture visée et tes contraintes.";
 

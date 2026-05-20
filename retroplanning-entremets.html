@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rétroplanning entremets — MFP</title>
+<title>Rétroplanning entremets — Les Secrets De Geoffrey</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
@@ -61,8 +61,8 @@
 </div>
 
 <main>
-  <h1>T'as un entremet à servir. <span class="accent">Quand tu commences ?</span></h1>
-  <p class="intro">Dis-moi la date, l'heure du service et ce que ton entremet contient. Je te sors le planning complet à l'heure près, du J-3 au dressage final. Fini les "merde, j'aurais dû commencer hier"</p>
+  <h1>T'as un entremets à servir. <span class="accent">Quand tu commences ?</span></h1>
+  <p class="intro">Dis-moi la date, l'heure du service et ce que ton entremets contient. Je te sors le planning complet à l'heure près, du J-3 au dressage final. Fini les "merde, j'aurais dû commencer hier"</p>
 
   <div class="form-section">
     <h3>Le service</h3>
@@ -80,15 +80,15 @@
       <label for="decongelation">Temps de décongélation au frigo</label>
       <select id="decongelation">
         <option value="4">4 heures (petits entremets individuels)</option>
-        <option value="6" selected>6 heures (entremet 18-22 cm, recommandé)</option>
-        <option value="8">8 heures (entremet 24-26 cm ou buche)</option>
+        <option value="6" selected>6 heures (entremets 18-22 cm, recommandé)</option>
+        <option value="8">8 heures (entremets 24-26 cm ou buche)</option>
         <option value="12">Toute une nuit (le plus sécurisant)</option>
       </select>
     </div>
   </div>
 
   <div class="form-section">
-    <h3>Les composants de ton entremet</h3>
+    <h3>Les composants de ton entremets</h3>
 
     <label style="margin-top:4px">Biscuit</label>
     <div class="checkbox-grid" id="grid-biscuit">
@@ -210,7 +210,7 @@ function computePlanning() {
   // Début décongélation frigo = service - decong
   const debutDecong = addHours(service, decong);
 
-  // Glaçage / velours : juste avant la décongélation sur entremet encore surgelé
+  // Glaçage / velours : juste avant la décongélation sur entremets encore surgelé
   // Prévoir 45 min (chauffe glaçage à 35°C, démoulage, coulage, fige)
   let momentFinition = null;
   if (finition === 'miroir' || finition === 'velours') {
@@ -285,20 +285,20 @@ function computePlanning() {
     tasks.push({time: debutMousse, title:"Mousse "+({chocolat:"chocolat",fruit:"de fruit",vanille:"bavaroise vanille",cheesecake:"cheesecake"}[mousse])+" + montage", detail: tipsMousse[mousse] + " Montage envers : coule 1/3 de mousse dans le moule, pose l'insert congelé centré et pressé légèrement, recoule un peu de mousse, pose le biscuit par-dessus, lisse à la spatule.", duration:"1h30"});
 
     const congel = new Date(debutMousse); congel.setMinutes(congel.getMinutes() + 90);
-    tasks.push({time: congel, title:"Congélation", detail: "Surgèle toute la nuit jusqu'au glaçage. Minimum 4h mais l'entremet doit être totalement surgelé à cœur pour résister au glaçage sans fondre. Couvre avec une cloche pour éviter le givrage.", duration: decong === 12 ? "toute la nuit" : "4h minimum"});
+    tasks.push({time: congel, title:"Congélation", detail: "Surgèle toute la nuit jusqu'au glaçage. Minimum 4h mais l'entremets doit être totalement surgelé à cœur pour résister au glaçage sans fondre. Couvre avec une cloche pour éviter le givrage.", duration: decong === 12 ? "toute la nuit" : "4h minimum"});
   }
 
   // J : glaçage / velours / nappage / dressage
   if (finition === 'miroir') {
     const chauffe = new Date(momentFinition); chauffe.setMinutes(chauffe.getMinutes() - 30);
     tasks.push({time: chauffe, title:"Réchauffe du glaçage miroir", detail:"Sors le glaçage du frigo. Passe-le 20-30 sec au micro-ondes par pulsations, mélange doucement. Mixeur plongeant incliné sans bulles. Température d'utilisation : 35°C exact au thermomètre.", duration:"30 min"});
-    tasks.push({time: momentFinition, title:"Démoulage et glaçage", detail:"Sors l'entremet du congélateur, démoule sur grille posée sur plat creux (récupère le surplus). Coule le glaçage à 35°C en un seul geste du centre vers l'extérieur. Attends 30 sec, racle le dessous à la spatule. Transfère délicatement sur le plat de service définitif.", duration:"30 min"});
+    tasks.push({time: momentFinition, title:"Démoulage et glaçage", detail:"Sors l'entremets du congélateur, démoule sur grille posée sur plat creux (récupère le surplus). Coule le glaçage à 35°C en un seul geste du centre vers l'extérieur. Attends 30 sec, racle le dessous à la spatule. Transfère délicatement sur le plat de service définitif.", duration:"30 min"});
   } else if (finition === 'velours') {
-    tasks.push({time: momentFinition, title:"Spray effet velours", detail:"Sors l'entremet du congélateur. Fais chauffer ton spray velours à 45°C (bain-marie). Pulvérise à 20-30 cm de distance en pluie fine. L'entremet DOIT être surgelé sinon le spray ne prend pas. Transfère sur le plat de service.", duration:"15 min"});
+    tasks.push({time: momentFinition, title:"Spray effet velours", detail:"Sors l'entremets du congélateur. Fais chauffer ton spray velours à 45°C (bain-marie). Pulvérise à 20-30 cm de distance en pluie fine. L'entremets DOIT être surgelé sinon le spray ne prend pas. Transfère sur le plat de service.", duration:"15 min"});
   } else if (finition === 'nappage') {
-    tasks.push({time: debutDecong, title:"Décongélation + nappage", detail:"Sors l'entremet du congélateur, démoule, place sur grille. Couvre au pinceau ou à la spatule d'un nappage neutre réchauffé à 30°C. Transfère sur le plat de service, direction le frigo pour décongeler.", duration:"20 min"});
+    tasks.push({time: debutDecong, title:"Décongélation + nappage", detail:"Sors l'entremets du congélateur, démoule, place sur grille. Couvre au pinceau ou à la spatule d'un nappage neutre réchauffé à 30°C. Transfère sur le plat de service, direction le frigo pour décongeler.", duration:"20 min"});
   } else {
-    tasks.push({time: debutDecong, title:"Sortie du congélateur + décongélation frigo", detail:"Sors l'entremet, démoule, place sur plat de service, direction le frigo pour décongélation douce.", duration:"5 min"});
+    tasks.push({time: debutDecong, title:"Sortie du congélateur + décongélation frigo", detail:"Sors l'entremets, démoule, place sur plat de service, direction le frigo pour décongélation douce.", duration:"5 min"});
   }
 
   if (fruitsFrais) {
@@ -308,7 +308,7 @@ function computePlanning() {
 
   // Début de la décongélation si elle n'est pas déjà couverte par la finition
   if (finition === 'miroir' || finition === 'velours') {
-    tasks.push({time: debutDecong, title:"Placement au frigo pour décongélation", detail:"L'entremet glacé est placé au frigo sur son plat de service. "+decong+"h minimum avant le service pour décongélation à cœur. NE PAS décongeler à température ambiante : ça fait perler le glaçage.", duration: decong+"h"});
+    tasks.push({time: debutDecong, title:"Placement au frigo pour décongélation", detail:"L'entremets glacé est placé au frigo sur son plat de service. "+decong+"h minimum avant le service pour décongélation à cœur. NE PAS décongeler à température ambiante : ça fait perler le glaçage.", duration: decong+"h"});
   }
 
   tasks.push({time: service, title:"Service !", detail:"Découpe avec un couteau fin passé sous l'eau chaude et essuyé entre chaque part. Tes invités vont halluciner.", duration:"—"});
@@ -361,7 +361,7 @@ function computePlanning() {
   const tip = document.createElement('div');
   tip.className = 'tip-final';
   tip.innerHTML = '<strong>Le conseil de Geoffrey</strong>' +
-    "Ce planning est un rétroplanning de sécurité : il donne des créneaux larges. Tu peux décaler les étapes de 1-2 jours en avance si tu préfères travailler à froid (le biscuit et l'insert se gardent 48h de plus au congélateur sans problème). Ce qui ne bouge jamais : glaçage miroir repos 24h obligatoire, entremet SURGELÉ au moment du glaçage, décongélation au frigo uniquement.";
+    "Ce planning est un rétroplanning de sécurité : il donne des créneaux larges. Tu peux décaler les étapes de 1-2 jours en avance si tu préfères travailler à froid (le biscuit et l'insert se gardent 48h de plus au congélateur sans problème). Ce qui ne bouge jamais : glaçage miroir repos 24h obligatoire, entremets SURGELÉ au moment du glaçage, décongélation au frigo uniquement.";
   timeline.appendChild(tip);
 
   // Header meta

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roadmap 90 jours — MFP</title>
+<title>Roadmap 90 jours — Les Secrets De Geoffrey</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
@@ -91,6 +91,32 @@
   .btn-sec:hover{border-color:#C8A04A;color:#C8A04A}
   .btn-sec.danger:hover{border-color:#b03232;color:#b03232}
 
+  /* === Niveau intro contextuelle === */
+  .level-intro{background:linear-gradient(135deg,#1A1410 0%,#2A1F18 100%);color:#FDF8F0;border-radius:4px;padding:20px 24px;margin-bottom:24px;border-left:4px solid #C8A04A;display:none}
+  .level-intro.show{display:block;animation:fadeSlide 0.4s ease}
+  .level-intro .lab{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;color:#C8A04A;text-transform:uppercase;margin-bottom:8px}
+  .level-intro .msg{font-family:Georgia,serif;font-size:17px;line-height:1.55;margin-bottom:10px}
+  .level-intro .rythme{font-size:13px;color:rgba(253,248,240,0.75);font-style:italic}
+  .level-intro .rythme strong{color:#E8D5A0;font-style:normal;font-weight:600}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+  /* === Recette mise en avant === */
+  .target-recipe{background:linear-gradient(135deg,rgba(200,160,74,0.12) 0%,rgba(200,160,74,0.04) 100%);border:2px solid #C8A04A!important;border-radius:4px;padding:16px 18px;margin-bottom:14px;position:relative;box-shadow:0 4px 12px rgba(200,160,74,0.15)}
+  .target-recipe::before{content:'★ POUR TOI';position:absolute;top:-11px;left:14px;background:#C8A04A;color:#fff;padding:3px 12px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;font-weight:700;border-radius:2px}
+  .target-recipe .recipe-name{font-size:16px!important;font-weight:700!important;color:#1A1410!important}
+  .target-recipe .recipe-desc{font-size:13px!important;color:rgba(26,20,16,0.75)!important;margin-top:4px!important}
+  .target-recipe .difficulty{font-size:10px;padding:5px 10px}
+
+  /* === Alternatives === */
+  .alternatives-header{font-family:'Courier New',monospace;font-size:9px;letter-spacing:2px;color:rgba(26,20,16,0.5);text-transform:uppercase;margin:14px 0 8px;font-weight:600}
+  .alternative-recipe{opacity:0.65;transform:scale(0.97);transition:all 0.2s}
+  .alternative-recipe:hover{opacity:1;transform:scale(1)}
+
+  /* === Phase révision === */
+  .phase.revision .phase-header{background:#3D332B}
+  .phase.revision .phase-header::after{content:'RÉVISION OPTIONNELLE';display:inline-block;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;background:rgba(200,160,74,0.2);color:#E8D5A0;padding:4px 10px;border-radius:2px;margin-left:10px;align-self:center}
+  .phase.revision .week-head{opacity:0.75}
+
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -101,7 +127,7 @@
 </div>
 
 <main>
-  <h1>De zéro à pro en <span class="accent">13 semaines</span></h1>
+  <h1>De zéro à pro en <span class="accent">90 jours</span></h1>
   <p class="intro">Un parcours structuré semaine par semaine pour progresser sur les vraies bases de la pâtisserie. Chaque semaine tu as un objectif, une technique à maîtriser, 3 recettes au choix selon ton niveau et un critère de réussite. Tu valides, tu passes à la suivante. En 90 jours tu es à l'aise sur les fondamentaux, les entremets et la création de desserts signature</p>
 
   <div class="progress-card">
@@ -134,6 +160,8 @@
     <div class="level-options" id="levelOptions"></div>
     <p style="font-size:12px;color:rgba(26,20,16,0.55);margin-top:12px;font-style:italic">Ça détermine quelle recette tu cibles chaque semaine. Tu peux changer à tout moment</p>
   </div>
+
+  <div class="level-intro" id="levelIntro"></div>
 
   <div id="phases"></div>
 
@@ -207,7 +235,7 @@ const roadmap = [
     recipes: [
       {diff:"facile", n:"Pâte sablée classique", d:"Méthode par sablage. 125 g farine, 75 g beurre, 57 g sucre, 25 g œuf"},
       {diff:"moyen", n:"Pâte sucrée aux amandes", d:"Méthode par crémage avec poudre d'amandes. Croustillante et parfumée"},
-      {diff:"avance", n:"Sablé breton pour entremet", d:"Jaunes montés + beurre pommade + farine + levure. Cuit en cercle"}
+      {diff:"avance", n:"Sablé breton pour entremets", d:"Jaunes montés + beurre pommade + farine + levure. Cuit en cercle"}
     ],
     criteria: "Ta pâte se tient au fonçage, ne rétracte pas à la cuisson, tient droite dans le cercle. Bords nets et dorure homogène"
   },
@@ -281,56 +309,56 @@ const roadmap = [
     phase: 2, week: 9,
     title: "Les entremets et le montage envers",
     subtitle: "Mousse, assemblage, congélation",
-    objective: "Savoir monter un entremet complet en envers (mousse → insert → biscuit) dans un moule silicone. Congeler 12 h minimum",
+    objective: "Savoir monter un entremets complet en envers (mousse → insert → biscuit) dans un moule silicone. Congeler 12 h minimum",
     technique: {
       t: "Le montage envers",
       d: "Coule 1/3 de mousse dans le moule. Pose l'insert congelé centré et pressé légèrement pour éviter les bulles d'air en dessous. Recoule un peu de mousse. Pose le biscuit par-dessus, lisse à la spatule. Congèle"
     },
     recipes: [
-      {diff:"facile", n:"Entremet chocolat vanille 18 cm", d:"Mousse chocolat + crémeux vanille + dacquoise amandes"},
+      {diff:"facile", n:"Entremets chocolat vanille 18 cm", d:"Mousse chocolat + crémeux vanille + dacquoise amandes"},
       {diff:"moyen", n:"Royal chocolat praliné", d:"Mousse chocolat + insert praliné + croustillant feuillantine + dacquoise"},
-      {diff:"avance", n:"Entremet mangue-passion-vanille", d:"Mousse vanille + triple insert fruité + sablé breton. 3 textures 3 saveurs"}
+      {diff:"avance", n:"Entremets mangue-passion-vanille", d:"Mousse vanille + triple insert fruité + sablé breton. 3 textures 3 saveurs"}
     ],
-    criteria: "Ton entremet a des couches nettes à la coupe. L'insert est parfaitement centré. Aucune bulle d'air ni affaissement après décongélation"
+    criteria: "Ton entremets a des couches nettes à la coupe. L'insert est parfaitement centré. Aucune bulle d'air ni affaissement après décongélation"
   },
   {
     phase: 2, week: 10,
     title: "Les glaçages et finitions",
     subtitle: "Miroir, velours, nappage",
-    objective: "Tu dois maîtriser au moins un glaçage miroir brillant et savoir l'appliquer sur un entremet surgelé sans perler ni couler",
+    objective: "Tu dois maîtriser au moins un glaçage miroir brillant et savoir l'appliquer sur un entremets surgelé sans perler ni couler",
     technique: {
       t: "La T° d'utilisation à 35°C",
-      d: "Le glaçage miroir se coule à 35°C exact sur un entremet SURGELÉ à cœur. Plus chaud, il coule trop fin. Plus froid, il fige avant de couvrir. Thermomètre à sonde obligatoire"
+      d: "Le glaçage miroir se coule à 35°C exact sur un entremets SURGELÉ à cœur. Plus chaud, il coule trop fin. Plus froid, il fige avant de couvrir. Thermomètre à sonde obligatoire"
     },
     recipes: [
       {diff:"facile", n:"Nappage brillant neutre chaud", d:"Préparation commerce, appliqué à 30°C au pinceau"},
       {diff:"moyen", n:"Glaçage miroir chocolat noir", d:"Sucre + glucose + chocolat + gélatine + lait concentré. Repos 24 h"},
-      {diff:"avance", n:"Glaçage miroir coloré effet marbré", d:"2 couleurs coulées simultanément et mixées à la spatule sur l'entremet"}
+      {diff:"avance", n:"Glaçage miroir coloré effet marbré", d:"2 couleurs coulées simultanément et mixées à la spatule sur l'entremets"}
     ],
-    criteria: "Ton glaçage couvre l'entremet en une seule fois, sans traces ni coulures excessives. Brillance parfaite qui dure. Pas de perlage au frigo"
+    criteria: "Ton glaçage couvre l'entremets en une seule fois, sans traces ni coulures excessives. Brillance parfaite qui dure. Pas de perlage au frigo"
   },
 
   // === PHASE 3 : CRÉATION (3 semaines, J71-90) ===
   {
     phase: 3, week: 11,
-    title: "Le tempérage du chocolat",
-    subtitle: "Courbes, chablon, décors",
-    objective: "Tempérer du chocolat noir, lait, blanc. Comprendre la courbe (fonte / cristallisation / travail). Faire des décors qui claquent, brillent, se cassent net",
+    title: "Les accords de saveurs",
+    subtitle: "Familles aromatiques, contrastes, équilibre",
+    objective: "Apprendre à associer les ingrédients sans se planter. Comprendre les familles aromatiques (fruits rouges, agrumes, fruits secs, épices, herbes) et savoir lesquelles dialoguent ensemble pour créer un dessert qui a du sens",
     technique: {
-      t: "La courbe chocolat noir 50-28-31°C",
-      d: "Fonte au bain-marie à 50°C. Refroidissement par ensemencement (ajout de pistoles non fondues) jusqu'à 28°C. Remontée douce à 31°C pour travail. Chaque écart = perte de brillance"
+      t: "La règle des accords par famille",
+      d: "Une famille aromatique = des ingrédients qui partagent des molécules aromatiques. Fraise + basilic, chocolat + noisette, citron + amande, vanille + caramel : ces accords marchent parce qu'ils ont des notes communes. Évite de mélanger 3 saveurs fortes différentes, tu vas brouiller le message"
     },
     recipes: [
-      {diff:"facile", n:"Pistoles trempées aux noisettes", d:"Chocolat tempéré coulé sur noisettes torréfiées. Décor facile pour entremet"},
-      {diff:"moyen", n:"Décors chocolat détaillés", d:"Chocolat tempéré étalé sur feuille guitare, détaillé à l'emporte-pièce juste avant cristallisation"},
-      {diff:"avance", n:"Tablette aux éclats", d:"Chocolat tempéré moulé en tablette avec fruits secs caramélisés. Cassant, brillant, contraction parfaite"}
+      {diff:"facile", n:"Tarte fraise basilic", d:"Pâte sucrée, crémeux fraise, dés de fraise frais, chiffonnade de basilic. Accord classique"},
+      {diff:"moyen", n:"Entremets citron amande romarin", d:"Mousse amande, insert lemon curd, biscuit amande, brin de romarin. Triple accord cohérent"},
+      {diff:"avance", n:"Création trois accords complexes", d:"Choisis 3 ingrédients d'une même famille (ex : fève tonka + noisette + caramel) et compose ton dessert autour"}
     ],
-    criteria: "Ton chocolat est brillant (miroir sur la surface), cassant (cassure nette), se contracte (se démoule tout seul). Aucun voile blanc après 24 h"
+    criteria: "Quand tu goûtes ton dessert, tu sens chaque saveur sans qu'aucune écrase les autres. L'accord est lisible et logique pour celui qui découvre"
   },
   {
     phase: 3, week: 12,
     title: "La composition d'une création signature",
-    subtitle: "Accords, contrastes, niveaux",
+    subtitle: "4 textures, équilibre, narration",
     objective: "Créer ta propre recette en partant d'un ingrédient principal. Construire 4 textures cohérentes (croustillant, moelleux, crémeux, fondant) et équilibrer les saveurs",
     technique: {
       t: "La règle des 4 textures",
@@ -338,26 +366,26 @@ const roadmap = [
     },
     recipes: [
       {diff:"facile", n:"Tarte signature 3 textures", d:"Pâte sucrée + crémeux + fruits frais. Cohérence couleur et goût"},
-      {diff:"moyen", n:"Entremet autour d'un ingrédient (ex : yuzu)", d:"Mousse, insert, biscuit et décor autour d'une même famille aromatique"},
-      {diff:"avance", n:"Création 5 textures avec accord inattendu", d:"Exemple : chocolat + carotte rôtie + orange sanguine + noisette + poivre Timut"}
+      {diff:"moyen", n:"Entremets autour d'un ingrédient (ex : yuzu)", d:"Mousse, insert, biscuit et décor autour d'une même famille aromatique"},
+      {diff:"avance", n:"Création 5 textures avec accord travaillé", d:"5 éléments de texture différents, accords de saveurs maîtrisés. Ton dessert raconte une histoire claire"}
     ],
     criteria: "Ton dessert a 4 textures distinctes. Les saveurs dialoguent sans qu'une écrase les autres. Quelqu'un qui goûte sait ce que tu as voulu raconter"
   },
   {
     phase: 3, week: 13,
-    title: "La mise en scène et la photo",
-    subtitle: "Dressage, éclairage, narration",
-    objective: "Savoir dresser une assiette pro, photographier tes créations en lumière naturelle, raconter l'histoire derrière la recette",
+    title: "Itération et perfectionnement",
+    subtitle: "Refaire, ajuster, signer",
+    objective: "Refaire ta création signature 2 ou 3 fois en améliorant un détail à chaque essai. Apprendre à ajuster un ratio, raffiner une texture, équilibrer une saveur. C'est cette boucle qui fait passer du dessert correct au dessert qui marque",
     technique: {
-      t: "La règle des tiers et du contraste",
-      d: "Divise ton cadre en 3 verticalement et horizontalement. Pose ton sujet sur une intersection. Fond mat sombre + dessert clair = contraste fort. Lumière naturelle latérale à 45° = volume et texture visibles"
+      t: "La méthode des variations contrôlées",
+      d: "Ne change qu'une chose à la fois entre deux essais : 10 % de sucre en moins, ou une infusion plus longue, ou un biscuit plus fin. Sinon tu ne sais pas ce qui a fait la différence. Note tes ratios et tes ressentis à chaque fournée dans ton carnet de pâtisserie",
     },
     recipes: [
-      {diff:"facile", n:"1 entremet photographié sous 3 angles", d:"Vue de dessus, vue profil, vue à la coupe. Même lumière"},
-      {diff:"moyen", n:"Mise en scène thématique", d:"Ton dessert + ingrédients bruts autour + textile + ambiance cohérente"},
-      {diff:"avance", n:"Création photographiée + storytelling Instagram", d:"5 photos série + carrousel + légende qui raconte la démarche créative"}
+      {diff:"facile", n:"Refaire ta tarte signature 2 fois", d:"Premier essai → identifier 1 défaut → second essai avec ajustement"},
+      {diff:"moyen", n:"Itérer un entremets sur 3 fournées", d:"3 versions du même entremets, chaque fois 1 paramètre différent. Compare et garde la meilleure"},
+      {diff:"avance", n:"Construire ta carte de 3 desserts signatures", d:"3 créations cohérentes entre elles (saison, gamme de saveurs, identité visuelle). Tu signes ta gamme"}
     ],
-    criteria: "Tes photos font envie en 2 secondes. On voit les textures, les volumes, la lumière. L'histoire est claire sans avoir à lire un texte"
+    criteria: "Tu sais expliquer pourquoi ta dernière version est meilleure que la première. Tu as un carnet à jour avec tes ratios. Tu peux refaire ta recette à l'identique sans hésiter"
   }
 ];
 
@@ -378,10 +406,36 @@ function saveState() {
 
 // Sélecteur niveau
 const levels = [
-  {id:'debutant', title:"Débutant", desc:"Tu découvres. Cible les recettes faciles en priorité"},
-  {id:'intermediaire', title:"Intermédiaire", desc:"Tu connais les bases. Cible les recettes moyennes"},
-  {id:'avance', title:"Avancé", desc:"Tu veux progresser vers le niveau pro. Cible les recettes avancées"}
+  {
+    id:'debutant',
+    title:"Débutant",
+    desc:"Tu découvres. Cible les recettes faciles en priorité",
+    intro:"Tu pars de zéro et c'est parfait. Le parcours complet de 13 semaines est fait pour toi. On commence par les crèmes anglaises et on monte doucement. Chaque semaine compte, ne saute aucune étape",
+    rythme:"1 semaine de roadmap = 1 semaine réelle (90 jours au total). Reste patient, les fondations c'est ce qui fait toute la différence ensuite",
+    targetDiff:'facile',
+    revisionPhases:[]
+  },
+  {
+    id:'intermediaire',
+    title:"Intermédiaire",
+    desc:"Tu connais les bases. Cible les recettes moyennes",
+    intro:"Tu as déjà les bases en main. Tu peux survoler la Phase 1 (révision rapide) et te concentrer sur la Phase 2 où la vraie technique commence. Vise les recettes moyennes, c'est là que tu vas vraiment progresser",
+    rythme:"1 semaine de roadmap = 4 à 5 jours réels (60 jours au total). Tu peux accélérer sur la Phase 1, ralentis sur les macarons et entremets",
+    targetDiff:'moyen',
+    revisionPhases:[1]
+  },
+  {
+    id:'avance',
+    title:"Avancé",
+    desc:"Tu veux progresser vers le niveau pro. Cible les recettes avancées",
+    intro:"Tu maîtrises les fondamentaux. Phase 1 et Phase 2 deviennent du rappel. Ton vrai terrain de jeu commence Phase 3 : accords de saveurs, composition signature, itération. Vise les recettes avancées et challenge-toi",
+    rythme:"1 semaine de roadmap = 2 à 3 jours réels (35 jours au total). Tu enchaînes vite jusqu'à la création où tu peux prendre ton temps",
+    targetDiff:'avance',
+    revisionPhases:[1,2]
+  }
 ];
+
+function getLevel(id) { return levels.find(l => l.id === id) || levels[0]; }
 
 function renderLevels() {
   const container = document.getElementById('levelOptions');
@@ -398,7 +452,18 @@ function setLevel(id) {
   state.level = id;
   saveState();
   renderLevels();
+  renderLevelIntro();
   renderPhases();
+}
+
+function renderLevelIntro() {
+  const lvl = getLevel(state.level);
+  const el = document.getElementById('levelIntro');
+  el.innerHTML =
+    '<div class="lab">Niveau '+(lvl.id==='debutant'?'1 · Débutant':lvl.id==='intermediaire'?'2 · Intermédiaire':'3 · Avancé')+'</div>' +
+    '<div class="msg">'+lvl.intro+'</div>' +
+    '<div class="rythme"><strong>Rythme conseillé :</strong> '+lvl.rythme+'</div>';
+  el.classList.add('show');
 }
 
 function renderPhases() {
@@ -406,12 +471,14 @@ function renderPhases() {
   const phases = [
     {num:1, title:"Phase 1 · Fondations", subtitle:"Jours 1 à 35", meta:"5 SEMAINES · CRÈMES, BISCUITS, PÂTES DE BASE"},
     {num:2, title:"Phase 2 · Maîtrise technique", subtitle:"Jours 36 à 70", meta:"5 SEMAINES · MACARONS, GANACHES, ENTREMETS, GLAÇAGES"},
-    {num:3, title:"Phase 3 · Création", subtitle:"Jours 71 à 90", meta:"3 SEMAINES · CHOCOLAT, COMPOSITION, MISE EN SCÈNE"}
+    {num:3, title:"Phase 3 · Création", subtitle:"Jours 71 à 90", meta:"3 SEMAINES · ACCORDS, COMPOSITION, ITÉRATION"}
   ];
+  const lvl = getLevel(state.level);
   container.innerHTML = phases.map(p => {
     const weeks = roadmap.filter(w => w.phase === p.num);
     const done = weeks.filter(w => state.done[w.week]).length;
-    return '<div class="phase">' +
+    const isRevision = lvl.revisionPhases.includes(p.num);
+    return '<div class="phase'+(isRevision?' revision':'')+'">' +
       '<div class="phase-header">' +
         '<div>' +
           '<div class="ph-meta">'+p.meta+'</div>' +
@@ -429,12 +496,23 @@ function renderPhases() {
 
 function renderWeek(w) {
   const isDone = !!state.done[w.week];
-  const level = state.level || 'debutant';
-  const targetRecipe = w.recipes.find(r =>
-    (level==='debutant' && r.diff==='facile') ||
-    (level==='intermediaire' && r.diff==='moyen') ||
-    (level==='avance' && r.diff==='avance')
-  ) || w.recipes[0];
+  const lvl = getLevel(state.level);
+  const targetRecipe = w.recipes.find(r => r.diff === lvl.targetDiff) || w.recipes[0];
+  const otherRecipes = w.recipes.filter(r => r !== targetRecipe);
+
+  const renderRecipe = (r, isTarget) => {
+    const diffLabel = r.diff==='facile'?'Facile':r.diff==='moyen'?'Moyen':'Avancé';
+    if (isTarget) {
+      return '<div class="recipe target-recipe">' +
+        '<span class="difficulty '+r.diff+'">'+diffLabel+'</span>' +
+        '<span class="recipe-name">'+r.n+'<span class="recipe-desc">'+r.d+'</span></span>' +
+      '</div>';
+    }
+    return '<div class="recipe alternative-recipe">' +
+      '<span class="difficulty '+r.diff+'">'+diffLabel+'</span>' +
+      '<span class="recipe-name">'+r.n+'<span class="recipe-desc">'+r.d+'</span></span>' +
+    '</div>';
+  };
 
   return '<div class="week '+(isDone?'done':'')+'" data-week="'+w.week+'">' +
     '<div class="week-head" onclick="toggleWeek('+w.week+')">' +
@@ -456,16 +534,16 @@ function renderWeek(w) {
           '<div class="tech-item"><strong>'+w.technique.t+'</strong>'+w.technique.d+'</div>' +
         '</div>' +
         '<div class="week-section">' +
-          '<div class="section-title">Tes recettes au choix — cible ton niveau ('+level+')</div>' +
+          '<div class="section-title">Ta recette pour ce niveau '+(lvl.id==='debutant'?'(Débutant)':lvl.id==='intermediaire'?'(Intermédiaire)':'(Avancé)')+'</div>' +
           '<div class="recipe-list">' +
-            w.recipes.map(r => {
-              const isTarget = r === targetRecipe;
-              return '<div class="recipe"'+(isTarget?' style="border-color:#C8A04A;background:rgba(200,160,74,0.05)"':'')+'>' +
-                '<span class="difficulty '+r.diff+'">'+(r.diff==='facile'?'Facile':r.diff==='moyen'?'Moyen':'Avancé')+(isTarget?' ★':'')+'</span>' +
-                '<span class="recipe-name">'+r.n+'<span class="recipe-desc">'+r.d+'</span></span>' +
-              '</div>';
-            }).join('') +
+            renderRecipe(targetRecipe, true) +
           '</div>' +
+          (otherRecipes.length > 0 ?
+            '<div class="alternatives-header">Tu peux aussi essayer ('+otherRecipes.length+' alternative'+(otherRecipes.length>1?'s':'')+')</div>' +
+            '<div class="recipe-list">' +
+              otherRecipes.map(r => renderRecipe(r, false)).join('') +
+            '</div>'
+          : '') +
         '</div>' +
         '<div class="week-section">' +
           '<div class="section-title">Critère de réussite</div>' +
@@ -546,6 +624,7 @@ function exportProgression() {
 
 // Init
 renderLevels();
+renderLevelIntro();
 renderPhases();
 </script>
 </body>
