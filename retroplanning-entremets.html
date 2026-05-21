@@ -92,10 +92,17 @@
 
     <label style="margin-top:4px">Biscuit</label>
     <div class="checkbox-grid" id="grid-biscuit">
-      <label class="check-card"><input type="radio" name="biscuit" value="dacquoise"><span>Dacquoise / Succès</span></label>
       <label class="check-card"><input type="radio" name="biscuit" value="genoise"><span>Génoise</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="dacquoise"><span>Dacquoise / Succès</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="joconde"><span>Joconde</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="sacher"><span>Sacher</span></label>
       <label class="check-card"><input type="radio" name="biscuit" value="financier"><span>Financier</span></label>
-      <label class="check-card"><input type="radio" name="biscuit" value="sacher"><span>Sacher / Joconde</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="trocadero"><span>Trocadéro</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="viennois"><span>Viennois</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="savoie"><span>Biscuit de Savoie</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="pain-genes"><span>Pain de Gênes</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="sable-breton"><span>Sablé Breton</span></label>
+      <label class="check-card"><input type="radio" name="biscuit" value="brownie"><span>Brownie</span></label>
       <label class="check-card"><input type="radio" name="biscuit" value="croustillant"><span>Croustillant feuilletine</span></label>
       <label class="check-card active"><input type="radio" name="biscuit" value="aucun" checked><span>Aucun biscuit</span></label>
     </div>
@@ -113,6 +120,7 @@
     <label style="margin-top:22px">Mousse principale</label>
     <div class="checkbox-grid" id="grid-mousse">
       <label class="check-card active"><input type="radio" name="mousse" value="chocolat" checked><span>Mousse chocolat</span></label>
+      <label class="check-card"><input type="radio" name="mousse" value="ganache-montee"><span>Ganache montée</span></label>
       <label class="check-card"><input type="radio" name="mousse" value="fruit"><span>Mousse de fruit</span></label>
       <label class="check-card"><input type="radio" name="mousse" value="vanille"><span>Bavaroise vanille</span></label>
       <label class="check-card"><input type="radio" name="mousse" value="cheesecake"><span>Mousse cheesecake</span></label>
@@ -244,13 +252,20 @@ function computePlanning() {
     const d = addHours(service, 48);
     d.setHours(9,0,0,0);
     const tips = {
-      'dacquoise':"Tamise poudre + sucre + farine. Meringue serrée (70g de sucre sur la meringue). Incorpore aux poudres délicatement. 170°C 15-18 min. Emballe hermétiquement une fois froid.",
       'genoise':"Œufs + jaunes + sucre au bain-marie 45-50°C. Monte au ruban froid. Incorpore farine tamisée à la maryse. 180°C 15-20 min. Filme une fois refroidi.",
-      'financier':"Beurre noisette filtré. Mélange poudres + blancs + beurre tiède. Poche et cuis 180°C 12-15 min. Se conserve très bien 48h.",
+      'dacquoise':"Tamise poudre + sucre + farine. Meringue serrée (70g de sucre sur la meringue). Incorpore aux poudres délicatement. 170°C 15-18 min. Emballe hermétiquement une fois froid.",
+      'joconde':"Monte œufs entiers + poudre d'amande + sucre glace au ruban. À part, meringue française serrée. Incorpore la farine, puis la meringue, puis le beurre fondu. Étale fin (3-4 mm). 230°C 6-8 min. Souple, idéal pour chemiser ou rouler.",
       'sacher':"Pâte d'amande détendue avec jaunes, monte avec œufs + sucre glace. Meringue serrée. Incorpore beurre + farine puis meringue. 180°C 12-15 min.",
+      'financier':"Beurre noisette filtré. Mélange poudres + blancs + beurre tiède. Poche et cuis 180°C 12-15 min. Se conserve très bien 48h.",
+      'trocadero':"Poudre d'amande + sucre glace + un peu de farine + blancs + beurre noisette. Type financier amande, moelleux et humide. Poche, 170°C 18-20 min. Se garde 48h.",
+      'viennois':"Œufs + jaunes + sucre montés au ruban, puis blancs serrés en meringue. Incorpore la farine tamisée à la maryse. Étale sur plaque. 220°C 8-10 min. Moelleux et souple, parfait roulé ou en bûche.",
+      'savoie':"Jaunes + sucre blanchis longuement. Meringue serrée. Incorpore en alternant poudres (farine + fécule) et meringue, très délicatement. Moule beurré-fariné. 170°C 20-25 min. Ultra léger, ne le dessèche pas.",
+      'pain-genes':"Détends la pâte d'amande avec les œufs un par un jusqu'au ruban. Incorpore farine + levure, puis beurre fondu tiède. Moule beurré. 170°C 25-30 min. Dense, fondant, très amande.",
+      'sable-breton':"Beurre pommade + sucre + jaunes + sel battus. Ajoute farine + levure sans corser. Étale 1 cm DANS un cercle beurré (il cuit dedans pour garder sa forme). 170°C 20-25 min. Croquant et beurré.",
+      'brownie':"Chocolat + beurre fondus ensemble. Sucre puis œufs, puis farine + un peu de cacao. Moule chemisé. 170°C 18-22 min MAXIMUM : le cœur reste fondant. Refroidis complètement avant de détailler.",
       'croustillant':"Chocolat fondu + praliné + feuillantine. Étale sur feuille silpat à 3-4 mm. Congèle avant détaillage. Se garde une semaine au frigo emballé."
     };
-    tasks.push({time: d, title:"Biscuit : "+({dacquoise:"Dacquoise",genoise:"Génoise",financier:"Financier",sacher:"Sacher/Joconde",croustillant:"Croustillant feuillantine"}[biscuit]), detail:tips[biscuit], duration:"1h"});
+    tasks.push({time: d, title:"Biscuit : "+({genoise:"Génoise",dacquoise:"Dacquoise / Succès",joconde:"Joconde",sacher:"Sacher",financier:"Financier",trocadero:"Trocadéro",viennois:"Viennois",savoie:"Biscuit de Savoie","pain-genes":"Pain de Gênes","sable-breton":"Sablé Breton",brownie:"Brownie",croustillant:"Croustillant feuilletine"}[biscuit]), detail:tips[biscuit], duration:"1h"});
   }
 
   // J-2 après-midi : insert (sauf si aucun)
@@ -274,15 +289,22 @@ function computePlanning() {
     tasks.push({time: d, title:"Préparation du glaçage miroir", detail:"Sucre + glucose + eau à 103°C. Verse sur lait concentré + chocolat blanc + colorant. Gélatine hydratée. Mixe sans incorporer d'air (mixeur plongeant incliné). Filme au contact, repos au frigo 24h avant utilisation : c'est ce qui donne la brillance parfaite.", duration:"30 min"});
   }
 
+  // Base ganache montée : émulsion + repos 6h minimum AVANT le montage
+  if (mousse === 'ganache-montee') {
+    const dg = addHours(debutMousse, 8);
+    tasks.push({time: dg, title:"Base ganache montée (repos obligatoire)", detail:"Crème chaude versée sur le chocolat en 3 fois, émulsionne au centre à la maryse. Ajoute la crème froide, mixe au mixeur plongeant. Filme au contact. Repos au frigo 6h minimum, idéalement une nuit : sans ce repos elle ne montera jamais.", duration:"30 min"});
+  }
+
   // J-1 après-midi : mousse + montage + congélation
   {
     const tipsMousse = {
       'chocolat':"Ganache chocolat + gélatine. Refroidis à 28-30°C. Incorpore crème montée souple (bec d'oiseau, pas ferme) en 3 fois. Ne jamais monter ferme la crème, sinon ça tranche au montage.",
+      'ganache-montee':"Sors ta ganache reposée (préparée à l'avance, voir étape précédente). Monte-la au fouet comme une chantilly souple, bec d'oiseau, surtout pas ferme sinon elle graine. Tu l'utilises directement comme couche principale.",
       'fruit':"Purée de fruit + sucre + gélatine tiède à 30°C. Incorpore crème montée souple. Coule vite : la gélatine commence à figer.",
       'vanille':"Crème anglaise vanille + gélatine. Refroidis à 22°C sous peine de tranchage. Incorpore crème montée souple délicatement.",
       'cheesecake':"Mascarpone + fromage frais + sucre glace détendu. Ajoute gélatine tiède et zestes si besoin. Incorpore crème montée souple. Coule immédiatement."
     };
-    tasks.push({time: debutMousse, title:"Mousse "+({chocolat:"chocolat",fruit:"de fruit",vanille:"bavaroise vanille",cheesecake:"cheesecake"}[mousse])+" + montage", detail: tipsMousse[mousse] + " Montage envers : coule 1/3 de mousse dans le moule, pose l'insert congelé centré et pressé légèrement, recoule un peu de mousse, pose le biscuit par-dessus, lisse à la spatule.", duration:"1h30"});
+    tasks.push({time: debutMousse, title:({chocolat:"Mousse chocolat",'ganache-montee':"Ganache montée",fruit:"Mousse de fruit",vanille:"Bavaroise vanille",cheesecake:"Mousse cheesecake"}[mousse])+" + montage", detail: tipsMousse[mousse] + " Montage envers : coule 1/3 de la couche principale dans le moule, pose l'insert congelé centré et pressé légèrement, recoule un peu, pose le biscuit par-dessus, lisse à la spatule.", duration:"1h30"});
 
     const congel = new Date(debutMousse); congel.setMinutes(congel.getMinutes() + 90);
     tasks.push({time: congel, title:"Congélation", detail: "Surgèle toute la nuit jusqu'au glaçage. Minimum 4h mais l'entremets doit être totalement surgelé à cœur pour résister au glaçage sans fondre. Couvre avec une cloche pour éviter le givrage.", duration: decong === 12 ? "toute la nuit" : "4h minimum"});
