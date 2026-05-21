@@ -140,14 +140,17 @@ const flavors = {
       {name:"Menthe", strength:"Classique", why:"Fraîcheur herbacée qui allonge la finale"},
       {name:"Balsamique", strength:"Audacieux", why:"Le vieux balsamique révèle des notes profondes insoupçonnées"},
       {name:"Mascarpone", strength:"Évident", why:"La crème douce et grasse magnifie le fruit"},
-      {name:"Poivre de Timut", strength:"Audacieux", why:"Poivre pamplemousse qui prolonge l'acidité"}
+      {name:"Poivre de Timut", strength:"Audacieux", why:"Poivre pamplemousse qui prolonge l'acidité"},
+      {name:"Framboise", strength:"Classique", why:"Duo de fruits rouges, le combo estival par excellence"},
+      {name:"Pêche", strength:"Moderne", why:"Deux fruits d'été juteux et floraux"},
+      {name:"Pamplemousse", strength:"Audacieux", why:"L'amertume de l'agrume relance la fraise sucrée"}
     ],
     ideas:[
       {name:"Fraisier basilic", desc:"Génoise punchée, mousseline vanille-basilic, fraises fraîches, nappage neutre"},
       {name:"Pavlova fraise-mascarpone", desc:"Meringue française, crème mascarpone-vanille, fraises marinées balsamique"},
       {name:"Verrine fraise-rhubarbe", desc:"Compote rhubarbe, fraises crues, crumble sablé, Chantilly citron vert"}
     ]},
-  "Framboise": {cat:"fruits", emoji:"🫐", desc:"Vive, acidulée, parfumée — elle adore les contrastes forts",
+  "Framboise": {cat:"fruits", emoji:"", desc:"Vive, acidulée, parfumée — elle adore les contrastes forts",
     pairings:[
       {name:"Chocolat noir", strength:"Évident", why:"Le contraste acide/amer est un classique intemporel"},
       {name:"Rose", strength:"Classique", why:"L'Ispahan de Pierre Hermé, floral et fruité"},
@@ -156,7 +159,10 @@ const flavors = {
       {name:"Vanille", strength:"Classique", why:"La vanille arrondit les angles vifs du fruit"},
       {name:"Basilic", strength:"Moderne", why:"Accord herbacé moderne qui dynamise"},
       {name:"Violette", strength:"Audacieux", why:"Deux délicatesses florales qui dialoguent"},
-      {name:"Citron", strength:"Moderne", why:"Double dose d'acidité pour une tarte tonique"}
+      {name:"Citron", strength:"Moderne", why:"Double dose d'acidité pour une tarte tonique"},
+      {name:"Abricot", strength:"Classique", why:"L'acidité de la framboise réveille l'abricot doux"},
+      {name:"Pêche", strength:"Classique", why:"Pêche Melba framboise, l'été en dessert"},
+      {name:"Mangue", strength:"Moderne", why:"Acidité rouge contre douceur tropicale"}
     ],
     ideas:[
       {name:"Ispahan", desc:"Macaron rose, crème rose, framboises fraîches, litchi"},
@@ -172,7 +178,10 @@ const flavors = {
       {name:"Gingembre", strength:"Audacieux", why:"Piquant qui amplifie la vivacité"},
       {name:"Huile d'olive", strength:"Audacieux", why:"Le vert de l'huile nappe l'acidité du citron"},
       {name:"Chocolat blanc", strength:"Classique", why:"Le blanc adoucit et crémeux le citron"},
-      {name:"Amande", strength:"Classique", why:"Le gras de l'amande enveloppe l'acidité"}
+      {name:"Amande", strength:"Classique", why:"Le gras de l'amande enveloppe l'acidité"},
+      {name:"Vanille", strength:"Classique", why:"Tarte citron-vanille, l'acidité adoucie en douceur"},
+      {name:"Myrtille", strength:"Classique", why:"Muffin myrtille-citron, l'acidité réveille la baie"},
+      {name:"Mûre", strength:"Moderne", why:"L'acidité du citron dynamise la mûre sauvage"}
     ],
     ideas:[
       {name:"Tarte citron meringuée", desc:"Pâte sucrée, crème citron, meringue italienne dorée au chalumeau"},
@@ -188,7 +197,10 @@ const flavors = {
       {name:"Clou de girofle", strength:"Audacieux", why:"Épice puissante qui structure l'orange en hiver"},
       {name:"Olive", strength:"Audacieux", why:"Salé végétal qui sublime l'orange amère (à la méditerranéenne)"},
       {name:"Whisky", strength:"Audacieux", why:"Les arômes boisés du whisky résonnent avec le zeste"},
-      {name:"Cardamome", strength:"Moderne", why:"Épice mentholée qui modernise le duo orange-chocolat"}
+      {name:"Cardamome", strength:"Moderne", why:"Épice mentholée qui modernise le duo orange-chocolat"},
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit l'amertume de l'orange"},
+      {name:"Coing", strength:"Classique", why:"Deux fruits d'hiver parfumés, en gelée ou en tarte"},
+      {name:"Pamplemousse", strength:"Moderne", why:"Deux agrumes, amertume et douceur qui se répondent"}
     ],
     ideas:[
       {name:"Cake orange-cardamome", desc:"Cake classique zeste orange et cardamome moulue, sirop d'imbibage"},
@@ -203,7 +215,10 @@ const flavors = {
       {name:"Banane", strength:"Moderne", why:"La banane rôtie enrobe l'acidité passion"},
       {name:"Chocolat lait", strength:"Moderne", why:"Crémeux lacté contre vivacité tropicale"},
       {name:"Fruit de la passion + rhum", strength:"Classique", why:"La version cocktail exotique"},
-      {name:"Gingembre", strength:"Moderne", why:"Double punch piquant-acide, très moderne"}
+      {name:"Gingembre", strength:"Moderne", why:"Double punch piquant-acide, très moderne"},
+      {name:"Framboise", strength:"Moderne", why:"L'acidité rouge épouse l'acidité tropicale"},
+      {name:"Vanille", strength:"Classique", why:"La vanille arrondit le pep de la passion"},
+      {name:"Caramel", strength:"Moderne", why:"Caramel passion, sucré-acidulé addictif"}
     ],
     ideas:[
       {name:"Entremets Mogador", desc:"Biscuit Joconde, mousse chocolat lait, gelée passion, glaçage miroir"},
@@ -218,7 +233,10 @@ const flavors = {
       {name:"Citron vert", strength:"Évident", why:"L'accord du ceviche version dessert"},
       {name:"Cardamome", strength:"Classique", why:"Épice indienne traditionnelle avec la mangue"},
       {name:"Piment", strength:"Audacieux", why:"Street food mexicain transposé en dessert"},
-      {name:"Vanille", strength:"Classique", why:"La vanille lisse la chair du fruit"}
+      {name:"Vanille", strength:"Classique", why:"La vanille lisse la chair du fruit"},
+      {name:"Ananas", strength:"Classique", why:"Duo tropical, deux jaunes solaires"},
+      {name:"Framboise", strength:"Moderne", why:"Douceur tropicale contre acidité rouge"},
+      {name:"Amande", strength:"Classique", why:"Le gras de l'amande enrobe la mangue charnue"}
     ],
     ideas:[
       {name:"Pavlova mangue-passion", desc:"Meringue croustillante, Chantilly, brunoise mangue-passion"},
@@ -234,7 +252,10 @@ const flavors = {
       {name:"Noix / Pécan", strength:"Classique", why:"Le gras des noix enrobe le croquant du fruit"},
       {name:"Thym / Romarin", strength:"Audacieux", why:"L'herbe boisée modernise la tarte aux pommes"},
       {name:"Gingembre", strength:"Moderne", why:"Le piquant dynamise les pommes trop sages"},
-      {name:"Beurre noisette", strength:"Évident", why:"Toute pomme cuite adore le beurre noisette"}
+      {name:"Beurre noisette", strength:"Évident", why:"Toute pomme cuite adore le beurre noisette"},
+      {name:"Châtaigne", strength:"Classique", why:"Automnal, deux douceurs farineuses et rondes"},
+      {name:"Cassis", strength:"Moderne", why:"L'acidité noire du cassis réveille la pomme"},
+      {name:"Coing", strength:"Classique", why:"Tarte pomme-coing, deux fruits à pépins parfumés"}
     ],
     ideas:[
       {name:"Tarte Tatin classique", desc:"Pommes caramélisées, pâte feuilletée retournée, Chantilly vanille"},
@@ -250,7 +271,10 @@ const flavors = {
       {name:"Gingembre", strength:"Moderne", why:"Piquant qui redonne du peps à la poire trop mûre"},
       {name:"Noix", strength:"Classique", why:"Combo rustique avec bleu ou caramel"},
       {name:"Praliné", strength:"Moderne", why:"Base modernisée sur bûche ou entremets"},
-      {name:"Eau-de-vie de poire", strength:"Audacieux", why:"Double intensité, pour connaisseurs"}
+      {name:"Eau-de-vie de poire", strength:"Audacieux", why:"Double intensité, pour connaisseurs"},
+      {name:"Châtaigne", strength:"Classique", why:"Automnal, deux douceurs rondes (esprit Mont-Blanc)"},
+      {name:"Cassis", strength:"Moderne", why:"L'acidité du cassis tranche la douceur de la poire"},
+      {name:"Amande", strength:"Classique", why:"Tarte Bourdaloue, poire et crème d'amande"}
     ],
     ideas:[
       {name:"Poire Belle-Hélène revisité", desc:"Poire pochée vanille-badiane, sauce chocolat noir tiède, glace vanille"},
@@ -482,6 +506,251 @@ const flavors = {
       {name:"Baklavas", desc:"Feuilles de filo, mélange noix-miel-fleur d'oranger, sirop de miel chaud"},
       {name:"Nougat de Montélimar", desc:"Miel, blancs d'œufs, amandes-pistaches, pain azyme"},
       {name:"Tarte miel-citron-thym", desc:"Sablé breton, crème citron-miel-thym, zestes confits"}
+    ]},
+  "Abricot": {cat:"fruits", emoji:"", desc:"Doux-acidulé, parfumé, soleil d'été — adore l'amande et le floral",
+    pairings:[
+      {name:"Amande", strength:"Évident", why:"Le couple roi : tarte amandine abricot, gras et acidulé"},
+      {name:"Vanille", strength:"Classique", why:"La vanille arrondit l'acidité de l'abricot rôti"},
+      {name:"Romarin", strength:"Audacieux", why:"L'herbe résineuse contraste avec le sucré du fruit doré"},
+      {name:"Pistache", strength:"Classique", why:"Gras vert contre fruit doré, tarte estivale"},
+      {name:"Chocolat noir", strength:"Moderne", why:"L'amertume cadre la douceur de l'abricot"},
+      {name:"Miel", strength:"Classique", why:"Abricots rôtis au miel, douceur sur douceur"}
+    ],
+    ideas:[
+      {name:"Tarte amandine abricot", desc:"Pâte sucrée, crème d'amande, oreillons d'abricot, amandes effilées"},
+      {name:"Entremets abricot-romarin", desc:"Dacquoise amande, mousse abricot, insert abricot-romarin, glaçage abricot"}
+    ]},
+  "Pêche": {cat:"fruits", emoji:"🍑", desc:"Juteuse, florale, délicate — l'été en bouche, fragile à la cuisson",
+    pairings:[
+      {name:"Verveine", strength:"Classique", why:"L'infusion citronnée prolonge le parfum de la pêche"},
+      {name:"Vanille", strength:"Évident", why:"La vanille enveloppe la chair juteuse de la pêche"},
+      {name:"Framboise", strength:"Classique", why:"La pêche Melba : pêche pochée, framboise, chantilly"},
+      {name:"Romarin", strength:"Moderne", why:"Note résineuse qui structure la douceur"},
+      {name:"Miel", strength:"Classique", why:"Pêche rôtie au miel, fondante et dorée"}
+    ],
+    ideas:[
+      {name:"Pêche Melba", desc:"Pêche pochée vanille, coulis de framboise, glace vanille, amandes"},
+      {name:"Tarte pêche-verveine", desc:"Sablé breton, crème verveine, pêches fraîches"}
+    ]},
+  "Cerise": {cat:"fruits", emoji:"🍒", desc:"Charnue, acidulée, gourmande — la star du clafoutis et de la forêt-noire",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"La forêt-noire, mariage indémodable acide-amer"},
+      {name:"Pistache", strength:"Classique", why:"Rouge contre vert, gras contre acidulé, très visuel"},
+      {name:"Amande", strength:"Classique", why:"Clafoutis, frangipane cerise, l'amande adoucit"},
+      {name:"Cardamome", strength:"Moderne", why:"L'épice chaude relève la cerise"},
+      {name:"Rose", strength:"Audacieux", why:"Floral délicat posé sur le fruit charnu"},
+      {name:"Vanille", strength:"Classique", why:"Douceur ronde sur l'acidité de la cerise"}
+    ],
+    ideas:[
+      {name:"Forêt-noire", desc:"Biscuit chocolat, chantilly, cerises au kirsch, copeaux de chocolat"},
+      {name:"Clafoutis revisité", desc:"Appareil vanillé crémeux, cerises entières, amandes effilées"}
+    ]},
+  "Cassis": {cat:"fruits", emoji:"", desc:"Intense, acide, presque sauvage — un fruit noir puissant qui structure",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"Le cassis perce l'amertume du noir avec son acidité profonde"},
+      {name:"Violette", strength:"Classique", why:"Crème de cassis et violette, accord floral profond"},
+      {name:"Poire", strength:"Moderne", why:"La douceur de la poire calme la puissance du cassis"},
+      {name:"Noisette", strength:"Classique", why:"Le gras torréfié de la noisette enrobe le cassis"},
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit l'acidité tranchante"},
+      {name:"Châtaigne", strength:"Moderne", why:"Automnal : la châtaigne ronde contre le cassis vif"}
+    ],
+    ideas:[
+      {name:"Entremets cassis-violette", desc:"Biscuit, mousse cassis, insert violette, glaçage violet"},
+      {name:"Tarte cassis-noisette", desc:"Sablé noisette, crème noisette, confit de cassis"}
+    ]},
+  "Myrtille": {cat:"fruits", emoji:"🫐", desc:"Douce, légèrement acidulée, sauvage — discrète mais addictive",
+    pairings:[
+      {name:"Citron", strength:"Évident", why:"Muffin myrtille-citron, l'acidité réveille le fruit"},
+      {name:"Vanille", strength:"Classique", why:"Cheesecake myrtille-vanille, douceur lactée"},
+      {name:"Cannelle", strength:"Moderne", why:"Crumble myrtille-cannelle, chaleur épicée"},
+      {name:"Basilic", strength:"Audacieux", why:"Note herbacée surprenante sur la myrtille"},
+      {name:"Chocolat blanc", strength:"Classique", why:"Le blanc crémeux contre l'acidité douce"}
+    ],
+    ideas:[
+      {name:"Cheesecake myrtille", desc:"Base sablée, appareil vanille, coulis de myrtille"},
+      {name:"Tarte myrtille-citron", desc:"Pâte sucrée, crème citron, myrtilles fraîches"}
+    ]},
+  "Mûre": {cat:"fruits", emoji:"", desc:"Sucrée-acidulée, juteuse, fin d'été — cousine puissante de la framboise",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"L'acidité noire de la mûre tranche l'amertume"},
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit le fruit sauvage"},
+      {name:"Citron", strength:"Moderne", why:"L'acidité du citron dynamise la mûre"},
+      {name:"Gingembre", strength:"Audacieux", why:"Le piquant relève la douceur juteuse"},
+      {name:"Pistache", strength:"Classique", why:"Gras vert contre fruit pourpre"}
+    ],
+    ideas:[
+      {name:"Tarte mûre-vanille", desc:"Pâte sucrée, crème vanille, mûres fraîches"},
+      {name:"Entremets fruits noirs", desc:"Biscuit, mousse mûre-cassis, glaçage pourpre"}
+    ]},
+  "Groseille": {cat:"fruits", emoji:"", desc:"Très acidulée, perlée, éclatante — la touche acide et le décor parfait",
+    pairings:[
+      {name:"Framboise", strength:"Classique", why:"Duo de fruits rouges acidulés, l'été en tarte"},
+      {name:"Meringue italienne", strength:"Évident", why:"L'acidité perçante adore le sucré de la meringue"},
+      {name:"Vanille", strength:"Classique", why:"La vanille calme l'acidité vive de la groseille"},
+      {name:"Pêche", strength:"Moderne", why:"Douceur de la pêche contre acidité de la groseille"},
+      {name:"Fraise", strength:"Classique", why:"Cousines d'été, fraîcheur acidulée"}
+    ],
+    ideas:[
+      {name:"Pavlova fruits rouges", desc:"Meringue, chantilly, groseilles, framboises, fraises"},
+      {name:"Tartelettes groseille-meringue", desc:"Sablé, crème, groseilles, meringue dorée"}
+    ]},
+  "Ananas": {cat:"fruits", emoji:"🍍", desc:"Exotique, juteux, acidulé — le soleil tropical, parfait rôti",
+    pairings:[
+      {name:"Coco", strength:"Évident", why:"Piña colada, le couple tropical par excellence"},
+      {name:"Vanille", strength:"Classique", why:"Ananas rôti vanillé, dessert minute irrésistible"},
+      {name:"Rhum", strength:"Classique", why:"Ananas flambé au rhum, caramélisation et chaleur"},
+      {name:"Caramel", strength:"Moderne", why:"L'ananas caramélisé, sucre contre acidité"},
+      {name:"Gingembre", strength:"Audacieux", why:"Le piquant relève l'exotisme de l'ananas"},
+      {name:"Mangue", strength:"Classique", why:"Duo tropical, deux jaunes solaires"}
+    ],
+    ideas:[
+      {name:"Ananas rôti vanille-rhum", desc:"Ananas rôti entier, sirop vanille-rhum, caramel"},
+      {name:"Entremets exotique", desc:"Dacquoise coco, mousse coco, insert ananas-mangue-passion"}
+    ]},
+  "Banane": {cat:"fruits", emoji:"🍌", desc:"Fondante, sucrée, réconfortante — le moelleux qui plaît à tous",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"Banana bread chocolaté, le réconfort absolu"},
+      {name:"Caramel", strength:"Évident", why:"Banoffee, banane-caramel-toffee, irrésistible"},
+      {name:"Coco", strength:"Classique", why:"Duo tropical fondant"},
+      {name:"Rhum", strength:"Classique", why:"Bananes flambées au rhum, dessert chaud"},
+      {name:"Passion", strength:"Moderne", why:"L'acidité de la passion réveille la banane douce"}
+    ],
+    ideas:[
+      {name:"Banoffee", desc:"Pâte sablée, caramel toffee, bananes, chantilly, cacao"},
+      {name:"Entremets banane-caramel-chocolat", desc:"Biscuit, crémeux caramel, mousse chocolat, banane"}
+    ]},
+  "Litchi": {cat:"fruits", emoji:"", desc:"Floral, parfumé, juteux — la signature de l'Ispahan",
+    pairings:[
+      {name:"Rose", strength:"Évident", why:"L'Ispahan : litchi-rose-framboise, le trio culte de Pierre Hermé"},
+      {name:"Framboise", strength:"Évident", why:"L'acidité de la framboise réveille le litchi floral"},
+      {name:"Coco", strength:"Classique", why:"Deux douceurs exotiques et lactées"},
+      {name:"Vanille", strength:"Classique", why:"La vanille prolonge le côté parfumé"},
+      {name:"Poire", strength:"Moderne", why:"Deux chairs juteuses et délicates"}
+    ],
+    ideas:[
+      {name:"Ispahan", desc:"Macaron rose, crème rose, litchi, framboises fraîches"},
+      {name:"Entremets litchi-framboise", desc:"Biscuit, mousse litchi, insert framboise, déco rose"}
+    ]},
+  "Pamplemousse": {cat:"fruits", emoji:"", desc:"Amer-acidulé, rafraîchissant — l'agrume qui réveille et allège",
+    pairings:[
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit l'amertume du pamplemousse"},
+      {name:"Basilic", strength:"Moderne", why:"Fraîcheur herbacée sur l'agrume amer"},
+      {name:"Gingembre", strength:"Audacieux", why:"Deux toniques qui se dynamisent"},
+      {name:"Fraise", strength:"Moderne", why:"L'agrume amer relève la fraise sucrée"},
+      {name:"Chocolat blanc", strength:"Classique", why:"Le crémeux du blanc calme l'amertume"}
+    ],
+    ideas:[
+      {name:"Tarte pamplemousse meringuée", desc:"Sablé, crème pamplemousse, meringue italienne"},
+      {name:"Entremets agrumes", desc:"Biscuit, mousse pamplemousse, suprêmes frais"}
+    ]},
+  "Châtaigne": {cat:"secs", emoji:"🌰", desc:"Douce, farineuse, automnale — le velouté réconfortant du Mont-Blanc",
+    pairings:[
+      {name:"Vanille", strength:"Évident", why:"Le Mont-Blanc : crème de marron, chantilly vanille"},
+      {name:"Cassis", strength:"Classique", why:"L'acidité du cassis tranche la douceur farineuse"},
+      {name:"Poire", strength:"Classique", why:"Automnal, deux douceurs rondes"},
+      {name:"Chocolat noir", strength:"Classique", why:"Le marron glacé enrobé, riche et fondant"},
+      {name:"Noisette", strength:"Moderne", why:"Deux saveurs torréfiées automnales"},
+      {name:"Rhum", strength:"Moderne", why:"Le rhum réveille la crème de marron"}
+    ],
+    ideas:[
+      {name:"Mont-Blanc", desc:"Meringue, chantilly, vermicelles de crème de marron"},
+      {name:"Entremets châtaigne-poire", desc:"Biscuit, mousse châtaigne, insert poire, déco marron"}
+    ]},
+  "Rhubarbe": {cat:"fruits", emoji:"", desc:"Très acide, végétale, printanière — a besoin de sucre et de fraises",
+    pairings:[
+      {name:"Fraise", strength:"Évident", why:"Le couple de printemps : crumble fraise-rhubarbe"},
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit l'acidité tranchante de la rhubarbe"},
+      {name:"Framboise", strength:"Classique", why:"Double acidité rouge et végétale"},
+      {name:"Pomme", strength:"Moderne", why:"Compotée pomme-rhubarbe, douceur et acidité"},
+      {name:"Gingembre", strength:"Audacieux", why:"Piquant sur la rhubarbe acide"}
+    ],
+    ideas:[
+      {name:"Crumble fraise-rhubarbe", desc:"Compotée fraise-rhubarbe, pâte à crumble amande"},
+      {name:"Tarte rhubarbe-vanille", desc:"Pâte sucrée, crème vanille, rhubarbe pochée"}
+    ]},
+  "Figue": {cat:"fruits", emoji:"", desc:"Mielleuse, charnue, fin d'été — sucrée et noble, aime les fruits secs",
+    pairings:[
+      {name:"Miel", strength:"Évident", why:"Figue rôtie au miel, douceur sur douceur noble"},
+      {name:"Amande", strength:"Classique", why:"Tarte figue-amande, le gras et le mielleux"},
+      {name:"Noisette", strength:"Classique", why:"Figue et fruits secs, accord rustique d'automne"},
+      {name:"Vanille", strength:"Classique", why:"La vanille prolonge la rondeur de la figue"},
+      {name:"Chocolat noir", strength:"Audacieux", why:"L'amertume contre le sucré confit de la figue"}
+    ],
+    ideas:[
+      {name:"Tarte figue-amande", desc:"Pâte sucrée, crème d'amande, figues fraîches, filet de miel"},
+      {name:"Entremets figue-miel", desc:"Biscuit noisette, mousse miel, figues rôties"}
+    ]},
+  "Melon": {cat:"fruits", emoji:"🍈", desc:"Juteux, sucré, désaltérant — surprenant en sucré, joue sur la fraîcheur",
+    pairings:[
+      {name:"Menthe", strength:"Évident", why:"Soupe de melon à la menthe, fraîcheur estivale"},
+      {name:"Framboise", strength:"Classique", why:"Carpaccio melon-framboise, rouge sur orange"},
+      {name:"Gingembre", strength:"Moderne", why:"Le piquant réveille la douceur du melon"},
+      {name:"Vanille", strength:"Classique", why:"La vanille arrondit le melon en dessert"},
+      {name:"Citron", strength:"Moderne", why:"L'acidité relève le sucré du melon"}
+    ],
+    ideas:[
+      {name:"Verrine melon-menthe", desc:"Billes de melon, framboises, sirop léger à la menthe"},
+      {name:"Sorbet melon", desc:"Melon mixé, sirop léger, touche de citron vert"}
+    ]},
+  "Clémentine": {cat:"fruits", emoji:"🍊", desc:"Sucrée, parfumée, hivernale — l'agrume de Noël, doux et juteux",
+    pairings:[
+      {name:"Chocolat noir", strength:"Évident", why:"L'agrume hivernal perce l'amertume, esprit Noël"},
+      {name:"Cannelle", strength:"Classique", why:"Épice de Noël sur l'agrume sucré"},
+      {name:"Vanille", strength:"Classique", why:"La vanille enveloppe la clémentine juteuse"},
+      {name:"Chocolat lait", strength:"Classique", why:"Douceur lactée et agrume parfumé"},
+      {name:"Cardamome", strength:"Moderne", why:"L'épice parfumée sublime la clémentine"}
+    ],
+    ideas:[
+      {name:"Entremets clémentine-chocolat", desc:"Biscuit, mousse chocolat, insert clémentine, déco or"},
+      {name:"Tarte clémentine", desc:"Pâte sucrée, crème de clémentine, suprêmes frais"}
+    ]},
+  "Kiwi": {cat:"fruits", emoji:"🥝", desc:"Acidulé, vert, vif — frais et tonique, à utiliser CRU (son enzyme fait trancher gélatine et laitages)",
+    pairings:[
+      {name:"Fraise", strength:"Évident", why:"Tarte aux fruits classique, vert contre rouge"},
+      {name:"Vanille", strength:"Classique", why:"La crème vanille adoucit l'acidité du kiwi cru"},
+      {name:"Banane", strength:"Classique", why:"Salade de fruits, deux textures fondantes"},
+      {name:"Menthe", strength:"Moderne", why:"Fraîcheur sur fraîcheur, très estival"},
+      {name:"Mangue", strength:"Moderne", why:"Duo exotique acidulé"}
+    ],
+    ideas:[
+      {name:"Tarte aux fruits frais", desc:"Pâte sucrée, crème pâtissière vanille, kiwi-fraise (kiwi cru)"},
+      {name:"Pavlova exotique", desc:"Meringue, chantilly, kiwi-mangue-passion posés crus"}
+    ]},
+  "Coing": {cat:"fruits", emoji:"", desc:"Astringent cru, parfumé cuit — le fruit oublié, sublime en pâte de fruit",
+    pairings:[
+      {name:"Cannelle", strength:"Évident", why:"Coing poché à la cannelle, parfum automnal"},
+      {name:"Vanille", strength:"Classique", why:"La vanille adoucit le coing parfumé"},
+      {name:"Pomme", strength:"Classique", why:"Tarte pomme-coing, deux fruits à pépins"},
+      {name:"Caramel", strength:"Moderne", why:"Le coing caramélisé, doux et confit"},
+      {name:"Cardamome", strength:"Audacieux", why:"L'épice parfumée sur le coing poché"}
+    ],
+    ideas:[
+      {name:"Pâte de fruits de coing", desc:"Coing cuit, sucre, cuisson lente puis séchage"},
+      {name:"Tarte coing-cannelle", desc:"Pâte sucrée, coing poché, crème, cannelle"}
+    ]},
+  "Mirabelle": {cat:"fruits", emoji:"", desc:"Petite prune dorée, sucrée-musquée — la gourmandise lorraine de fin d'été",
+    pairings:[
+      {name:"Vanille", strength:"Évident", why:"Tarte mirabelle vanillée, le classique lorrain"},
+      {name:"Cannelle", strength:"Classique", why:"Chaleur épicée sur la prune dorée"},
+      {name:"Amande", strength:"Classique", why:"Tarte mirabelle-amande, le gras et le musqué"},
+      {name:"Miel", strength:"Moderne", why:"Mirabelles rôties au miel"},
+      {name:"Gingembre", strength:"Audacieux", why:"Le piquant réveille la douceur musquée"}
+    ],
+    ideas:[
+      {name:"Tarte mirabelle", desc:"Pâte brisée, mirabelles dénoyautées, sucre vanillé"},
+      {name:"Clafoutis mirabelle", desc:"Appareil vanillé, mirabelles, amandes effilées"}
+    ]},
+  "Papaye": {cat:"fruits", emoji:"", desc:"Exotique, douce, musquée — fondante et tropicale, réveillée par le citron vert",
+    pairings:[
+      {name:"Citron", strength:"Évident", why:"Le citron vert réveille la papaye douce et discrète"},
+      {name:"Coco", strength:"Classique", why:"Duo tropical fondant et lacté"},
+      {name:"Gingembre", strength:"Moderne", why:"Le piquant dynamise la papaye"},
+      {name:"Mangue", strength:"Classique", why:"Deux fruits tropicaux fondants"},
+      {name:"Passion", strength:"Moderne", why:"L'acidité de la passion relève la papaye"}
+    ],
+    ideas:[
+      {name:"Salade exotique", desc:"Papaye, mangue, ananas, citron vert, menthe"},
+      {name:"Verrine papaye-coco", desc:"Papaye, crème coco, zeste de citron vert"}
     ]}
 };
 
@@ -493,7 +762,7 @@ Object.entries(flavors).forEach(([name, data]) => {
   if (!container) return;
   const btn = document.createElement('button');
   btn.className = 'flavor';
-  btn.innerHTML = `<span class="emoji">${data.emoji}</span>${name}`;
+  btn.innerHTML = `${data.emoji ? '<span class="emoji">'+data.emoji+'</span>' : ''}${name}`;
   btn.onclick = () => selectFlavor(name, btn);
   container.appendChild(btn);
 });
@@ -525,7 +794,7 @@ function selectFlavor(name, btn) {
   ` : '';
 
   result.innerHTML = `
-    <h2><span class="emoji">${data.emoji}</span>${name}</h2>
+    <h2>${data.emoji ? '<span class="emoji">'+data.emoji+'</span>' : ''}${name}</h2>
     <p class="desc">${data.desc}</p>
     <div class="pairings">${pairingsHTML}</div>
     ${ideasHTML}

@@ -273,7 +273,7 @@ const FLAVORS = [
   {id:"dulcey", name:"Dulcey / Blond", emoji:"🟡", note:"avec Dulcey 35% pour les notes biscuit-caramel"},
   {id:"vanille", name:"Vanille", emoji:"🌱", note:"avec 1 à 2 gousses de vanille Bourbon infusées 20 min à 60°C couvert"},
   {id:"caramel", name:"Caramel", emoji:"🍯", note:"avec un caramel à sec beurre salé intégré à la crème chaude"},
-  {id:"framboise", name:"Framboise", emoji:"🫐", note:"avec 30% de purée de framboise filtrée au tamis fin"},
+  {id:"framboise", name:"Framboise", emoji:"", note:"avec 30% de purée de framboise filtrée au tamis fin"},
   {id:"fraise", name:"Fraise", emoji:"🍓", note:"avec 30% de purée de fraises Mara des bois ou Ponthier"},
   {id:"citron", name:"Citron", emoji:"🍋", note:"avec zestes infusés dans le sucre + jus 10% de la masse"},
   {id:"passion", name:"Fruit de la passion", emoji:"🥭", note:"avec pulpe de passion filtrée (15-20% du poids)"},
@@ -927,7 +927,7 @@ function renderFlavors() {
   const container = document.getElementById('opts-flavor');
   container.innerHTML = FLAVORS.map(f => `
     <button class="option ${state.flavor === f.id ? 'active' : ''}" onclick="selectFlavor('${f.id}')">
-      <span class="opt-name">${f.emoji} ${f.name}</span>
+      <span class="opt-name">${f.emoji ? f.emoji+' ' : ''}${f.name}</span>
     </button>
   `).join('');
   document.getElementById('badge-flavor').textContent = state.flavor ? FLAVORS.find(f => f.id === state.flavor).name : 'À choisir';
@@ -1088,7 +1088,7 @@ function generateRecipe() {
         </div>
         <div class="meta-cell">
           <div class="meta-label">Saveur</div>
-          <div class="meta-value">${flavor.emoji} ${flavor.name}</div>
+          <div class="meta-value">${flavor.emoji ? flavor.emoji+' ' : ''}${flavor.name}</div>
         </div>
       </div>
 
