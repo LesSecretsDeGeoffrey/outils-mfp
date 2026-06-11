@@ -128,7 +128,7 @@
 <main>
   <form id="qform" novalidate>
     <section class="section">
-      <p class="reqnote">Ça te prend 2 minutes, mais ça m'aide <b>énormément</b> 🙏 · seule la note et le Oui/Non sont obligatoires</p>
+      <p class="reqnote">Ça te prend 2 minutes, mais ça m'aide <b>énormément</b> 🙏 · seules les questions marquées « facultatif » sont optionnelles</p>
 
       <div class="q">
         <label class="lab">De 0 à 10, quelle note tu donnerais à la masterclass ?</label>
@@ -152,19 +152,22 @@
 
       <div id="blocNon">
         <div class="q">
-          <label class="lab">Quelle est la raison qui t'a empêché de la rejoindre ? <span class="opt">(facultatif)</span></label>
+          <label class="lab">Quelle est la raison qui t'a empêché de la rejoindre ?</label>
           <span class="hint">Sois honnête, c'est ce qui m'aide le plus à m'améliorer</span>
           <textarea name="raison_pas_rejoint" placeholder="..."></textarea>
+          <div class="qerr">Cette question est obligatoire</div>
         </div>
 
         <div class="q">
-          <label class="lab">Quel est le prix qui t'aurait fait rejoindre la Méthode Fondations Pro ? <span class="opt">(facultatif)</span></label>
+          <label class="lab">Quel est le prix qui t'aurait fait rejoindre la Méthode Fondations Pro ?</label>
           <textarea name="prix_ideal" placeholder="..."></textarea>
+          <div class="qerr">Cette question est obligatoire</div>
         </div>
 
         <div class="q">
-          <label class="lab">Si le prix n'était pas un frein, qu'est-ce qui te ferait dire « oui » tout de suite ? <span class="opt">(facultatif)</span></label>
+          <label class="lab">Si le prix n'était pas un frein, qu'est-ce qui te ferait dire « oui » tout de suite ?</label>
           <textarea name="oui_tout_de_suite" placeholder="..."></textarea>
+          <div class="qerr">Cette question est obligatoire</div>
         </div>
       </div>
 
@@ -226,14 +229,21 @@ document.querySelectorAll('textarea').forEach(el =>
 document.querySelectorAll('.choices').forEach(g =>
   g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
-// ---- validation : note + a_rejoint obligatoires ----
+// ---- validation : note + a_rejoint toujours obligatoires ;
+//      les 3 questions objection deviennent obligatoires si "Non" ----
 const REQUIRED = [{name:'note', type:'nps'}, {name:'a_rejoint', type:'radio'}];
+const REQUIRED_SI_NON = [{name:'raison_pas_rejoint', type:'text'}, {name:'prix_ideal', type:'text'}, {name:'oui_tout_de_suite', type:'text'}];
+function requiredNow(){
+  return radioVal('a_rejoint') === 'Non' ? REQUIRED.concat(REQUIRED_SI_NON) : REQUIRED;
+}
 function isFilled(f){
   if (f.type==='nps') return npsVal!==null;
+  if (f.type==='text') return document.querySelector(`[name="${f.name}"]`).value.trim().length>0;
   return !!document.querySelector(`input[name="${f.name}"]:checked`);
 }
 function anchorOf(f){
   if (f.type==='nps') return document.getElementById('nps').closest('.q');
+  if (f.type==='text') return document.querySelector(`[name="${f.name}"]`).closest('.q');
   return document.querySelector(`[data-name="${f.name}"]`).closest('.q');
 }
 
@@ -261,10 +271,10 @@ form.addEventListener('submit', async (e) => {
   errBox.style.display='none';
   document.querySelectorAll('.q.invalid').forEach(q=>q.classList.remove('invalid'));
 
-  const missing = REQUIRED.filter(f => !isFilled(f));
+  const missing = requiredNow().filter(f => !isFilled(f));
   if (missing.length){
     missing.forEach(f => anchorOf(f).classList.add('invalid'));
-    errBox.textContent = 'Réponds au moins à la note et au Oui/Non 🙂';
+    errBox.textContent = missing.length===1 ? 'Il reste 1 question obligatoire sans réponse (surlignée en rouge)' : `Il reste ${missing.length} questions obligatoires sans réponse (surlignées en rouge)`;
     errBox.style.display='block';
     anchorOf(missing[0]).scrollIntoView({behavior:'smooth', block:'center'});
     return;
