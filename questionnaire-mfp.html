@@ -134,7 +134,7 @@
 <main>
   <form id="qform" novalidate>
     <section class="section">
-      <p class="reqnote"><b>Toutes les questions sont obligatoires</b> · ça te prend quelques minutes, mais ça m'aide énormément 🙏</p>
+      <p class="reqnote">Ça te prend quelques minutes, mais ça m'aide <b>énormément</b> 🙏 · seules les questions marquées « facultatif » sont optionnelles</p>
 
       <div class="q">
         <label class="lab">Quel était ton niveau en pâtisserie quand tu as rejoint la Méthode Fondations Pro ?</label>
@@ -207,19 +207,19 @@
       </div>
 
       <div class="q">
-        <label class="lab">Qu'est-ce qui te manque pour mettre 10/10 ?</label>
+        <label class="lab">Qu'est-ce qui te manque pour mettre 10/10 ? <span class="opt">(facultatif)</span></label>
         <textarea name="manque_pour_10" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
-        <label class="lab">Si un(e) ami(e) passionné(e) hésitait à rejoindre, tu lui dirais quoi ?</label>
+        <label class="lab">Si un(e) ami(e) passionné(e) hésitait à rejoindre, tu lui dirais quoi ? <span class="opt">(facultatif)</span></label>
         <textarea name="dirait_a_un_ami" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
-        <label class="lab">Qu'est-ce que je pourrais améliorer ?</label>
+        <label class="lab">Qu'est-ce que je pourrais améliorer ? <span class="opt">(facultatif)</span></label>
         <span class="hint">Contenu, plateforme, accompagnement... tout ce qui te passe par la tête</span>
         <textarea name="ameliorations" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
@@ -244,7 +244,7 @@
       </div>
 
       <div class="q">
-        <label class="lab">Un dernier truc à me dire ?</label>
+        <label class="lab">Un dernier truc à me dire ? <span class="opt">(facultatif)</span></label>
         <span class="hint">Un kiff, un coup de gueule, une idée. Lâche-toi</span>
         <textarea name="dernier_mot" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
@@ -310,11 +310,7 @@ const REQUIRED = [
   {name:'ce_qui_a_convaincu', type:'text'},
   {name:'changement', type:'text'},
   {name:'nps', type:'nps'},
-  {name:'manque_pour_10', type:'text'},
-  {name:'dirait_a_un_ami', type:'text'},
-  {name:'ameliorations', type:'text'},
-  {name:'contenus_futurs', type:'check'},
-  {name:'dernier_mot', type:'text'}
+  {name:'contenus_futurs', type:'check'}
 ];
 function isFilled(f){
   if (f.type==='radio') return !!document.querySelector(`input[name="${f.name}"]:checked`);
@@ -341,12 +337,12 @@ function payload(){
     ce_qui_a_convaincu: val('ce_qui_a_convaincu'),
     changement: val('changement'),
     nps: npsVal,
-    manque_pour_10: val('manque_pour_10'),
-    dirait_a_un_ami: val('dirait_a_un_ami'),
-    ameliorations: val('ameliorations'),
+    manque_pour_10: val('manque_pour_10') || null,
+    dirait_a_un_ami: val('dirait_a_un_ami') || null,
+    ameliorations: val('ameliorations') || null,
     contenus_futurs: checkVals('contenus_futurs'),
     contenus_futurs_autre: val('contenus_futurs_autre') || null,
-    dernier_mot: val('dernier_mot')
+    dernier_mot: val('dernier_mot') || null
   };
 }
 
