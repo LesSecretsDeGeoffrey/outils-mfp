@@ -128,21 +128,14 @@
 
       <div class="block">
         <h2>Profil des répondants</h2>
-        <p class="desc">Ancienneté et niveau au moment de rejoindre.</p>
-        <div style="margin-bottom:18px"><div class="overline" style="margin-bottom:10px;display:block">Ancienneté</div><div id="ancBars"></div></div>
-        <div><div class="overline" style="margin-bottom:10px;display:block">Niveau de départ</div><div id="nivBars"></div></div>
+        <p class="desc">Niveau en pâtisserie au moment de rejoindre.</p>
+        <div id="nivBars"></div>
       </div>
 
       <div class="block">
         <h2>Verbatims — leurs mots exacts</h2>
-        <p class="desc">L'or pour ton copywriting. Clique sur une question pour déplier, puis copie les réponses qui claquent.</p>
+        <p class="desc">L'or pour ton copywriting. Les réponses sont anonymes, tu peux les réutiliser comme preuve sociale. Clique sur une question pour déplier, puis copie celles qui claquent.</p>
         <div id="verbatims"></div>
-      </div>
-
-      <div class="block">
-        <h2>Témoignages prêts à utiliser</h2>
-        <p class="desc">Réponses des élèves qui t'ont autorisé à les publier (avec prénom ou en anonyme).</p>
-        <div id="temoignages"></div>
       </div>
     </div>
   </main>
@@ -228,7 +221,6 @@ function render(){
   // contenus
   bars(document.getElementById('contBars'), countArr('contenus_futurs'), n);
   // profil
-  bars(document.getElementById('ancBars'), countField('anciennete'), n);
   bars(document.getElementById('nivBars'), countField('niveau_depart'), n);
 
   // nps distribution
@@ -245,38 +237,26 @@ function render(){
   // verbatims
   const VQ = [
     ['galere_avant','Leur plus grosse galère avant'],
-    ['declic','Le déclic qui les a fait passer à l\'achat'],
+    ['declic','Ce qui les a convaincus de rejoindre'],
     ['hesitation','Ce qui les faisait hésiter (= objections à casser)'],
     ['ce_qui_a_convaincu','Ce qui a levé leur hésitation'],
     ['changement','Ce qui a changé pour eux'],
-    ['dirait_a_un_ami','Ce qu\'ils diraient à un ami qui hésite'],
+    ['dirait_a_un_ami','Ce qu\'ils diraient à un ami qui hésite (= témoignages)'],
     ['manque_pour_10','Ce qui manque pour mettre 10/10'],
-    ['ameliorations','À améliorer'],
+    ['ameliorations','Ce que je pourrais améliorer'],
     ['dernier_mot','Un dernier mot']
   ];
   document.getElementById('verbatims').innerHTML = VQ.map(([f,label])=>{
-    const items = ROWS.map(r=>({txt:r[f], who:r.prenom})).filter(x=>x.txt && x.txt.trim());
-    const all = items.map(x=>'- '+x.txt).join('\n');
+    const items = ROWS.map(r=>r[f]).filter(t=>t && t.trim());
+    const all = items.map(t=>'- '+t).join('\n');
     return `<details class="vq">
       <summary>${esc(label)}<span class="cnt">${items.length} réponse${items.length>1?'s':''}</span></summary>
       <div class="body">
         ${items.length?`<div class="tools"><button class="copy" data-all="${encodeURIComponent(all)}">Copier tout</button></div>`:''}
-        ${items.length? items.map(x=>`<div class="ans"><div><span class="txt">${esc(x.txt)}</span>${x.who?`<span class="who">— ${esc(x.who)}</span>`:''}</div><button class="copy" data-txt="${encodeURIComponent(x.txt)}">Copier</button></div>`).join('')
+        ${items.length? items.map(t=>`<div class="ans"><span class="txt">${esc(t)}</span><button class="copy" data-txt="${encodeURIComponent(t)}">Copier</button></div>`).join('')
           : '<p class="empty">Aucune réponse pour l\'instant</p>'}
       </div></details>`;
   }).join('');
-
-  // témoignages (consent oui)
-  const temos = ROWS.filter(r => r.consentement_temoignage && r.consentement_temoignage.startsWith('Oui'))
-    .map(r => {
-      const quote = r.dirait_a_un_ami || r.changement || r.ce_qui_a_convaincu;
-      if(!quote) return null;
-      const withName = r.consentement_temoignage.includes('prénom') && r.prenom;
-      return { quote, name: withName ? r.prenom : 'Élève de la Méthode (anonyme)' };
-    }).filter(Boolean);
-  document.getElementById('temoignages').innerHTML = temos.length
-    ? temos.map(t=>`<div class="tcard"><div class="quote">« ${esc(t.quote)} »</div><div class="name">${esc(t.name)}</div></div>`).join('')
-    : '<p class="empty">Aucun témoignage autorisé pour l\'instant</p>';
 }
 
 // copy buttons (delegation)
@@ -292,7 +272,7 @@ document.addEventListener('click', e=>{
 // CSV
 function exportCSV(){
   if(!ROWS.length) return;
-  const cols = ['created_at','anciennete','niveau_depart','galere_avant','declic','arguments','hesitation','ce_qui_a_convaincu','changement','nps','manque_pour_10','dirait_a_un_ami','ameliorations','contenus_futurs','contenus_futurs_autre','dernier_mot','consentement_temoignage','prenom','contact'];
+  const cols = ['created_at','niveau_depart','galere_avant','declic','arguments','hesitation','ce_qui_a_convaincu','changement','nps','manque_pour_10','dirait_a_un_ami','ameliorations','contenus_futurs','contenus_futurs_autre','dernier_mot'];
   const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
   const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
   const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});

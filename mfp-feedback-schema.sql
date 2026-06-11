@@ -15,33 +15,20 @@ create table if not exists public.mfp_feedback (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz default now(),
 
-  -- Partie 1 — contexte
-  anciennete            text,    -- Q1 depuis combien de temps
-  niveau_depart         text,    -- Q2 niveau au moment de rejoindre
-
-  -- Partie 2 — pourquoi tu as rejoint (le coeur)
-  galere_avant          text,    -- Q3 (or) plus grosse galère avant
-  declic                text,    -- Q4 (or) le déclic
-  arguments             text[],  -- Q5 (or) ce qui a le plus compté (multi)
-  hesitation            text,    -- Q6 (or) ce qui faisait hésiter
-  ce_qui_a_convaincu    text,    -- Q7 (or) ce qui a levé l'hésitation
-
-  -- Partie 3 — depuis que tu es dedans
-  changement            text,    -- Q8 (or) LE truc qui a changé
-  nps                   int,     -- Q9 recommandation 0-10
-  manque_pour_10        text,    -- Q10 ce qui manque pour 10/10
-  dirait_a_un_ami       text,    -- Q11 (or / témoignage) ce qu'il dirait à un ami
-
-  -- Partie 4 — la suite
-  ameliorations         text,    -- Q12 à améliorer
-  contenus_futurs       text[],  -- Q13 contenus souhaités (multi)
-  contenus_futurs_autre text,    -- Q13 autre (libre)
-  dernier_mot           text,    -- Q14 un dernier truc
-
-  -- Partie 5 — clôture
-  consentement_temoignage text,  -- Q15 droit d'usage en témoignage
-  prenom                text,    -- Q16 prénom (facultatif)
-  contact               text     -- Q16 insta / contact (facultatif)
+  niveau_depart         text,    -- niveau au moment de rejoindre
+  galere_avant          text,    -- plus grosse galère avant (or)
+  declic                text,    -- ce qui l'a convaincu de rejoindre (or)
+  arguments             text[],  -- ce qui a le plus compté, multi, max 3 (or)
+  hesitation            text,    -- ce qui faisait hésiter (or)
+  ce_qui_a_convaincu    text,    -- ce qui a levé l'hésitation (or)
+  changement            text,    -- LE truc qui a changé (or)
+  nps                   int,     -- recommandation 0-10
+  manque_pour_10        text,    -- ce qui manque pour 10/10
+  dirait_a_un_ami       text,    -- ce qu'il dirait à un ami (= témoignage anonyme) (or)
+  ameliorations         text,    -- ce que je pourrais améliorer
+  contenus_futurs       text[],  -- contenus souhaités (multi)
+  contenus_futurs_autre text,    -- autre idée de contenu (facultatif)
+  dernier_mot           text     -- un dernier truc
 );
 
 create index if not exists idx_mfp_feedback_created_at on public.mfp_feedback(created_at desc);
