@@ -59,6 +59,10 @@
   .bar .bl .v{font-weight:700; color:var(--or-deep); white-space:nowrap}
   .bar .track{background:#F0E8D8; border-radius:5px; height:20px; overflow:hidden}
   .bar .fill{height:100%; border-radius:5px; background:linear-gradient(90deg,#E0BE6A,#C8A04A); min-width:2px; transition:width .5s}
+  .npsdist{display:flex; gap:5px; align-items:flex-end; height:130px; margin:10px 0 4px}
+  .npsdist .col{flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px}
+  .npsdist .col .b{width:100%; border-radius:4px 4px 0 0; min-height:3px; background:linear-gradient(180deg,#E0BE6A,#C8A04A); transition:height .5s}
+  .npsdist .col .n{font-size:11px; color:var(--muted)} .npsdist .col .c{font-size:11px; font-weight:700; color:var(--or-deep)}
   .split{display:flex; gap:14px; flex-wrap:wrap}
   .splitcard{flex:1; min-width:130px; text-align:center; border:1px solid var(--ligne); border-radius:8px; padding:18px}
   .splitcard .n{font-family:Georgia,serif; font-size:34px}
@@ -110,8 +114,8 @@
 
       <div class="block">
         <h2>Note de la masterclass</h2>
-        <p class="desc">De 1 (pas du tout) à 5 (excellente).</p>
-        <div id="noteBars"></div>
+        <p class="desc">De 0 (pas du tout) à 10 (excellente).</p>
+        <div class="npsdist" id="noteBars"></div>
       </div>
 
       <div class="block">
@@ -185,26 +189,23 @@ function render(){
 
   const notes = ROWS.map(r=>r.note).filter(v=>v!==null && v!==undefined);
   const noteAvg = notes.length ? (notes.reduce((a,b)=>a+b,0)/notes.length).toFixed(1) : '—';
-  const satis = notes.length ? Math.round(notes.filter(v=>v>=4).length/notes.length*100)+'%' : '—';
+  const satis = notes.length ? Math.round(notes.filter(v=>v>=8).length/notes.length*100)+'%' : '—';
   const oui = ROWS.filter(r=>r.a_rejoint==='Oui').length;
   const non = ROWS.filter(r=>r.a_rejoint==='Non').length;
   const conv = (oui+non) ? Math.round(oui/(oui+non)*100)+'%' : '—';
 
   document.getElementById('kpis').innerHTML = `
     <div class="kpi"><div class="num">${n}</div><div class="lab">Réponses</div></div>
-    <div class="kpi"><div class="num">${noteAvg}</div><div class="lab">Note moyenne /5</div></div>
-    <div class="kpi"><div class="num">${satis}</div><div class="lab">Satisfaits (4-5)</div></div>
+    <div class="kpi"><div class="num">${noteAvg}</div><div class="lab">Note moyenne /10</div></div>
+    <div class="kpi"><div class="num">${satis}</div><div class="lab">Satisfaits (8-10)</div></div>
     <div class="kpi"><div class="num">${conv}</div><div class="lab">Ont rejoint la Méthode</div></div>`;
 
-  // note distribution 1-5
-  const LABELS = {1:'1 · Pas du tout',2:'2 · Sans plus',3:'3 · Intéressante',4:'4 · Bien',5:'5 · Excellente'};
-  const dist = [1,2,3,4,5].map(i=>[i, notes.filter(v=>v===i).length]);
-  const dmax = Math.max(...dist.map(d=>d[1]),1);
-  document.getElementById('noteBars').innerHTML = dist.map(([i,c])=>`
-    <div class="bar">
-      <div class="bl"><span>${LABELS[i]}</span><span class="v">${c}${notes.length?' · '+Math.round(c/notes.length*100)+'%':''}</span></div>
-      <div class="track"><div class="fill" style="width:${Math.max(c/dmax*100,2)}%"></div></div>
-    </div>`).join('');
+  // note distribution 0-10 (colonnes verticales, même système que le questionnaire élèves)
+  const dist = Array.from({length:11},(_,i)=>notes.filter(v=>v===i).length);
+  const dmax = Math.max(...dist,1);
+  document.getElementById('noteBars').innerHTML = dist.map((c,i)=>
+    `<div class="col"><span class="c">${c||''}</span><div class="b" style="height:${c/dmax*100}%"></div><span class="n">${i}</span></div>`
+  ).join('');
 
   // conversion split
   document.getElementById('conv').innerHTML = `

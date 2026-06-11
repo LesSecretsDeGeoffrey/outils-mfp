@@ -77,9 +77,20 @@
   .choice input:checked ~ .box::after{content:""; position:absolute; width:8px; height:8px; inset:0; margin:auto; background:var(--encre); border-radius:50%}
   .choice:has(input:checked){border-color:var(--or); background:rgba(200,160,74,0.08)}
   .choice .num{font-weight:700; color:var(--or-deep); margin-right:2px}
+  /* NPS 0-10 (même système que le questionnaire élèves) */
+  .nps{display:flex; flex-wrap:wrap; gap:7px; margin-top:4px}
+  .nps button{
+    flex:1 1 auto; min-width:38px; font-family:inherit; font-size:16px; font-weight:600;
+    padding:11px 0; border:1px solid var(--ligne); border-radius:6px; background:#FCFAF6;
+    color:var(--encre); cursor:pointer; transition:all .15s;
+  }
+  .nps button:hover{border-color:var(--or)}
+  .nps button.sel{background:var(--or); border-color:var(--or); color:var(--encre)}
+  .nps-ends{display:flex; justify-content:space-between; font-size:12px; color:var(--muted); margin-top:8px}
   /* invalid state */
   .q.invalid textarea{border-color:var(--rouge); background:#FFF6F4}
   .q.invalid .choice{border-color:#E0A59D}
+  .q.invalid .nps button{border-color:#E0A59D}
   .q.invalid .lab{color:var(--rouge)}
   .qerr{display:none; color:var(--rouge); font-size:13px; font-weight:600; margin-top:8px}
   .q.invalid .qerr{display:block}
@@ -120,14 +131,9 @@
       <p class="reqnote">Ça te prend 2 minutes, mais ça m'aide <b>énormément</b> 🙏 · seule la note et le Oui/Non sont obligatoires</p>
 
       <div class="q">
-        <label class="lab">Quelle note tu donnerais à la masterclass ?</label>
-        <div class="choices" data-name="note">
-          <label class="choice"><input type="radio" name="note" value="1"><span class="box"></span><span><span class="num">1</span> · Pas du tout</span></label>
-          <label class="choice"><input type="radio" name="note" value="2"><span class="box"></span><span><span class="num">2</span> · Sans plus</span></label>
-          <label class="choice"><input type="radio" name="note" value="3"><span class="box"></span><span><span class="num">3</span> · Intéressante</span></label>
-          <label class="choice"><input type="radio" name="note" value="4"><span class="box"></span><span><span class="num">4</span> · Bien</span></label>
-          <label class="choice"><input type="radio" name="note" value="5"><span class="box"></span><span><span class="num">5</span> · Excellente</span></label>
-        </div>
+        <label class="lab">De 0 à 10, quelle note tu donnerais à la masterclass ?</label>
+        <div class="nps" id="nps"></div>
+        <div class="nps-ends"><span>Pas du tout</span><span>Excellente</span></div>
         <div class="qerr">Choisis une note</div>
       </div>
 
@@ -187,6 +193,21 @@
 const SUPABASE_URL = 'https://mxnrqnpvcxwdwykzzchk.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_f_MKNNQu-CG7LqW3Bs0sUA_TIU2fBUf';
 
+// ---- note 0-10 (même système que le questionnaire élèves) ----
+let npsVal = null;
+const npsBox = document.getElementById('nps');
+for (let i = 0; i <= 10; i++) {
+  const b = document.createElement('button');
+  b.type = 'button'; b.textContent = i;
+  b.addEventListener('click', () => {
+    npsVal = i;
+    [...npsBox.children].forEach(c => c.classList.remove('sel'));
+    b.classList.add('sel');
+    npsBox.closest('.q').classList.remove('invalid');
+  });
+  npsBox.appendChild(b);
+}
+
 // ---- branchement : les questions 4-5-6 n'apparaissent que si "Non" ----
 const blocNon = document.getElementById('blocNon');
 document.getElementById('aRejointGroup').addEventListener('change', e => {
@@ -207,16 +228,22 @@ document.querySelectorAll('.choices').forEach(g =>
   g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
 // ---- validation : note + a_rejoint obligatoires ----
-const REQUIRED = [{name:'note'}, {name:'a_rejoint'}];
-function isFilled(f){ return !!document.querySelector(`input[name="${f.name}"]:checked`); }
-function anchorOf(f){ return document.querySelector(`[data-name="${f.name}"]`).closest('.q'); }
+const REQUIRED = [{name:'note', type:'nps'}, {name:'a_rejoint', type:'radio'}];
+function isFilled(f){
+  if (f.type==='nps') return npsVal!==null;
+  return !!document.querySelector(`input[name="${f.name}"]:checked`);
+}
+function anchorOf(f){
+  if (f.type==='nps') return document.getElementById('nps').closest('.q');
+  return document.querySelector(`[data-name="${f.name}"]`).closest('.q');
+}
 
 function val(name){ const el=document.querySelector(`[name="${name}"]`); return el?el.value.trim():''; }
 function radioVal(name){ const el=document.querySelector(`input[name="${name}"]:checked`); return el?el.value:null; }
 function payload(){
   const joined = radioVal('a_rejoint') === 'Oui';
   return {
-    note: radioVal('note') ? parseInt(radioVal('note'),10) : null,
+    note: npsVal,
     prefere: val('prefere') || null,
     a_rejoint: radioVal('a_rejoint'),
     raison_pas_rejoint: joined ? null : (val('raison_pas_rejoint') || null),
