@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résultats — Avis masterclass macarons</title>
+<meta name="robots" content="noindex">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --creme:#FDF8F0; --encre:#1A1410; --or:#C8A04A; --or-deep:#8B6914;
+    --muted:#6B5C44; --ligne:rgba(26,20,16,0.12); --carte:#fff;
+    --vert:#3E8E5A; --rouge:#B23A2E; --gris:#B8A98C;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--creme); color:var(--encre); line-height:1.55}
+  .overline{font-family:'Courier New',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--or)}
+  #gate{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--encre)}
+  #gate .card{background:var(--carte); border-radius:8px; padding:40px 34px; max-width:360px; width:100%; text-align:center; border-top:3px solid var(--or)}
+  #gate h1{font-family:Georgia,serif; font-weight:400; font-size:26px; margin:14px 0 8px}
+  #gate p{color:var(--muted); font-size:14px; margin-bottom:22px}
+  #gate input{width:100%; font-size:17px; padding:13px; border:1px solid var(--ligne); border-radius:6px; text-align:center; margin-bottom:14px}
+  #gate input:focus{outline:none; border-color:var(--or)}
+  #gate button{width:100%; font-family:inherit; font-size:16px; font-weight:700; color:var(--encre); border:none; padding:14px; border-radius:6px; cursor:pointer; background:linear-gradient(135deg,#E0BE6A,#C8A04A)}
+  #gateErr{color:var(--rouge); font-size:13px; margin-top:10px; display:none}
+  #app{display:none}
+  .top{background:var(--encre); color:var(--creme); padding:26px clamp(16px,5vw,40px); border-bottom:3px solid var(--or)}
+  .top .row{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px}
+  .top h1{font-family:Georgia,serif; font-weight:400; font-size:clamp(22px,4vw,30px)}
+  .top h1 .accent{color:var(--or); font-style:italic}
+  .top .actions{display:flex; gap:10px; flex-wrap:wrap}
+  .top button{font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:9px 15px; border-radius:6px; border:1px solid rgba(200,160,74,0.5); background:transparent; color:var(--or)}
+  .top button:hover{background:rgba(200,160,74,0.12)}
+  .top button.danger{border-color:rgba(216,139,130,0.6); color:#E6A39B}
+  .top button.danger:hover{background:rgba(178,58,46,0.18)}
+  .modal-bg{display:none; position:fixed; inset:0; background:rgba(26,20,16,0.7); z-index:50; align-items:center; justify-content:center; padding:24px}
+  .modal{background:var(--carte); border-radius:10px; padding:34px 30px; max-width:420px; width:100%; border-top:3px solid var(--rouge)}
+  .modal h3{font-family:Georgia,serif; font-weight:400; font-size:24px; margin:14px 0 10px}
+  .modal p{font-size:15px; color:var(--encre); line-height:1.55}
+  .modal .resetmsg{color:var(--rouge); font-size:13.5px; font-weight:600; margin-top:14px; line-height:1.5}
+  .modal .resetmsg:empty{margin:0}
+  .modal-actions{display:flex; gap:12px; margin-top:26px}
+  .mbtn{flex:1; font-family:inherit; font-size:15px; font-weight:700; cursor:pointer; padding:13px; border-radius:7px; border:1px solid var(--ligne)}
+  .mbtn.cancel{background:#fff; color:var(--muted)}
+  .mbtn.cancel:hover{border-color:var(--encre); color:var(--encre)}
+  .mbtn.dangerbtn{background:var(--rouge); color:#fff; border-color:var(--rouge)}
+  .mbtn.dangerbtn:hover{background:#9A2E24}
+  .mbtn:disabled{opacity:.55; cursor:not-allowed}
+  main{max-width:1100px; margin:0 auto; padding:clamp(20px,4vw,40px) clamp(16px,5vw,40px) 100px}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-bottom:34px}
+  .kpi{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:20px; text-align:center}
+  .kpi .num{font-family:Georgia,serif; font-size:38px; line-height:1; color:var(--or-deep)}
+  .kpi .lab{font-size:12px; color:var(--muted); margin-top:8px; text-transform:uppercase; letter-spacing:1px}
+  .block{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:clamp(20px,4vw,32px); margin-bottom:24px; position:relative; overflow:hidden}
+  .block::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
+  .block h2{font-family:Georgia,serif; font-weight:400; font-size:clamp(19px,3vw,24px); margin-bottom:6px}
+  .block .desc{font-size:13.5px; color:var(--muted); margin-bottom:22px}
+  .bar{margin-bottom:13px}
+  .bar .bl{display:flex; justify-content:space-between; font-size:14px; margin-bottom:5px; gap:10px}
+  .bar .bl .v{font-weight:700; color:var(--or-deep); white-space:nowrap}
+  .bar .track{background:#F0E8D8; border-radius:5px; height:20px; overflow:hidden}
+  .bar .fill{height:100%; border-radius:5px; background:linear-gradient(90deg,#E0BE6A,#C8A04A); min-width:2px; transition:width .5s}
+  .split{display:flex; gap:14px; flex-wrap:wrap}
+  .splitcard{flex:1; min-width:130px; text-align:center; border:1px solid var(--ligne); border-radius:8px; padding:18px}
+  .splitcard .n{font-family:Georgia,serif; font-size:34px}
+  .splitcard.oui{background:rgba(62,142,90,0.08)} .splitcard.oui .n{color:var(--vert)}
+  .splitcard.non{background:rgba(178,58,46,0.06)} .splitcard.non .n{color:var(--rouge)}
+  .splitcard .l{font-size:12px; color:var(--muted); margin-top:6px; text-transform:uppercase; letter-spacing:1px}
+  .vq{border:1px solid var(--ligne); border-radius:8px; margin-bottom:14px; overflow:hidden}
+  .vq summary{cursor:pointer; padding:15px 18px; font-weight:600; font-size:15px; background:#FCFAF6; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px}
+  .vq summary::-webkit-details-marker{display:none}
+  .vq summary .cnt{font-size:12px; color:var(--muted); font-weight:400; background:#F0E8D8; padding:3px 9px; border-radius:20px; white-space:nowrap}
+  .vq .body{padding:6px 18px 18px}
+  .vq .tools{display:flex; justify-content:flex-end; margin:8px 0}
+  .ans{background:#FCFAF6; border-left:3px solid var(--or); border-radius:0 6px 6px 0; padding:12px 14px; margin-bottom:10px; font-size:14.5px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start}
+  .ans .txt{white-space:pre-wrap}
+  .copy{flex:0 0 auto; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:var(--muted); padding:5px 11px; border-radius:5px}
+  .copy:hover{border-color:var(--or); color:var(--or-deep)}
+  .copy.done{background:var(--or); color:var(--encre); border-color:var(--or)}
+  .empty{color:var(--gris); font-style:italic; font-size:14px}
+  #loading{text-align:center; padding:80px 20px; color:var(--muted)}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="card">
+    <span class="overline">Résultats privés</span>
+    <h1>Avis masterclass</h1>
+    <p>Réservé à Geoffrey</p>
+    <input type="password" id="pw" placeholder="Mot de passe" autocomplete="off">
+    <button onclick="unlock()">Voir les résultats</button>
+    <div id="gateErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="top"><div class="row">
+    <h1>Avis <span class="accent">masterclass macarons</span></h1>
+    <div class="actions">
+      <button onclick="loadData()">↻ Recharger</button>
+      <button onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="danger" onclick="openReset()">🗑 Réinitialiser</button>
+    </div>
+  </div></div>
+  <main>
+    <div id="loading">Chargement des réponses...</div>
+    <div id="content" style="display:none">
+      <div class="kpis" id="kpis"></div>
+
+      <div class="block">
+        <h2>Note de la masterclass</h2>
+        <p class="desc">De 1 (pas du tout) à 5 (excellente).</p>
+        <div id="noteBars"></div>
+      </div>
+
+      <div class="block">
+        <h2>Ont-ils rejoint la Méthode ?</h2>
+        <p class="desc">Ta conversion sur les répondants. Le « Non » = ta marge de progression sur le close.</p>
+        <div class="split" id="conv"></div>
+      </div>
+
+      <div class="block">
+        <h2>Pourquoi ils n'ont pas rejoint <span style="font-size:14px;color:var(--muted)">(le plus important)</span></h2>
+        <p class="desc">Les freins et le prix idéal de ceux qui n'ont pas acheté. C'est l'or pour corriger ton close et ton offre. Clique pour déplier, copie ce qui claque.</p>
+        <div id="verbObjections"></div>
+      </div>
+
+      <div class="block">
+        <h2>Le reste des verbatims</h2>
+        <p class="desc">Ce qu'ils ont préféré et ce qui les bloque en pâtisserie.</p>
+        <div id="verbAutres"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="resetModal" class="modal-bg">
+  <div class="modal">
+    <span class="overline" style="color:var(--rouge);border-color:rgba(178,58,46,.4)">Action irréversible</span>
+    <h3>Effacer tout l'historique ?</h3>
+    <p>Tu vas supprimer <b id="resetCount">0</b> réponse(s) <b>définitivement</b>. Impossible de revenir en arrière.</p>
+    <div id="resetMsg" class="resetmsg"></div>
+    <div class="modal-actions">
+      <button class="mbtn cancel" onclick="closeReset()">Annuler</button>
+      <button class="mbtn dangerbtn" id="resetConfirmBtn" onclick="doReset()">Oui, tout supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://mxnrqnpvcxwdwykzzchk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_f_MKNNQu-CG7LqW3Bs0sUA_TIU2fBUf';
+const PASSWORD = '6688';
+let ROWS = [];
+const H = (extra={}) => Object.assign({'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}, extra);
+
+function unlock(){
+  if (document.getElementById('pw').value === PASSWORD){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else { document.getElementById('gateErr').style.display='block'; }
+}
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+
+async function loadData(){
+  document.getElementById('loading').style.display='block';
+  document.getElementById('content').style.display='none';
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/atelier_feedback?select=*&order=created_at.desc`, { headers:H() });
+    if(res.status===404){ document.getElementById('loading').innerHTML='La table n\'existe pas encore.<br>Lance d\'abord <b>atelier-feedback-schema.sql</b> dans Supabase &gt; SQL Editor, puis recharge.'; return; }
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    ROWS = await res.json();
+    render();
+  }catch(err){ document.getElementById('loading').textContent = 'Erreur de chargement : '+err.message; }
+}
+
+const esc = s => (s==null?'':String(s)).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function render(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('content').style.display='block';
+  const n = ROWS.length;
+
+  const notes = ROWS.map(r=>r.note).filter(v=>v!==null && v!==undefined);
+  const noteAvg = notes.length ? (notes.reduce((a,b)=>a+b,0)/notes.length).toFixed(1) : '—';
+  const satis = notes.length ? Math.round(notes.filter(v=>v>=4).length/notes.length*100)+'%' : '—';
+  const oui = ROWS.filter(r=>r.a_rejoint==='Oui').length;
+  const non = ROWS.filter(r=>r.a_rejoint==='Non').length;
+  const conv = (oui+non) ? Math.round(oui/(oui+non)*100)+'%' : '—';
+
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="num">${n}</div><div class="lab">Réponses</div></div>
+    <div class="kpi"><div class="num">${noteAvg}</div><div class="lab">Note moyenne /5</div></div>
+    <div class="kpi"><div class="num">${satis}</div><div class="lab">Satisfaits (4-5)</div></div>
+    <div class="kpi"><div class="num">${conv}</div><div class="lab">Ont rejoint la Méthode</div></div>`;
+
+  // note distribution 1-5
+  const LABELS = {1:'1 · Pas du tout',2:'2 · Sans plus',3:'3 · Intéressante',4:'4 · Bien',5:'5 · Excellente'};
+  const dist = [1,2,3,4,5].map(i=>[i, notes.filter(v=>v===i).length]);
+  const dmax = Math.max(...dist.map(d=>d[1]),1);
+  document.getElementById('noteBars').innerHTML = dist.map(([i,c])=>`
+    <div class="bar">
+      <div class="bl"><span>${LABELS[i]}</span><span class="v">${c}${notes.length?' · '+Math.round(c/notes.length*100)+'%':''}</span></div>
+      <div class="track"><div class="fill" style="width:${Math.max(c/dmax*100,2)}%"></div></div>
+    </div>`).join('');
+
+  // conversion split
+  document.getElementById('conv').innerHTML = `
+    <div class="splitcard oui"><div class="n">${oui}</div><div class="l">Ont rejoint</div></div>
+    <div class="splitcard non"><div class="n">${non}</div><div class="l">N'ont pas rejoint</div></div>`;
+
+  // verbatims
+  const renderVQ = (el, list) => {
+    document.getElementById(el).innerHTML = list.map(([f,label])=>{
+      const items = ROWS.map(r=>r[f]).filter(t=>t && t.trim());
+      const all = items.map(t=>'- '+t).join('\n');
+      return `<details class="vq">
+        <summary>${esc(label)}<span class="cnt">${items.length} réponse${items.length>1?'s':''}</span></summary>
+        <div class="body">
+          ${items.length?`<div class="tools"><button class="copy" data-all="${encodeURIComponent(all)}">Copier tout</button></div>`:''}
+          ${items.length? items.map(t=>`<div class="ans"><span class="txt">${esc(t)}</span><button class="copy" data-txt="${encodeURIComponent(t)}">Copier</button></div>`).join('')
+            : '<p class="empty">Aucune réponse pour l\'instant</p>'}
+        </div></details>`;
+    }).join('');
+  };
+  renderVQ('verbObjections', [
+    ['raison_pas_rejoint','La raison qui les a empêchés de rejoindre'],
+    ['prix_ideal','Le prix qui les aurait fait rejoindre'],
+    ['oui_tout_de_suite','Ce qui les ferait dire « oui » tout de suite']
+  ]);
+  renderVQ('verbAutres', [
+    ['prefere','Ce qu\'ils ont préféré pendant la masterclass'],
+    ['blocage_patisserie','Ce qui les bloque le plus en pâtisserie']
+  ]);
+}
+
+document.addEventListener('click', e=>{
+  const b = e.target.closest('.copy'); if(!b) return;
+  const txt = decodeURIComponent(b.dataset.txt || b.dataset.all || '');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const old = b.textContent; b.textContent='Copié ✓'; b.classList.add('done');
+    setTimeout(()=>{ b.textContent=old; b.classList.remove('done'); }, 1400);
+  });
+});
+
+function exportCSV(){
+  if(!ROWS.length) return;
+  const cols = ['created_at','note','prefere','a_rejoint','raison_pas_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie'];
+  const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
+  const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'avis-masterclass-macarons.csv'; a.click();
+}
+
+// ===== Réinitialiser =====
+function openReset(){
+  document.getElementById('resetCount').textContent = ROWS.length;
+  document.getElementById('resetMsg').textContent = '';
+  const b = document.getElementById('resetConfirmBtn'); b.disabled=false; b.textContent='Oui, tout supprimer';
+  document.getElementById('resetModal').style.display='flex';
+}
+function closeReset(){ document.getElementById('resetModal').style.display='none'; }
+async function doReset(){
+  const btn=document.getElementById('resetConfirmBtn'), msg=document.getElementById('resetMsg');
+  btn.disabled=true; btn.textContent='Suppression...';
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/atelier_feedback?created_at=gte.2000-01-01`, { method:'DELETE', headers:H({'Prefer':'return=minimal'}) });
+    const chk = await fetch(`${SUPABASE_URL}/rest/v1/atelier_feedback?select=id`, { headers:H() });
+    const rows = await chk.json();
+    if(Array.isArray(rows) && rows.length>0){
+      msg.innerHTML='Suppression bloquée par la sécurité Supabase. Lance d\'abord la policy DELETE (voir <b>atelier-feedback-schema.sql</b>), puis réessaie.';
+      btn.disabled=false; btn.textContent='Oui, tout supprimer'; return;
+    }
+    closeReset(); loadData();
+  }catch(e){ msg.textContent='Erreur : '+e.message; btn.disabled=false; btn.textContent='Oui, tout supprimer'; }
+}
+document.getElementById('resetModal').addEventListener('click', e => { if(e.target.id==='resetModal') closeReset(); });
+</script>
+</body>
+</html>
