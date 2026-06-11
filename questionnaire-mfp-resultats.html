@@ -32,6 +32,22 @@
   .top .actions{display:flex; gap:10px; flex-wrap:wrap}
   .top button{font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:9px 15px; border-radius:6px; border:1px solid rgba(200,160,74,0.5); background:transparent; color:var(--or)}
   .top button:hover{background:rgba(200,160,74,0.12)}
+  .top button.danger{border-color:rgba(216,139,130,0.6); color:#E6A39B}
+  .top button.danger:hover{background:rgba(178,58,46,0.18)}
+  /* modal reset */
+  .modal-bg{display:none; position:fixed; inset:0; background:rgba(26,20,16,0.7); z-index:50; align-items:center; justify-content:center; padding:24px}
+  .modal{background:var(--carte); border-radius:10px; padding:34px 30px; max-width:420px; width:100%; border-top:3px solid var(--rouge)}
+  .modal h3{font-family:Georgia,serif; font-weight:400; font-size:24px; margin:14px 0 10px}
+  .modal p{font-size:15px; color:var(--encre); line-height:1.55}
+  .modal .resetmsg{color:var(--rouge); font-size:13.5px; font-weight:600; margin-top:14px; line-height:1.5}
+  .modal .resetmsg:empty{margin:0}
+  .modal-actions{display:flex; gap:12px; margin-top:26px}
+  .mbtn{flex:1; font-family:inherit; font-size:15px; font-weight:700; cursor:pointer; padding:13px; border-radius:7px; border:1px solid var(--ligne)}
+  .mbtn.cancel{background:#fff; color:var(--muted)}
+  .mbtn.cancel:hover{border-color:var(--encre); color:var(--encre)}
+  .mbtn.dangerbtn{background:var(--rouge); color:#fff; border-color:var(--rouge)}
+  .mbtn.dangerbtn:hover{background:#9A2E24}
+  .mbtn:disabled{opacity:.55; cursor:not-allowed}
   main{max-width:1100px; margin:0 auto; padding:clamp(20px,4vw,40px) clamp(16px,5vw,40px) 100px}
   .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-bottom:34px}
   .kpi{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:20px; text-align:center}
@@ -96,6 +112,7 @@
     <div class="actions">
       <button onclick="loadData()">↻ Recharger</button>
       <button onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="danger" onclick="openReset()">🗑 Réinitialiser</button>
     </div>
   </div></div>
   <main>
@@ -139,6 +156,19 @@
       </div>
     </div>
   </main>
+</div>
+
+<div id="resetModal" class="modal-bg">
+  <div class="modal">
+    <span class="overline" style="color:var(--rouge);border-color:rgba(178,58,46,.4)">Action irréversible</span>
+    <h3>Effacer tout l'historique ?</h3>
+    <p>Tu vas supprimer <b id="resetCount">0</b> réponse(s) <b>définitivement</b>. Impossible de revenir en arrière.</p>
+    <div id="resetMsg" class="resetmsg"></div>
+    <div class="modal-actions">
+      <button class="mbtn cancel" onclick="closeReset()">Annuler</button>
+      <button class="mbtn dangerbtn" id="resetConfirmBtn" onclick="doReset()">Oui, tout supprimer</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -279,6 +309,42 @@ function exportCSV(){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = 'questionnaire-mfp.csv'; a.click();
 }
+
+// ===== Réinitialiser (efface tout l'historique) =====
+function openReset(){
+  document.getElementById('resetCount').textContent = ROWS.length;
+  document.getElementById('resetMsg').textContent = '';
+  const b = document.getElementById('resetConfirmBtn');
+  b.disabled = false; b.textContent = 'Oui, tout supprimer';
+  document.getElementById('resetModal').style.display = 'flex';
+}
+function closeReset(){ document.getElementById('resetModal').style.display = 'none'; }
+async function doReset(){
+  const btn = document.getElementById('resetConfirmBtn');
+  const msg = document.getElementById('resetMsg');
+  btn.disabled = true; btn.textContent = 'Suppression...';
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/mfp_feedback?created_at=gte.2000-01-01`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Prefer': 'return=minimal' }
+    });
+    // re-vérifie qu'il ne reste rien (la RLS peut bloquer le delete tant que la policy n'est pas ajoutée)
+    const chk = await fetch(`${SUPABASE_URL}/rest/v1/mfp_feedback?select=id`, { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } });
+    const rows = await chk.json();
+    if (Array.isArray(rows) && rows.length > 0) {
+      msg.innerHTML = 'Suppression bloquée par la sécurité Supabase. Lance d\'abord la policy DELETE (1 ligne SQL, voir <b>mfp-feedback-schema.sql</b>), puis réessaie.';
+      btn.disabled = false; btn.textContent = 'Oui, tout supprimer';
+      return;
+    }
+    closeReset();
+    loadData();
+  } catch (e) {
+    msg.textContent = 'Erreur : ' + e.message;
+    btn.disabled = false; btn.textContent = 'Oui, tout supprimer';
+  }
+}
+// fermer le modal en cliquant à l'extérieur
+document.getElementById('resetModal').addEventListener('click', e => { if (e.target.id === 'resetModal') closeReset(); });
 </script>
 </body>
 </html>

@@ -5,10 +5,13 @@
 -- Le formulaire (questionnaire-mfp.html) écrit ici à chaque réponse.
 -- Le dashboard (questionnaire-mfp-resultats.html) lit ici pour l'analyse.
 --
--- Sécurité : on autorise INSERT + SELECT via la clé publishable (la même
--- que le dashboard webinaires). On N'autorise PAS UPDATE / DELETE : comme le
--- lien du formulaire est public, personne ne peut effacer ou modifier les
--- réponses des autres avec la clé. Pour supprimer un test/spam : Table Editor.
+-- Sécurité : on autorise INSERT + SELECT + DELETE via la clé publishable
+-- (la même que le dashboard webinaires). Le DELETE sert au bouton
+-- « Réinitialiser » du dashboard.
+-- ⚠️ Comme le lien du formulaire est public (la clé est dans son code source),
+-- autoriser le DELETE signifie que quelqu'un qui récupère la clé pourrait
+-- aussi effacer les réponses. Risque faible vu l'audience, posture identique
+-- au dashboard webinaires. Durcissement possible plus tard via Supabase Auth.
 -- ============================================
 
 create table if not exists public.mfp_feedback (
@@ -46,7 +49,12 @@ drop policy if exists "mfp_feedback_select" on public.mfp_feedback;
 create policy "mfp_feedback_select" on public.mfp_feedback
   for select using (true);
 
--- Pas de policy UPDATE / DELETE = impossible d'effacer ou modifier via la clé publique.
+-- Suppression ouverte (bouton « Réinitialiser » du dashboard). Voir l'avertissement en tête de fichier.
+drop policy if exists "mfp_feedback_delete" on public.mfp_feedback;
+create policy "mfp_feedback_delete" on public.mfp_feedback
+  for delete using (true);
+
+-- Pas de policy UPDATE = personne ne peut modifier une réponse via la clé publique.
 
 -- ============================================
 -- DONE — vérifie dans Table Editor que la table mfp_feedback est créée.
