@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résultats — Questionnaire MFP</title>
+<meta name="robots" content="noindex">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --creme:#FDF8F0; --encre:#1A1410; --or:#C8A04A; --or-deep:#8B6914;
+    --muted:#6B5C44; --ligne:rgba(26,20,16,0.12); --carte:#fff;
+    --vert:#3E8E5A; --rouge:#B23A2E; --gris:#B8A98C;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--creme); color:var(--encre); line-height:1.55}
+  .overline{font-family:'Courier New',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--or)}
+  /* GATE */
+  #gate{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--encre)}
+  #gate .card{background:var(--carte); border-radius:8px; padding:40px 34px; max-width:360px; width:100%; text-align:center; border-top:3px solid var(--or)}
+  #gate h1{font-family:Georgia,serif; font-weight:400; font-size:26px; margin:14px 0 8px}
+  #gate p{color:var(--muted); font-size:14px; margin-bottom:22px}
+  #gate input{width:100%; font-size:17px; padding:13px; border:1px solid var(--ligne); border-radius:6px; text-align:center; margin-bottom:14px}
+  #gate input:focus{outline:none; border-color:var(--or)}
+  #gate button{width:100%; font-family:inherit; font-size:16px; font-weight:700; color:var(--encre); border:none; padding:14px; border-radius:6px; cursor:pointer; background:linear-gradient(135deg,#E0BE6A,#C8A04A)}
+  #gateErr{color:var(--rouge); font-size:13px; margin-top:10px; display:none}
+  /* APP */
+  #app{display:none}
+  .top{background:var(--encre); color:var(--creme); padding:26px clamp(16px,5vw,40px); border-bottom:3px solid var(--or)}
+  .top .row{max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px}
+  .top h1{font-family:Georgia,serif; font-weight:400; font-size:clamp(22px,4vw,30px)}
+  .top h1 .accent{color:var(--or); font-style:italic}
+  .top .actions{display:flex; gap:10px; flex-wrap:wrap}
+  .top button{font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:9px 15px; border-radius:6px; border:1px solid rgba(200,160,74,0.5); background:transparent; color:var(--or)}
+  .top button:hover{background:rgba(200,160,74,0.12)}
+  main{max-width:1100px; margin:0 auto; padding:clamp(20px,4vw,40px) clamp(16px,5vw,40px) 100px}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-bottom:34px}
+  .kpi{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:20px; text-align:center}
+  .kpi .num{font-family:Georgia,serif; font-size:38px; line-height:1; color:var(--or-deep)}
+  .kpi .lab{font-size:12px; color:var(--muted); margin-top:8px; text-transform:uppercase; letter-spacing:1px}
+  .block{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:clamp(20px,4vw,32px); margin-bottom:24px; position:relative; overflow:hidden}
+  .block::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
+  .block h2{font-family:Georgia,serif; font-weight:400; font-size:clamp(19px,3vw,24px); margin-bottom:6px}
+  .block .desc{font-size:13.5px; color:var(--muted); margin-bottom:22px}
+  /* bars */
+  .bar{margin-bottom:13px}
+  .bar .bl{display:flex; justify-content:space-between; font-size:14px; margin-bottom:5px; gap:10px}
+  .bar .bl .v{font-weight:700; color:var(--or-deep); white-space:nowrap}
+  .bar .track{background:#F0E8D8; border-radius:5px; height:20px; overflow:hidden}
+  .bar .fill{height:100%; border-radius:5px; background:linear-gradient(90deg,#E0BE6A,#C8A04A); min-width:2px; transition:width .5s}
+  .bar.rank1 .fill{background:linear-gradient(90deg,#C8A04A,#8B6914)}
+  /* nps dist */
+  .npsdist{display:flex; gap:5px; align-items:flex-end; height:120px; margin:10px 0 4px}
+  .npsdist .col{flex:1; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px}
+  .npsdist .col .b{width:100%; border-radius:4px 4px 0 0; min-height:3px; background:var(--gris)}
+  .npsdist .col.detr .b{background:#D98B82} .npsdist .col.pass .b{background:#E0C98A} .npsdist .col.prom .b{background:#7FB894}
+  .npsdist .col .n{font-size:11px; color:var(--muted)} .npsdist .col .c{font-size:11px; font-weight:700}
+  .npsleg{display:flex; gap:18px; flex-wrap:wrap; font-size:13px; margin-top:14px}
+  .npsleg span{display:inline-flex; align-items:center; gap:6px}
+  .dot{width:11px; height:11px; border-radius:3px; display:inline-block}
+  /* verbatims */
+  .vq{border:1px solid var(--ligne); border-radius:8px; margin-bottom:14px; overflow:hidden}
+  .vq summary{cursor:pointer; padding:15px 18px; font-weight:600; font-size:15px; background:#FCFAF6; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px}
+  .vq summary::-webkit-details-marker{display:none}
+  .vq summary .cnt{font-size:12px; color:var(--muted); font-weight:400; background:#F0E8D8; padding:3px 9px; border-radius:20px; white-space:nowrap}
+  .vq .body{padding:6px 18px 18px}
+  .vq .tools{display:flex; justify-content:flex-end; margin:8px 0}
+  .ans{background:#FCFAF6; border-left:3px solid var(--or); border-radius:0 6px 6px 0; padding:12px 14px; margin-bottom:10px; font-size:14.5px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start}
+  .ans .txt{white-space:pre-wrap}
+  .ans .who{font-size:12px; color:var(--or-deep); font-weight:600; margin-top:6px; display:block}
+  .copy{flex:0 0 auto; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:var(--muted); padding:5px 11px; border-radius:5px}
+  .copy:hover{border-color:var(--or); color:var(--or-deep)}
+  .copy.done{background:var(--or); color:var(--encre); border-color:var(--or)}
+  .empty{color:var(--gris); font-style:italic; font-size:14px}
+  .tcard{background:#FCFAF6; border:1px solid var(--ligne); border-radius:8px; padding:16px 18px; margin-bottom:12px}
+  .tcard .quote{font-size:15px; font-style:italic; line-height:1.55} .tcard .name{margin-top:10px; font-weight:700; color:var(--or-deep); font-size:13.5px}
+  #loading{text-align:center; padding:80px 20px; color:var(--muted)}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="card">
+    <span class="overline">Résultats privés</span>
+    <h1>Questionnaire MFP</h1>
+    <p>Réservé à Geoffrey</p>
+    <input type="password" id="pw" placeholder="Mot de passe" autocomplete="off">
+    <button onclick="unlock()">Voir les résultats</button>
+    <div id="gateErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="top"><div class="row">
+    <h1>Résultats <span class="accent">questionnaire MFP</span></h1>
+    <div class="actions">
+      <button onclick="loadData()">↻ Recharger</button>
+      <button onclick="exportCSV()">⬇ Export CSV</button>
+    </div>
+  </div></div>
+  <main>
+    <div id="loading">Chargement des réponses...</div>
+    <div id="content" style="display:none">
+      <div class="kpis" id="kpis"></div>
+
+      <div class="block">
+        <h2>Tes arguments de vente, classés</h2>
+        <p class="desc">Ce qui a le plus pesé dans leur décision d'acheter. Le n°1 = l'argument à mettre en avant dans tes ateliers et tes ads.</p>
+        <div id="argBars"></div>
+      </div>
+
+      <div class="block">
+        <h2>Note de recommandation</h2>
+        <p class="desc">De 0 à 10. Promoteurs (9-10), passifs (7-8), détracteurs (0-6).</p>
+        <div class="npsdist" id="npsDist"></div>
+        <div class="npsleg">
+          <span><span class="dot" style="background:#7FB894"></span>Promoteurs <b id="lProm">0</b></span>
+          <span><span class="dot" style="background:#E0C98A"></span>Passifs <b id="lPass">0</b></span>
+          <span><span class="dot" style="background:#D98B82"></span>Détracteurs <b id="lDetr">0</b></span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Contenus les plus demandés</h2>
+        <p class="desc">Ce que tes élèves veulent voir arriver dans la méthode.</p>
+        <div id="contBars"></div>
+      </div>
+
+      <div class="block">
+        <h2>Profil des répondants</h2>
+        <p class="desc">Ancienneté et niveau au moment de rejoindre.</p>
+        <div style="margin-bottom:18px"><div class="overline" style="margin-bottom:10px;display:block">Ancienneté</div><div id="ancBars"></div></div>
+        <div><div class="overline" style="margin-bottom:10px;display:block">Niveau de départ</div><div id="nivBars"></div></div>
+      </div>
+
+      <div class="block">
+        <h2>Verbatims — leurs mots exacts</h2>
+        <p class="desc">L'or pour ton copywriting. Clique sur une question pour déplier, puis copie les réponses qui claquent.</p>
+        <div id="verbatims"></div>
+      </div>
+
+      <div class="block">
+        <h2>Témoignages prêts à utiliser</h2>
+        <p class="desc">Réponses des élèves qui t'ont autorisé à les publier (avec prénom ou en anonyme).</p>
+        <div id="temoignages"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://mxnrqnpvcxwdwykzzchk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_f_MKNNQu-CG7LqW3Bs0sUA_TIU2fBUf';
+const PASSWORD = '6688';
+let ROWS = [];
+
+function unlock(){
+  const v = document.getElementById('pw').value;
+  if (v === PASSWORD){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else {
+    document.getElementById('gateErr').style.display='block';
+  }
+}
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+
+async function loadData(){
+  document.getElementById('loading').style.display='block';
+  document.getElementById('content').style.display='none';
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/mfp_feedback?select=*&order=created_at.desc`, {
+      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+SUPABASE_KEY }
+    });
+    if(res.status===404){
+      document.getElementById('loading').innerHTML = 'La table n\'existe pas encore.<br>Lance d\'abord <b>mfp-feedback-schema.sql</b> dans Supabase &gt; SQL Editor, puis recharge.';
+      return;
+    }
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    ROWS = await res.json();
+    render();
+  }catch(err){
+    document.getElementById('loading').textContent = 'Erreur de chargement : '+err.message;
+  }
+}
+
+// helpers
+const esc = s => (s==null?'':String(s)).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function countArr(field){
+  const m = {};
+  ROWS.forEach(r => (r[field]||[]).forEach(v => m[v]=(m[v]||0)+1));
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+}
+function countField(field){
+  const m = {};
+  ROWS.forEach(r => { const v=r[field]; if(v){ m[v]=(m[v]||0)+1; } });
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+}
+function bars(el, data, total){
+  const max = data.length ? data[0][1] : 1;
+  el.innerHTML = data.length ? data.map(([k,v],i)=>`
+    <div class="bar ${i===0?'rank1':''}">
+      <div class="bl"><span>${esc(k)}</span><span class="v">${v}${total?' · '+Math.round(v/total*100)+'%':''}</span></div>
+      <div class="track"><div class="fill" style="width:${Math.max(v/max*100,3)}%"></div></div>
+    </div>`).join('') : '<p class="empty">Aucune donnée pour l\'instant</p>';
+}
+
+function render(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('content').style.display='block';
+  const n = ROWS.length;
+
+  // KPIs
+  const npsVals = ROWS.map(r=>r.nps).filter(v=>v!==null && v!==undefined);
+  const npsAvg = npsVals.length ? (npsVals.reduce((a,b)=>a+b,0)/npsVals.length).toFixed(1) : '—';
+  const prom = npsVals.filter(v=>v>=9).length, pass = npsVals.filter(v=>v>=7&&v<=8).length, detr = npsVals.filter(v=>v<=6).length;
+  const npsScore = npsVals.length ? Math.round((prom-detr)/npsVals.length*100) : '—';
+  const reco = npsVals.length ? Math.round(prom/npsVals.length*100)+'%' : '—';
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="num">${n}</div><div class="lab">Réponses</div></div>
+    <div class="kpi"><div class="num">${npsAvg}</div><div class="lab">Note moyenne /10</div></div>
+    <div class="kpi"><div class="num">${npsScore}</div><div class="lab">Score NPS</div></div>
+    <div class="kpi"><div class="num">${reco}</div><div class="lab">Te recommandent (9-10)</div></div>`;
+
+  // arguments
+  bars(document.getElementById('argBars'), countArr('arguments'), n);
+  // contenus
+  bars(document.getElementById('contBars'), countArr('contenus_futurs'), n);
+  // profil
+  bars(document.getElementById('ancBars'), countField('anciennete'), n);
+  bars(document.getElementById('nivBars'), countField('niveau_depart'), n);
+
+  // nps distribution
+  const dist = Array.from({length:11},(_,i)=>npsVals.filter(v=>v===i).length);
+  const dmax = Math.max(...dist,1);
+  document.getElementById('npsDist').innerHTML = dist.map((c,i)=>{
+    const cls = i<=6?'detr':(i<=8?'pass':'prom');
+    return `<div class="col ${cls}"><span class="c">${c||''}</span><div class="b" style="height:${c/dmax*100}%"></div><span class="n">${i}</span></div>`;
+  }).join('');
+  document.getElementById('lProm').textContent = prom;
+  document.getElementById('lPass').textContent = pass;
+  document.getElementById('lDetr').textContent = detr;
+
+  // verbatims
+  const VQ = [
+    ['galere_avant','Leur plus grosse galère avant'],
+    ['declic','Le déclic qui les a fait passer à l\'achat'],
+    ['hesitation','Ce qui les faisait hésiter (= objections à casser)'],
+    ['ce_qui_a_convaincu','Ce qui a levé leur hésitation'],
+    ['changement','Ce qui a changé pour eux'],
+    ['dirait_a_un_ami','Ce qu\'ils diraient à un ami qui hésite'],
+    ['manque_pour_10','Ce qui manque pour mettre 10/10'],
+    ['ameliorations','À améliorer'],
+    ['dernier_mot','Un dernier mot']
+  ];
+  document.getElementById('verbatims').innerHTML = VQ.map(([f,label])=>{
+    const items = ROWS.map(r=>({txt:r[f], who:r.prenom})).filter(x=>x.txt && x.txt.trim());
+    const all = items.map(x=>'- '+x.txt).join('\n');
+    return `<details class="vq">
+      <summary>${esc(label)}<span class="cnt">${items.length} réponse${items.length>1?'s':''}</span></summary>
+      <div class="body">
+        ${items.length?`<div class="tools"><button class="copy" data-all="${encodeURIComponent(all)}">Copier tout</button></div>`:''}
+        ${items.length? items.map(x=>`<div class="ans"><div><span class="txt">${esc(x.txt)}</span>${x.who?`<span class="who">— ${esc(x.who)}</span>`:''}</div><button class="copy" data-txt="${encodeURIComponent(x.txt)}">Copier</button></div>`).join('')
+          : '<p class="empty">Aucune réponse pour l\'instant</p>'}
+      </div></details>`;
+  }).join('');
+
+  // témoignages (consent oui)
+  const temos = ROWS.filter(r => r.consentement_temoignage && r.consentement_temoignage.startsWith('Oui'))
+    .map(r => {
+      const quote = r.dirait_a_un_ami || r.changement || r.ce_qui_a_convaincu;
+      if(!quote) return null;
+      const withName = r.consentement_temoignage.includes('prénom') && r.prenom;
+      return { quote, name: withName ? r.prenom : 'Élève de la Méthode (anonyme)' };
+    }).filter(Boolean);
+  document.getElementById('temoignages').innerHTML = temos.length
+    ? temos.map(t=>`<div class="tcard"><div class="quote">« ${esc(t.quote)} »</div><div class="name">${esc(t.name)}</div></div>`).join('')
+    : '<p class="empty">Aucun témoignage autorisé pour l\'instant</p>';
+}
+
+// copy buttons (delegation)
+document.addEventListener('click', e=>{
+  const b = e.target.closest('.copy'); if(!b) return;
+  const txt = decodeURIComponent(b.dataset.txt || b.dataset.all || '');
+  navigator.clipboard.writeText(txt).then(()=>{
+    const old = b.textContent; b.textContent='Copié ✓'; b.classList.add('done');
+    setTimeout(()=>{ b.textContent=old; b.classList.remove('done'); }, 1400);
+  });
+});
+
+// CSV
+function exportCSV(){
+  if(!ROWS.length) return;
+  const cols = ['created_at','anciennete','niveau_depart','galere_avant','declic','arguments','hesitation','ce_qui_a_convaincu','changement','nps','manque_pour_10','dirait_a_un_ami','ameliorations','contenus_futurs','contenus_futurs_autre','dernier_mot','consentement_temoignage','prenom','contact'];
+  const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
+  const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = 'questionnaire-mfp.csv'; a.click();
+}
+</script>
+</body>
+</html>
