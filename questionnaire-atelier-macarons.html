@@ -44,6 +44,10 @@
     padding:clamp(22px,5vw,40px); position:relative; overflow:hidden;
   }
   .section::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--or)}
+  .contact-section{margin-top:24px; background:linear-gradient(180deg,#FFFDF8,#FBF3E2)}
+  .contact-head{margin-bottom:24px}
+  .contact-head h2{font-family:Georgia,serif; font-weight:400; font-size:clamp(21px,4vw,27px); margin:10px 0 10px; line-height:1.2}
+  .contact-head p{font-size:14.5px; color:var(--muted); line-height:1.6}
   .reqnote{font-size:13px; color:var(--muted); margin-bottom:30px; padding-bottom:18px; border-bottom:1px solid var(--ligne)}
   .reqnote b{color:var(--or-deep)}
   .q{margin-bottom:30px}
@@ -122,7 +126,7 @@
 <header class="hero">
   <span class="overline">Masterclass Macarons</span>
   <h1>J'ai besoin de <span class="accent">ton avis</span></h1>
-  <p class="sub">Tu viens d'assister à ma masterclass macarons. Tes réponses vont m'aider à l'améliorer pour les prochains. C'est rapide et 100% anonyme 🙏</p>
+  <p class="sub">Tu viens d'assister à ma masterclass macarons. Tes réponses vont m'aider à l'améliorer pour les prochains. C'est rapide et anonyme, sauf si tu choisis de me laisser tes coordonnées à la fin 🙏</p>
 </header>
 
 <main>
@@ -174,6 +178,26 @@
       <div class="q">
         <label class="lab">Qu'est-ce qui te bloque le plus en pâtisserie ? <span class="opt">(facultatif)</span></label>
         <textarea name="blocage_patisserie" placeholder="..."></textarea>
+      </div>
+    </section>
+
+    <section class="section contact-section">
+      <div class="contact-head">
+        <span class="overline">Bonus · facultatif</span>
+        <h2>On en parle de vive voix ?</h2>
+        <p>Si tu veux, on prend 15 à 20 min en visio ensemble, gratuitement et sans aucune pression, pour faire le point sur ta pâtisserie et voir comment je peux t'aider à débloquer ce qui coince. Laisse-moi tes coordonnées et je te recontacte personnellement, rien d'automatique, c'est moi</p>
+      </div>
+      <div class="q">
+        <label class="lab">Ton prénom</label>
+        <input type="text" name="prenom" placeholder="Ton prénom">
+      </div>
+      <div class="q">
+        <label class="lab">Ton email</label>
+        <input type="text" name="email" inputmode="email" placeholder="ton@email.com">
+      </div>
+      <div class="q">
+        <label class="lab">Ton téléphone ou WhatsApp</label>
+        <input type="text" name="telephone" inputmode="tel" placeholder="06 12 34 56 78">
       </div>
     </section>
 
@@ -258,7 +282,10 @@ function payload(){
     raison_pas_rejoint: joined ? null : (val('raison_pas_rejoint') || null),
     prix_ideal: joined ? null : (val('prix_ideal') || null),
     oui_tout_de_suite: joined ? null : (val('oui_tout_de_suite') || null),
-    blocage_patisserie: val('blocage_patisserie') || null
+    blocage_patisserie: val('blocage_patisserie') || null,
+    prenom: val('prenom') || null,
+    email: val('email') || null,
+    telephone: val('telephone') || null
   };
 }
 
