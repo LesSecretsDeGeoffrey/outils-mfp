@@ -86,6 +86,11 @@
   .copy{flex:0 0 auto; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:var(--muted); padding:5px 11px; border-radius:5px}
   .copy:hover{border-color:var(--or); color:var(--or-deep)}
   .copy.done{background:var(--or); color:var(--encre); border-color:var(--or)}
+  .ans-btns{flex:0 0 auto; display:flex; gap:7px}
+  .del-ans{font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:#B07A72; padding:5px 11px; border-radius:5px; white-space:nowrap}
+  .del-ans:hover{border-color:var(--rouge); color:var(--rouge)}
+  .del-ans.armed{background:var(--rouge); color:#fff; border-color:var(--rouge)}
+  .del-ans:disabled{opacity:.6; cursor:default}
   .empty{color:var(--gris); font-style:italic; font-size:14px}
   .tcard{background:#FCFAF6; border:1px solid var(--ligne); border-radius:8px; padding:16px 18px; margin-bottom:12px}
   .tcard .quote{font-size:15px; font-style:italic; line-height:1.55} .tcard .name{margin-top:10px; font-weight:700; color:var(--or-deep); font-size:13.5px}
@@ -277,13 +282,13 @@ function render(){
     ['dernier_mot','Un dernier mot']
   ];
   document.getElementById('verbatims').innerHTML = VQ.map(([f,label])=>{
-    const items = ROWS.map(r=>r[f]).filter(t=>t && t.trim());
-    const all = items.map(t=>'- '+t).join('\n');
+    const items = ROWS.map(r=>({id:r.id, txt:r[f]})).filter(x=>x.txt && x.txt.trim());
+    const all = items.map(x=>'- '+x.txt).join('\n');
     return `<details class="vq">
       <summary>${esc(label)}<span class="cnt">${items.length} réponse${items.length>1?'s':''}</span></summary>
       <div class="body">
         ${items.length?`<div class="tools"><button class="copy" data-all="${encodeURIComponent(all)}">Copier tout</button></div>`:''}
-        ${items.length? items.map(t=>`<div class="ans"><span class="txt">${esc(t)}</span><button class="copy" data-txt="${encodeURIComponent(t)}">Copier</button></div>`).join('')
+        ${items.length? items.map(x=>`<div class="ans" data-id="${x.id}"><span class="txt">${esc(x.txt)}</span><span class="ans-btns"><button class="copy" data-txt="${encodeURIComponent(x.txt)}">Copier</button><button class="del-ans" title="Supprime toute la réponse de cet élève">Supprimer</button></span></div>`).join('')
           : '<p class="empty">Aucune réponse pour l\'instant</p>'}
       </div></details>`;
   }).join('');
@@ -297,6 +302,31 @@ document.addEventListener('click', e=>{
     const old = b.textContent; b.textContent='Copié ✓'; b.classList.add('done');
     setTimeout(()=>{ b.textContent=old; b.classList.remove('done'); }, 1400);
   });
+});
+
+// supprimer une réponse (= la ligne entière) — 2 clics : Supprimer -> Confirmer ?
+document.addEventListener('click', async e=>{
+  const b = e.target.closest('.del-ans'); if(!b) return;
+  const id = b.closest('.ans')?.dataset.id; if(!id) return;
+  const HD = { 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+SUPABASE_KEY };
+  if(b.dataset.armed!=='1'){
+    b.dataset.armed='1'; b.textContent='Confirmer ?'; b.classList.add('armed');
+    clearTimeout(b._t); b._t=setTimeout(()=>{ b.dataset.armed='0'; b.textContent='Supprimer'; b.classList.remove('armed'); }, 3000);
+    return;
+  }
+  clearTimeout(b._t); b.disabled=true; b.textContent='...';
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/mfp_feedback?id=eq.${id}`, {method:'DELETE', headers:{...HD,'Prefer':'return=minimal'}});
+    // garde-fou : la ligne existe-t-elle encore ? (RLS bloque si la policy DELETE n'est pas active)
+    const chk = await fetch(`${SUPABASE_URL}/rest/v1/mfp_feedback?id=eq.${id}&select=id`, {headers:HD});
+    const still = await chk.json();
+    if(Array.isArray(still) && still.length>0){
+      b.disabled=false; b.classList.remove('armed'); b.dataset.armed='0'; b.textContent='Bloqué';
+      b.title='Suppression bloquée par la sécurité Supabase : lance la policy DELETE (mfp-feedback-schema.sql) puis réessaie';
+      return;
+    }
+    loadData(); // recharge tout (stats, verbatims)
+  }catch(err){ b.disabled=false; b.classList.remove('armed'); b.dataset.armed='0'; b.textContent='Erreur, réessaie'; }
 });
 
 // CSV
