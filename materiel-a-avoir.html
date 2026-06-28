@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matériel à avoir — Méthode Fondations Pro</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A;position:sticky;top:0;z-index:20}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(28px,5vw,52px) clamp(16px,4vw,40px) 60px}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.12}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.72);margin-bottom:10px;max-width:680px;font-size:clamp(15px,2vw,17px)}
+  .affil{font-size:12.5px;color:rgba(26,20,16,0.5);max-width:680px;margin-bottom:26px}
+  /* search */
+  .searchwrap{position:sticky;top:54px;z-index:15;background:#FDF8F0;padding:12px 0 16px;margin-bottom:8px}
+  .searchwrap input{width:100%;padding:14px 18px;border:1.5px solid rgba(26,20,16,0.15);background:#fff;font-size:16px;font-family:inherit;color:#1A1410;border-radius:30px;outline:none}
+  .searchwrap input:focus{border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.15)}
+  .searchwrap input::placeholder{color:rgba(26,20,16,0.4)}
+  .noresult{display:none;text-align:center;color:rgba(26,20,16,0.55);padding:40px 0;font-style:italic}
+  /* groups */
+  .group{margin-bottom:14px}
+  .group-head{margin:34px 0 18px}
+  .g-over{font-family:Georgia,serif;font-size:clamp(22px,3vw,30px);font-weight:400;color:#1A1410;display:block}
+  .g-over::before{content:"";display:inline-block;width:26px;height:2px;background:#C8A04A;vertical-align:middle;margin-right:12px;margin-bottom:5px}
+  .g-note{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-top:8px;margin-left:38px}
+  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .cat{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:6px;padding:20px 18px}
+  .cat-label{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .cat-count{background:rgba(200,160,74,0.18);color:#9a7b1f;border-radius:20px;padding:1px 9px;font-size:10px}
+  .items{display:flex;flex-direction:column;gap:8px}
+  .item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;min-height:50px;border:1px solid rgba(26,20,16,0.1);border-radius:8px;text-decoration:none;color:#1A1410;background:#FDF8F0;transition:border-color .18s ease,transform .18s ease,background .18s ease;-webkit-tap-highlight-color:transparent}
+  .item:hover,.item:focus-visible{border-color:#C8A04A;background:#fff;transform:translateX(3px);outline:none}
+  .i-name{font-size:15px;line-height:1.35}
+  .i-go{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;white-space:nowrap;opacity:.8;flex-shrink:0}
+  .item:hover .i-go,.item:focus-visible .i-go{opacity:1}
+  /* kenwood */
+  .kenwood{background:#1A1410;color:#FDF8F0;border-radius:8px;border-top:4px solid #C8A04A;padding:clamp(24px,4vw,36px);display:flex;flex-direction:column;gap:14px}
+  .k-over{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#C8A04A}
+  .k-title{font-family:Georgia,serif;font-size:clamp(24px,3.5vw,32px);font-weight:400}
+  .k-desc{color:rgba(253,248,240,0.72);max-width:560px;font-size:15px}
+  .k-promo{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:4px}
+  .k-promo-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(253,248,240,0.6)}
+  .k-code{font-family:'Courier New',monospace;font-weight:700;letter-spacing:3px;color:#1A1410;background:#C8A04A;padding:7px 16px;border-radius:4px;font-size:15px}
+  .k-bonus{font-size:13.5px;color:#C8A04A}
+  .k-btn{align-self:flex-start;margin-top:8px;background:#C8A04A;color:#1A1410;text-decoration:none;font-family:'Courier New',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:14px 26px;border-radius:30px;transition:transform .18s ease,box-shadow .18s ease}
+  .k-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,74,0.3)}
+  footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
+  footer .brand{color:#C8A04A;font-family:Georgia,serif;font-size:16px}
+  @media (max-width:560px){
+    .cats{grid-template-columns:1fr}
+    .searchwrap{top:52px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Matériel à avoir</span>
+  <a href="index.html">&larr; Retour</a>
+</div>
+
+<main>
+  <h1>Tout mon <span class="accent">matériel</span>, en un clic</h1>
+  <p class="intro">Voici le matériel que j'utilise et que je te recommande. Clique sur ce que tu cherches, tu es redirigé direct vers le bon produit.</p>
+
+  <div class="searchwrap">
+    <input id="q" type="search" autocomplete="off" placeholder="Rechercher un ustensile (maryse, cercle, robot...)" aria-label="Rechercher un ustensile">
+  </div>
+  <p class="noresult" id="noresult">Aucun matériel ne correspond à ta recherche</p>
+
+  <section class="group">
+    <div class="group-head">
+      <span class="g-over">Les indispensables</span>
+      
+    </div>
+    <div class="cats">
+    <div class="cat">
+      <h3 class="cat-label">Ustensiles de base <span class="cat-count">8</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/3XXP4qa" target="_blank" rel="noopener nofollow" data-name="maryse">
+        <span class="i-name">Maryse</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3MKCnwh" target="_blank" rel="noopener nofollow" data-name="fouet">
+        <span class="i-name">Fouet</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3L3yiD7" target="_blank" rel="noopener nofollow" data-name="rouleau patissier">
+        <span class="i-name">Rouleau pâtissier</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/498la7H" target="_blank" rel="noopener nofollow" data-name="corne a patisserie">
+        <span class="i-name">Corne à pâtisserie</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3Ld3IqC" target="_blank" rel="noopener nofollow" data-name="pinceau alimentaire">
+        <span class="i-name">Pinceau alimentaire</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/498pNyN" target="_blank" rel="noopener nofollow" data-name="tamis (modele 1)">
+        <span class="i-name">Tamis (modèle 1)</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3NbVJKY" target="_blank" rel="noopener nofollow" data-name="tamis (modele 2)">
+        <span class="i-name">Tamis (modèle 2)</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4p0LmqH" target="_blank" rel="noopener nofollow" data-name="spatules coudees">
+        <span class="i-name">Spatules coudées</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Pesée &amp; préparation <span class="cat-count">3</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/4oBcAny" target="_blank" rel="noopener nofollow" data-name="balance de precision">
+        <span class="i-name">Balance de précision</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4qgtskX" target="_blank" rel="noopener nofollow" data-name="verres doseurs">
+        <span class="i-name">Verres doseurs</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4qbNdtJ" target="_blank" rel="noopener nofollow" data-name="culs de poule">
+        <span class="i-name">Culs de poule</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Cuisson &amp; travail des pâtes <span class="cat-count">4</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/4apc0WQ" target="_blank" rel="noopener nofollow" data-name="tapis de cuisson">
+        <span class="i-name">Tapis de cuisson</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4amSHNR" target="_blank" rel="noopener nofollow" data-name="tapis de cuisson micro-perfore">
+        <span class="i-name">Tapis de cuisson micro-perforé</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3L7UxI0" target="_blank" rel="noopener nofollow" data-name="tapis genoise">
+        <span class="i-name">Tapis génoise</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/49hs7oe" target="_blank" rel="noopener nofollow" data-name="grille de cuisson">
+        <span class="i-name">Grille de cuisson</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Dressage &amp; finitions <span class="cat-count">1</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/4j3NbSx" target="_blank" rel="noopener nofollow" data-name="poches a douilles">
+        <span class="i-name">Poches à douilles</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="group-head">
+      <span class="g-over">Moules &amp; cercles</span>
+      <p class="g-note">Marques recommandées : Silikomart &amp; Pavoni</p>
+    </div>
+    <div class="cats">
+    <div class="cat">
+      <h3 class="cat-label">Inserts &amp; entremets <span class="cat-count">3</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/4s3ahN5" target="_blank" rel="noopener nofollow" data-name="moules a insert individuels">
+        <span class="i-name">Moules à insert individuels</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3MBBPZX" target="_blank" rel="noopener nofollow" data-name="moule entremets — format familial 1">
+        <span class="i-name">Moule entremets — format familial 1</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3Y1T2hu" target="_blank" rel="noopener nofollow" data-name="moule entremets — format familial 2">
+        <span class="i-name">Moule entremets — format familial 2</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Cercles <span class="cat-count">4</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/48LtlYM" target="_blank" rel="noopener nofollow" data-name="cercles a tartelettes">
+        <span class="i-name">Cercles à tartelettes</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3L7Uv2Q" target="_blank" rel="noopener nofollow" data-name="cercles entremets individuels">
+        <span class="i-name">Cercles entremets individuels</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4qk3Mny" target="_blank" rel="noopener nofollow" data-name="cercle entremets 16 cm">
+        <span class="i-name">Cercle entremets 16 cm</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4pS0YhK" target="_blank" rel="noopener nofollow" data-name="cercle entremets 18 cm">
+        <span class="i-name">Cercle entremets 18 cm</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Refroidissement &amp; cristallisation <span class="cat-count">2</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/3Y1wFc0" target="_blank" rel="noopener nofollow" data-name="plats pour cristallisation des cremes (1)">
+        <span class="i-name">Plats pour cristallisation des crèmes (1)</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4j3M6dn" target="_blank" rel="noopener nofollow" data-name="plats pour cristallisation des cremes (2)">
+        <span class="i-name">Plats pour cristallisation des crèmes (2)</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Pour aller plus loin <span class="cat-count">5</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/3ZW1P5p" target="_blank" rel="noopener nofollow" data-name="thermometre laser">
+        <span class="i-name">Thermomètre laser</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4p46cFA" target="_blank" rel="noopener nofollow" data-name="rape microplane">
+        <span class="i-name">Râpe Microplane</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3MUvJUl" target="_blank" rel="noopener nofollow" data-name="thermometre de cuisine">
+        <span class="i-name">Thermomètre de cuisine</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/48rSIx6" target="_blank" rel="noopener nofollow" data-name="mixeur plongeant">
+        <span class="i-name">Mixeur plongeant</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/48yHVCV" target="_blank" rel="noopener nofollow" data-name="mixeur puissant pour praline">
+        <span class="i-name">Mixeur puissant pour praliné</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="group-head">
+      <span class="g-over">Robot pâtissier</span>
+      <p class="g-note">Optionnel, mais vrai game changer</p>
+    </div>
+    <div class="cats">
+    <div class="cat">
+      <h3 class="cat-label">Bon rapport qualité / prix <span class="cat-count">7</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/4ayDCsp" target="_blank" rel="noopener nofollow" data-name="kenwood kmix — rouge">
+        <span class="i-name">Kenwood kMix — Rouge</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4a2rm3i" target="_blank" rel="noopener nofollow" data-name="kenwood kvl4110s — argent">
+        <span class="i-name">Kenwood KVL4110S — Argent</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/3MuAqE9" target="_blank" rel="noopener nofollow" data-name="kenwood kmix — rouge (autre coloris)">
+        <span class="i-name">Kenwood kMix — Rouge (autre coloris)</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/44OGlKv" target="_blank" rel="noopener nofollow" data-name="kenwood titanium kvl85">
+        <span class="i-name">Kenwood Titanium KVL85</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/48EBgWy" target="_blank" rel="noopener nofollow" data-name="kenwood — petrin planetaire">
+        <span class="i-name">Kenwood — Pétrin planétaire</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4axA8q3" target="_blank" rel="noopener nofollow" data-name="kenwood titanium patissier kwl90">
+        <span class="i-name">Kenwood Titanium Pâtissier KWL90</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4iLr7vV" target="_blank" rel="noopener nofollow" data-name="kitchenaid classic 5k45ss">
+        <span class="i-name">KitchenAid Classic 5K45SS</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    <div class="cat">
+      <h3 class="cat-label">Autres alternatives fiables <span class="cat-count">6</span></h3>
+      <div class="items">
+      <a class="item" href="https://amzn.to/3KXvHur" target="_blank" rel="noopener nofollow" data-name="kenwood — petrin planetaire">
+        <span class="i-name">Kenwood — Pétrin planétaire</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/48KwnfR" target="_blank" rel="noopener nofollow" data-name="kenwood kmx750rd — rouge 1000w">
+        <span class="i-name">Kenwood KMX750RD — Rouge 1000W</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4pEiLbX" target="_blank" rel="noopener nofollow" data-name="kitchenaid classic 5k45ss">
+        <span class="i-name">KitchenAid Classic 5K45SS</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4j0wnLY" target="_blank" rel="noopener nofollow" data-name="kenwood kvc85 — titanium">
+        <span class="i-name">Kenwood KVC85 — Titanium</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4qe1shH" target="_blank" rel="noopener nofollow" data-name="kenwood titanium patissier kwl90">
+        <span class="i-name">Kenwood Titanium Pâtissier KWL90</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      <a class="item" href="https://amzn.to/4qjSsrB" target="_blank" rel="noopener nofollow" data-name="kenwood kvl4110s — argent">
+        <span class="i-name">Kenwood KVL4110S — Argent</span>
+        <span class="i-go">Voir &rarr;</span>
+      </a>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="group">
+    <div class="kenwood">
+      <span class="k-over">Le plus haut de gamme</span>
+      <h3 class="k-title">Kenwood Cooking Chef</h3>
+      <p class="k-desc">Le robot qui cuit pendant qu'il mélange. Si tu veux tout faire avec une seule machine, c'est celle-là.</p>
+      <div class="k-promo">
+        <span class="k-promo-label">Code promo</span>
+        <span class="k-code">GEOFFREY</span>
+        <span class="k-bonus">3 accessoires offerts &middot; valeur &asymp; 500&euro;</span>
+      </div>
+      <a class="k-btn" href="https://www.kenwoodworld.com/fr-fr/e/cookingchef-ambassadorprogram?utm_source=instagram&amp;utm_medium=kol&amp;utm_campaign=FR_KW_hq_kitchen-kitchen-machine_social_ig_Masson-Geoffrey_coupon_GEOFFREY" target="_blank" rel="noopener nofollow">Profiter de l'offre Kenwood &rarr;</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="brand">Les Secrets de Geoffrey</p>
+  <p style="margin-top:8px">Méthode Fondations Pro — Le matériel de ma communauté</p>
+</footer>
+
+<script>
+(function(){
+  var q=document.getElementById('q');
+  var items=[].slice.call(document.querySelectorAll('.item'));
+  var cats=[].slice.call(document.querySelectorAll('.cat'));
+  var groups=[].slice.call(document.querySelectorAll('.group'));
+  var noresult=document.getElementById('noresult');
+  function strip(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+  q.addEventListener('input',function(){
+    var v=strip(q.value.trim());
+    var any=false;
+    items.forEach(function(it){
+      var show=!v||it.getAttribute('data-name').indexOf(v)>-1;
+      it.style.display=show?'':'none';
+      if(show)any=true;
+    });
+    cats.forEach(function(c){
+      var vis=c.querySelectorAll('.item:not([style*="display: none"])').length;
+      c.style.display=vis?'':'none';
+    });
+    groups.forEach(function(g){
+      var vis=g.querySelectorAll('.cat:not([style*="display: none"]), .kenwood').length;
+      // keep kenwood group always visible only when no query
+      var hasVisibleCat=g.querySelectorAll('.cat:not([style*="display: none"])').length>0;
+      var isKenwood=!!g.querySelector('.kenwood');
+      if(isKenwood){ g.style.display=v?'none':''; }
+      else { g.style.display=hasVisibleCat?'':'none'; }
+    });
+    noresult.style.display=any?'none':'block';
+  });
+})();
+</script>
+</body>
+</html>
