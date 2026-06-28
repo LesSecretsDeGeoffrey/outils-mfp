@@ -23,8 +23,15 @@
   .rc-drop p{color:rgba(26,20,16,0.6);font-size:14px}
   .rc-drop strong{color:#1A1410}
   .rc-drop .rc-or{display:block;font-size:11px;color:rgba(26,20,16,0.4);margin-top:6px;font-family:'Courier New',monospace;letter-spacing:1px;text-transform:uppercase}
-  textarea{width:100%;min-height:150px;padding:14px 16px;border:1px solid rgba(26,20,16,0.18);background:#FDFBF7;border-radius:6px;font-size:15px;font-family:inherit;color:#1A1410;resize:vertical;line-height:1.5}
-  textarea:focus{outline:none;border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.12)}
+  textarea{width:100%;min-height:185px;padding:14px 16px;border:1.5px solid rgba(200,160,74,0.45);background:#FDFBF7;border-radius:8px;font-size:15px;font-family:inherit;color:#1A1410;resize:vertical;line-height:1.5}
+  textarea:focus{outline:none;border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.15)}
+  .rc-label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7b1f;font-weight:700;margin-bottom:10px}
+  .rc-or-line{display:flex;align-items:center;text-align:center;color:rgba(26,20,16,0.4);font-size:11px;margin:16px 0;font-family:'Courier New',monospace;letter-spacing:1.5px;text-transform:uppercase}
+  .rc-or-line::before,.rc-or-line::after{content:'';flex:1;height:1px;background:rgba(26,20,16,0.12)}
+  .rc-or-line span{padding:0 14px}
+  .rc-drop-compact{padding:14px 16px;margin-bottom:0}
+  .rc-drop-compact p{margin:0;font-size:13.5px}
+  .rc-drop-compact .rc-or{display:inline;margin:0 0 0 4px;text-transform:none;letter-spacing:0;font-size:12px}
   .rc-actions-in{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
   .btn{font-family:'Courier New',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;border:none;border-radius:30px;padding:13px 24px;cursor:pointer;transition:transform .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent}
   .btn-gold{background:#C8A04A;color:#1A1410}
@@ -123,13 +130,14 @@
   <p class="intro">Colle ta recette complète (ou dépose un PDF). L'outil additionne chaque ingrédient sur toutes les préparations — si le chocolat blanc revient dans deux étapes, tu vois le total. Puis ajuste pour ×2, ×3 ou pour le nombre de parts que tu veux.</p>
 
   <div class="rc-input">
-    <div class="rc-drop" id="rcDrop">
-      <p><strong>Dépose un PDF ou un fichier texte ici</strong></p>
-      <span class="rc-or">ou clique pour choisir un fichier</span>
+    <label class="rc-label" for="rcText">Colle ta recette ici</label>
+    <textarea id="rcText" placeholder="Copie-colle ta recette complète, avec toutes ses préparations (ganache, biscuit, insert, montage...).&#10;&#10;Exemple :&#10;Confit de fraise&#10;200g de purée de fraise&#10;4g de pectine NH&#10;&#10;Ganache montée&#10;110g de chocolat blanc&#10;200g de crème liquide 30%"></textarea>
+    <div class="rc-or-line"><span>ou</span></div>
+    <div class="rc-drop rc-drop-compact" id="rcDrop">
+      <p><strong>Dépose un PDF</strong><span class="rc-or">ou clique pour le choisir</span></p>
       <input type="file" id="rcFile" accept=".pdf,.txt,text/plain,application/pdf" style="display:none">
     </div>
     <div class="rc-pdfstatus" id="rcPdfStatus" style="display:none"></div>
-    <textarea id="rcText" placeholder="Colle ta recette ici — avec toutes ses préparations (ganache, biscuit, insert, montage...).&#10;&#10;Exemple :&#10;Confit de fraise&#10;200g de purée de fraise&#10;4g de pectine NH&#10;&#10;Ganache montée&#10;110g de chocolat blanc&#10;200g de crème liquide 30%"></textarea>
     <div class="rc-actions-in">
       <button class="btn btn-gold" id="rcAnalyze">Calculer les quantités</button>
       <button class="rc-link" id="rcExample">Essayer avec un exemple</button>
