@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de quantités — Méthode Fondations Pro</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A;position:sticky;top:0;z-index:30}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(26px,5vw,48px) clamp(16px,4vw,40px) 70px}
+  h1{font-family:Georgia,serif;font-size:clamp(27px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.12}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.72);margin-bottom:26px;max-width:680px;font-size:clamp(15px,2vw,17px)}
+  .overline{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A}
+
+  /* INPUT */
+  .rc-input{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:8px;padding:clamp(18px,3vw,26px);margin-bottom:22px}
+  .rc-drop{border:2px dashed rgba(200,160,74,0.5);border-radius:8px;padding:22px;text-align:center;transition:background .15s,border-color .15s;cursor:pointer;margin-bottom:14px}
+  .rc-drop.over{background:rgba(200,160,74,0.1);border-color:#C8A04A}
+  .rc-drop p{color:rgba(26,20,16,0.6);font-size:14px}
+  .rc-drop strong{color:#1A1410}
+  .rc-drop .rc-or{display:block;font-size:11px;color:rgba(26,20,16,0.4);margin-top:6px;font-family:'Courier New',monospace;letter-spacing:1px;text-transform:uppercase}
+  textarea{width:100%;min-height:150px;padding:14px 16px;border:1px solid rgba(26,20,16,0.18);background:#FDFBF7;border-radius:6px;font-size:15px;font-family:inherit;color:#1A1410;resize:vertical;line-height:1.5}
+  textarea:focus{outline:none;border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.12)}
+  .rc-actions-in{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+  .btn{font-family:'Courier New',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;border:none;border-radius:30px;padding:13px 24px;cursor:pointer;transition:transform .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent}
+  .btn-gold{background:#C8A04A;color:#1A1410}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,160,74,0.3)}
+  .btn-ghost{background:transparent;color:rgba(26,20,16,0.6);border:1px solid rgba(26,20,16,0.18)}
+  .btn-ghost:hover{border-color:#C8A04A;color:#1A1410}
+  .rc-link{background:none;border:none;color:#C8A04A;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .rc-pdfstatus{font-size:13px;color:rgba(26,20,16,0.55);margin-top:8px}
+  .rc-pdfstatus.err{color:#C45A42}
+
+  /* RESULTS */
+  .rc-results{display:none}
+  .rc-results.show{display:block}
+  .rc-bar{background:#1A1410;color:#FDF8F0;border-radius:8px;border-top:4px solid #C8A04A;padding:clamp(16px,3vw,22px);margin-bottom:18px}
+  .rc-bar h2{font-family:Georgia,serif;font-weight:400;font-size:20px;margin-bottom:4px}
+  .rc-bar .rc-sub{color:rgba(253,248,240,0.65);font-size:13px;margin-bottom:16px}
+  .rc-scale-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+  .rc-mult{font-family:'Courier New',monospace;font-size:13px;font-weight:700;background:transparent;color:#FDF8F0;border:1px solid rgba(253,248,240,0.25);border-radius:30px;padding:8px 16px;cursor:pointer;transition:all .15s}
+  .rc-mult:hover{border-color:#C8A04A}
+  .rc-mult.active{background:#C8A04A;color:#1A1410;border-color:#C8A04A}
+  .rc-mult-custom{width:74px;text-align:center}
+  .rc-custom-input{width:70px;padding:7px 8px;border:1px solid rgba(253,248,240,0.25);background:rgba(253,248,240,0.06);color:#FDF8F0;border-radius:20px;font-family:'Courier New',monospace;font-size:13px;text-align:center}
+  .rc-custom-input:focus{outline:none;border-color:#C8A04A}
+  .rc-yield{display:flex;flex-wrap:wrap;gap:8px;align-items:center;border-top:1px solid rgba(253,248,240,0.12);padding-top:14px;font-size:13.5px;color:rgba(253,248,240,0.85)}
+  .rc-yield label{color:rgba(253,248,240,0.6);font-family:'Courier New',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+  .rc-yfield{padding:7px 9px;border:1px solid rgba(253,248,240,0.22);background:rgba(253,248,240,0.06);color:#FDF8F0;border-radius:6px;font-family:inherit;font-size:13.5px}
+  .rc-yfield.num{width:58px;text-align:center}
+  .rc-yfield::placeholder{color:rgba(253,248,240,0.4)}
+
+  /* VIEW TOGGLE + TABLE */
+  .rc-viewbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .rc-tabs{display:flex;gap:6px;background:#F4E9D5;border-radius:30px;padding:4px}
+  .rc-tab{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:700;border:none;background:transparent;color:rgba(26,20,16,0.55);padding:8px 16px;border-radius:30px;cursor:pointer;transition:all .15s}
+  .rc-tab.active{background:#fff;color:#1A1410;box-shadow:0 1px 4px rgba(26,20,16,0.08)}
+  .rc-outactions{display:flex;gap:8px;flex-wrap:wrap}
+  .rc-outactions .btn{padding:10px 16px;font-size:11px}
+
+  .rc-total{list-style:none}
+  .rc-titem{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:8px;margin-bottom:8px;overflow:hidden}
+  .rc-trow{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer}
+  .rc-qty{font-family:'Courier New',monospace;font-weight:700;font-size:16px;color:#9a7b1f;min-width:96px;text-align:right;flex-shrink:0}
+  .rc-name{flex:1;font-size:15.5px;min-width:0}
+  .rc-srccount{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.5px;color:rgba(26,20,16,0.4);text-transform:uppercase;flex-shrink:0}
+  .rc-chev{color:rgba(26,20,16,0.3);flex-shrink:0;transition:transform .15s}
+  .rc-titem.open .rc-chev{transform:rotate(90deg)}
+  .rc-sources{display:none;padding:0 16px 12px 16px;border-top:1px dashed rgba(26,20,16,0.1);margin-top:-2px}
+  .rc-titem.open .rc-sources{display:block}
+  .rc-src{display:flex;justify-content:space-between;font-size:13px;color:rgba(26,20,16,0.6);padding:6px 0}
+  .rc-src .rc-src-prep{font-style:italic}
+
+  /* EDIT VIEW */
+  .rc-prep{margin-bottom:18px}
+  .rc-prep-head{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);font-weight:700;margin-bottom:8px}
+  .rc-erow{display:flex;gap:8px;align-items:center;margin-bottom:7px}
+  .rc-erow input{padding:10px 10px;border:1px solid rgba(26,20,16,0.15);background:#fff;border-radius:6px;font-family:inherit;font-size:14px;color:#1A1410}
+  .rc-erow input:focus{outline:none;border-color:#C8A04A}
+  .rc-eq{width:64px;text-align:center;font-family:'Courier New',monospace}
+  .rc-eu{width:64px;text-align:center;font-family:'Courier New',monospace}
+  .rc-en{flex:1;min-width:0}
+  .rc-del{background:none;border:none;color:rgba(196,90,66,0.7);font-size:20px;cursor:pointer;padding:0 6px;line-height:1;flex-shrink:0}
+  .rc-del:hover{color:#C45A42}
+  .rc-addrow{margin-top:4px}
+
+  .rc-empty{background:#fff;border:1px solid rgba(196,90,66,0.3);border-radius:8px;padding:20px;color:rgba(26,20,16,0.7);font-size:14px}
+  .rc-empty strong{color:#C45A42}
+  .rc-note{font-size:12.5px;color:rgba(26,20,16,0.5);margin-top:12px;line-height:1.5}
+  .rc-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A1410;color:#FDF8F0;padding:12px 22px;border-radius:30px;font-size:13px;border:1px solid #C8A04A;opacity:0;transition:all .25s;z-index:50}
+  .rc-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
+  footer .brand{color:#C8A04A;font-family:Georgia,serif;font-size:16px}
+  @media (max-width:560px){
+    .rc-qty{min-width:74px;font-size:15px}
+    .rc-erow .rc-eu{display:none}
+  }
+  @media print{
+    .topbar,.rc-input,.rc-scale-row,.rc-yield,.rc-viewbar,.rc-outactions,footer,.rc-chev,.rc-srccount{display:none!important}
+    .rc-bar{background:#fff;color:#000;border:1px solid #000}
+    .rc-bar .rc-sub,.rc-bar h2{color:#000}
+    .rc-titem{border-color:#999;break-inside:avoid}
+    .rc-qty{color:#000}
+    .rc-sources{display:block!important}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Calculateur de quantités</span>
+  <a href="index.html">&larr; Retour</a>
+</div>
+
+<main>
+  <span class="overline">Une recette → ta liste de courses</span>
+  <h1>La quantité <span class="accent">totale</span> de chaque ingrédient</h1>
+  <p class="intro">Colle ta recette complète (ou dépose un PDF). L'outil additionne chaque ingrédient sur toutes les préparations — si le chocolat blanc revient dans deux étapes, tu vois le total. Puis ajuste pour ×2, ×3 ou pour le nombre de parts que tu veux.</p>
+
+  <div class="rc-input">
+    <div class="rc-drop" id="rcDrop">
+      <p><strong>Dépose un PDF ou un fichier texte ici</strong></p>
+      <span class="rc-or">ou clique pour choisir un fichier</span>
+      <input type="file" id="rcFile" accept=".pdf,.txt,text/plain,application/pdf" style="display:none">
+    </div>
+    <div class="rc-pdfstatus" id="rcPdfStatus" style="display:none"></div>
+    <textarea id="rcText" placeholder="Colle ta recette ici — avec toutes ses préparations (ganache, biscuit, insert, montage...).&#10;&#10;Exemple :&#10;Confit de fraise&#10;200g de purée de fraise&#10;4g de pectine NH&#10;&#10;Ganache montée&#10;110g de chocolat blanc&#10;200g de crème liquide 30%"></textarea>
+    <div class="rc-actions-in">
+      <button class="btn btn-gold" id="rcAnalyze">Calculer les quantités</button>
+      <button class="rc-link" id="rcExample">Essayer avec un exemple</button>
+      <button class="rc-link" id="rcClear" style="display:none">Effacer</button>
+    </div>
+  </div>
+
+  <div class="rc-results" id="rcResults">
+    <div class="rc-bar">
+      <h2 id="rcCount">Quantités totales</h2>
+      <p class="rc-sub" id="rcFactorLabel">Recette de base (×1)</p>
+      <div class="rc-scale-row" id="rcScaleRow"></div>
+      <div class="rc-yield">
+        <label>Recette de base :</label>
+        <input class="rc-yfield num" id="rcBaseQty" type="number" min="0" step="1" inputmode="numeric">
+        <input class="rc-yfield" id="rcBaseUnit" type="text" placeholder="parts" style="width:120px">
+        <label style="margin-left:6px">Je veux :</label>
+        <input class="rc-yfield num" id="rcTargetQty" type="number" min="0" step="1" inputmode="numeric" placeholder="—">
+      </div>
+    </div>
+
+    <div class="rc-viewbar">
+      <div class="rc-tabs">
+        <button class="rc-tab active" data-view="total">Total ingrédients</button>
+        <button class="rc-tab" data-view="edit">Modifier / par préparation</button>
+      </div>
+      <div class="rc-outactions">
+        <button class="btn btn-ghost" id="rcCopy">Copier</button>
+        <button class="btn btn-ghost" id="rcPrint">Imprimer</button>
+      </div>
+    </div>
+
+    <div id="rcView"></div>
+    <p class="rc-note" id="rcNote"></p>
+  </div>
+</main>
+
+<footer>
+  <p class="brand">Les Secrets de Geoffrey</p>
+  <p style="margin-top:8px">Méthode Fondations Pro — Les outils de ma communauté</p>
+</footer>
+
+<div class="rc-toast" id="rcToast"></div>
+
+<script>
+/* ============================================================
+   PARSER DÉTERMINISTE — recette FR → ingrédients structurés
+   ============================================================ */
+(function(){
+'use strict';
+
+/* ---------- normalisation texte ---------- */
+function normalizeText(raw){
+  return (raw||'')
+    .replace(/\r\n?/g,'\n')
+    .replace(/[  ]/g,' ')
+    .replace(/[‐‑‒–—]/g,'-')
+    .replace(/[’‘]/g,"'")
+    .replace(/½/g,'1/2').replace(/¼/g,'1/4').replace(/¾/g,'3/4')
+    .replace(/⅓/g,'1/3').replace(/⅔/g,'2/3')
+    .replace(/œ/g,'oe').replace(/Œ/g,'Oe').replace(/æ/g,'ae').replace(/Æ/g,'Ae')
+    .replace(/(\d)(g|kg|ml|cl|l|mg)([a-zàâéèêîô])/gi,'$1$2 $3') // "185gde" -> "185g de"
+    .replace(/[ \t]+/g,' ')
+    .replace(/\n{3,}/g,'\n\n');
+}
+function stripAccents(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'');}
+
+/* ---------- lexiques ---------- */
+const BULLET=/^\s*[▢◆□■◇●○◦▪▫▸►▶▷‣⁃→➜➤❯»›‹>~\-–—*•·]+\s+/;
+const DECOR=/^[-=_*~.·•◆▢□\s]+$/;
+const META_ONLY=/^(recette|ingr[ée]dients?|pr[ée]paration|m[ée]thode|[ée]tapes?|mat[ée]riel|notes?|astuce|conseil)\s*:?\s*$/i;
+const PREP_HEAD=/^(la |le |les |l'|pour (la|le|les|l'))?\s*(confit|compot[ée]e?|gel[ée]e|insert|ganache(\s+mont[ée]e)?|cr[ée]meux|cr[èe]me(\s+\S+)?|namelaka|p[âa]te\s+\S+|biscuit|g[ée]noise|dacquoise|streusel|sabl[ée]|croustillant|pralin[ée]|caramel|gla[çc]age|nappage|sirop|meringue|mousse|bavarois|financier|madeleine|coque|appareil|montage|dressage|d[ée]cor|finition|punchage|chantilly|curd|confiture|crumble|tuile|base|fond|garniture|sauce|coulis)\b/i;
+const VERB_HEAD=/^(verse|versez|verser|m[ée]lange|m[ée]langez|m[ée]langer|fouette|fouetter|incorpore|incorporer|ajoute|ajouter|chauffe|chauffer|porte|porter|monte|monter|[ée]tale|[ée]taler|cuis|cuit|cuire|enfourne|enfourner|r[ée]serve|r[ée]server|laisse|laisser|d[ée]tend|d[ée]tendre|tamise|tamiser|blanchi|blanchir|battez?|battre|p[èe]se|peser|coule|couler|d[ée]moule|d[ée]mouler|refroidi|refroidir|filtre|filtrer|d[ée]pose|d[ée]posez|d[ée]poser|garni|garnir|nappe|napper|temp[èe]re|temp[ée]rer|sable|sabler|cr[èe]me|cr[ée]mer|foisonne|foisonner|dispose|disposer|recouvre|recouvrir|poche|pochez|pocher|saupoudre|saupoudrer|fais|faire|mixe|mixer|fonds?|fondre|hors|alterne|alterner|infuse|infuser|donne|fraise|fraisez|coupe|couper|place|placer|cong[èe]le|cong[ée]ler|bloque|bloquer|lisse|lisser|utilise|utiliser|ne pas)\b/i;
+const TIMETHERM=/\d+\s*(°c|min\b|minutes?|h\b|heures?|secondes?|fois|nuit|jour)/i;
+
+/* ---------- nombres / unités ---------- */
+const NUM=String.raw`(?:\d+\s+\d+\/\d+|\d+\/\d+|\d+(?:[.,]\d+)?)`;
+// unités RECONNUES — oeuf/jaune/blanc/noix volontairement ABSENTS (ce sont des ingrédients, pas des unités)
+const UNIT=String.raw`(?:kg|kilos?|kilogrammes?|g(?:rammes?|rs?)?|mg|ml|millilitres?|cl|centilitres?|dl|l(?:itres?)?|c\.?\s*[àa]\.?\s*s\.?|c\.?\s*[àa]\.?\s*c\.?|cuill?[èe]res?\s+[àa]\s+(?:soupe|caf[ée])|c[àa]s|c[àa]c|cs|cc|pinc[ée]es?|gousses?|f[èe]ves?|feuilles?|zestes?|pi[èe]ces?|sachets?|brins?|gouttes?|b[âa]tons?)`;
+// lookahead (?![a-zà-ÿ]) : empêche "g" de matcher dans "gousse"/"grammes" sans casser les quantités sans unité ("3 oeufs")
+const FULL_RE=new RegExp('^\\s*('+NUM+')\\s*(?:('+UNIT+')(?![a-zà-ÿ]))?\\s*(?:de\\s+|d\'|du\\s+|des\\s+)?\\s*(.+)$','i');
+const QTY_TEST=new RegExp('(?:^|\\s)'+NUM+'\\s*(?:'+UNIT+'(?![a-zà-ÿ]))?','i');
+
+const UNIT_NORM={
+  g:['g',1],gr:['g',1],grs:['g',1],gramme:['g',1],grammes:['g',1],
+  kg:['g',1000],kilo:['g',1000],kilos:['g',1000],kilogramme:['g',1000],kilogrammes:['g',1000],
+  mg:['g',0.001],
+  ml:['ml',1],millilitre:['ml',1],millilitres:['ml',1],
+  cl:['ml',10],centilitre:['ml',10],centilitres:['ml',10],
+  dl:['ml',100],l:['ml',1000],litre:['ml',1000],litres:['ml',1000],
+  cas:['ml',15],cac:['ml',5],cs:['ml',15],cc:['ml',5],
+  gousse:['gousse',1],gousses:['gousse',1],
+  feve:['fève',1],feves:['fève',1],
+  feuille:['feuille',1],feuilles:['feuille',1],
+  zeste:['zeste',1],zestes:['zeste',1],
+  pincee:['pincée',1],pincees:['pincée',1],
+  baton:['bâton',1],batons:['bâton',1],
+  sachet:['sachet',1],sachets:['sachet',1],
+  goutte:['goutte',1],gouttes:['goutte',1],
+  brin:['brin',1],brins:['brin',1],
+  noix:['pièce',1],tranche:['pièce',1],tranches:['pièce',1],
+  piece:['pièce',1],pieces:['pièce',1],
+  oeuf:['pièce',1],oeufs:['pièce',1],jaune:['pièce',1],jaunes:['pièce',1],blanc:['pièce',1],blancs:['pièce',1]
+};
+function normUnit(u){
+  if(!u) return ['pièce',1];
+  let k=stripAccents(u.toLowerCase()).replace(/\./g,'').replace(/\s+/g,'');
+  k=k.replace(/^cuilleres?asoupe$/,'cas').replace(/^cuilleres?acafe$/,'cac');
+  if(/^cas$/.test(k))k='cas'; if(/^cac$/.test(k))k='cac';
+  return UNIT_NORM[k]||[u.toLowerCase(),1];
+}
+function parseNum(s){
+  s=s.trim();
+  if(/^\d+\s+\d+\/\d+$/.test(s)){const[w,f]=s.split(/\s+/);const[a,b]=f.split('/');return +w+(+a)/(+b);}
+  if(/^\d+\/\d+$/.test(s)){const[a,b]=s.split('/');return (+a)/(+b);}
+  return parseFloat(s.replace(',','.'));
+}
+
+/* ---------- clé d'agrégation ---------- */
+const SYN=[
+  [/chocolat.*\bblanc\b/,'chocolat blanc'],
+  [/chocolat.*\b(au\s+)?lait\b/,'chocolat au lait'],
+  [/chocolat.*\b(noir|fondant|amer)\b/,'chocolat noir'],
+  [/chocolat.*\b(dulcey|blond)\b/,'chocolat dulcey'],
+  [/chocolat.*\b(ruby|rose)\b/,'chocolat ruby'],
+  [/chocolat.*\b(caramelia|caramel)\b/,'chocolat caramelia'],
+  [/\bgianduja\b/,'gianduja'],
+  [/\b(cacao|poudre.*cacao)\b/,'cacao'],
+  [/\bjaune/,"jaune d'oeuf"],
+  [/\bblanc.*oeuf\b/,"blanc d'oeuf"],
+  [/\boeuf\b/,'oeuf'],
+  [/creme.*\b(liquide|fleurette|entiere|fluide)\b/,'creme liquide'],
+  [/creme.*\bcoco\b/,'creme de coco'],
+  [/creme.*\bmarron\b/,'creme de marron'],
+  [/creme.*\bepaisse\b/,'creme epaisse'],
+  [/\bmascarpone\b/,'mascarpone'],
+  [/pate.*\bmarron\b/,'pate de marron'],
+  [/\bgelatine\b/,'gelatine'],
+  [/extrait.*vanille/,'extrait de vanille'],
+  [/sucre.*vanill/,'sucre vanille'],
+  [/\bvanille\b/,'vanille'],
+  [/\bfeve.*tonka\b|\btonka\b/,'feve de tonka'],
+  [/sucre.*glace/,'sucre glace'],
+  [/\b(cassonade|sucre.*roux|sucre.*brun|vergeoise)\b/,'cassonade'],
+  [/\bmuscovado\b/,'muscovado'],
+  [/(sirop.*)?\bglucose\b/,'glucose'],
+  [/\b(sucre.*inverti|trimoline)\b/,'sucre inverti'],
+  [/\bsucre\b/,'sucre'],
+  [/\bmaizena\b|fecule.*mais|\bfecule\b(?!.*pomme)/,'maizena'],
+  [/farine.*\bt(\d+)/,'farine T$1'],
+  [/\bfarine\b/,'farine'],
+  [/levure.*boulang/,'levure boulangere'],
+  [/\b(levure.*chimique|levure|poudre.*lever)\b/,'levure chimique'],
+  [/\bbicarbonate\b/,'bicarbonate'],
+  [/beurre.*\bcacao\b|\bmycryo\b/,'beurre de cacao'],
+  [/beurre.*demi.*sel/,'beurre demi-sel'],
+  [/\bbeurre\b/,'beurre'],
+  [/lait.*\bcoco\b/,'lait de coco'],
+  [/lait.*\bpoudre\b/,'lait en poudre'],
+  [/lait.*concentre/,'lait concentre'],
+  [/\blait\b/,'lait'],
+  [/poudre.*amande|amande.*poudre/,"poudre d'amande"],
+  [/poudre.*noisette|noisette.*poudre/,'poudre de noisette'],
+  [/poudre.*pistache|pistache.*poudre/,'poudre de pistache'],
+  [/pectine\s+nh/,'pectine NH'],
+  [/pectine.*jaune/,'pectine jaune'],
+  [/agar/,'agar-agar'],
+  [/fleur.*oranger/,"eau de fleur d'oranger"],
+  [/\beau\b/,'eau'],
+  [/\bmiel\b/,'miel'],
+  [/fleur.*sel/,'fleur de sel'],
+  [/\bsel\b/,'sel']
+];
+const KEYSTOP=/\b(de|d|du|des|la|le|les|au|aux|a|en|pour|bonne|qualite|bio|extra|premium|fondu|fondue|fondus|fondues|pommade|mou|molle|froid|froide|froids|froides|chaud|chaude|tiede|tiedes|ramolli|ramollie|tempere|temperee|tamise|tamisee|coupe|coupee|coupees|coupes|cubes|morceaux|lamelles|quartiers|rondelles|concasse|concassee|concassees|rape|rapee|torrefie|torrefiee|torrefiees|entier|entiere|bien|tres|fraiche|fraiches|frais|ambiante|temperature|valrhona|callebaut|barry|weiss|couverture|liquide_KEEP)\b/g;
+function aggKey(rawName){
+  let s=' '+stripAccents(rawName.toLowerCase())+' ';
+  s=s.replace(/\d+([.,]\d+)?\s*%\s*(min(i|imum)?\.?)?/g,' ');
+  s=s.replace(/\b(min|mini|minimum|max|maxi|environ|qs)\b/g,' ');
+  s=s.replace(/\(\s*[0-9a-z]{1,3}\s*\)/g,' ');
+  s=s.replace(/\([^)]*\)/g,' ');
+  s=s.replace(/[^a-z0-9\s]/g,' ');
+  s=s.replace(KEYSTOP,' ');
+  s=s.split(/\s+/).filter(Boolean).map(w=>w.length>3?w.replace(/(s|x)$/,''):w).join(' ');
+  s=s.replace(/\s+/g,' ').trim();
+  for(const[re,out]of SYN){ if(re.test(s)) return out.replace(/\$1/,(s.match(/t(\d+)/)||[])[1]||''); }
+  return s;
+}
+
+/* ---------- nettoyage du nom affiché ---------- */
+function cleanDisplay(name){
+  return name
+    .replace(/\s+\d{1,2}\s+[A-ZÀ-Þ][a-zà-ÿ].*$/u,'') // coupe une étape qui a fui dans le nom (PDF 2 colonnes) : "...minimum 1 Réhydrate..."
+    .replace(/\(\s*\d+\s*\)/g,'')
+    .replace(/\((?:optionnel|optionnelle|facultatif|facultative)\)/gi,'')
+    .replace(/\(ou[^)]*\)/gi,'')
+    .replace(/\s{2,}/g,' ').trim();
+}
+function stripLead(name){
+  let s=name.trim();
+  s=s.replace(/^(quelques?|un peu d['e]|une poign[ée]e d['e]|suffisamment d['e]|du|de la|des|de l')\b\s*/i,'').trim();
+  s=s.replace(/^(feuilles?|tranches?|brins?|gousses?|zestes?|b[âa]tons?|filaments?|pinc[ée]es?|gouttes?|copeaux)\s+(de\s+|d')\s*/i,'').trim();
+  return s;
+}
+
+/* ---------- extraction d'une ligne ---------- */
+function splitPlus(line){
+  if(!/\s\+\s/.test(line)) return [line];
+  const parts=line.split(/\s\+\s/);
+  return parts.every(p=>QTY_TEST.test(p))?parts:[line];
+}
+function parseIngredient(line){
+  const m=line.match(FULL_RE);
+  if(!m){
+    const nm=cleanDisplay(stripLead(line));
+    if(!nm||nm.length<2) return null;
+    // rejette les fragments d'étape / matériel sans quantité (bruit PDF)
+    if(/^(sur|dans|jusqu|pour|avec|puis|ensuite|enfin|pendant|hors|environ|bon\s+app|douilles?|moules?|cercles?|plaques?|tapis|fours?|frigos?|cong[eé]l|r[ée]serve|laisse|mets?)\b/i.test(nm)) return null;
+    return {qty:null,unit:'pièce',name:nm};
+  }
+  let qty=parseNum(m[1]);
+  let [unit,fac]=normUnit(m[2]);
+  let name=cleanDisplay(m[3]);
+  if(!name||/^(min|minutes?|°c|fois|h|heures?|nuit|jour)\b/i.test(name)) return null;
+  return {qty:qty*fac,unit,name};
+}
+
+/* ---------- détection rendement ---------- */
+const YIELD_RE=/\bpour\s+(?:(\d+)\s*[àa-]\s*\d+|(\d+))\s*(personnes?|parts?|portions?|tartelettes?|entremets?|verrines?|pi[èe]ces?|g[âa]teaux?|moules?|cercles?|macarons?|choux|bûches?|buches?|cakes?|individuels?)\b/i;
+function detectYield(text){
+  const m=text.match(YIELD_RE);
+  if(!m) return null;
+  return {value:+(m[1]||m[2]),unit:m[3].replace(/s$/,'')+( (+(m[1]||m[2]))>1 ? 's':'')};
+}
+
+/* ---------- parse complet ---------- */
+function parseRecipe(raw){
+  const text=normalizeText(raw);
+  const yld=detectYield(text);
+  const items=[];
+  let currentPrep='Préparation principale';
+  const preps=[];
+  const lines=text.split('\n');
+  for(let li=0;li<lines.length;li++){
+    let line=lines[li].trim();
+    if(!line) continue;
+    let hadBullet=BULLET.test(line);
+    line=line.replace(BULLET,'').trim();
+    // glyphe de case à cocher extrait d'un PDF (souvent "U"/"q" devant un chiffre ou un titre)
+    line=line.replace(/^[A-Za-z]\s+(?=[\d])/,'').replace(/^[A-Za-z]\s+(?=[A-ZÀ-Þ][a-zà-ÿ])/,'').trim();
+    if(!line||DECOR.test(line)) continue;
+    // bruit d'extraction PDF : pieds de page, numéros de page, marqueurs, en-têtes tout en MAJUSCULES
+    if(/\d+\s*\/\s*\d+\s*$/.test(line)) continue;                       // "... 2 / 12"
+    if(/^[a-z]\s*[-–]\s*\d+$/i.test(line)) continue;                    // "J - 1"
+    { const L=line.replace(/[^a-zà-ÿA-ZÀ-Þ]/g,''); if(L.length>18 && L===L.toUpperCase()) continue; }
+    if(YIELD_RE.test(line)) continue; // "Pour 6 tartelettes" = rendement, pas un ingrédient
+    const wc=line.split(/\s+/).length;
+    const hasQty=QTY_TEST.test(line);
+    // META seul
+    if(META_ONLY.test(line) && !PREP_HEAD.test(line)) continue;
+    // TITRE FORT : courte ligne "préparation + qualificatif" (lève l'ambiguïté "Crème pistache" [titre] vs "Crème le beurre…" [étape])
+    const w2=(line.split(/\s+/)[1]||'').toLowerCase().replace(/['’].*/,'');
+    const art2=/^(le|la|les|l|du|de|des|un|une|ce|cette|ta|ton|tes|votre|vos|au|aux|en|a|sur|dans|hors|tout|toute|bien|d)$/.test(w2);
+    const strongTitle = !hasQty && PREP_HEAD.test(line) && wc<=4 && !art2 && !/[.!?]/.test(line);
+    // ÉTAPE
+    const isStep = !strongTitle && ( /^\d{1,2}\s*[.)°]\s+\p{Lu}/u.test(line)
+      || (/^\d{1,2}\s+\p{Lu}\p{Ll}/u.test(line) && wc>=3) // "10 Passe la dorure" / "8 Décercle tes tartelettes" (n° d'étape sans point, ex PDF)
+      || (!hadBullet && VERB_HEAD.test(line))
+      || (wc>=6 && TIMETHERM.test(line))
+      || line.length>110 );
+    if(isStep) continue;
+    // "Quelques X" non chiffré (garniture)
+    if(!hasQty && /^(quelques|un peu de|une poign[ée]e)/i.test(line)){
+      line.split(/\s+et\s+(?=quelques?\b|un peu|une poign)/i).forEach(part=>{
+        part=part.replace(/\s+pour\s+.*$/i,'').trim(); // coupe "...pour le croquant / la déco / décorer"
+        const ing=parseIngredient(part);
+        if(ing) items.push(bake(ing,currentPrep));
+      });
+      continue;
+    }
+    // "X pour saupoudrer / décorer" = garniture non chiffrée (lignes sans verbe d'action en tête)
+    if(!hasQty){
+      const mg=line.match(/^(.{2,40}?)\s+pour\s+(saupoudr|d[ée]cor|parsem|finir|servir|le croquant|la d[ée]co)/i);
+      if(mg){ const ing=parseIngredient(mg[1].trim()); if(ing){ items.push(bake(ing,currentPrep)); } continue; }
+    }
+    // TITRE de préparation
+    const looksTitle = strongTitle || ( !hasQty && !VERB_HEAD.test(line) &&
+       ( PREP_HEAD.test(line) || (line.length<=60 && wc<=7 && /^[\p{Lu}]/u.test(line) && !/^\d/.test(line)) ) );
+    if(looksTitle){
+      currentPrep=line.replace(/\s*:\s*$/,'');
+      if(preps.indexOf(currentPrep)<0) preps.push(currentPrep);
+      continue;
+    }
+    // INGRÉDIENT
+    if(hasQty || hadBullet){
+      for(const part of splitPlus(line)){
+        const ing=parseIngredient(part);
+        if(ing) items.push(bake(ing,currentPrep));
+      }
+    }
+  }
+  // passe secondaire : garnitures "quelques X" citées dans les étapes (toujours non chiffrées)
+  const seenKeys=new Set(items.map(i=>i.key));
+  const TIMEWORD=/^(minute|seconde|heure|instant|tour|fois|jour|semaine|mois|nuit|cm|mm|degr|gramme|litre)/i;
+  let mq; const reQ=/\bquelques?\s+([a-zà-ÿ][a-zà-ÿ'’ -]{2,40})/gi;
+  while((mq=reQ.exec(text))){
+    let ph=mq[1].split(/\s+(?:coup|fra[îi]|frais|en |pour |et |avec |torr|concass|hach|bien |d[ée]cor|grossi|finement|r[âa]p)/i)[0].trim();
+    if(!ph||TIMEWORD.test(ph)) continue;
+    const ing=parseIngredient(ph); if(!ing) continue;
+    const k=aggKey(ing.name); if(!k||seenKeys.has(k)) continue;
+    seenKeys.add(k); ing.qty=null;
+    items.push(bake(ing,currentPrep));
+  }
+  return {yield:yld,items,preps};
+}
+function bake(ing,prep){
+  const key=aggKey(ing.name);
+  return {prep,qty:ing.qty,unit:ing.unit,name:ing.name,key,id:'i'+(bake._n=(bake._n||0)+1)};
+}
+
+/* ---------- agrégation ---------- */
+function aggregate(items){
+  const map=new Map();
+  for(const it of items){
+    if(!it.key) continue;
+    const k=it.key+'|'+it.unit;
+    if(!map.has(k)) map.set(k,{key:it.key,unit:it.unit,qty:0,hasNull:false,names:{},sources:[]});
+    const e=map.get(k);
+    if(it.qty==null) e.hasNull=true; else e.qty+=it.qty;
+    const disp=cleanDisplay(it.name);
+    e.names[disp]=(e.names[disp]||0)+1;
+    e.sources.push({prep:it.prep,qty:it.qty,unit:it.unit});
+  }
+  const out=[...map.values()].map(e=>{
+    let best='',bl=-1;
+    for(const n in e.names){ if(n.length>bl){bl=n.length;best=n;} }
+    best=best.charAt(0).toUpperCase()+best.slice(1);
+    return {...e,display:best};
+  });
+  // tri : masse d'abord (desc qty), puis autres
+  const rank=u=>u==='g'?0:u==='ml'?1:2;
+  out.sort((a,b)=> rank(a.unit)-rank(b.unit) || b.qty-a.qty);
+  return out;
+}
+
+window.RC={normalizeText,aggKey,parseRecipe,aggregate,
+  analyze:function(t){const p=parseRecipe(t);return {yield:p.yield,total:aggregate(p.items),items:p.items,preps:p.preps};}};
+})();
+
+/* ============================================================
+   UI
+   ============================================================ */
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+const txt=$('rcText'), results=$('rcResults'), drop=$('rcDrop'), fileIn=$('rcFile');
+let state={items:[],yield:null,factor:1,mode:'mult',baseQty:null,baseUnit:'',target:null,view:'total'};
+
+/* ----- PDF.js (chargé à la demande) ----- */
+let pdfLoading=null;
+function loadPdfJs(){
+  if(window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if(pdfLoading) return pdfLoading;
+  pdfLoading=new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload=()=>{ try{window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){} res(window.pdfjsLib); };
+    s.onerror=()=>rej(new Error('pdfjs'));
+    document.head.appendChild(s);
+  });
+  return pdfLoading;
+}
+async function extractPdf(file){
+  const lib=await loadPdfJs();
+  const buf=await file.arrayBuffer();
+  const pdf=await lib.getDocument({data:buf}).promise;
+  let out=[];
+  for(let p=1;p<=pdf.numPages;p++){
+    const page=await pdf.getPage(p);
+    const W=page.getViewport({scale:1}).width;
+    const tc=await page.getTextContent();
+    const items=tc.items.filter(i=>i.str.trim()).map(i=>({x:i.transform[4],y:i.transform[5],s:i.str}));
+    if(!items.length) continue;
+    // détection 2 colonnes (recettes pâtisserie = ingrédients | préparation)
+    const mid=W*0.5;
+    const leftN=items.filter(i=>i.x<mid).length, rightN=items.length-leftN;
+    const band=items.filter(i=>i.x>W*0.40 && i.x<W*0.60).length;
+    const twoCol = leftN>4 && rightN>4 && band/items.length < 0.14;
+    const cols = twoCol ? [items.filter(i=>i.x<mid), items.filter(i=>i.x>=mid)] : [items];
+    cols.forEach(col=>{
+      const rows={};
+      col.forEach(i=>{ const y=Math.round(i.y/3)*3; (rows[y]=rows[y]||[]).push(i); });
+      Object.keys(rows).map(Number).sort((a,b)=>b-a).forEach(y=>{
+        const line=rows[y].sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ').replace(/\s+/g,' ').trim();
+        if(line) out.push(line);
+      });
+    });
+  }
+  return out.join('\n');
+}
+
+function setPdfStatus(msg,err){
+  const el=$('rcPdfStatus');
+  if(!msg){el.style.display='none';return;}
+  el.style.display='block'; el.textContent=msg; el.className='rc-pdfstatus'+(err?' err':'');
+}
+async function handleFile(file){
+  if(!file) return;
+  if(/\.txt$/i.test(file.name)||file.type==='text/plain'){
+    setPdfStatus('Lecture du fichier…');
+    txt.value=await file.text(); setPdfStatus(''); analyze(); return;
+  }
+  setPdfStatus('Lecture du PDF « '+file.name+' »…');
+  try{
+    const t=await extractPdf(file);
+    txt.value=t; setPdfStatus('PDF lu ✓ — vérifie le texte ci-dessous puis recalcule si besoin');
+    analyze();
+  }catch(e){
+    setPdfStatus("Impossible de lire ce PDF automatiquement. Ouvre-le, copie le texte et colle-le ci-dessus.",true);
+  }
+}
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop',e=>{ if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+drop.addEventListener('click',()=>fileIn.click());
+fileIn.addEventListener('change',e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+/* ----- analyse ----- */
+function analyze(){
+  const res=window.RC.analyze(txt.value);
+  state.items=res.items;
+  state.yield=res.yield;
+  state.baseQty=res.yield?res.yield.value:null;
+  state.baseUnit=res.yield?res.yield.unit:'parts';
+  state.target=null; state.factor=1; state.mode='mult';
+  if(!res.items.length){
+    results.classList.add('show');
+    $('rcView').innerHTML='<div class="rc-empty"><strong>Aucun ingrédient détecté.</strong> Vérifie que ta recette contient bien des lignes du type « 100g de farine ». Tu peux aussi passer en mode « Modifier » pour les ajouter à la main.</div>';
+    $('rcCount').textContent='Quantités totales';
+    $('rcFactorLabel').textContent='';
+    $('rcScaleRow').innerHTML=''; $('rcNote').textContent='';
+    $('rcClear').style.display='';
+    return;
+  }
+  $('rcBaseQty').value=state.baseQty!=null?state.baseQty:'';
+  $('rcBaseUnit').value=state.baseUnit;
+  $('rcTargetQty').value='';
+  state.view='total';
+  document.querySelectorAll('.rc-tab').forEach(t=>t.classList.toggle('active',t.dataset.view==='total'));
+  results.classList.add('show');
+  $('rcClear').style.display='';
+  buildScaleRow();
+  render();
+  results.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ----- scaling ----- */
+function buildScaleRow(){
+  const row=$('rcScaleRow');
+  row.innerHTML='';
+  [0.5,1,2,3].forEach(m=>{
+    const b=document.createElement('button');
+    b.className='rc-mult'+(state.mode==='mult'&&state.factor===m?' active':'');
+    b.textContent='×'+m; b.onclick=()=>{state.mode='mult';state.factor=m;state.target=null;$('rcTargetQty').value='';render();buildScaleRow();};
+    row.appendChild(b);
+  });
+  const ci=document.createElement('input');
+  ci.className='rc-custom-input'; ci.type='number'; ci.min='0'; ci.step='0.5'; ci.placeholder='×?';
+  ci.oninput=()=>{const v=parseFloat(ci.value);if(v>0){state.mode='mult';state.factor=v;state.target=null;$('rcTargetQty').value='';render();document.querySelectorAll('.rc-mult').forEach(x=>x.classList.remove('active'));}};
+  row.appendChild(ci);
+}
+function currentFactor(){
+  if(state.mode==='target'&&state.baseQty>0&&state.target>0) return state.target/state.baseQty;
+  return state.factor;
+}
+function factorLabel(){
+  const f=currentFactor();
+  let s='Recette '+(f===1?'de base':(f<1?'réduite':'augmentée'))+' (×'+round(f,2)+')';
+  if(state.mode==='target'&&state.target>0) s='Pour '+state.target+' '+state.baseUnit+' (×'+round(f,2)+')';
+  return s;
+}
+$('rcBaseQty').addEventListener('input',e=>{state.baseQty=parseFloat(e.target.value)||null; if(state.target)applyTarget(); render();});
+$('rcBaseUnit').addEventListener('input',e=>{state.baseUnit=e.target.value||'parts'; render();});
+$('rcTargetQty').addEventListener('input',e=>{ state.target=parseFloat(e.target.value)||null; applyTarget(); });
+function applyTarget(){ if(state.target>0&&state.baseQty>0){state.mode='target';render();document.querySelectorAll('.rc-mult').forEach(x=>x.classList.remove('active'));} else {state.mode='mult';render();buildScaleRow();} }
+
+/* ----- format ----- */
+function round(n,d){const p=Math.pow(10,d||0);return Math.round(n*p)/p;}
+function fmtQty(q,unit){
+  if(q==null) return '—';
+  let v=q*currentFactor();
+  if(unit==='g'||unit==='ml'){ v = v<10?round(v,1):Math.round(v); return v+' '+unit; }
+  // comptables
+  const r=round(v,2);
+  if(Math.abs(r-Math.round(r))<0.02) return Math.round(r)+plural(unit,Math.round(r));
+  return '~'+round(v,1)+plural(unit,2);
+}
+function plural(u,n){
+  if(u==='pièce') return '';
+  if(['gousse','feuille','fève','pincée','bâton','sachet','goutte','brin','zeste'].indexOf(u)>=0) return ' '+u+(n>1?'s':'');
+  return ' '+u;
+}
+
+/* ----- render ----- */
+function render(){
+  if(!state.items.length) return;
+  $('rcFactorLabel').textContent=factorLabel();
+  if(state.view==='total') renderTotal(); else renderEdit();
+}
+function renderTotal(){
+  const total=window.RC.aggregate(state.items);
+  $('rcCount').textContent=total.length+' ingrédient'+(total.length>1?'s':'')+' au total';
+  const hasMixed=detectMixedUnits(total);
+  const ul=document.createElement('ul'); ul.className='rc-total';
+  total.forEach(g=>{
+    const li=document.createElement('li'); li.className='rc-titem';
+    const qtyTxt = g.hasNull && g.qty===0 ? 'Au goût' : fmtQty(g.qty,g.unit)+(g.hasNull?' +':'');
+    const srcN=g.sources.length;
+    li.innerHTML=
+      '<div class="rc-trow">'+
+        '<span class="rc-qty">'+qtyTxt+'</span>'+
+        '<span class="rc-name">'+esc(g.display)+'</span>'+
+        (srcN>1?'<span class="rc-srccount">'+srcN+' préps</span>':'')+
+        '<span class="rc-chev">›</span>'+
+      '</div>'+
+      '<div class="rc-sources">'+ g.sources.map(s=>
+        '<div class="rc-src"><span class="rc-src-prep">'+esc(s.prep)+'</span><span>'+(s.qty==null?'qq.':fmtQty(s.qty,s.unit))+'</span></div>'
+      ).join('')+'</div>';
+    li.querySelector('.rc-trow').onclick=()=>li.classList.toggle('open');
+    ul.appendChild(li);
+  });
+  const v=$('rcView'); v.innerHTML=''; v.appendChild(ul);
+  $('rcNote').innerHTML='Clique une ligne pour voir dans quelles préparations l\'ingrédient apparaît.'+(hasMixed?' ⚠️ Certains ingrédients sont donnés en unités différentes (g et ml) et ne sont pas additionnés ensemble.':'');
+}
+function detectMixedUnits(total){
+  const byKey={}; total.forEach(g=>{(byKey[g.key]=byKey[g.key]||new Set()).add(g.unit);});
+  return Object.values(byKey).some(s=>s.size>1);
+}
+function renderEdit(){
+  const v=$('rcView'); v.innerHTML='';
+  const byPrep={};
+  state.items.forEach(it=>{(byPrep[it.prep]=byPrep[it.prep]||[]).push(it);});
+  Object.keys(byPrep).forEach(prep=>{
+    const sec=document.createElement('div'); sec.className='rc-prep';
+    sec.innerHTML='<div class="rc-prep-head">'+esc(prep)+'</div>';
+    byPrep[prep].forEach(it=>sec.appendChild(editRow(it)));
+    v.appendChild(sec);
+  });
+  const add=document.createElement('button');
+  add.className='btn btn-ghost rc-addrow'; add.textContent='+ Ajouter un ingrédient';
+  add.onclick=()=>{ const it={prep:'Ajouts',qty:0,unit:'g',name:'',key:'',id:'i'+Date.now()}; state.items.push(it); state.view='edit'; render(); };
+  v.appendChild(add);
+  $('rcCount').textContent='Modifier les ingrédients';
+  $('rcNote').textContent='Corrige une quantité ou un nom, supprime ou ajoute une ligne. Le total se met à jour automatiquement.';
+}
+function editRow(it){
+  const row=document.createElement('div'); row.className='rc-erow';
+  const q=document.createElement('input'); q.className='rc-eq'; q.type='text'; q.inputMode='decimal'; q.value=it.qty==null?'':round(it.qty,2); q.placeholder='qté';
+  const u=document.createElement('input'); u.className='rc-eu'; u.type='text'; u.value=it.unit; q.title='quantité';
+  const n=document.createElement('input'); n.className='rc-en'; n.type='text'; n.value=it.name; n.placeholder='ingrédient';
+  q.oninput=()=>{ const val=q.value.trim(); it.qty=val===''?null:(parseFloat(val.replace(',','.'))||0); };
+  u.oninput=()=>{ it.unit=u.value.trim()||'pièce'; };
+  n.oninput=()=>{ it.name=n.value; it.key=window.RC.aggKey(n.value); };
+  const del=document.createElement('button'); del.className='rc-del'; del.innerHTML='×'; del.title='supprimer';
+  del.onclick=()=>{ state.items=state.items.filter(x=>x!==it); render(); };
+  row.appendChild(q); row.appendChild(u); row.appendChild(n); row.appendChild(del);
+  return row;
+}
+function esc(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+/* ----- tabs / actions ----- */
+document.querySelectorAll('.rc-tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.rc-tab').forEach(x=>x.classList.toggle('active',x===t));
+  state.view=t.dataset.view; render();
+});
+$('rcAnalyze').onclick=analyze;
+$('rcClear').onclick=()=>{ txt.value=''; results.classList.remove('show'); setPdfStatus(''); $('rcClear').style.display='none'; txt.focus(); };
+$('rcExample').onclick=()=>{ txt.value=EXAMPLE; analyze(); };
+$('rcCopy').onclick=()=>{
+  const total=window.RC.aggregate(state.items);
+  let lines=['Liste de courses — '+factorLabel(),''];
+  total.forEach(g=>{ const q=g.hasNull&&g.qty===0?'au goût':fmtQty(g.qty,g.unit); lines.push('- '+q+'  '+g.display); });
+  const text=lines.join('\n');
+  navigator.clipboard.writeText(text).then(()=>toast('Liste copiée ✓')).catch(()=>{ const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('Liste copiée ✓'); });
+};
+$('rcPrint').onclick=()=>{ if(state.view!=='total'){state.view='total';document.querySelectorAll('.rc-tab').forEach(x=>x.classList.toggle('active',x.dataset.view==='total'));render();} setTimeout(()=>window.print(),60); };
+function toast(m){ const t=$('rcToast'); t.textContent=m; t.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove('show'),1800); }
+
+const EXAMPLE=`Tartelettes Pistache & Fraise
+Pour 6 tartelettes
+
+Ganache montée pistache
+- 200g de crème liquide 30% mini
+- 110g de chocolat blanc
+- 50g de pâte de pistache
+Chauffe 80g de crème, verse sur le chocolat et la pâte de pistache. Émulsionne, ajoute le reste de crème froide. Repos une nuit puis monte au batteur.
+
+Pâte sucrée amande
+- 150g de beurre
+- 200g de farine
+- 90g de sucre glace
+- 30g de poudre d'amande
+- 1 oeuf
+Sable le beurre avec la farine. Ajoute le sucre glace, la poudre d'amande puis l'oeuf. Fonce les cercles. Cuis à blanc à 160°C pendant 15 minutes.
+
+Crème pistache
+- 150g de crème liquide 30% mini
+- 15g de pâte de pistache
+- 50g de poudre de pistache
+- 40g de sucre
+
+Confit de fraise
+- 200g de purée de fraise
+- 4g de pectine NH
+
+Montage
+Garnis les fonds, ajoute le confit, poche la ganache. Quelques fraises fraîches pour décorer.`;
+})();
+</script>
+</body>
+</html>
