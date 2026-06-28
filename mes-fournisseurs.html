@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes fournisseurs — Méthode Fondations Pro</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A;position:sticky;top:0;z-index:20}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(28px,5vw,52px) clamp(16px,4vw,40px) 60px}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,44px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.12}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.72);margin-bottom:34px;max-width:680px;font-size:clamp(15px,2vw,17px)}
+  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .cat{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:6px;padding:20px 18px}
+  .cat-label{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+  .cat-count{background:rgba(200,160,74,0.18);color:#9a7b1f;border-radius:20px;padding:1px 9px;font-size:10px}
+  .items{display:flex;flex-direction:column;gap:8px}
+  .item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;min-height:54px;border:1px solid rgba(26,20,16,0.1);border-radius:8px;text-decoration:none;color:#1A1410;background:#FDF8F0;transition:border-color .18s ease,transform .18s ease,background .18s ease;-webkit-tap-highlight-color:transparent}
+  .item:hover,.item:focus-visible{border-color:#C8A04A;background:#fff;transform:translateX(3px);outline:none}
+  .i-main{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .i-name{font-size:15.5px;line-height:1.3;font-weight:600}
+  .i-host{font-size:12px;color:rgba(26,20,16,0.5);font-family:'Courier New',monospace;letter-spacing:.3px}
+  .i-go{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#C8A04A;white-space:nowrap;opacity:.8;flex-shrink:0}
+  .item:hover .i-go,.item:focus-visible .i-go{opacity:1}
+  footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
+  footer .brand{color:#C8A04A;font-family:Georgia,serif;font-size:16px}
+  @media (max-width:560px){.cats{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Mes fournisseurs</span>
+  <a href="index.html">&larr; Retour</a>
+</div>
+
+<main>
+  <h1>Mes <span class="accent">fournisseurs</span></h1>
+  <p class="intro">Les boutiques où je commande mon matériel et mes matières premières. Clique sur une enseigne, tu arrives direct sur son site.</p>
+
+  <div class="cats">
+
+    <div class="cat">
+      <h3 class="cat-label">Fruits à coques <span class="cat-count">2</span></h3>
+      <div class="items">
+        <a class="item" href="https://www.bedouin-fruits-secs.com/fr/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Bedouin Fruits Secs</span><span class="i-host">bedouin-fruits-secs.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.koro.fr/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Koro</span><span class="i-host">koro.fr</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat">
+      <h3 class="cat-label">Matériel & matières premières <span class="cat-count">5</span></h3>
+      <div class="items">
+        <a class="item" href="https://www.cerfdellier.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Cerf Dellier</span><span class="i-host">cerfdellier.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.meilleurduchef.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Meilleur du Chef</span><span class="i-host">meilleurduchef.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.cuisineaddict.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Cuisine Addict</span><span class="i-host">cuisineaddict.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.maspatule.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">MaSpatule</span><span class="i-host">maspatule.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.parlapapa.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Parlapapa</span><span class="i-host">parlapapa.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="cat">
+      <h3 class="cat-label">Vanille <span class="cat-count">3</span></h3>
+      <div class="items">
+        <a class="item" href="https://www.davidvanille.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">David Vanille</span><span class="i-host">davidvanille.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://galand-vanille.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Galand Vanille</span><span class="i-host">galand-vanille.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+        <a class="item" href="https://www.patisserieetmercilaboutique.com/" target="_blank" rel="noopener nofollow">
+          <span class="i-main"><span class="i-name">Pâtisserie et Merci</span><span class="i-host">patisserieetmercilaboutique.com</span></span>
+          <span class="i-go">Voir &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p class="brand">Les Secrets de Geoffrey</p>
+  <p style="margin-top:8px">Méthode Fondations Pro — Les fournisseurs de ma communauté</p>
+</footer>
+</body>
+</html>
