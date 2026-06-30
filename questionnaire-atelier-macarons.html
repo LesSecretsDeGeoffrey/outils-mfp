@@ -127,7 +127,7 @@
 <header class="hero">
   <span class="overline">Masterclass Macarons</span>
   <h1>J'ai besoin de <span class="accent">ton avis</span></h1>
-  <p class="sub">Tu viens d'assister à ma masterclass macarons. Tes réponses vont m'aider à l'améliorer pour les prochains. C'est rapide et anonyme, sauf si tu choisis de me laisser tes coordonnées à la fin 🙏</p>
+  <p class="sub">Tu viens d'assister à ma masterclass macarons. Réponds à ces quelques questions pour m'aider à l'améliorer, et je t'envoie un petit cadeau juste après 🎁</p>
 </header>
 
 <main>
@@ -184,20 +184,20 @@
 
     <section class="section contact-section">
       <div class="contact-head">
-        <span class="overline">Bonus · facultatif</span>
-        <p>Si tu veux, on prend 15 à 20 min en visio ensemble, gratuitement et sans aucune pression, pour faire le point sur ta pâtisserie et voir comment je peux t'aider à débloquer ce qui coince. Laisse-moi tes coordonnées et je te recontacte personnellement</p>
+        <span class="overline">🎁 Ton cadeau</span>
+        <h2>Où je t'envoie ton cadeau ?</h2>
+        <p>Laisse-moi ton prénom et ton numéro, je t'envoie ton cadeau directement par message 🎁</p>
       </div>
       <div class="q">
         <label class="lab">Ton prénom</label>
-        <input type="text" name="prenom" placeholder="Ton prénom">
+        <input type="text" name="prenom" autocomplete="given-name" placeholder="Ton prénom">
+        <div class="qerr">Indique ton prénom pour recevoir ton cadeau</div>
       </div>
       <div class="q">
-        <label class="lab">Ton email</label>
-        <input type="text" name="email" inputmode="email" placeholder="ton@email.com">
-      </div>
-      <div class="q">
-        <label class="lab">Ton téléphone ou WhatsApp</label>
-        <input type="text" name="telephone" inputmode="tel" placeholder="06 12 34 56 78">
+        <label class="lab">Ton numéro de téléphone</label>
+        <span class="hint">C'est là que je t'envoie ton cadeau (SMS ou WhatsApp)</span>
+        <input type="text" name="telephone" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78">
+        <div class="qerr">Indique ton numéro pour recevoir ton cadeau</div>
       </div>
     </section>
 
@@ -211,7 +211,7 @@
   <div id="merci">
     <span class="heart">🙏</span>
     <div class="big">Merci infiniment !</div>
-    <p>Ta réponse est bien arrivée. C'est exactement ce genre de retour qui m'aide à rendre mes prochaines masterclass encore meilleures. À très vite 🤍</p>
+    <p>Ta réponse est bien arrivée 🙏 Je t'envoie ton cadeau très vite directement sur ton numéro. À tout de suite 🤍</p>
   </div>
 </main>
 
@@ -248,14 +248,14 @@ document.getElementById('aRejointGroup').addEventListener('change', e => {
 });
 
 // ---- nettoyage erreur quand on remplit ----
-document.querySelectorAll('textarea').forEach(el =>
+document.querySelectorAll('textarea, input[type=text]').forEach(el =>
   el.addEventListener('input', () => el.closest('.q')?.classList.remove('invalid')));
 document.querySelectorAll('.choices').forEach(g =>
   g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
 // ---- validation : note + a_rejoint toujours obligatoires ;
 //      les 3 questions objection deviennent obligatoires si "Non" ----
-const REQUIRED = [{name:'note', type:'nps'}, {name:'a_rejoint', type:'radio'}];
+const REQUIRED = [{name:'note', type:'nps'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
 const REQUIRED_SI_NON = [{name:'raison_pas_rejoint', type:'text'}, {name:'prix_ideal', type:'text'}, {name:'oui_tout_de_suite', type:'text'}];
 function requiredNow(){
   return radioVal('a_rejoint') === 'Non' ? REQUIRED.concat(REQUIRED_SI_NON) : REQUIRED;
@@ -284,7 +284,6 @@ function payload(){
     oui_tout_de_suite: joined ? null : (val('oui_tout_de_suite') || null),
     blocage_patisserie: val('blocage_patisserie') || null,
     prenom: val('prenom') || null,
-    email: val('email') || null,
     telephone: val('telephone') || null
   };
 }
@@ -304,6 +303,18 @@ form.addEventListener('submit', async (e) => {
     errBox.textContent = missing.length===1 ? 'Il reste 1 question obligatoire sans réponse (surlignée en rouge)' : `Il reste ${missing.length} questions obligatoires sans réponse (surlignées en rouge)`;
     errBox.style.display='block';
     anchorOf(missing[0]).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+
+  // numéro plausible (au moins 6 chiffres) — c'est par là que passe le cadeau + la relance
+  const telD = val('telephone').replace(/\D/g,'');
+  if (telD.length < 6){
+    const q = document.querySelector('[name=telephone]').closest('.q');
+    q.classList.add('invalid');
+    const er = q.querySelector('.qerr'); if(er) er.textContent = 'Vérifie ton numéro de téléphone';
+    errBox.textContent = 'Vérifie ton numéro de téléphone 🙏';
+    errBox.style.display='block';
+    q.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
 

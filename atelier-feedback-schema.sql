@@ -25,7 +25,10 @@ create table if not exists public.atelier_feedback (
   oui_tout_de_suite   text,    -- Q6 (si Non) ce qui le ferait dire oui tout de suite (or)
   blocage_patisserie  text,    -- Q7 ce qui le bloque le plus en pâtisserie
 
-  -- bloc coordonnées (facultatif) — pour décrocher un call de vente post-live
+  -- coordonnées — prénom + téléphone OBLIGATOIRES côté formulaire (échangés contre le
+  -- « cadeau »), pour relancer chaque personne une par une. email gardé pour l'historique
+  -- (les anciennes réponses), plus collecté par le nouveau formulaire. Colonnes nullable
+  -- (les vieilles réponses anonymes restent valides).
   prenom              text,
   email               text,
   telephone           text

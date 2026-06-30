@@ -82,6 +82,11 @@
   .lead-contacts a:hover{border-color:var(--or)}
   .lead-ctx{font-size:13.5px; color:var(--muted); line-height:1.5}
   .lead-ctx b{color:var(--encre); font-weight:600}
+  .lead-num{font-size:13px; color:var(--muted); padding:7px 10px; align-self:center}
+  .lead-answers{margin-top:2px}
+  .pa-line{font-size:13.5px; color:var(--muted); line-height:1.5; padding:3px 0}
+  .pa-line b{color:var(--encre); font-weight:600}
+  .lead-del{display:flex; justify-content:flex-end; margin-top:10px}
   .vq{border:1px solid var(--ligne); border-radius:8px; margin-bottom:14px; overflow:hidden}
   .vq summary{cursor:pointer; padding:15px 18px; font-weight:600; font-size:15px; background:#FCFAF6; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px}
   .vq summary::-webkit-details-marker{display:none}
@@ -143,8 +148,8 @@
       </div>
 
       <div class="block">
-        <h2>📞 À rappeler — coordonnées laissées</h2>
-        <p class="desc">Les gens qui ont laissé leurs coordonnées pour qu'on échange. Ceux qui ont dit « Non » + ont laissé un contact = tes meilleures cibles de call post-live. Leur objection est rappelée pour préparer l'appel.</p>
+        <h2>👤 Réponses par personne</h2>
+        <p class="desc">Tout ce que chaque personne a répondu, avec son numéro pour la relancer (clic = appel ou WhatsApp). Les « Non » (à convertir) sont en premier.</p>
         <div id="leads"></div>
       </div>
 
@@ -217,14 +222,13 @@ function render(){
   const oui = ROWS.filter(r=>r.a_rejoint==='Oui').length;
   const non = ROWS.filter(r=>r.a_rejoint==='Non').length;
   const conv = (oui+non) ? Math.round(oui/(oui+non)*100)+'%' : '—';
-  const leads = ROWS.filter(r => (r.email||'').trim() || (r.telephone||'').trim() || (r.prenom||'').trim());
 
   document.getElementById('kpis').innerHTML = `
     <div class="kpi"><div class="num">${n}</div><div class="lab">Réponses</div></div>
     <div class="kpi"><div class="num">${noteAvg}</div><div class="lab">Note moyenne /10</div></div>
     <div class="kpi"><div class="num">${satis}</div><div class="lab">Satisfaits (8-10)</div></div>
     <div class="kpi"><div class="num">${conv}</div><div class="lab">Ont rejoint la Méthode</div></div>
-    <div class="kpi"><div class="num">${leads.length}</div><div class="lab">À rappeler</div></div>`;
+    <div class="kpi"><div class="num">${non}</div><div class="lab">À relancer (Non)</div></div>`;
 
   // note distribution 0-10 (colonnes verticales, même système que le questionnaire élèves)
   const dist = Array.from({length:11},(_,i)=>notes.filter(v=>v===i).length);
@@ -238,27 +242,35 @@ function render(){
     <div class="splitcard oui"><div class="n">${oui}</div><div class="l">Ont rejoint</div></div>
     <div class="splitcard non"><div class="n">${non}</div><div class="l">N'ont pas rejoint</div></div>`;
 
-  // leads à rappeler (coordonnées laissées) — les "Non" d'abord = meilleures cibles de call
+  // réponses par personne — tout ce que chacun a répondu + contact pour relancer ; les "Non" d'abord
   const waLink = tel => { let d=(tel||'').replace(/\D/g,''); if(!d) return null; if(d.startsWith('0')) d='33'+d.slice(1); return 'https://wa.me/'+d; };
-  const leadsSorted = [...leads].sort((a,b)=> (a.a_rejoint==='Non'?0:1)-(b.a_rejoint==='Non'?0:1));
-  document.getElementById('leads').innerHTML = leadsSorted.length ? leadsSorted.map(r=>{
+  const telLink = tel => { const d=(tel||'').replace(/[^\d+]/g,''); return d?('tel:'+d):null; };
+  const peopleSorted = [...ROWS].sort((a,b)=> (a.a_rejoint==='Non'?0:1)-(b.a_rejoint==='Non'?0:1));
+  document.getElementById('leads').innerHTML = peopleSorted.length ? peopleSorted.map(r=>{
     const cls = r.a_rejoint==='Non'?'non':(r.a_rejoint==='Oui'?'oui':'');
     const badge = r.a_rejoint==='Non'?'<span class="lead-badge non">N\'a pas rejoint</span>':(r.a_rejoint==='Oui'?'<span class="lead-badge oui">A rejoint</span>':'');
-    const wa = waLink(r.telephone);
+    const wa = waLink(r.telephone), tl = telLink(r.telephone);
     const contacts = [
-      r.email?`<a href="mailto:${esc(r.email)}">✉ ${esc(r.email)}</a>`:'',
-      r.telephone?(wa?`<a href="${wa}" target="_blank" rel="noopener">💬 ${esc(r.telephone)}</a>`:`<span>${esc(r.telephone)}</span>`):''
+      tl?`<a href="${tl}">📞 Appeler</a>`:'',
+      wa?`<a href="${wa}" target="_blank" rel="noopener">💬 WhatsApp</a>`:'',
+      r.telephone?`<span class="lead-num">${esc(r.telephone)}</span>`:'',
+      r.email?`<a href="mailto:${esc(r.email)}">✉ ${esc(r.email)}</a>`:''
     ].filter(Boolean).join('');
-    const ctx = [];
-    if(r.raison_pas_rejoint) ctx.push(`<b>Frein :</b> ${esc(r.raison_pas_rejoint)}`);
-    if(r.prix_ideal) ctx.push(`<b>Prix idéal :</b> ${esc(r.prix_ideal)}`);
-    if(r.oui_tout_de_suite) ctx.push(`<b>Dirait oui si :</b> ${esc(r.oui_tout_de_suite)}`);
-    return `<div class="lead ${cls}">
+    const ans = [
+      ['Ce qu\'il a préféré', r.prefere],
+      ['Frein (pas rejoint)', r.raison_pas_rejoint],
+      ['Prix idéal', r.prix_ideal],
+      ['Dirait « oui » si', r.oui_tout_de_suite],
+      ['Le bloque en pâtisserie', r.blocage_patisserie]
+    ].filter(([,v])=>v && String(v).trim())
+     .map(([l,v])=>`<div class="pa-line"><b>${l} :</b> ${esc(v)}</div>`).join('');
+    return `<div class="lead ${cls}" data-id="${r.id}">
       <div class="lead-top"><span class="lead-name">${esc(r.prenom||'(sans prénom)')}</span>${badge}<span class="lead-note">${r.note!=null?r.note+'/10':''}</span></div>
       ${contacts?`<div class="lead-contacts">${contacts}</div>`:''}
-      ${ctx.length?`<div class="lead-ctx">${ctx.join(' · ')}</div>`:''}
+      ${ans?`<div class="lead-answers">${ans}</div>`:''}
+      <div class="lead-del"><button class="del-ans" title="Supprime toute la réponse de cette personne">Supprimer</button></div>
     </div>`;
-  }).join('') : '<p class="empty">Personne n\'a encore laissé ses coordonnées</p>';
+  }).join('') : '<p class="empty">Aucune réponse pour l\'instant</p>';
 
   // verbatims
   const renderVQ = (el, list) => {
@@ -297,7 +309,7 @@ document.addEventListener('click', e=>{
 // supprimer une réponse (= la ligne entière) — 2 clics : Supprimer -> Confirmer ?
 document.addEventListener('click', async e=>{
   const b = e.target.closest('.del-ans'); if(!b) return;
-  const id = b.closest('.ans')?.dataset.id; if(!id) return;
+  const id = (b.closest('.ans') || b.closest('.lead'))?.dataset.id; if(!id) return;
   if(b.dataset.armed!=='1'){
     b.dataset.armed='1'; b.textContent='Confirmer ?'; b.classList.add('armed');
     clearTimeout(b._t); b._t=setTimeout(()=>{ b.dataset.armed='0'; b.textContent='Supprimer'; b.classList.remove('armed'); }, 3000);
