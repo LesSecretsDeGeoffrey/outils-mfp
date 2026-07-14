@@ -258,6 +258,7 @@ function render(){
     ].filter(Boolean).join('');
     const ans = [
       ['Ce qu\'il a préféré', r.prefere],
+      ['À améliorer', r.amelioration],
       ['Frein (pas rejoint)', r.raison_pas_rejoint],
       ['Prix idéal', r.prix_ideal],
       ['Dirait « oui » si', r.oui_tout_de_suite],
@@ -293,6 +294,7 @@ function render(){
   ]);
   renderVQ('verbAutres', [
     ['prefere','Ce qu\'ils ont préféré pendant la masterclass'],
+    ['amelioration','Ce qui rendrait la masterclass encore meilleure'],
     ['blocage_patisserie','Ce qui les bloque le plus en pâtisserie']
   ]);
 }
@@ -325,7 +327,7 @@ document.addEventListener('click', async e=>{
 
 function exportCSV(){
   if(!ROWS.length) return;
-  const cols = ['created_at','note','prefere','a_rejoint','raison_pas_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie','prenom','email','telephone'];
+  const cols = ['created_at','note','prefere','amelioration','a_rejoint','raison_pas_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie','prenom','email','telephone'];
   const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
   const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
   const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});

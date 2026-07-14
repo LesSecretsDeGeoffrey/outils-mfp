@@ -147,6 +147,11 @@
       </div>
 
       <div class="q">
+        <label class="lab">Selon toi, qu'est-ce qui rendrait la prochaine masterclass encore meilleure ? <span class="opt">(facultatif)</span></label>
+        <textarea name="amelioration" placeholder="..."></textarea>
+      </div>
+
+      <div class="q">
         <label class="lab">As-tu intégré la Méthode Fondations Pro ?</label>
         <div class="choices" data-name="a_rejoint" id="aRejointGroup">
           <label class="choice"><input type="radio" name="a_rejoint" value="Oui"><span class="box"></span>Oui</label>
@@ -278,6 +283,7 @@ function payload(){
   return {
     note: npsVal,
     prefere: val('prefere') || null,
+    amelioration: val('amelioration') || null,
     a_rejoint: radioVal('a_rejoint'),
     raison_pas_rejoint: joined ? null : (val('raison_pas_rejoint') || null),
     prix_ideal: joined ? null : (val('prix_ideal') || null),
