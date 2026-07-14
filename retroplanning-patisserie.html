@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rétroplanning pâtisserie — Les Secrets De Geoffrey</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{overflow-x:hidden}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(26px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:36px;max-width:660px}
+  .form-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(22px,4vw,36px);margin-bottom:22px}
+  .form-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:6px;color:#1A1410}
+  .form-section h3 .step{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;color:#C8A04A;display:block;margin-bottom:6px;text-transform:uppercase}
+  .form-section .hint{font-size:13px;color:rgba(26,20,16,0.55);margin-bottom:18px}
+  label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin-bottom:10px;font-weight:600}
+  /* les cartes/pills interactives ne doivent pas hériter du label majuscule Courier */
+  .fam-name,.fam-sub,.subtype,.radio-pill span,.check-card span{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;text-transform:none;letter-spacing:normal;font-weight:400}
+  .fam-name{font-family:Georgia,serif}
+  input[type="date"],input[type="time"],select{width:100%;padding:14px 16px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:15px;font-family:inherit;color:#1A1410;border-radius:3px;transition:border-color 0.2s}
+  input[type="date"]:focus,input[type="time"]:focus,select:focus{outline:none;border-color:#C8A04A}
+  select{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A04A' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+  .two-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:600px){.two-cols{grid-template-columns:1fr}}
+  .field{margin-top:18px}
+  .field:first-of-type{margin-top:0}
+
+  /* Family selector */
+  .family-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .fam-card{display:block;padding:18px;border:1px solid rgba(26,20,16,0.15);border-radius:4px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;position:relative}
+  .fam-card:hover{border-color:#C8A04A}
+  .fam-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A;box-shadow:inset 0 0 0 1px #C8A04A}
+  .fam-card input{position:absolute;opacity:0;pointer-events:none}
+  .fam-name{display:block;font-family:Georgia,serif;font-size:17px;color:#1A1410;margin-bottom:4px}
+  .fam-sub{display:block;font-size:12px;color:rgba(26,20,16,0.6);line-height:1.4}
+
+  .fam-block[hidden]{display:none}
+  .subtype-row{display:flex;flex-wrap:wrap;gap:8px}
+  .subtype{padding:9px 15px;border:1px solid rgba(26,20,16,0.15);border-radius:20px;cursor:pointer;font-size:13px;background:#fff;transition:all 0.15s;user-select:none}
+  .subtype:hover{border-color:#C8A04A}
+  .subtype.active{background:#1A1410;color:#FDF8F0;border-color:#1A1410}
+  .subtype input{position:absolute;opacity:0;pointer-events:none}
+
+  .checkbox-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+  .check-card{display:flex;align-items:center;gap:10px;padding:13px 15px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none}
+  .check-card:hover{border-color:#C8A04A}
+  .check-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .check-card input{margin:0;accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .check-card span{font-size:14px;color:#1A1410}
+
+  .radio-row{display:flex;flex-wrap:wrap;gap:10px}
+  .radio-pill{display:flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none}
+  .radio-pill:hover{border-color:#C8A04A}
+  .radio-pill.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .radio-pill input{accent-color:#C8A04A;width:15px;height:15px}
+  .radio-pill span{font-size:14px}
+
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:17px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:4px}
+  .calculate-btn:hover{background:#B08A3E}
+
+  .result{margin-top:40px;display:none}
+  .result.visible{display:block}
+  .result-header{background:#1A1410;color:#FDF8F0;padding:clamp(20px,4vw,32px);border-radius:4px 4px 0 0;border-bottom:3px solid #C8A04A}
+  .result-header .meta{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .result-header h2{font-family:Georgia,serif;font-size:clamp(21px,3vw,28px);font-weight:400;line-height:1.3}
+  .day-block{background:#fff;border:1px solid rgba(26,20,16,0.1);border-top:none}
+  .day-block:last-of-type{border-radius:0 0 4px 4px}
+  .day-header{background:rgba(200,160,74,0.08);padding:16px 24px;border-bottom:1px solid rgba(200,160,74,0.2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+  .day-label{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;font-weight:600}
+  .day-date{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-style:italic}
+  .tasks{padding:8px 0}
+  .task{display:flex;gap:18px;padding:16px 24px;border-bottom:1px solid rgba(26,20,16,0.06);align-items:flex-start}
+  .task:last-child{border-bottom:none}
+  .task-time{font-family:Georgia,serif;font-size:17px;color:#C8A04A;min-width:78px;flex-shrink:0;font-weight:600}
+  .task-body{flex:1;min-width:0}
+  .task-title{font-size:15px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .task-detail{font-size:13px;color:rgba(26,20,16,0.65);line-height:1.55}
+  .task-duration{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#C8A04A;margin-top:6px;padding:3px 8px;background:rgba(200,160,74,0.1);border-radius:2px}
+  .tip-final{background:rgba(200,160,74,0.08);padding:22px 24px;margin-top:22px;border-left:3px solid #C8A04A;border-radius:2px}
+  .tip-final strong{color:#C8A04A;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:8px}
+  .tip-final .body{font-size:13.5px;color:rgba(26,20,16,0.75);line-height:1.6}
+  .warning{background:#FEF3E2;border-left:3px solid #E8A33C;padding:13px 16px;margin-top:16px;border-radius:2px;font-size:13px;color:#8B5A20}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Rétroplanning pâtisserie</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>T'as un dessert à servir. <span class="accent">Quand tu commences ?</span></h1>
+  <p class="intro">Choisis ton dessert, dis-moi la date du service et ce qu'il contient. Je te sors le planning complet à l'heure près, avec le bon ordre et les temps de repos qui ne se rattrapent pas. Fini les « merde, j'aurais dû commencer hier »</p>
+
+  <!-- ETAPE 1 : famille -->
+  <div class="form-section">
+    <h3><span class="step">Étape 1</span>Quel dessert tu prépares ?</h3>
+    <div class="family-cards" id="familyCards">
+      <label class="fam-card active"><input type="radio" name="famille" value="entremets" checked><span class="fam-name">Entremets &amp; bûches</span><span class="fam-sub">Mousse ou ganache montée, insert, glaçage miroir ou velours</span></label>
+      <label class="fam-card"><input type="radio" name="famille" value="tarte"><span class="fam-name">Tartes &amp; tartelettes</span><span class="fam-sub">Pâte à foncer, crème, confit, fruits frais</span></label>
+      <label class="fam-card"><input type="radio" name="famille" value="choux"><span class="fam-name">Choux</span><span class="fam-sub">Éclair, Paris-Brest, chou, religieuse, St-Honoré</span></label>
+      <label class="fam-card"><input type="radio" name="famille" value="macarons"><span class="fam-name">Macarons</span><span class="fam-sub">Coques, garniture, maturation 24 à 48h</span></label>
+      <label class="fam-card"><input type="radio" name="famille" value="fraisier"><span class="fam-name">Fraisier &amp; gâteaux à la crème</span><span class="fam-sub">Biscuit, mousseline ou diplomate, fruits frais</span></label>
+    </div>
+  </div>
+
+  <!-- ETAPE 2 : service -->
+  <div class="form-section">
+    <h3><span class="step">Étape 2</span>Le service</h3>
+    <div class="two-cols">
+      <div>
+        <label for="serviceDate">Date du service</label>
+        <input type="date" id="serviceDate">
+      </div>
+      <div>
+        <label for="serviceTime">Heure du service</label>
+        <input type="time" id="serviceTime" value="14:00">
+      </div>
+    </div>
+
+    <!-- extra entremets : décongélation -->
+    <div class="field fam-extra" data-fam="entremets" id="extra-decong">
+      <label for="decongelation">Temps de décongélation au frigo</label>
+      <select id="decongelation">
+        <option value="4">4 heures (petits entremets individuels)</option>
+        <option value="6" selected>6 heures (entremets 18-22 cm, recommandé)</option>
+        <option value="8">8 heures (entremets 24-26 cm ou bûche)</option>
+        <option value="12">Toute une nuit (le plus sécurisant)</option>
+      </select>
+    </div>
+
+    <!-- extra macarons : maturation -->
+    <div class="field fam-extra" data-fam="macarons" id="extra-maturation" hidden>
+      <label for="maturation">Maturation au frigo avant dégustation</label>
+      <select id="maturation">
+        <option value="24" selected>24 heures (minimum, la coque s'imprègne)</option>
+        <option value="48">48 heures (l'idéal, texture et goût parfaits)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ETAPE 3 : composants -->
+  <div class="form-section">
+    <h3><span class="step">Étape 3</span>Les composants</h3>
+    <p class="hint">Toutes les recettes de la Méthode sont là. Le planning s'adapte à la technique de chacune.</p>
+
+    <!-- ========== ENTREMETS ========== -->
+    <div class="fam-block" data-fam="entremets">
+      <div class="field"><label>Biscuit</label><select id="ent-biscuit"></select></div>
+      <div class="field"><label>Insert intérieur</label><select id="ent-insert"></select></div>
+      <div class="field"><label>Mousse principale</label><select id="ent-mousse"></select></div>
+      <div class="field">
+        <label>Finition extérieure</label>
+        <div class="radio-row" id="ent-finition">
+          <label class="radio-pill active"><input type="radio" name="ent-fin" value="miroir" checked><span>Glaçage miroir</span></label>
+          <label class="radio-pill"><input type="radio" name="ent-fin" value="velours"><span>Effet velours</span></label>
+          <label class="radio-pill"><input type="radio" name="ent-fin" value="nappage"><span>Nappage neutre</span></label>
+          <label class="radio-pill"><input type="radio" name="ent-fin" value="aucun"><span>Brut</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Options</label>
+        <div class="checkbox-grid">
+          <label class="check-card"><input type="checkbox" class="ent-opt" value="praline"><span>Praliné maison</span></label>
+          <label class="check-card"><input type="checkbox" class="ent-opt" value="decor"><span>Décor chocolat tempéré</span></label>
+          <label class="check-card"><input type="checkbox" class="ent-opt" value="fruits"><span>Décor fruits frais</span></label>
+          <label class="check-card"><input type="checkbox" class="ent-opt" value="imbibage"><span>Imbibage du biscuit</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== TARTE ========== -->
+    <div class="fam-block" data-fam="tarte" hidden>
+      <div class="field"><label>Pâte</label><select id="tar-pate"></select></div>
+      <div class="field"><label>Couche du fond (facultatif)</label><select id="tar-fond"></select></div>
+      <div class="field"><label>Crème / garniture principale</label><select id="tar-creme"></select></div>
+      <div class="field">
+        <label>Finition</label>
+        <div class="radio-row" id="tar-finition">
+          <label class="radio-pill active"><input type="radio" name="tar-fin" value="fruits" checked><span>Fruits frais</span></label>
+          <label class="radio-pill"><input type="radio" name="tar-fin" value="meringue"><span>Meringue</span></label>
+          <label class="radio-pill"><input type="radio" name="tar-fin" value="decor"><span>Décor chocolat</span></label>
+          <label class="radio-pill"><input type="radio" name="tar-fin" value="brut"><span>Nappage / brut</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Options</label>
+        <div class="checkbox-grid">
+          <label class="check-card"><input type="checkbox" class="tar-opt" value="praline"><span>Praliné maison</span></label>
+          <label class="check-card"><input type="checkbox" class="tar-opt" value="avance"><span>Foncer la veille (fond cuit d'avance)</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== CHOUX ========== -->
+    <div class="fam-block" data-fam="choux" hidden>
+      <div class="field">
+        <label>Type de pièce</label>
+        <div class="subtype-row" id="chx-type">
+          <label class="subtype active"><input type="radio" name="chx-type" value="eclair" checked>Éclair</label>
+          <label class="subtype"><input type="radio" name="chx-type" value="parisbrest">Paris-Brest</label>
+          <label class="subtype"><input type="radio" name="chx-type" value="chou">Chou / chantilly</label>
+          <label class="subtype"><input type="radio" name="chx-type" value="religieuse">Religieuse</label>
+          <label class="subtype"><input type="radio" name="chx-type" value="sthonore">St-Honoré</label>
+          <label class="subtype"><input type="radio" name="chx-type" value="chouquette">Chouquettes</label>
+        </div>
+      </div>
+      <div class="field"><label>Pâte à choux</label><select id="chx-pate"></select></div>
+      <div class="field"><label>Craquelin (facultatif)</label><select id="chx-craquelin"></select></div>
+      <div class="field"><label>Garniture</label><select id="chx-garniture"></select></div>
+      <div class="field"><label>Insert coulant (facultatif)</label><select id="chx-insert"></select></div>
+      <div class="field">
+        <label>Finition</label>
+        <div class="radio-row" id="chx-finition">
+          <label class="radio-pill active"><input type="radio" name="chx-fin" value="fondant" checked><span>Fondant</span></label>
+          <label class="radio-pill"><input type="radio" name="chx-fin" value="glacage"><span>Glaçage / rocher</span></label>
+          <label class="radio-pill"><input type="radio" name="chx-fin" value="craquelin"><span>Craquelin nu</span></label>
+          <label class="radio-pill"><input type="radio" name="chx-fin" value="sucre"><span>Sucre glace</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== MACARONS ========== -->
+    <div class="fam-block" data-fam="macarons" hidden>
+      <div class="field"><label>Coques</label><select id="mac-coques"></select></div>
+      <div class="field"><label>Garniture</label><select id="mac-garniture"></select></div>
+      <div class="field"><label>Insert au cœur (facultatif)</label><select id="mac-insert"></select></div>
+    </div>
+
+    <!-- ========== FRAISIER ========== -->
+    <div class="fam-block" data-fam="fraisier" hidden>
+      <div class="field">
+        <label>Type de gâteau</label>
+        <div class="subtype-row" id="fra-type">
+          <label class="subtype active"><input type="radio" name="fra-type" value="fraisier" checked>Fraisier</label>
+          <label class="subtype"><input type="radio" name="fra-type" value="framboisier">Framboisier</label>
+          <label class="subtype"><input type="radio" name="fra-type" value="layer">Layer cake</label>
+          <label class="subtype"><input type="radio" name="fra-type" value="moka">Moka / gâteau à la crème</label>
+        </div>
+      </div>
+      <div class="field"><label>Biscuit</label><select id="fra-biscuit"></select></div>
+      <div class="field"><label>Crème</label><select id="fra-creme"></select></div>
+      <div class="field">
+        <label>Finition</label>
+        <div class="radio-row" id="fra-finition">
+          <label class="radio-pill active"><input type="radio" name="fra-fin" value="fruits" checked><span>Fruits frais + nappage</span></label>
+          <label class="radio-pill"><input type="radio" name="fra-fin" value="amande"><span>Pâte d'amande</span></label>
+          <label class="radio-pill"><input type="radio" name="fra-fin" value="chantilly"><span>Chantilly / lissage</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label>Options</label>
+        <div class="checkbox-grid">
+          <label class="check-card active"><input type="checkbox" class="fra-opt" value="sirop" checked><span>Imbibage (sirop)</span></label>
+          <label class="check-card"><input type="checkbox" class="fra-opt" value="veille"><span>Montage la veille (repos nuit)</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="calculate-btn" onclick="computePlanning()">Calculer mon planning</button>
+
+  <div class="result" id="result">
+    <div class="result-header">
+      <p class="meta" id="resultMeta">Service</p>
+      <h2 id="resultTitle">Ton rétroplanning</h2>
+    </div>
+    <div id="timeline"></div>
+  </div>
+</main>
+
+<script>
+/* ============================================================
+   CATALOGUE COMPLET DES RECETTES  (Grand Livre + Crèmes Perso)
+   ============================================================ */
+const BISCUITS = [
+  "La Génoise Nature","La Génoise Cacao","Le Biscuit Dacquoise","Le Biscuit Dacquoise Cacao",
+  "Le Biscuit Financier","Le Biscuit Financier Cacao","Le Biscuit Financier Praliné",
+  "Le Biscuit Madeleine","Le Biscuit Madeleine Cacao","Le Biscuit Madeleine Praliné",
+  "Le Brownie","Le Brownie Chocolat au Lait","Le Brownie Chocolat Blanc",
+  "Le Biscuit de Savoie","Le Biscuit de Savoie Cacao","Le Biscuit Sacher","Le Biscuit Sacher Cacao",
+  "Le Biscuit Joconde","Le Biscuit Joconde Cacao","Le Biscuit Pain de Gênes","Le Biscuit Pain de Gênes Cacao",
+  "Le Biscuit Viennois","Le Biscuit Viennois Cacao","Le Biscuit Trocadéro","Le Biscuit Trocadéro Cacao",
+  "Le Biscuit Japonais (Pâte à Choux)","Le Biscuit Japonais Cacao"
+];
+const PATES = [
+  "La Pâte Sucrée","La Pâte Sucrée Cacao","La Pâte Sablée","La Pâte Sablée Cacao",
+  "Le Sablé Breton","Le Sablé Breton Cacao"
+];
+const GANACHES = [
+  "Ganache à la Vanille","Ganache Yuzu","Ganache Griotte","Ganache Chocolat Noir","Ganache Chocolat au Lait",
+  "Ganache Chocolat Dulcey","Ganache Noisette","Ganache Café","Ganache Framboise","Ganache Pistache",
+  "Ganache à la Brioche","Ganache Mandarine","Ganache Cacahuète","Ganache Fruit de la Passion",
+  "Ganache Cassis et Violette","Ganache Chocolat au Lait et Fruit de la Passion","Ganache Fruit de la Passion et Mangue",
+  "Ganache Framboise et Rose","Ganache Griotte et Amaretto","Ganache Griotte et Tonka","Ganache à la Rose",
+  "Ganache au Jasmin","Ganache à la Fleur d'Oranger","Ganache Chocolat et Piment d'Espelette","Ganache au Safran",
+  "Ganache à la Verveine","Ganache au Matcha","Ganache Sésame Noir","Ganache Façon Mojito","Ganache Chocolat Tonka",
+  "Ganache Citron Basilic","Ganache Popcorn"
+];
+const GANACHES_MONTEES = [
+  "Ganache Montée à la Vanille","Ganache Montée au Piment d'Espelette","Ganache Montée au Basilic",
+  "Ganache Montée à la Menthe","Ganache Montée au Café","Ganache Montée à la Cannelle","Ganache Montée au Thé Matcha",
+  "Ganache Montée au Chocolat au Lait","Ganache Montée au Chocolat au Lait et Fruit de la Passion",
+  "Ganache Montée au Chocolat Noir","Ganache Montée au Chocolat Dulcey","Ganache Montée à la Noisette",
+  "Ganache Montée à la Pistache","Ganache Montée à la Cacahuète","Ganache Montée au Sésame Noir",
+  "Ganache Montée au Rhum","Ganache Montée à la Fleur d'Oranger","Ganache Montée à la Rose",
+  "Ganache Montée à la Noix de Coco","Ganache Montée au Yuzu","Ganache Montée au Fruit de la Passion",
+  "Ganache Montée à la Framboise","Ganache Montée à la Fraise","Ganache Montée au Citron Vert",
+  "Ganache Montée Façon Mojito","Ganache Montée à la Cerise","Ganache Montée Façon Tiramisu",
+  "Ganache Montée à la Cerise et Amaretto","Ganache Montée à la Pomme et à la Cannelle"
+];
+const CREMEUX = [
+  "Crémeux à la Vanille","Crémeux Chocolat Noir","Crémeux Noisette","Crémeux Cacahuète",
+  "Crémeux Chocolat Noir et Framboise","Crémeux Chocolat Noir et Cardamome","Crémeux Cannelle"
+];
+const CARAMELS = ["Caramel Filant","Caramel Filant à la Tonka"];
+
+/* ---- helpers construction des <select> ---- */
+function opt(cat, name){ return '<option value="'+cat+'|'+name+'">'+name+'</option>'; }
+function grp(label, cat, arr){ return '<optgroup label="'+label+'">'+arr.map(n=>opt(cat,n)).join('')+'</optgroup>'; }
+function fill(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
+
+/* Biscuits + pâtes en select simple (catégorie fixe) */
+function biscuitOptions(withAucun){
+  let h = withAucun ? '<option value="aucun|Aucun biscuit">Aucun biscuit</option>' : '';
+  h += BISCUITS.map(n=>opt('biscuit',n)).join('');
+  return h;
+}
+
+document.addEventListener('DOMContentLoaded', build);
+function build(){
+  /* ENTREMETS */
+  fill('ent-biscuit', biscuitOptions(true));
+  fill('ent-insert',
+    '<option value="aucun|Aucun insert">Aucun insert</option>' +
+    grp('Confit','confit',['Le Confit de Fruits']) +
+    grp('Crémeux','cremeux',CREMEUX) +
+    grp('Caramel','caramel',CARAMELS) +
+    '<option value="praline|Praliné coulant maison">Praliné coulant maison</option>' +
+    '<option value="namelaka|La Crème Namelaka">La Crème Namelaka (en insert)</option>' +
+    '<option value="moussefruit|Insert mousse de fruit">Insert mousse de fruit</option>'
+  );
+  fill('ent-mousse',
+    grp('Ganache montée','ganache_montee',GANACHES_MONTEES) +
+    '<option value="namelaka|La Crème Namelaka">La Crème Namelaka montée</option>' +
+    grp('Mousses','mousse',['Mousse au chocolat','Mousse de fruit','Bavaroise vanille','Mousse cheesecake'])
+  );
+
+  /* TARTE */
+  fill('tar-pate', PATES.map(n=>opt('pate',n)).join(''));
+  fill('tar-fond',
+    '<option value="aucun|Aucune couche">Aucune couche de fond</option>' +
+    grp('Crémeux','cremeux',CREMEUX) +
+    '<option value="praline|Praliné maison">Praliné (couche de fond)</option>' +
+    grp('Confit','confit',['Le Confit de Fruits']) +
+    grp('Ganache','ganache',GANACHES)
+  );
+  fill('tar-creme',
+    grp('Ganache montée','ganache_montee',GANACHES_MONTEES) +
+    grp('Crémeux','cremeux',CREMEUX) +
+    '<option value="namelaka|La Crème Namelaka">La Crème Namelaka</option>' +
+    '<option value="diplomate|La Crème Diplomate">La Crème Diplomate</option>' +
+    '<option value="mousseline|La Crème Mousseline">La Crème Mousseline</option>' +
+    '<option value="patissiere|La Crème Pâtissière">La Crème Pâtissière</option>' +
+    grp('Ganache','ganache',GANACHES)
+  );
+
+  /* CHOUX */
+  fill('chx-pate',
+    '<option value="pate|La Pâte à Choux">La Pâte à Choux</option>' +
+    '<option value="pate|La Pâte à Choux au Chocolat">La Pâte à Choux au Chocolat</option>'
+  );
+  fill('chx-craquelin',
+    '<option value="aucun|Sans craquelin">Sans craquelin</option>' +
+    '<option value="craquelin|Le Craquelin">Le Craquelin</option>' +
+    '<option value="craquelin|Le Craquelin Cacao">Le Craquelin Cacao</option>'
+  );
+  fill('chx-garniture',
+    '<option value="mousseline|La Crème Mousseline">La Crème Mousseline (Paris-Brest, praliné)</option>' +
+    '<option value="diplomate|La Crème Diplomate">La Crème Diplomate</option>' +
+    '<option value="patissiere|La Crème Pâtissière">La Crème Pâtissière</option>' +
+    '<option value="chantilly|Crème Chantilly">Crème Chantilly</option>' +
+    grp('Ganache montée','ganache_montee',GANACHES_MONTEES) +
+    grp('Crémeux','cremeux',CREMEUX)
+  );
+  fill('chx-insert',
+    '<option value="aucun|Aucun insert">Aucun insert</option>' +
+    '<option value="praline|Praliné coulant maison">Praliné coulant maison</option>' +
+    grp('Crémeux','cremeux',CREMEUX) +
+    grp('Confit','confit',['Le Confit de Fruits'])
+  );
+
+  /* MACARONS */
+  fill('mac-coques',
+    '<option value="coques|Coques à la meringue italienne">Coques à la meringue italienne</option>' +
+    '<option value="coques|Coques à la meringue française">Coques à la meringue française</option>'
+  );
+  fill('mac-garniture',
+    grp('Ganache','ganache',GANACHES) +
+    grp('Ganache montée','ganache_montee',GANACHES_MONTEES) +
+    grp('Crémeux','cremeux',CREMEUX) +
+    grp('Caramel','caramel',CARAMELS) +
+    '<option value="praline|Praliné maison">Praliné maison</option>'
+  );
+  fill('mac-insert',
+    '<option value="aucun|Sans insert">Sans insert au cœur</option>' +
+    grp('Confit','confit',['Le Confit de Fruits']) +
+    grp('Caramel','caramel',CARAMELS) +
+    '<option value="praline|Praliné coulant">Praliné coulant</option>'
+  );
+
+  /* FRAISIER */
+  fill('fra-biscuit', biscuitOptions(false));
+  fill('fra-creme',
+    '<option value="mousseline|La Crème Mousseline">La Crème Mousseline (fraisier classique)</option>' +
+    '<option value="diplomate|La Crème Diplomate">La Crème Diplomate</option>' +
+    grp('Ganache montée','ganache_montee',GANACHES_MONTEES) +
+    '<option value="beurre|Crème au beurre">Crème au beurre (moka)</option>' +
+    '<option value="chantilly|Crème Chantilly">Crème Chantilly</option>'
+  );
+
+  // date par défaut : service dans 3 jours
+  const t = new Date(); t.setDate(t.getDate()+3);
+  document.getElementById('serviceDate').value = t.toISOString().slice(0,10);
+  document.getElementById('serviceDate').min = new Date().toISOString().slice(0,10);
+}
+
+/* ---- interactions visuelles ---- */
+document.addEventListener('change', e=>{
+  const t=e.target;
+  if(t.type==='radio'){
+    document.querySelectorAll('input[name="'+t.name+'"]').forEach(i=>{
+      const w=i.closest('.radio-pill,.subtype,.fam-card,.check-card'); if(w) w.classList.remove('active');
+    });
+  }
+  if((t.type==='radio'||t.type==='checkbox')){
+    const w=t.closest('.radio-pill,.subtype,.fam-card,.check-card');
+    if(w) w.classList.toggle('active', t.checked);
+  }
+  if(t.name==='famille') switchFamily(t.value);
+});
+function switchFamily(fam){
+  document.querySelectorAll('.fam-block').forEach(b=>b.hidden = b.dataset.fam!==fam);
+  document.querySelectorAll('.fam-extra').forEach(b=>b.hidden = b.dataset.fam!==fam);
+}
+
+/* ============================================================
+   MOTEUR DE TEMPS
+   ============================================================ */
+const JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const MOIS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+function formatDate(d){ return JOURS[d.getDay()]+' '+d.getDate()+' '+MOIS[d.getMonth()]; }
+function formatTime(d){ return String(d.getHours()).padStart(2,'0')+'h'+String(d.getMinutes()).padStart(2,'0'); }
+function minusH(date,h){ return new Date(date.getTime()-h*3600*1000); }
+function dayAt(service,daysBefore,h,m){ const d=new Date(service); d.setDate(d.getDate()-daysBefore); d.setHours(h,m||0,0,0); return d; }
+function val(id){ const el=document.getElementById(id); const v=el.value.split('|'); return {cat:v[0], name:v.slice(1).join('|')}; }
+
+/* --------- tips crème par catégorie (garniture / montage) --------- */
+function dayBeforeAt(useTime, h){ const d=new Date(useTime); d.setDate(d.getDate()-1); d.setHours(h,0,0,0); return d; }
+function baseCremeTask(c, useTime, tasks){
+  // pousse la préparation de la base AVANT son utilisation (repos obligatoire),
+  // ancrée la veille de l'utilisation à une heure raisonnable
+  if(c.cat==='ganache_montee'){
+    let base=dayBeforeAt(useTime,18);
+    if(base > minusH(useTime,6)) base=minusH(useTime,6.5); // garde toujours 6h de repos
+    tasks.push({time:base, title:'Base de ta '+c.name.replace('Ganache Montée','ganache montée')+' (repos obligatoire)',
+      detail:"Crème chaude versée sur le chocolat en 3 fois, émulsionne au centre à la maryse. Ajoute la crème froide, mixe au mixeur plongeant. Filme au contact. Repos au frigo 6h minimum, idéalement une nuit : sans ce repos elle ne montera jamais.", duration:'30 min'});
+    return true;
+  }
+  if(c.cat==='namelaka'){
+    let base=dayBeforeAt(useTime,10);
+    if(base > minusH(useTime,12)) base=minusH(useTime,13);
+    tasks.push({time:base, title:'Crème Namelaka (repos 12h obligatoire)',
+      detail:"Anglaise chaude + gélatine versée sur le chocolat, ajoute le lait froid, mixe sans bulles. Filme au contact. Repos au frigo 12h minimum : la Namelaka ne prend sa texture nappante qu'après ce repos long.", duration:'20 min'});
+    return true;
+  }
+  return false;
+}
+
+/* ---------- ENTREMETS ---------- */
+function planEntremets(service){
+  const decong=parseInt(document.getElementById('decongelation').value);
+  const biscuit=val('ent-biscuit'), insert=val('ent-insert'), mousse=val('ent-mousse');
+  const finition=document.querySelector('input[name="ent-fin"]:checked').value;
+  const opts=[...document.querySelectorAll('.ent-opt:checked')].map(o=>o.value);
+  const tasks=[];
+
+  const debutDecong=minusH(service,decong);
+  let momentFinition=null;
+  if(finition==='miroir'||finition==='velours') momentFinition=minusH(debutDecong,0.75);
+  const finCongel=momentFinition||debutDecong;
+  // montage la veille au soir, congélation de nuit (la vraie pratique, jamais à 2h du matin)
+  let montage=dayAt(service,1,17);
+  const latestMontage=minusH(finCongel,4); // il faut au moins 4h de congélation avant le glaçage
+  if(montage>latestMontage) montage=latestMontage;
+  const debutMousse=minusH(montage,1.5);
+
+  if(opts.includes('praline')){ const d=dayAt(service,3,10); tasks.push({time:d,title:'Praliné maison',detail:"Torréfie les fruits à coque 15 min à 160°C. Caramel à sec ambré versé dessus. Laisse figer, concasse puis mixe jusqu'à texture liquide (15-20 min au mixeur). Conserve à température ambiante.",duration:'1h30'}); }
+  if(opts.includes('decor')){ const d=dayAt(service,3,14); tasks.push({time:d,title:'Décor chocolat tempéré',detail:"Tempère ton chocolat (noir 50-28-31°C, lait 45-27-29°C, blanc 40-26-28°C). Coule sur feuille guitare, détaille avant cristallisation complète. Conserve à 18°C au sec.",duration:'1h'}); }
+
+  if(biscuit.cat!=='aucun'){ const d=dayAt(service,2,9); tasks.push({time:d,title:'Biscuit : '+biscuit.name,detail:biscuitTip(biscuit.name),duration:'1h'}); }
+
+  if(insert.cat!=='aucun'){
+    const d=dayAt(service,2,15);
+    const detail={
+      confit:"Chauffe la purée à 40°C. Ajoute sucre + pectine NH en pluie, 1 min à ébullition. Jus de citron. Coule dans le moule insert, surgèle au moins 3h, idéalement une nuit.",
+      cremeux:"Anglaise 82-85°C versée sur le chocolat haché en 3 fois. Émulsionne, mixe. Coule dans le moule insert. Surgèle 4h minimum, idéalement une nuit.",
+      praline:"Ramollis la gélatine. Crème frémissante + gélatine versées sur praliné + chocolat. Émulsionne. Coule dans le moule insert. Surgèle 4h minimum.",
+      caramel:"Caramel à sec blond, déglace à la crème chaude (attention aux projections), beurre + sel. Refroidis à 35°C, coule dans le moule insert. Surgèle 4h minimum.",
+      namelaka:"Prépare ta Namelaka (repos 12h avant), coule-la dans le moule insert et surgèle 4h minimum.",
+      moussefruit:"Purée tiède + gélatine réhydratée. Refroidis à 22°C. Incorpore la crème montée souple. Coule dans le moule insert, surgèle 4h minimum."
+    }[insert.cat] || "Prépare ton insert, coule-le dans le moule et surgèle au moins 4h.";
+    tasks.push({time:d,title:'Insert : '+insert.name,detail:detail+" Une fois démoulé, l'insert reste au congélateur jusqu'au montage.",duration:'1h'});
+  }
+
+  if(finition==='miroir'){ const d=new Date(momentFinition); d.setDate(d.getDate()-1); tasks.push({time:d,title:'Préparation du glaçage miroir',detail:"Sucre + glucose + eau à 103°C. Verse sur lait concentré + chocolat blanc + colorant. Gélatine hydratée. Mixe sans incorporer d'air (mixeur plongeant incliné). Filme au contact, repos au frigo 24h avant utilisation : c'est ce qui donne la brillance parfaite.",duration:'30 min'}); }
+
+  baseCremeTask(mousse, debutMousse, tasks);
+
+  const tipsMousse={
+    ganache_montee:"Sors ta ganache reposée. Monte-la au fouet comme une chantilly souple, bec d'oiseau, surtout pas ferme sinon elle graine. Tu l'utilises directement comme couche principale.",
+    namelaka:"Sors ta Namelaka reposée et monte-la souple au fouet.",
+    mousse:null
+  };
+  const mousseTip = mousse.cat==='mousse'
+    ? ({'Mousse au chocolat':"Ganache chocolat + gélatine, refroidis à 28-30°C. Incorpore la crème montée souple (bec d'oiseau) en 3 fois. Ne monte jamais la crème ferme, sinon ça tranche.",
+        'Mousse de fruit':"Purée + sucre + gélatine tiède à 30°C. Incorpore la crème montée souple. Coule vite, la gélatine commence à figer.",
+        'Bavaroise vanille':"Crème anglaise vanille + gélatine, refroidis à 22°C. Incorpore la crème montée souple délicatement.",
+        'Mousse cheesecake':"Mascarpone + fromage frais + sucre glace détendu, gélatine tiède. Incorpore la crème montée souple. Coule immédiatement."}[mousse.name] || "Prépare ta mousse, incorpore la crème montée souple.")
+    : tipsMousse[mousse.cat];
+
+  tasks.push({time:debutMousse, title:mousse.name+' + montage',
+    detail:(mousseTip||'')+" Montage à l'envers : coule 1/3 de la mousse dans le moule, pose l'insert congelé centré et pressé légèrement, recoule un peu, pose le biscuit, lisse à la spatule.",duration:'1h30'});
+  const congel=new Date(debutMousse); congel.setMinutes(congel.getMinutes()+90);
+  const overnight=congel.toDateString()!==finCongel.toDateString();
+  tasks.push({time:congel,title:'Congélation',detail:"Surgèle jusqu'au glaçage. Minimum 4h, mais l'entremets doit être totalement surgelé à cœur pour résister au glaçage sans fondre. Couvre d'une cloche contre le givrage.",duration: overnight?'toute la nuit':'4h minimum'});
+
+  if(finition==='miroir'){
+    const chauffe=new Date(momentFinition); chauffe.setMinutes(chauffe.getMinutes()-30);
+    tasks.push({time:chauffe,title:'Réchauffe du glaçage miroir',detail:"Sors le glaçage du frigo. Passe-le 20-30 sec au micro-ondes par pulsations, mélange doucement. Mixeur plongeant incliné, sans bulles. Température d'utilisation : 35°C exact au thermomètre.",duration:'30 min'});
+    tasks.push({time:momentFinition,title:'Démoulage et glaçage',detail:"Démoule sur grille posée sur un plat creux. Coule le glaçage à 35°C d'un seul geste, du centre vers l'extérieur. Attends 30 sec, racle le dessous. Transfère sur le plat de service.",duration:'30 min'});
+  } else if(finition==='velours'){
+    tasks.push({time:momentFinition,title:'Spray effet velours',detail:"Chauffe le spray velours à 45°C. Pulvérise à 20-30 cm en pluie fine. L'entremets DOIT être surgelé, sinon le spray ne prend pas. Transfère sur le plat de service.",duration:'15 min'});
+  } else if(finition==='nappage'){
+    tasks.push({time:debutDecong,title:'Nappage + décongélation',detail:"Démoule, place sur grille. Couvre au pinceau d'un nappage neutre réchauffé à 30°C. Transfère sur le plat de service, direction le frigo.",duration:'20 min'});
+  } else {
+    tasks.push({time:debutDecong,title:'Sortie du congélateur',detail:"Démoule, place sur le plat de service, direction le frigo pour décongélation douce.",duration:'5 min'});
+  }
+
+  if(finition==='miroir'||finition==='velours'){
+    tasks.push({time:debutDecong,title:'Placement au frigo (décongélation)',detail:"L'entremets glacé va au frigo sur son plat de service, "+decong+"h avant le service. Jamais à température ambiante : ça fait perler le glaçage.",duration:decong+'h'});
+  }
+  if(opts.includes('fruits')){ const d=minusH(service,0.5); tasks.push({time:d,title:'Fruits frais + décor',detail:"Les fruits se posent juste avant le service pour rester brillants. Lustre au nappage neutre chaud. Ajoute les décors chocolat, la feuille d'or, les éclats de praliné.",duration:'15 min'}); }
+  tasks.push({time:service,title:'Service !',detail:"Découpe au couteau fin passé sous l'eau chaude, essuyé entre chaque part.",duration:'—'});
+
+  return {tasks, tip:"Ce planning est un rétroplanning de sécurité, à créneaux larges. Tu peux prendre 1-2 jours d'avance sur le biscuit et l'insert (ils tiennent au congélateur). Ce qui ne bouge jamais : glaçage miroir reposé 24h, entremets SURGELÉ au moment du glaçage, décongélation au frigo uniquement."};
+}
+
+/* ---------- TARTE ---------- */
+function planTarte(service){
+  const pate=val('tar-pate'), fond=val('tar-fond'), creme=val('tar-creme');
+  const fin=document.querySelector('input[name="tar-fin"]:checked').value;
+  const opts=[...document.querySelectorAll('.tar-opt:checked')].map(o=>o.value);
+  const tasks=[];
+  const avance=opts.includes('avance');
+  const pateDay=avance?2:1;
+
+  if(opts.includes('praline')){ tasks.push({time:dayAt(service,3,10),title:'Praliné maison',detail:"Torréfie les fruits à coque, caramel à sec, mixe jusqu'à texture liquide. Se garde plusieurs jours à température ambiante.",duration:'1h30'}); }
+
+  tasks.push({time:dayAt(service,pateDay,9),title:'Pâte : '+pate.name,detail:"Crème le beurre pommade avec le sucre glace, ajoute l'œuf puis les poudres SANS corser (ne travaille pas trop la pâte). Fraise, forme un disque, filme et repos au frigo 2h minimum, idéalement une nuit.",duration:'30 min'});
+  tasks.push({time:dayAt(service,pateDay,12),title:'Fonçage + cuisson à blanc',detail:"Étale à 2-3 mm, fonce le cercle sans étirer, pique le fond. Repos au frigo 30 min (ça évite la rétractation à la cuisson). Cuis à blanc 160-170°C 18-22 min jusqu'à une jolie coloration dorée. Refroidis complètement sur grille avant de garnir.",duration:'1h'});
+
+  const montage=minusH(service,3);
+  if(fond.cat!=='aucun'){
+    tasks.push({time:dayAt(service,1,16),title:'Couche du fond : '+fond.name,detail: fond.cat==='confit'?"Confit à la pectine, coule-le sur le fond cuit et refroidi, laisse figer au frigo.":(fond.cat==='praline'?"Étale une fine couche de praliné au fond de la tarte cuite.":"Prépare ta couche de fond et étale-la dans le fond de tarte refroidi."),duration:'30 min'});
+  }
+
+  // crème principale
+  if(baseCremeTask(creme, montage, tasks)){
+    // ganache montée / namelaka : base la veille, montée au montage
+  } else if(creme.cat==='patissiere'||creme.cat==='mousseline'||creme.cat==='diplomate'){
+    tasks.push({time:dayAt(service,1,16,30),title:'Crème pâtissière (base)',detail:"Cuis ta pâtissière, filme-la au contact et refroidis-la vite au frigo. C'est la base de ta "+(creme.cat==='mousseline'?'mousseline':(creme.cat==='diplomate'?'diplomate':'crème'))+", elle doit être bien froide avant le montage.",duration:'30 min'});
+  } else if(creme.cat==='cremeux'){
+    tasks.push({time:dayAt(service,1,16),title:'Crémeux : '+creme.name,detail:"Anglaise 82-85°C versée sur le chocolat, émulsionne, mixe. Filme au contact et laisse prendre au frigo, il se poche une fois bien froid.",duration:'40 min'});
+  } else if(creme.cat==='ganache'){
+    tasks.push({time:dayAt(service,1,16),title:creme.name,detail:"Crème chaude sur le chocolat en 3 fois, émulsionne, mixe. Filme au contact, cristallisation au frigo une nuit avant de couler ou pocher.",duration:'30 min'});
+  }
+
+  // montage jour J
+  const cremeMontageDetail={
+    ganache_montee:"Monte ta ganache reposée souple au fouet, poche-la sur le fond de tarte.",
+    namelaka:"Monte ta Namelaka souple et poche-la.",
+    mousseline:"Détends ta pâtissière froide et monte-la avec le beurre pommade jusqu'à une texture lisse et aérée. Poche aussitôt.",
+    diplomate:"Détends la pâtissière, ajoute la gélatine et incorpore la crème montée souple. Poche aussitôt.",
+    patissiere:"Détends ta pâtissière froide au fouet et étale/poche-la sur le fond.",
+    cremeux:"Poche ton crémeux bien froid.",
+    ganache:"Coule ou poche ta ganache cristallisée."
+  }[creme.cat] || "Garnis le fond avec ta crème.";
+  tasks.push({time:montage,title:'Montage de la tarte',detail:cremeMontageDetail+" Garnis le fond cuit et lisse. Réserve au frigo pour figer.",duration:'45 min'});
+
+  if(fin==='meringue'){ tasks.push({time:minusH(service,1),title:'Meringue + finition',detail:"Poche la meringue (italienne pour la tenue), colore au chalumeau juste avant le service.",duration:'20 min'}); }
+  if(fin==='fruits'){ tasks.push({time:minusH(service,0.5),title:'Fruits frais + nappage',detail:"Dispose les fruits au dernier moment pour qu'ils restent brillants et fermes. Lustre au nappage neutre chaud pour l'effet vitrine.",duration:'20 min'}); }
+  if(fin==='decor'){ tasks.push({time:minusH(service,0.5),title:'Décor chocolat',detail:"Pose tes décors chocolat tempérés et finitions juste avant le service.",duration:'15 min'}); }
+
+  tasks.push({time:service,title:'Service !',detail:"La tarte se sert le jour même : le fond reste croustillant tant que la crème n'a pas trop imbibé la pâte.",duration:'—'});
+
+  return {tasks, tip:"Une tarte se joue sur le croustillant : garnis le fond le plus tard possible, jamais plus de 24h avant le service. Ce qui ne bouge pas : repos froid de la pâte avant fonçage, repos froid après fonçage (anti-rétractation), et cuisson à blanc bien dorée. Les fruits frais et la meringue se posent au dernier moment."};
+}
+
+/* ---------- CHOUX ---------- */
+function planChoux(service){
+  const type=document.querySelector('input[name="chx-type"]:checked').value;
+  const pate=val('chx-pate'), craquelin=val('chx-craquelin'), garn=val('chx-garniture'), insert=val('chx-insert');
+  const fin=document.querySelector('input[name="chx-fin"]:checked').value;
+  const tasks=[];
+
+  // veille : craquelin, base pâtissière, insert, base ganache montée
+  if(craquelin.cat!=='aucun'){ tasks.push({time:dayAt(service,1,15),title:craquelin.name,detail:"Sable beurre + sucre + farine (+ cacao), étale à 2 mm entre deux feuilles, détaille des disques et réserve au congélateur : posé congelé sur les choux crus, il donne le craquelé régulier.",duration:'30 min'}); }
+  if(insert.cat==='confit'){ tasks.push({time:dayAt(service,1,15.5|0,30),title:'Insert : '+insert.name,detail:"Confit à la pectine, coule en moule insert fin et surgèle. Il se glisse au cœur du chou/Paris-Brest au garnissage.",duration:'30 min'}); }
+  if(insert.cat==='cremeux'){ tasks.push({time:dayAt(service,1,16),title:'Insert : '+insert.name,detail:"Crémeux coulé en poche, cristallisé au frigo, prêt à insérer au cœur au montage.",duration:'40 min'}); }
+  if(insert.cat==='praline'){ tasks.push({time:dayAt(service,1,16),title:'Praliné coulant',detail:"Praliné maison prêt à insérer au cœur. Se garde à température ambiante.",duration:'20 min'}); }
+
+  if(garn.cat==='mousseline'||garn.cat==='diplomate'||garn.cat==='patissiere'){
+    tasks.push({time:dayAt(service,1,17),title:'Crème pâtissière (base)',detail:"Cuis ta pâtissière"+(type==='parisbrest'?" pralinée":"")+", filme au contact et refroidis vite au frigo. Elle doit être bien froide avant d'être montée le jour même.",duration:'30 min'});
+  }
+  baseCremeTask(garn, dayAt(service,0,9), tasks); // ganache montée base la veille au soir
+
+  // jour J
+  const cuisson=minusH(service, type==='chouquette'?4:6);
+  const detailPate="Panade : eau/lait + beurre + sel + sucre à ébullition, hors du feu ajoute la farine d'un coup, dessèche 1-2 min sur le feu. Débarrasse, incorpore les œufs un par un jusqu'à la texture bec d'oiseau (la pâte fait un V qui se referme lentement). Poche"+(type==='eclair'?" les éclairs":(type==='parisbrest'?" la couronne":" les choux"))+", dorure"+(craquelin.cat!=='aucun'?" puis pose les disques de craquelin congelés":"")+". Cuisson four bien chaud (250°C éteint puis 160°C, ou 180°C selon ton four) : NE JAMAIS ouvrir avant que les choux soient bien colorés et fermes, sinon ils retombent. Refroidis complètement sur grille.";
+  tasks.push({time:cuisson,title:'Pâte à choux + pochage + cuisson',detail:detailPate,duration:type==='chouquette'?'1h':'1h30'});
+
+  if(type!=='chouquette'){
+    const montage=minusH(service, 2.5);
+    const gd={
+      mousseline:"Détends ta pâtissière froide et monte-la avec le beurre pommade jusqu'à texture lisse et aérée.",
+      diplomate:"Détends la pâtissière, incorpore la crème montée souple.",
+      patissiere:"Détends ta pâtissière froide au fouet.",
+      chantilly:"Monte la crème bien froide en chantilly souple.",
+      ganache_montee:"Monte ta ganache reposée souple au fouet.",
+      cremeux:"Poche ton crémeux bien froid."
+    }[garn.cat]||"Prépare ta garniture.";
+    tasks.push({time:montage,title:'Garnissage : '+garn.name,detail:gd+" Garnis"+(insert.cat!=='aucun'?" en glissant l'insert au cœur, puis":"")+" par en dessous (2-3 trous) ou en ouvrant en deux. Ne garnis jamais à l'avance : les choux ramollissent.",duration:'45 min'});
+  }
+
+  const finLabel={fondant:'Fondant',glacage:'Glaçage / rocher',craquelin:'Craquelin nu',sucre:'Sucre glace'}[fin];
+  if(type==='chouquette'){
+    tasks.push({time:minusH(service,3.5),title:'Sucre en grains',detail:"Les chouquettes se saupoudrent de sucre grains AVANT cuisson (déjà fait au pochage). Servies natures, elles tiennent bien la journée.",duration:'—'});
+  } else if(fin==='fondant'){
+    tasks.push({time:minusH(service,2),title:'Glaçage au fondant',detail:"Réchauffe le fondant à 35°C max (au-delà il perd son brillant), colore/parfume, trempe le dessus des éclairs, racle l'excédent au doigt. Laisse figer 15 min.",duration:'20 min'});
+  } else if(fin==='glacage'){
+    tasks.push({time:minusH(service,2),title:'Glaçage / rocher',detail:"Trempe le dessus dans le glaçage tempéré, laisse prendre au frais 10-15 min.",duration:'20 min'});
+  } else if(fin==='sucre'){
+    tasks.push({time:minusH(service,0.5),title:'Sucre glace',detail:"Saupoudre le Paris-Brest / les choux de sucre glace juste avant le service.",duration:'5 min'});
+  }
+  if(type==='sthonore'){ tasks.push({time:minusH(service,2.5),title:'Caramel + montage St-Honoré',detail:"Caramel à sec blond, trempe le dessus des petits choux (attention, ça brûle), colle-les sur la base de pâte. Pochage de crème au dernier moment.",duration:'30 min'}); }
+
+  tasks.push({time:service,title:'Service !',detail:"Les choux se dégustent le jour même, idéalement dans les 2-3h après garnissage pour garder le croustillant.",duration:'—'});
+
+  return {tasks, tip:"Le choux, c'est une pâtisserie du jour même. Ce qui se prépare la veille : le craquelin (congelé), la pâtissière, l'insert et la base de ganache montée. Le jour J : cuisson le matin, garnissage et glaçage au plus près du service. La règle qui ne se négocie pas : ne JAMAIS ouvrir le four avant coloration complète."};
+}
+
+/* ---------- MACARONS ---------- */
+function planMacarons(service){
+  const matu=parseInt(document.getElementById('maturation').value);
+  const coques=val('mac-coques'), garn=val('mac-garniture'), insert=val('mac-insert');
+  const tasks=[];
+
+  const assemblage=minusH(service,matu);        // fin d'assemblage → départ maturation
+  const coquesStart=minusH(assemblage,3);        // coques (2h) + garniture + assemblage
+
+  // garniture base à repos (ganache montée) ou ganache classique la veille des coques
+  if(garn.cat==='ganache_montee'){
+    baseCremeTask(garn, minusH(assemblage,0.5), tasks);
+  } else if(garn.cat==='ganache'){
+    tasks.push({time:minusH(coquesStart,14),title:garn.name+' (cristallisation)',detail:"Crème chaude sur le chocolat en 3 fois, émulsionne, mixe. Filme au contact, cristallisation au frigo (idéalement une nuit) : elle doit être pochable, ni liquide ni dure.",duration:'30 min'});
+  }
+  if(insert.cat==='confit'){ tasks.push({time:minusH(coquesStart,14),title:'Insert : '+insert.name,detail:"Confit à la pectine, coulé fin et surgelé en petits dômes, à glisser au cœur de la garniture.",duration:'30 min'}); }
+
+  tasks.push({time:coquesStart,title:'Coques ('+coques.name.replace('Coques à la ','').replace('meringue','meringue')+')',
+    detail:"Tamise le tant-pour-tant (poudre d'amande + sucre glace). "+(coques.name.includes('italienne')?"Meringue italienne : sirop à 118°C versé sur les blancs.":"Meringue française : blancs montés serrés avec le sucre.")+" Macaronne jusqu'au ruban lisse et brillant. Poche sur gabarit, tape les plaques, croûtage 30-45 min (la coque ne colle plus au doigt). Cuis à 145°C 15 min, plaque par plaque, four préchauffé avec plaque pleine dedans. Refroidis avant de décoller.",duration:'2h'});
+
+  tasks.push({time:minusH(assemblage,0.5),title:'Garniture : '+garn.name,detail: garn.cat==='ganache_montee'?"Monte ta ganache reposée souple au fouet, mets-la en poche.":(garn.cat==='cremeux'?"Poche ton crémeux bien froid.":(garn.cat==='caramel'?"Ton caramel filant, à température de pochage.":(garn.cat==='praline'?"Praliné maison en poche.":"Ta ganache cristallisée, en poche."))),duration:'20 min'});
+
+  tasks.push({time:assemblage,title:'Assemblage + mise en boîte',detail:"Appaire les coques par taille. Poche une noix de garniture"+(insert.cat!=='aucun'?" avec l'insert au centre":"")+", referme sans écraser. Range à plat en boîte hermétique, direction le frigo.",duration:'30 min'});
+
+  tasks.push({time:assemblage,title:'Maturation '+matu+'h au frigo',detail:"C'EST L'ÉTAPE QU'ON OUBLIE. La coque s'imprègne de la garniture et devient moelleuse dedans, croquante dehors. "+matu+"h au frigo minimum, en boîte hermétique. Sans maturation, un macaron reste sec et sableux.",duration:matu+'h'});
+
+  tasks.push({time:minusH(service,0.5),title:'Sortir du frigo',detail:"Sors les macarons 30 min avant de servir : ils se dégustent à température ambiante, jamais froids.",duration:'30 min'});
+  tasks.push({time:service,title:'Dégustation !',detail:"Coque lisse, collerette nette, cœur moelleux.",duration:'—'});
+
+  return {tasks, tip:"Le vrai secret des macarons, ce n'est pas la cuisson, c'est la MATURATION. Coques et garniture le même jour, assemblage, puis "+matu+"h au frigo avant de servir. Tu peux même congeler les macarons assemblés et les faire maturer en décongelant. Ce qui ne bouge pas : croûtage avant cuisson, cuisson plaque par plaque, maturation 24h minimum."};
+}
+
+/* ---------- FRAISIER ---------- */
+function planFraisier(service){
+  const type=document.querySelector('input[name="fra-type"]:checked').value;
+  const biscuit=val('fra-biscuit'), creme=val('fra-creme');
+  const fin=document.querySelector('input[name="fra-fin"]:checked').value;
+  const opts=[...document.querySelectorAll('.fra-opt:checked')].map(o=>o.value);
+  const veille=opts.includes('veille');
+  const tasks=[];
+  const fruitMot = type==='framboisier'?'framboises':'fraises';
+
+  tasks.push({time:dayAt(service,1,9),title:'Biscuit : '+biscuit.name,detail:biscuitTip(biscuit.name)+" Détaille deux disques/plaques à la taille du cadre.",duration:'1h'});
+  if(opts.includes('sirop')){ tasks.push({time:dayAt(service,1,11),title:'Sirop d\'imbibage',detail:"Sirop léger (eau + sucre) parfumé au choix (vanille, kirsch, fruit). Il garde le biscuit moelleux sans le détremper.",duration:'10 min'}); }
+
+  if(creme.cat==='mousseline'||creme.cat==='diplomate'){
+    tasks.push({time:dayAt(service,1,15),title:'Crème pâtissière (base)',detail:"Cuis ta pâtissière, filme au contact, refroidis vite. Base de ta "+(creme.cat==='mousseline'?'mousseline':'diplomate')+", bien froide avant le montage.",duration:'40 min'});
+  } else if(creme.cat==='beurre'){
+    tasks.push({time:dayAt(service,1,15),title:'Crème au beurre (base)',detail:"Prépare ta crème au beurre (pâte à bombe ou meringue + beurre). Réserve à température de travail pour le montage.",duration:'40 min'});
+  }
+  baseCremeTask(creme, veille?dayAt(service,1,18):minusH(service,7), tasks);
+
+  const montageTime = veille ? dayAt(service,1,18) : minusH(service,6);
+  const cremeDetail={
+    mousseline:"Détends la pâtissière et monte-la avec le beurre pommade, texture lisse et aérée.",
+    diplomate:"Détends la pâtissière, incorpore la crème montée souple.",
+    ganache_montee:"Monte ta ganache reposée souple au fouet.",
+    beurre:"Lisse ta crème au beurre.",
+    chantilly:"Monte la crème en chantilly souple."
+  }[creme.cat]||"Prépare ta crème.";
+  tasks.push({time:montageTime,title:'Montage du '+(type==='layer'?'layer cake':(type==='moka'?'moka':(type==='framboisier'?'framboisier':'fraisier'))),
+    detail:cremeDetail+" Cadre chemisé de rhodoïd, 1er biscuit imbibé, "+fruitMot+" taillées et plaquées contre le cadre, crème pochée en garnissant bien les interstices, "+fruitMot+" au centre, 2e biscuit imbibé, dernière couche de crème, lisse à ras. Repos au frigo 6h minimum"+(veille?" (toute la nuit, parfait).":", idéalement une nuit : la crème doit figer pour tenir la découpe."),duration:'1h'});
+
+  if(fin==='amande'){ tasks.push({time:minusH(service,1.5),title:'Pâte d\'amande + décor',detail:"Étale finement la pâte d'amande, pose-la sur le dessus lissé, décadre délicatement. Ajoute quelques "+fruitMot+" et un peu de nappage.",duration:'30 min'}); }
+  else if(fin==='fruits'){ tasks.push({time:minusH(service,1),title:'Décadrage + fruits + nappage',detail:"Décadre délicatement (le rhodoïd part tout seul si la crème a bien figé). Dispose les "+fruitMot+" fraîches sur le dessus, lustre au nappage neutre chaud pour l'effet vitrine.",duration:'20 min'}); }
+  else { tasks.push({time:minusH(service,1),title:'Décadrage + chantilly / lissage',detail:"Décadre, lisse une fine couche de chantilly ou peaufine le lissage. Décor au dernier moment.",duration:'20 min'}); }
+
+  tasks.push({time:service,title:'Service !',detail:"Découpe au couteau fin passé sous l'eau chaude. Le fraisier tient 24 à 48h au frigo.",duration:'—'});
+
+  return {tasks, tip:"Un fraisier ne se congèle pas (les fruits frais rendent de l'eau) : c'est un dessert de repos froid. Le point qui ne se rattrape pas, c'est le repos de montage (6h minimum, idéalement la veille au soir) : sans lui, la crème ne tient pas la découpe et le gâteau s'affaisse. Pose les fruits du dessus et le nappage juste avant le service."};
+}
+
+/* --------- tips biscuits (partagés entremets / fraisier) --------- */
+function biscuitTip(name){
+  const n=name.toLowerCase();
+  if(n.includes('génoise')||n.includes('genoise')) return "Œufs + jaunes + sucre au bain-marie à 45-50°C, monte au ruban puis refroidis en fouettant. Incorpore la farine tamisée à la maryse. 180°C 15-20 min. Filme une fois refroidi.";
+  if(n.includes('dacquoise')) return "Tamise poudre + sucre glace. Meringue française serrée. Incorpore aux poudres délicatement. 170°C 15-18 min. Emballe hermétiquement une fois froid.";
+  if(n.includes('joconde')) return "Monte œufs entiers + poudre d'amande + sucre glace au ruban, à part une meringue serrée. Incorpore farine, meringue, puis beurre fondu. Étale fin (3-4 mm). 230°C 6-8 min. Souple, idéal à chemiser.";
+  if(n.includes('sacher')) return "Pâte d'amande détendue aux jaunes, monte avec œufs + sucre glace. Meringue serrée. Beurre + farine puis meringue. 180°C 12-15 min.";
+  if(n.includes('financier')) return "Beurre noisette filtré. Mélange poudres + blancs + beurre tiède (+ praliné/cacao selon la version). Poche, 180°C 12-15 min. Se conserve très bien 48h.";
+  if(n.includes('madeleine')) return "Appareil au beurre fondu, repos froid de la pâte pour la bosse. Poche dans les empreintes. Choc thermique 220°C puis 180°C. Se garde 48h.";
+  if(n.includes('brownie')) return "Chocolat + beurre fondus. Sucre, œufs, puis farine (+ cacao). 170°C 18-22 min MAXIMUM : le cœur reste fondant. Refroidis complètement avant de détailler.";
+  if(n.includes('savoie')) return "Jaunes + sucre blanchis longuement, meringue serrée. Incorpore en alternant poudres (farine + fécule) et meringue, très délicatement. 170°C 20-25 min. Ultra léger.";
+  if(n.includes('pain de gênes')) return "Détends la pâte d'amande aux œufs un par un jusqu'au ruban. Farine + levure, puis beurre fondu tiède. 170°C 25-30 min. Dense et fondant.";
+  if(n.includes('viennois')) return "Œufs + jaunes + sucre au ruban, blancs serrés en meringue. Incorpore la farine à la maryse. Étale sur plaque. 220°C 8-10 min. Moelleux, parfait roulé ou en bûche.";
+  if(n.includes('trocadéro')||n.includes('trocadero')) return "Poudre d'amande + sucre glace + un peu de farine + blancs + beurre noisette. Type financier moelleux et humide. 170°C 18-20 min. Se garde 48h.";
+  if(n.includes('japonais')||n.includes('pâte à choux')) return "Biscuit à base de pâte à choux + meringue, très léger. Étale et cuis 180-190°C jusqu'à coloration. Souple, il se manie bien pour le montage.";
+  return "Prépare ton "+name+" selon ta fiche. Filme-le une fois froid : il se garde 48h et se congèle très bien.";
+}
+
+/* ============================================================
+   ORCHESTRATION + RENDER
+   ============================================================ */
+const PLANNERS={entremets:planEntremets, tarte:planTarte, choux:planChoux, macarons:planMacarons, fraisier:planFraisier};
+const FAM_LABEL={entremets:'Entremets', tarte:'Tarte', choux:'Choux', macarons:'Macarons', fraisier:'Gâteau à la crème'};
+
+function computePlanning(){
+  const dateStr=document.getElementById('serviceDate').value;
+  const timeStr=document.getElementById('serviceTime').value;
+  if(!dateStr||!timeStr){ alert('Renseigne la date et l\'heure du service'); return; }
+  const service=new Date(dateStr+'T'+timeStr);
+  const fam=document.querySelector('input[name="famille"]:checked').value;
+
+  const {tasks, tip}=PLANNERS[fam](service);
+  tasks.sort((a,b)=>a.time-b.time);
+
+  // regroupement par jour
+  const byDay=new Map();
+  tasks.forEach(t=>{ const k=t.time.toDateString(); if(!byDay.has(k)) byDay.set(k,{date:t.time,tasks:[]}); byDay.get(k).tasks.push(t); });
+  const serviceDay=new Date(service); serviceDay.setHours(0,0,0,0);
+
+  const timeline=document.getElementById('timeline');
+  timeline.innerHTML='';
+  byDay.forEach(day=>{
+    const d=new Date(day.date); d.setHours(0,0,0,0);
+    const diff=Math.round((serviceDay-d)/(1000*3600*24));
+    const label= diff===0?'Jour J':'J - '+diff;
+    const block=document.createElement('div'); block.className='day-block';
+    block.innerHTML='<div class="day-header"><span class="day-label">'+label+'</span><span class="day-date">'+formatDate(day.date)+'</span></div>'+
+      '<div class="tasks">'+day.tasks.map(t=>
+        '<div class="task"><div class="task-time">'+formatTime(t.time)+'</div><div class="task-body">'+
+        '<div class="task-title">'+t.title+'</div><div class="task-detail">'+t.detail+'</div>'+
+        '<span class="task-duration">'+t.duration+'</span></div></div>').join('')+'</div>';
+    timeline.appendChild(block);
+  });
+
+  const tipEl=document.createElement('div'); tipEl.className='tip-final';
+  tipEl.innerHTML='<strong>Le conseil de Geoffrey</strong><div class="body">'+tip+'</div>';
+  timeline.appendChild(tipEl);
+
+  document.getElementById('resultMeta').textContent=FAM_LABEL[fam]+' — service '+formatDate(service)+' à '+formatTime(service);
+  document.getElementById('resultTitle').textContent='Ton rétroplanning, étape par étape';
+  const r=document.getElementById('result'); r.classList.add('visible');
+  r.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
