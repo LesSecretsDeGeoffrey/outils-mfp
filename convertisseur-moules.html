@@ -50,11 +50,46 @@
   .section h2{font-family:Georgia,serif;font-size:22px;font-weight:400;margin-bottom:8px}
   .section .subtitle{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:20px}
 
-  .ing-row{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:10px;align-items:end;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(26,20,16,0.08)}
+  /* IMPORT RECETTE */
+  .imp{background:#FDF8F0;border:1px solid rgba(200,160,74,0.35);border-radius:6px;padding:clamp(14px,2.5vw,20px);margin-bottom:24px}
+  .imp-label{display:block;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7b1f;font-weight:700;margin:0 0 10px}
+  .imp textarea{width:100%;min-height:130px;padding:13px 15px;border:1.5px solid rgba(200,160,74,0.45);background:#FFFDF9;border-radius:6px;font-size:14.5px;font-family:inherit;color:#1A1410;resize:vertical;line-height:1.5}
+  .imp textarea:focus{outline:none;border-color:#C8A04A;box-shadow:0 0 0 3px rgba(200,160,74,0.15)}
+  .imp-or{display:flex;align-items:center;text-align:center;color:rgba(26,20,16,0.4);font-size:11px;margin:14px 0;font-family:'Courier New',monospace;letter-spacing:1.5px;text-transform:uppercase}
+  .imp-or::before,.imp-or::after{content:'';flex:1;height:1px;background:rgba(26,20,16,0.12)}
+  .imp-or span{padding:0 14px}
+  .imp-drop{border:2px dashed rgba(200,160,74,0.5);border-radius:6px;padding:14px 16px;text-align:center;cursor:pointer;transition:background .15s,border-color .15s}
+  .imp-drop.over{background:rgba(200,160,74,0.12);border-color:#C8A04A}
+  .imp-drop p{color:rgba(26,20,16,0.6);font-size:13.5px;margin:0}
+  .imp-drop strong{color:#1A1410}
+  .imp-drop .imp-sub{font-size:12px;color:rgba(26,20,16,0.45);margin-left:5px}
+  .imp-status{font-size:13px;color:rgba(26,20,16,0.6);margin-top:10px;line-height:1.5}
+  .imp-status.ok{color:#7a6216}
+  .imp-status.err{color:#b03232}
+  .imp-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+  .btn-gold{background:#C8A04A;color:#1A1410;border:none;border-radius:30px;padding:13px 24px;font-family:'Courier New',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;-webkit-tap-highlight-color:transparent}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(200,160,74,0.3)}
+  .imp-link{background:none;border:none;color:#C8A04A;font-family:'Courier New',monospace;font-size:12px;letter-spacing:.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0}
+  .imp-hint{font-size:12px;color:rgba(26,20,16,0.45);margin-top:10px}
+
+  .prep-head{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;font-weight:700;margin:22px 0 10px;padding-bottom:6px;border-bottom:1px solid rgba(200,160,74,0.25)}
+  .prep-head:first-child{margin-top:0}
+
+  .ing-row{display:grid;grid-template-columns:2fr 1fr 0.8fr 1.1fr auto;gap:10px;align-items:end;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(26,20,16,0.08)}
   .ing-row:last-child{border-bottom:none}
   .ing-row label{margin-top:0}
-  .ing-row .new-val{background:#FDF8F0;border:1px solid rgba(200,160,74,0.3);padding:10px 14px;font-family:'Courier New',monospace;font-size:14px;color:#C8A04A;border-radius:3px;font-weight:700;display:flex;align-items:center;justify-content:center;min-height:42px}
-  @media (max-width:600px){.ing-row{grid-template-columns:1fr 1fr;gap:8px}}
+  .ing-row .new-val{background:#FDF8F0;border:1px solid rgba(200,160,74,0.3);padding:10px 12px;font-family:'Courier New',monospace;font-size:14px;color:#C8A04A;border-radius:3px;font-weight:700;display:flex;align-items:center;justify-content:center;min-height:42px;text-align:center}
+  @media (max-width:640px){
+    .ing-row{grid-template-columns:1fr 62px 1.15fr 26px;gap:8px;grid-template-areas:"n n n x" "q u v v"}
+    .ing-row .c-name{grid-area:n}
+    .ing-row .c-qty{grid-area:q}
+    .ing-row .c-unit{grid-area:u}
+    .ing-row .c-new{grid-area:v}
+    .ing-row .btn-remove{grid-area:x;align-self:end;padding:8px 0}
+    .ing-row label{font-size:9px;letter-spacing:1px}
+    .ing-row input{padding:10px 8px}
+    .ing-row .new-val{padding:10px 6px;font-size:13px}
+  }
 
   .btn-remove{background:transparent;border:none;color:rgba(26,20,16,0.4);font-size:20px;cursor:pointer;padding:8px;line-height:1;grid-column:auto}
   .btn-remove:hover{color:#b03232}
@@ -74,7 +109,7 @@
 
 <main>
   <h1>Change de moule sans <span class="accent">rater ta recette</span></h1>
-  <p class="intro">La recette est pour un 20 cm rond et toi t'as un 24 cm carré ? Choisis les 2 moules, l'outil calcule le ratio exact et convertit tes ingrédients</p>
+  <p class="intro">La recette est pour un 20 cm rond et toi t'as un 24 cm carré ? Choisis les 2 moules, l'outil calcule le ratio exact et convertit tes ingrédients. Colle ta recette ou dépose ton PDF, les lignes se remplissent toutes seules</p>
 
   <!-- CHOIX MOULES -->
   <div class="molds">
@@ -109,7 +144,25 @@
   <!-- INGREDIENTS -->
   <div class="section">
     <h2>Tes ingrédients à convertir</h2>
-    <p class="subtitle">Rentre les quantités de ta recette originale, les quantités ajustées apparaissent à droite</p>
+    <p class="subtitle">Importe ta recette d'un coup, ou rentre les quantités à la main. Les quantités ajustées apparaissent à droite</p>
+
+    <div class="imp">
+      <label class="imp-label" for="impText">Colle ta recette ici</label>
+      <textarea id="impText" placeholder="Copie-colle ta recette (ingrédients et préparations).&#10;&#10;Exemple :&#10;Génoise&#10;200g d'oeufs&#10;120g de sucre&#10;120g de farine T55"></textarea>
+      <div class="imp-or"><span>ou</span></div>
+      <div class="imp-drop" id="impDrop">
+        <p><strong>Dépose un PDF</strong><span class="imp-sub">ou clique pour le choisir</span></p>
+        <input type="file" id="impFile" accept=".pdf,.txt,text/plain,application/pdf" style="display:none">
+      </div>
+      <div class="imp-status" id="impStatus" style="display:none"></div>
+      <div class="imp-actions">
+        <button class="btn-gold" id="impRun" type="button">Remplir mes ingrédients</button>
+        <button class="imp-link" id="impExample" type="button">Essayer avec un exemple</button>
+        <button class="imp-link" id="impClear" type="button" style="display:none">Effacer</button>
+      </div>
+      <p class="imp-hint">L'import remplace la liste ci-dessous. Tu peux ensuite corriger, supprimer ou ajouter une ligne</p>
+    </div>
+
     <div id="ingredients"></div>
     <button class="btn-add" onclick="addIngredient()">+ Ajouter un ingrédient</button>
     <div class="tip">
@@ -119,6 +172,284 @@
 </main>
 
 <script>
+/* ============================================================
+   PARSER DÉTERMINISTE — recette FR → ingrédients structurés
+   (identique au Calculateur de quantités)
+   ============================================================ */
+(function(){
+'use strict';
+
+/* ---------- normalisation texte ---------- */
+function normalizeText(raw){
+  return (raw||'')
+    .replace(/\r\n?/g,'\n')
+    .replace(/[  ]/g,' ')
+    .replace(/[‐‑‒–—]/g,'-')
+    .replace(/[’‘]/g,"'")
+    .replace(/½/g,'1/2').replace(/¼/g,'1/4').replace(/¾/g,'3/4')
+    .replace(/⅓/g,'1/3').replace(/⅔/g,'2/3')
+    .replace(/œ/g,'oe').replace(/Œ/g,'Oe').replace(/æ/g,'ae').replace(/Æ/g,'Ae')
+    .replace(/(\d)(g|kg|ml|cl|l|mg)([a-zàâéèêîô])/gi,'$1$2 $3') // "185gde" -> "185g de"
+    .replace(/[ \t]+/g,' ')
+    .replace(/\n{3,}/g,'\n\n');
+}
+function stripAccents(s){return s.normalize('NFD').replace(/[̀-ͯ]/g,'');}
+
+/* ---------- lexiques ---------- */
+const BULLET=/^\s*[▢◆□■◇●○◦▪▫▸►▶▷‣⁃→➜➤❯»›‹>~\-–—*•·]+\s+/;
+const DECOR=/^[-=_*~.·•◆▢□\s]+$/;
+const META_ONLY=/^(recette|ingr[ée]dients?|pr[ée]paration|m[ée]thode|[ée]tapes?|mat[ée]riel|notes?|astuce|conseil)\s*:?\s*$/i;
+const PREP_HEAD=/^(la |le |les |l'|pour (la|le|les|l'))?\s*(confit|compot[ée]e?|gel[ée]e|insert|ganache(\s+mont[ée]e)?|cr[ée]meux|cr[èe]me(\s+\S+)?|namelaka|p[âa]te\s+\S+|biscuit|g[ée]noise|dacquoise|streusel|sabl[ée]|croustillant|pralin[ée]|caramel|gla[çc]age|nappage|sirop|meringue|mousse|bavarois|financier|madeleine|coque|appareil|montage|dressage|d[ée]cor|finition|punchage|chantilly|curd|confiture|crumble|tuile|base|fond|garniture|sauce|coulis)\b/i;
+const VERB_HEAD=/^(verse|versez|verser|m[ée]lange|m[ée]langez|m[ée]langer|fouette|fouetter|incorpore|incorporer|ajoute|ajouter|chauffe|chauffer|porte|porter|monte|monter|[ée]tale|[ée]taler|cuis|cuit|cuire|enfourne|enfourner|r[ée]serve|r[ée]server|laisse|laisser|d[ée]tend|d[ée]tendre|tamise|tamiser|blanchi|blanchir|battez?|battre|p[èe]se|peser|coule|couler|d[ée]moule|d[ée]mouler|refroidi|refroidir|filtre|filtrer|d[ée]pose|d[ée]posez|d[ée]poser|garni|garnir|nappe|napper|temp[èe]re|temp[ée]rer|sable|sabler|cr[èe]me|cr[ée]mer|foisonne|foisonner|dispose|disposer|recouvre|recouvrir|poche|pochez|pocher|saupoudre|saupoudrer|fais|faire|mixe|mixer|fonds?|fondre|hors|alterne|alterner|infuse|infuser|donne|fraise|fraisez|coupe|couper|place|placer|cong[èe]le|cong[ée]ler|bloque|bloquer|lisse|lisser|utilise|utiliser|ne pas)\b/i;
+const TIMETHERM=/\d+\s*(°c|min\b|minutes?|h\b|heures?|secondes?|fois|nuit|jour)/i;
+
+/* ---------- nombres / unités ---------- */
+const NUM=String.raw`(?:\d+\s+\d+\/\d+|\d+\/\d+|\d+(?:[.,]\d+)?)`;
+// unités RECONNUES — oeuf/jaune/blanc/noix volontairement ABSENTS (ce sont des ingrédients, pas des unités)
+const UNIT=String.raw`(?:kg|kilos?|kilogrammes?|g(?:rammes?|rs?)?|mg|ml|millilitres?|cl|centilitres?|dl|l(?:itres?)?|c\.?\s*[àa]\.?\s*s\.?|c\.?\s*[àa]\.?\s*c\.?|cuill?[èe]res?\s+[àa]\s+(?:soupe|caf[ée])|c[àa]s|c[àa]c|cs|cc|pinc[ée]es?|gousses?|f[èe]ves?|feuilles?|zestes?|pi[èe]ces?|sachets?|brins?|gouttes?|b[âa]tons?)`;
+// lookahead (?![a-zà-ÿ]) : empêche "g" de matcher dans "gousse"/"grammes" sans casser les quantités sans unité ("3 oeufs")
+const FULL_RE=new RegExp('^\\s*('+NUM+')\\s*(?:('+UNIT+')(?![a-zà-ÿ]))?\\s*(?:de\\s+|d\'|du\\s+|des\\s+)?\\s*(.+)$','i');
+const QTY_TEST=new RegExp('(?:^|\\s)'+NUM+'\\s*(?:'+UNIT+'(?![a-zà-ÿ]))?','i');
+
+const UNIT_NORM={
+  g:['g',1],gr:['g',1],grs:['g',1],gramme:['g',1],grammes:['g',1],
+  kg:['g',1000],kilo:['g',1000],kilos:['g',1000],kilogramme:['g',1000],kilogrammes:['g',1000],
+  mg:['g',0.001],
+  ml:['ml',1],millilitre:['ml',1],millilitres:['ml',1],
+  cl:['ml',10],centilitre:['ml',10],centilitres:['ml',10],
+  dl:['ml',100],l:['ml',1000],litre:['ml',1000],litres:['ml',1000],
+  cas:['ml',15],cac:['ml',5],cs:['ml',15],cc:['ml',5],
+  gousse:['gousse',1],gousses:['gousse',1],
+  feve:['fève',1],feves:['fève',1],
+  feuille:['feuille',1],feuilles:['feuille',1],
+  zeste:['zeste',1],zestes:['zeste',1],
+  pincee:['pincée',1],pincees:['pincée',1],
+  baton:['bâton',1],batons:['bâton',1],
+  sachet:['sachet',1],sachets:['sachet',1],
+  goutte:['goutte',1],gouttes:['goutte',1],
+  brin:['brin',1],brins:['brin',1],
+  noix:['pièce',1],tranche:['pièce',1],tranches:['pièce',1],
+  piece:['pièce',1],pieces:['pièce',1],
+  oeuf:['pièce',1],oeufs:['pièce',1],jaune:['pièce',1],jaunes:['pièce',1],blanc:['pièce',1],blancs:['pièce',1]
+};
+function normUnit(u){
+  if(!u) return ['pièce',1];
+  let k=stripAccents(u.toLowerCase()).replace(/\./g,'').replace(/\s+/g,'');
+  k=k.replace(/^cuilleres?asoupe$/,'cas').replace(/^cuilleres?acafe$/,'cac');
+  if(/^cas$/.test(k))k='cas'; if(/^cac$/.test(k))k='cac';
+  return UNIT_NORM[k]||[u.toLowerCase(),1];
+}
+function parseNum(s){
+  s=s.trim();
+  if(/^\d+\s+\d+\/\d+$/.test(s)){const[w,f]=s.split(/\s+/);const[a,b]=f.split('/');return +w+(+a)/(+b);}
+  if(/^\d+\/\d+$/.test(s)){const[a,b]=s.split('/');return (+a)/(+b);}
+  return parseFloat(s.replace(',','.'));
+}
+
+/* ---------- clé d'agrégation ---------- */
+const SYN=[
+  [/chocolat.*\bblanc\b/,'chocolat blanc'],
+  [/chocolat.*\b(au\s+)?lait\b/,'chocolat au lait'],
+  [/chocolat.*\b(noir|fondant|amer)\b/,'chocolat noir'],
+  [/chocolat.*\b(dulcey|blond)\b/,'chocolat dulcey'],
+  [/chocolat.*\b(ruby|rose)\b/,'chocolat ruby'],
+  [/chocolat.*\b(caramelia|caramel)\b/,'chocolat caramelia'],
+  [/\bgianduja\b/,'gianduja'],
+  [/\b(cacao|poudre.*cacao)\b/,'cacao'],
+  [/\bjaune/,"jaune d'oeuf"],
+  [/\bblanc.*oeuf\b/,"blanc d'oeuf"],
+  [/\boeuf\b/,'oeuf'],
+  [/creme.*\b(liquide|fleurette|entiere|fluide)\b/,'creme liquide'],
+  [/creme.*\bcoco\b/,'creme de coco'],
+  [/creme.*\bmarron\b/,'creme de marron'],
+  [/creme.*\bepaisse\b/,'creme epaisse'],
+  [/\bmascarpone\b/,'mascarpone'],
+  [/pate.*\bmarron\b/,'pate de marron'],
+  [/\bgelatine\b/,'gelatine'],
+  [/extrait.*vanille/,'extrait de vanille'],
+  [/sucre.*vanill/,'sucre vanille'],
+  [/\bvanille\b/,'vanille'],
+  [/\bfeve.*tonka\b|\btonka\b/,'feve de tonka'],
+  [/sucre.*glace/,'sucre glace'],
+  [/\b(cassonade|sucre.*roux|sucre.*brun|vergeoise)\b/,'cassonade'],
+  [/\bmuscovado\b/,'muscovado'],
+  [/(sirop.*)?\bglucose\b/,'glucose'],
+  [/\b(sucre.*inverti|trimoline)\b/,'sucre inverti'],
+  [/\bsucre\b/,'sucre'],
+  [/\bmaizena\b|fecule.*mais|\bfecule\b(?!.*pomme)/,'maizena'],
+  [/farine.*\bt(\d+)/,'farine T$1'],
+  [/\bfarine\b/,'farine'],
+  [/levure.*boulang/,'levure boulangere'],
+  [/\b(levure.*chimique|levure|poudre.*lever)\b/,'levure chimique'],
+  [/\bbicarbonate\b/,'bicarbonate'],
+  [/beurre.*\bcacao\b|\bmycryo\b/,'beurre de cacao'],
+  [/beurre.*demi.*sel/,'beurre demi-sel'],
+  [/\bbeurre\b/,'beurre'],
+  [/lait.*\bcoco\b/,'lait de coco'],
+  [/lait.*\bpoudre\b/,'lait en poudre'],
+  [/lait.*concentre/,'lait concentre'],
+  [/\blait\b/,'lait'],
+  [/poudre.*amande|amande.*poudre/,"poudre d'amande"],
+  [/poudre.*noisette|noisette.*poudre/,'poudre de noisette'],
+  [/poudre.*pistache|pistache.*poudre/,'poudre de pistache'],
+  [/pectine\s+nh/,'pectine NH'],
+  [/pectine.*jaune/,'pectine jaune'],
+  [/agar/,'agar-agar'],
+  [/fleur.*oranger/,"eau de fleur d'oranger"],
+  [/\beau\b/,'eau'],
+  [/\bmiel\b/,'miel'],
+  [/fleur.*sel/,'fleur de sel'],
+  [/\bsel\b/,'sel']
+];
+const KEYSTOP=/\b(de|d|du|des|la|le|les|au|aux|a|en|pour|bonne|qualite|bio|extra|premium|fondu|fondue|fondus|fondues|pommade|mou|molle|froid|froide|froids|froides|chaud|chaude|tiede|tiedes|ramolli|ramollie|tempere|temperee|tamise|tamisee|coupe|coupee|coupees|coupes|cubes|morceaux|lamelles|quartiers|rondelles|concasse|concassee|concassees|rape|rapee|torrefie|torrefiee|torrefiees|entier|entiere|bien|tres|fraiche|fraiches|frais|ambiante|temperature|valrhona|callebaut|barry|weiss|couverture|liquide_KEEP)\b/g;
+function aggKey(rawName){
+  let s=' '+stripAccents(rawName.toLowerCase())+' ';
+  s=s.replace(/\d+([.,]\d+)?\s*%\s*(min(i|imum)?\.?)?/g,' ');
+  s=s.replace(/\b(min|mini|minimum|max|maxi|environ|qs)\b/g,' ');
+  s=s.replace(/\(\s*[0-9a-z]{1,3}\s*\)/g,' ');
+  s=s.replace(/\([^)]*\)/g,' ');
+  s=s.replace(/[^a-z0-9\s]/g,' ');
+  s=s.replace(KEYSTOP,' ');
+  s=s.split(/\s+/).filter(Boolean).map(w=>w.length>3?w.replace(/(s|x)$/,''):w).join(' ');
+  s=s.replace(/\s+/g,' ').trim();
+  for(const[re,out]of SYN){ if(re.test(s)) return out.replace(/\$1/,(s.match(/t(\d+)/)||[])[1]||''); }
+  return s;
+}
+
+/* ---------- nettoyage du nom affiché ---------- */
+function cleanDisplay(name){
+  return name
+    .replace(/\s+\d{1,2}\s+[A-ZÀ-Þ][a-zà-ÿ].*$/u,'') // coupe une étape qui a fui dans le nom (PDF 2 colonnes) : "...minimum 1 Réhydrate..."
+    .replace(/\(\s*\d+\s*\)/g,'')
+    .replace(/\((?:optionnel|optionnelle|facultatif|facultative)\)/gi,'')
+    .replace(/\(ou[^)]*\)/gi,'')
+    .replace(/\s{2,}/g,' ').trim();
+}
+function stripLead(name){
+  let s=name.trim();
+  s=s.replace(/^(quelques?|un peu d['e]|une poign[ée]e d['e]|suffisamment d['e]|du|de la|des|de l')\b\s*/i,'').trim();
+  s=s.replace(/^(feuilles?|tranches?|brins?|gousses?|zestes?|b[âa]tons?|filaments?|pinc[ée]es?|gouttes?|copeaux)\s+(de\s+|d')\s*/i,'').trim();
+  return s;
+}
+
+/* ---------- extraction d'une ligne ---------- */
+function splitPlus(line){
+  if(!/\s\+\s/.test(line)) return [line];
+  const parts=line.split(/\s\+\s/);
+  return parts.every(p=>QTY_TEST.test(p))?parts:[line];
+}
+function parseIngredient(line){
+  const m=line.match(FULL_RE);
+  if(!m){
+    const nm=cleanDisplay(stripLead(line));
+    if(!nm||nm.length<2) return null;
+    // rejette les fragments d'étape / matériel sans quantité (bruit PDF)
+    if(/^(sur|dans|jusqu|pour|avec|puis|ensuite|enfin|pendant|hors|environ|bon\s+app|douilles?|moules?|cercles?|plaques?|tapis|fours?|frigos?|cong[eé]l|r[ée]serve|laisse|mets?)\b/i.test(nm)) return null;
+    return {qty:null,unit:'pièce',name:nm};
+  }
+  let qty=parseNum(m[1]);
+  let [unit,fac]=normUnit(m[2]);
+  let name=cleanDisplay(m[3]);
+  if(!name||/^(min|minutes?|°c|fois|h|heures?|nuit|jour)\b/i.test(name)) return null;
+  return {qty:qty*fac,unit,name};
+}
+
+/* ---------- détection rendement ---------- */
+const YIELD_RE=/\bpour\s+(?:(\d+)\s*[àa-]\s*\d+|(\d+))\s*(personnes?|parts?|portions?|tartelettes?|entremets?|verrines?|pi[èe]ces?|g[âa]teaux?|moules?|cercles?|macarons?|choux|bûches?|buches?|cakes?|individuels?)\b/i;
+
+/* ---------- parse complet ---------- */
+function parseRecipe(raw){
+  const text=normalizeText(raw);
+  const items=[];
+  let currentPrep='Préparation principale';
+  const preps=[];
+  const lines=text.split('\n');
+  for(let li=0;li<lines.length;li++){
+    let line=lines[li].trim();
+    if(!line) continue;
+    let hadBullet=BULLET.test(line);
+    line=line.replace(BULLET,'').trim();
+    // glyphe de case à cocher extrait d'un PDF (souvent "U"/"q" devant un chiffre ou un titre)
+    line=line.replace(/^[A-Za-z]\s+(?=[\d])/,'').replace(/^[A-Za-z]\s+(?=[A-ZÀ-Þ][a-zà-ÿ])/,'').trim();
+    if(!line||DECOR.test(line)) continue;
+    // bruit d'extraction PDF : pieds de page, numéros de page, marqueurs, en-têtes tout en MAJUSCULES
+    if(/\d+\s*\/\s*\d+\s*$/.test(line)) continue;                       // "... 2 / 12"
+    if(/^[a-z]\s*[-–]\s*\d+$/i.test(line)) continue;                    // "J - 1"
+    { const L=line.replace(/[^a-zà-ÿA-ZÀ-Þ]/g,''); if(L.length>18 && L===L.toUpperCase()) continue; }
+    if(YIELD_RE.test(line)) continue; // "Pour 6 tartelettes" = rendement, pas un ingrédient
+    const wc=line.split(/\s+/).length;
+    const hasQty=QTY_TEST.test(line);
+    // META seul
+    if(META_ONLY.test(line) && !PREP_HEAD.test(line)) continue;
+    // TITRE FORT : courte ligne "préparation + qualificatif" (lève l'ambiguïté "Crème pistache" [titre] vs "Crème le beurre…" [étape])
+    const w2=(line.split(/\s+/)[1]||'').toLowerCase().replace(/['’].*/,'');
+    const art2=/^(le|la|les|l|du|de|des|un|une|ce|cette|ta|ton|tes|votre|vos|au|aux|en|a|sur|dans|hors|tout|toute|bien|d)$/.test(w2);
+    const strongTitle = !hasQty && PREP_HEAD.test(line) && wc<=4 && !art2 && !/[.!?]/.test(line);
+    // ÉTAPE
+    const isStep = !strongTitle && ( /^\d{1,2}\s*[.)°]\s+\p{Lu}/u.test(line)
+      || (/^\d{1,2}\s+\p{Lu}\p{Ll}/u.test(line) && wc>=3) // "10 Passe la dorure" / "8 Décercle tes tartelettes" (n° d'étape sans point, ex PDF)
+      || (!hadBullet && VERB_HEAD.test(line))
+      || (wc>=6 && TIMETHERM.test(line))
+      || line.length>110 );
+    if(isStep) continue;
+    // "Quelques X" non chiffré (garniture)
+    if(!hasQty && /^(quelques|un peu de|une poign[ée]e)/i.test(line)){
+      line.split(/\s+et\s+(?=quelques?\b|un peu|une poign)/i).forEach(part=>{
+        part=part.replace(/\s+pour\s+.*$/i,'').trim(); // coupe "...pour le croquant / la déco / décorer"
+        const ing=parseIngredient(part);
+        if(ing) items.push(bake(ing,currentPrep));
+      });
+      continue;
+    }
+    // "X pour saupoudrer / décorer" = garniture non chiffrée (lignes sans verbe d'action en tête)
+    if(!hasQty){
+      const mg=line.match(/^(.{2,40}?)\s+pour\s+(saupoudr|d[ée]cor|parsem|finir|servir|le croquant|la d[ée]co)/i);
+      if(mg){ const ing=parseIngredient(mg[1].trim()); if(ing){ items.push(bake(ing,currentPrep)); } continue; }
+    }
+    // TITRE de préparation
+    const looksTitle = strongTitle || ( !hasQty && !VERB_HEAD.test(line) &&
+       ( PREP_HEAD.test(line) || (line.length<=60 && wc<=7 && /^[\p{Lu}]/u.test(line) && !/^\d/.test(line)) ) );
+    if(looksTitle){
+      currentPrep=line.replace(/\s*:\s*$/,'');
+      if(preps.indexOf(currentPrep)<0) preps.push(currentPrep);
+      continue;
+    }
+    // INGRÉDIENT
+    if(hasQty || hadBullet){
+      for(const part of splitPlus(line)){
+        const ing=parseIngredient(part);
+        if(ing) items.push(bake(ing,currentPrep));
+      }
+    }
+  }
+  return {items,preps};
+}
+function bake(ing,prep){
+  return {prep,qty:ing.qty,unit:ing.unit,name:ing.name,key:aggKey(ing.name)};
+}
+
+/* ---------- détection du moule d'origine dans la recette ---------- */
+function detectMold(raw){
+  const text=normalizeText(raw);
+  for(const line of text.split('\n')){
+    const m=line.match(/\b(cercle|moule|cadre|entremets?|tartelettes?|tartes?|g[âa]teau)\b[^\n]{0,40}?(\d{1,2}(?:[.,]5)?)\s*cm\b/i);
+    if(!m) continue;
+    // "Pour 6 cercles de 8 cm" = 6 pièces, pas un moule unique -> on ne touche à rien
+    const many=line.match(/\b(\d+)\s*(cercles|moules|entremets|tartelettes|tartes|g[âa]teaux|pi[èe]ces)\b/i);
+    if(many && +many[1]>1) continue;
+    const size=parseFloat(m[2].replace(',','.'));
+    if(size<10||size>40) continue;
+    return {shape:/\bcarr[ée]|\bcadre\b/i.test(line)?'carre':'rond', size};
+  }
+  return null;
+}
+
+window.RC={normalizeText,aggKey,parseRecipe,detectMold};
+})();
+
+/* ============================================================
+   CONVERTISSEUR DE MOULES
+   ============================================================ */
 const shapes = [
   {id:"rond", name:"Rond", svg:'<svg viewBox="0 0 40 40" width="36" height="36"><circle cx="20" cy="20" r="14"/></svg>', dims:[{k:"d",label:"Diamètre (cm)",val:20},{k:"h",label:"Hauteur (cm)",val:4.5}]},
   {id:"carre", name:"Carré", svg:'<svg viewBox="0 0 40 40" width="36" height="36"><rect x="6" y="6" width="28" height="28"/></svg>', dims:[{k:"c",label:"Côté (cm)",val:18},{k:"h",label:"Hauteur (cm)",val:4.5}]},
@@ -132,11 +463,13 @@ const state = {
 };
 
 let ingredients = [
-  {name:"Œufs (g)", qty:200},
-  {name:"Sucre (g)", qty:200},
-  {name:"Farine (g)", qty:200},
-  {name:"Beurre (g)", qty:100}
+  {name:"Œufs", qty:200, unit:"g", prep:""},
+  {name:"Sucre", qty:200, unit:"g", prep:""},
+  {name:"Farine", qty:200, unit:"g", prep:""},
+  {name:"Beurre", qty:100, unit:"g", prep:""}
 ];
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
 function renderShapes(target) {
   const container = document.getElementById('shapes-' + target);
@@ -216,37 +549,75 @@ function calculate() {
   renderIngredients(ratio);
 }
 
-function renderIngredients(ratio) {
-  const container = document.getElementById('ingredients');
-  container.innerHTML = ingredients.map((ing, i) => {
-    const newQty = ratio > 0 ? (ing.qty * ratio).toFixed(1).replace('.', ',') : '—';
-    return `
+// unités qui se comptent : elles prennent un "s" au pluriel
+const COUNTABLE = ['gousse','feuille','fève','pincée','bâton','sachet','goutte','brin','zeste','pièce','tranche'];
+
+function fmtNewQty(qty, unit, ratio) {
+  if (qty == null || !(ratio > 0)) return '—';
+  const v = qty * ratio;
+  let n;
+  if (unit === 'g' || unit === 'ml') n = v < 10 ? Math.round(v*10)/10 : Math.round(v);
+  else n = Math.round(v*10)/10;
+  let suffix = '';
+  if (unit && unit !== 'pièce') suffix = ' ' + (n > 1 && COUNTABLE.indexOf(unit) >= 0 ? unit + 's' : unit);
+  return String(n).replace('.', ',') + suffix;
+}
+
+// "oeufs" -> "Œufs" : le parser normalise les ligatures, on les remet pour l'affichage
+function prettyName(s) {
+  s = String(s == null ? '' : s).trim().replace(/oeuf/gi, m => m[0] === 'O' ? 'Œuf' : 'œuf');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function ingRow(ing, i, ratio) {
+  return `
       <div class="ing-row">
-        <div>
+        <div class="c-name">
           <label>Ingrédient</label>
-          <input type="text" value="${ing.name}" placeholder="Ex : Sucre (g)" oninput="updateIng(${i}, 'name', this.value)">
+          <input type="text" value="${esc(ing.name)}" placeholder="Ex : Sucre" oninput="updateIng(${i}, 'name', this.value)">
         </div>
-        <div>
+        <div class="c-qty">
           <label>Quantité d'origine</label>
-          <input type="number" step="1" min="0" value="${ing.qty || ''}" placeholder="0" oninput="updateIng(${i}, 'qty', parseFloat(this.value)||0)">
+          <input type="number" step="1" min="0" value="${ing.qty == null ? '' : ing.qty}" placeholder="0" oninput="updateIng(${i}, 'qty', this.value === '' ? null : (parseFloat(this.value)||0))">
         </div>
-        <div>
+        <div class="c-unit">
+          <label>Unité</label>
+          <input type="text" value="${esc(ing.unit || 'g')}" placeholder="g" oninput="updateIng(${i}, 'unit', this.value)">
+        </div>
+        <div class="c-new">
           <label>Nouvelle quantité</label>
-          <div class="new-val">${newQty}</div>
+          <div class="new-val">${esc(fmtNewQty(ing.qty, ing.unit, ratio))}</div>
         </div>
         <button class="btn-remove" onclick="removeIng(${i})" title="Supprimer">×</button>
       </div>
     `;
-  }).join('');
+}
+
+function renderIngredients(ratio) {
+  const container = document.getElementById('ingredients');
+  // regroupement par préparation (uniquement si la recette importée en a plusieurs)
+  const groups = [];
+  ingredients.forEach((ing, i) => {
+    const p = ing.prep || '';
+    let g = groups.find(x => x.prep === p);
+    if (!g) { g = {prep:p, rows:[]}; groups.push(g); }
+    g.rows.push(i);
+  });
+  container.innerHTML = groups.map(g =>
+    (g.prep ? `<div class="prep-head">${esc(g.prep)}</div>` : '') +
+    g.rows.map(i => ingRow(ingredients[i], i, ratio)).join('')
+  ).join('');
 }
 
 function updateIng(i, key, val) {
+  if (key === 'unit') val = val.trim() || 'g';
   ingredients[i][key] = val;
   calculate();
 }
 
 function addIngredient() {
-  ingredients.push({name:"", qty:0});
+  const last = ingredients[ingredients.length - 1];
+  ingredients.push({name:"", qty:null, unit:"g", prep: last ? last.prep : ""});
   calculate();
 }
 
@@ -256,7 +627,175 @@ function removeIng(i) {
   calculate();
 }
 
-// Init
+/* ============================================================
+   IMPORT RECETTE (copier-coller ou PDF)
+   ============================================================ */
+(function(){
+'use strict';
+const $ = id => document.getElementById(id);
+const txt = $('impText'), drop = $('impDrop'), fileIn = $('impFile');
+
+/* ----- PDF.js (chargé à la demande) ----- */
+let pdfLoading = null;
+function loadPdfJs(){
+  if(window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  if(pdfLoading) return pdfLoading;
+  pdfLoading = new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload=()=>{ try{window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';}catch(e){} res(window.pdfjsLib); };
+    s.onerror=()=>rej(new Error('pdfjs'));
+    document.head.appendChild(s);
+  });
+  return pdfLoading;
+}
+async function extractPdf(file){
+  const lib=await loadPdfJs();
+  const buf=await file.arrayBuffer();
+  const pdf=await lib.getDocument({data:buf}).promise;
+  let out=[];
+  for(let p=1;p<=pdf.numPages;p++){
+    const page=await pdf.getPage(p);
+    const W=page.getViewport({scale:1}).width;
+    const tc=await page.getTextContent();
+    const items=tc.items.filter(i=>i.str.trim()).map(i=>({x:i.transform[4],y:i.transform[5],w:i.width||0,s:i.str}));
+    if(!items.length) continue;
+    // détection 2 colonnes (recettes pâtisserie = ingrédients | préparation)
+    const mid=W*0.5;
+    const leftN=items.filter(i=>i.x<mid).length, rightN=items.length-leftN;
+    const band=items.filter(i=>i.x>W*0.40 && i.x<W*0.60).length;
+    const twoCol = leftN>4 && rightN>4 && band/items.length < 0.14;
+    const cols = twoCol ? [items.filter(i=>i.x<mid), items.filter(i=>i.x>=mid)] : [items];
+    cols.forEach(col=>{
+      const rows={};
+      col.forEach(i=>{ const y=Math.round(i.y/3)*3; (rows[y]=rows[y]||[]).push(i); });
+      Object.keys(rows).map(Number).sort((a,b)=>b-a).forEach(y=>{
+        const seq=rows[y].sort((a,b)=>a.x-b.x);
+        // une même ligne visuelle peut porter DEUX cellules (ingrédient à gauche | étape à droite).
+        // On coupe sur un saut horizontal net, sauf si la partie droite commence par un chiffre
+        // (là c'est une mise en page "Sucre .... 100 g" ou un numéro d'étape, il faut la garder collée)
+        const parts=[]; let cur=[];
+        seq.forEach((it,k)=>{
+          if(k>0 && cur.length){
+            const prev=seq[k-1];
+            const gap=it.x-(prev.x+prev.w);
+            if(gap>W*0.07 && !/^\d/.test(seq.slice(k).map(i=>i.s).join(' ').trim())){ parts.push(cur); cur=[]; }
+          }
+          cur.push(it);
+        });
+        parts.push(cur);
+        parts.forEach(p=>{
+          const line=p.map(i=>i.s).join(' ').replace(/\s+/g,' ').trim();
+          if(line) out.push(line);
+        });
+      });
+    });
+  }
+  return out.join('\n');
+}
+
+function setStatus(msg, cls){
+  const el=$('impStatus');
+  if(!msg){ el.style.display='none'; el.textContent=''; return; }
+  el.style.display='block'; el.innerHTML=msg; el.className='imp-status'+(cls?' '+cls:'');
+}
+
+/* ----- import ----- */
+function runImport(){
+  const raw = txt.value;
+  if(!raw.trim()){ setStatus('Colle ta recette ou dépose un PDF avant de remplir', 'err'); return; }
+  const parsed = window.RC.parseRecipe(raw);
+  const items = parsed.items.filter(it => it.qty != null && it.qty > 0);
+  if(!items.length){
+    setStatus("Aucun ingrédient chiffré détecté. Vérifie que ta recette contient bien des lignes du type « 100g de farine », ou remplis les lignes à la main", 'err');
+    return;
+  }
+  const preps = new Set(items.map(i => i.prep));
+  const single = preps.size <= 1;
+  ingredients = items.map(it => ({
+    name: prettyName(it.name),
+    qty: Math.round(it.qty * 100) / 100,
+    unit: it.unit === 'pièce' ? '' : it.unit,
+    prep: single ? '' : prettyName(it.prep)
+  }));
+
+  // moule d'origine mentionné dans la recette ("cercle de 20 cm")
+  let moldMsg = '';
+  const mold = window.RC.detectMold(raw);
+  if(mold){
+    state.a.shape = mold.shape;
+    state.a.dims = mold.shape === 'carre'
+      ? {c: mold.size, h: state.a.dims.h || 4.5}
+      : {d: mold.size, h: state.a.dims.h || 4.5};
+    renderShapes('a'); renderDims('a');
+    moldMsg = ' Moule d\'origine détecté : ' + (mold.shape === 'carre' ? 'carré' : 'rond') + ' de ' + String(mold.size).replace('.', ',') + ' cm — corrige-le si ce n\'est pas le bon';
+  }
+
+  calculate();
+  const n = ingredients.length;
+  setStatus('<strong>' + n + ' ingrédient' + (n>1?'s':'') + ' importé' + (n>1?'s':'') + ' ✓</strong> — vérifie les quantités avant de convertir.' + moldMsg, 'ok');
+  $('impClear').style.display = '';
+  document.getElementById('ingredients').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+async function handleFile(file){
+  if(!file) return;
+  if(/\.txt$/i.test(file.name) || file.type === 'text/plain'){
+    setStatus('Lecture du fichier…');
+    txt.value = await file.text();
+    runImport();
+    return;
+  }
+  setStatus('Lecture du PDF « ' + esc(file.name) + ' »…');
+  try{
+    txt.value = await extractPdf(file);
+    runImport();
+  }catch(e){
+    setStatus("Impossible de lire ce PDF automatiquement. Ouvre-le, copie le texte et colle-le dans le cadre ci-dessus", 'err');
+  }
+}
+
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+drop.addEventListener('drop', e=>{ if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+drop.addEventListener('click', ()=>fileIn.click());
+fileIn.addEventListener('change', e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+
+$('impRun').addEventListener('click', runImport);
+$('impExample').addEventListener('click', ()=>{ txt.value = EXAMPLE; runImport(); });
+$('impClear').addEventListener('click', ()=>{
+  txt.value=''; fileIn.value=''; setStatus('');
+  $('impClear').style.display='none';
+  ingredients=[{name:"",qty:null,unit:"g",prep:""}];
+  calculate(); txt.focus();
+});
+
+const EXAMPLE = `Entremets vanille framboise
+Pour un cercle de 20 cm
+
+Biscuit génoise
+- 200g d'oeufs
+- 120g de sucre
+- 120g de farine T55
+- 30g de beurre fondu
+Monte les oeufs avec le sucre au ruban. Incorpore la farine tamisée puis le beurre fondu. Cuis à 180°C pendant 12 minutes.
+
+Insert framboise
+- 250g de purée de framboise
+- 30g de sucre
+- 5g de pectine NH
+
+Mousse vanille
+- 400g de crème liquide 30% mini
+- 90g de chocolat blanc
+- 2 feuilles de gélatine
+- 1 gousse de vanille
+
+Montage
+Coule la moitié de la mousse, dépose l'insert congelé, recouvre et termine par le biscuit. Bloque au congélateur une nuit.`;
+})();
+
+/* ----- Init ----- */
 renderShapes('a');
 renderShapes('b');
 renderDims('a');
