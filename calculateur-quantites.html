@@ -518,7 +518,7 @@ async function extractPdf(file){
     const page=await pdf.getPage(p);
     const W=page.getViewport({scale:1}).width;
     const tc=await page.getTextContent();
-    const items=tc.items.filter(i=>i.str.trim()).map(i=>({x:i.transform[4],y:i.transform[5],s:i.str}));
+    const items=tc.items.filter(i=>i.str.trim()).map(i=>({x:i.transform[4],y:i.transform[5],w:i.width||0,s:i.str}));
     if(!items.length) continue;
     // détection 2 colonnes (recettes pâtisserie = ingrédients | préparation)
     const mid=W*0.5;
@@ -530,8 +530,24 @@ async function extractPdf(file){
       const rows={};
       col.forEach(i=>{ const y=Math.round(i.y/3)*3; (rows[y]=rows[y]||[]).push(i); });
       Object.keys(rows).map(Number).sort((a,b)=>b-a).forEach(y=>{
-        const line=rows[y].sort((a,b)=>a.x-b.x).map(i=>i.s).join(' ').replace(/\s+/g,' ').trim();
-        if(line) out.push(line);
+        const seq=rows[y].sort((a,b)=>a.x-b.x);
+        // une même ligne visuelle peut porter DEUX cellules (ingrédient à gauche | étape à droite).
+        // On coupe sur un saut horizontal net, sauf si la partie droite commence par un chiffre
+        // (là c'est une mise en page "Sucre .... 100 g" ou un numéro d'étape, il faut la garder collée)
+        const parts=[]; let cur=[];
+        seq.forEach((it,k)=>{
+          if(k>0 && cur.length){
+            const prev=seq[k-1];
+            const gap=it.x-(prev.x+prev.w);
+            if(gap>W*0.07 && !/^\d/.test(seq.slice(k).map(i=>i.s).join(' ').trim())){ parts.push(cur); cur=[]; }
+          }
+          cur.push(it);
+        });
+        parts.push(cur);
+        parts.forEach(p=>{
+          const line=p.map(i=>i.s).join(' ').replace(/\s+/g,' ').trim();
+          if(line) out.push(line);
+        });
       });
     });
   }
