@@ -23,9 +23,14 @@
   .item:hover,.item:focus-visible{border-color:#C8A04A;background:#fff;transform:translateX(3px);outline:none}
   .i-main{display:flex;flex-direction:column;gap:1px;min-width:0}
   .i-name{font-size:15.5px;line-height:1.3;font-weight:600}
-  .i-sub{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px}
   .i-host{font-size:12px;color:rgba(26,20,16,0.5);font-family:'Courier New',monospace;letter-spacing:.3px}
-  .i-code{font-family:'Courier New',monospace;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8B6914;background:rgba(200,160,74,0.2);border-radius:20px;padding:2px 8px;white-space:nowrap}
+  .item.has-promo{flex-direction:column;align-items:stretch;gap:11px}
+  .i-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .i-promo{display:flex;flex-direction:column;gap:4px;background:rgba(200,160,74,0.14);border:1px dashed rgba(200,160,74,0.65);border-radius:6px;padding:9px 12px}
+  .i-promo-label{font-family:'Courier New',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#8B6914}
+  .i-promo-line{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .i-promo-code{font-family:'Courier New',monospace;font-size:17px;font-weight:700;letter-spacing:1.5px;color:#1A1410}
+  .i-promo-off{font-size:13.5px;font-weight:700;color:#8B6914;white-space:nowrap}
   .i-go{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#C8A04A;white-space:nowrap;opacity:.8;flex-shrink:0}
   .item:hover .i-go,.item:focus-visible .i-go{opacity:1}
   footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
@@ -42,7 +47,7 @@
 
 <main>
   <h1>Mes <span class="accent">fournisseurs</span></h1>
-  <p class="intro">Les boutiques où je commande mon matériel et mes matières premières. Clique sur une enseigne, tu arrives direct sur son site. Quand j'ai négocié un code de réduction, il est affiché à côté du nom.</p>
+  <p class="intro">Les boutiques où je commande mon matériel et mes matières premières. Clique sur une enseigne, tu arrives direct sur son site. Quand j'ai négocié un code promo, il est affiché juste sous l'enseigne.</p>
 
   <div class="cats">
 
@@ -63,9 +68,15 @@
     <div class="cat">
       <h3 class="cat-label">Matériel & matières premières <span class="cat-count">6</span></h3>
       <div class="items">
-        <a class="item" href="https://www.deco-relief.fr/" target="_blank" rel="noopener nofollow">
-          <span class="i-main"><span class="i-name">Deco Relief</span><span class="i-sub"><span class="i-host">deco-relief.fr</span><span class="i-code">LSDG15 &middot; &minus;15 %</span></span></span>
-          <span class="i-go">Voir &rarr;</span>
+        <a class="item has-promo" href="https://www.deco-relief.fr/" target="_blank" rel="noopener nofollow">
+          <span class="i-top">
+            <span class="i-main"><span class="i-name">Deco Relief</span><span class="i-host">deco-relief.fr</span></span>
+            <span class="i-go">Voir &rarr;</span>
+          </span>
+          <span class="i-promo">
+            <span class="i-promo-label">Code promo</span>
+            <span class="i-promo-line"><span class="i-promo-code">LSDG15</span><span class="i-promo-off">&minus;15 % sur ta commande</span></span>
+          </span>
         </a>
         <a class="item" href="https://www.cerfdellier.com/" target="_blank" rel="noopener nofollow">
           <span class="i-main"><span class="i-name">Cerf Dellier</span><span class="i-host">cerfdellier.com</span></span>
