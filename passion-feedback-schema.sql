@@ -24,8 +24,7 @@ create table if not exists public.passion_feedback (
   phrase_recue  text,  -- la phrase de l'entourage restée en travers (facultatif)
   si_reussite   text,  -- ce que « réussir à tous les coups » changerait (or)
   prenom        text,  -- facultatif
-  consentement  text,  -- citation : avec prénom / anonyme / non
-  contact       text   -- @ Instagram ou email si ok pour creuser en DM (facultatif)
+  contact       text   -- @ Instagram ou téléphone si ok pour creuser en DM (facultatif)
 );
 
 create index if not exists idx_passion_feedback_created_at on public.passion_feedback(created_at desc);

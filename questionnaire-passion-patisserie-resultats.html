@@ -78,7 +78,6 @@
   .ans{background:#FCFAF6; border-left:3px solid var(--or); border-radius:0 6px 6px 0; padding:12px 14px; margin-bottom:10px; font-size:14.5px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start}
   .ans .txt{white-space:pre-wrap}
   .ans .who{font-size:12px; color:var(--or-deep); font-weight:600; margin-top:6px; display:block}
-  .ans .who.nocite{color:#B07A72}
   .copy{flex:0 0 auto; font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:var(--muted); padding:5px 11px; border-radius:5px}
   .copy:hover{border-color:var(--or); color:var(--or-deep)}
   .copy.done{background:var(--or); color:var(--encre); border-color:var(--or)}
@@ -127,14 +126,8 @@
 
       <div class="block">
         <h2>Verbatims — leurs mots exacts</h2>
-        <p class="desc">L'or pour le copywriting. Le prénom s'affiche sous chaque réponse avec son niveau d'autorisation de citation. Clique sur une question pour déplier, puis copie ce qui claque.</p>
+        <p class="desc">L'or pour le copywriting. Le prénom s'affiche sous chaque réponse quand il est donné. Clique sur une question pour déplier, puis copie ce qui claque.</p>
         <div id="verbatims"></div>
-      </div>
-
-      <div class="block">
-        <h2>Autorisation de citation</h2>
-        <p class="desc">Ce que tu as le droit de réutiliser publiquement.</p>
-        <div id="consBars"></div>
       </div>
 
       <div class="block">
@@ -212,13 +205,8 @@ function bars(el, data, total){
     </div>`).join('') : '<p class="empty">Aucune donnée pour l\'instant</p>';
 }
 function whoLine(r){
-  if(!r.prenom && !r.consentement) return '';
-  const p = r.prenom ? esc(r.prenom) : 'Anonyme';
-  let cite = '', cls = '';
-  if(r.consentement === 'Oui, avec mon prénom') cite = 'citation avec prénom OK';
-  else if(r.consentement === 'Oui, mais sans mon prénom') cite = 'citation anonyme seulement';
-  else { cite = 'NE PAS CITER'; cls = ' nocite'; }
-  return `<span class="who${cls}">— ${p} · ${cite}</span>`;
+  if(!r.prenom) return '';
+  return `<span class="who">— ${esc(r.prenom)}</span>`;
 }
 
 function render(){
@@ -227,12 +215,9 @@ function render(){
   const n = ROWS.length;
 
   // KPIs
-  const citeOK = ROWS.filter(r => r.consentement && r.consentement.startsWith('Oui')).length;
   const contacts = ROWS.filter(r => r.contact && r.contact.trim());
-  const pctCite = n ? Math.round(citeOK/n*100)+'%' : '—';
   document.getElementById('kpis').innerHTML = `
     <div class="kpi"><div class="num">${n}</div><div class="lab">Réponses</div></div>
-    <div class="kpi"><div class="num">${pctCite}</div><div class="lab">Citation autorisée</div></div>
     <div class="kpi"><div class="num">${contacts.length}</div><div class="lab">À recontacter en DM</div></div>`;
 
   // contacts à recontacter
@@ -243,7 +228,6 @@ function render(){
     </div>`).join('') : '<p class="empty">Personne pour l\'instant</p>';
 
   // bars
-  bars(document.getElementById('consBars'), countField('consentement'), n);
   bars(document.getElementById('ancBars'), countField('anciennete'), n);
 
   // verbatims
@@ -305,7 +289,7 @@ document.addEventListener('click', async e=>{
 // CSV
 function exportCSV(){
   if(!ROWS.length) return;
-  const cols = ['created_at','anciennete','importance','pire_ratage','phrase_revee','phrase_recue','si_reussite','prenom','consentement','contact'];
+  const cols = ['created_at','anciennete','importance','pire_ratage','phrase_revee','phrase_recue','si_reussite','prenom','contact'];
   const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
   const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
   const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});

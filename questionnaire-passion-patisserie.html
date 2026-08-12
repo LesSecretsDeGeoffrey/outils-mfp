@@ -136,35 +136,30 @@
 
       <div class="q">
         <label class="lab">Pourquoi la pâtisserie est importante pour toi ?</label>
-        <span class="hint">Pas la réponse polie. La vraie. Qu'est-ce que ça t'apporte, à toi ?</span>
         <textarea name="importance" placeholder="Raconte avec tes mots..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
-        <label class="lab">Raconte-moi ton pire ratage</label>
-        <span class="hint">C'était quoi, pour quelle occasion... et surtout : qu'est-ce que tu t'es dit dans ta tête à ce moment-là ?</span>
+        <label class="lab">Raconte-moi ton pire ratage, et ce que tu t'es dit dans ta tête à ce moment-là</label>
         <textarea name="pire_ratage" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
         <label class="lab">Tu poses ton gâteau sur la table devant tout le monde. Quelle est LA phrase que tu rêves d'entendre ?</label>
-        <span class="hint">Écris-la mot pour mot, comme si tu l'entendais</span>
         <textarea name="phrase_revee" placeholder="« ... »"></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
         <label class="lab">À l'inverse : quelle phrase on t'a déjà dite après un gâteau (raté ou réussi) qui t'est restée en travers de la gorge ? <span class="opt">(facultatif)</span></label>
-        <span class="hint">Même une remarque gentille qui t'a piquée sans le vouloir</span>
         <textarea name="phrase_recue" placeholder="« ... »"></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
 
       <div class="q">
         <label class="lab">Imagine que tu réussisses à tous les coups, sans exception. Qu'est-ce que ça changerait pour toi ?</label>
-        <span class="hint">Dans ta cuisine, avec tes proches, dans ta tête</span>
         <textarea name="si_reussite" placeholder="..."></textarea>
         <div class="qerr">Cette question est obligatoire</div>
       </div>
@@ -174,21 +169,10 @@
         <input type="text" name="prenom" placeholder="...">
       </div>
 
-      <div class="q">
-        <label class="lab">Tu m'autorises à citer certaines de tes réponses dans mes contenus ?</label>
-        <span class="hint">Posts, vidéos, pages. Jamais ton nom complet, jamais ton contact</span>
-        <div class="choices" data-name="consentement">
-          <label class="choice"><input type="radio" name="consentement" value="Oui, avec mon prénom"><span class="box round"></span>Oui, avec mon prénom</label>
-          <label class="choice"><input type="radio" name="consentement" value="Oui, mais sans mon prénom"><span class="box round"></span>Oui, mais sans mon prénom</label>
-          <label class="choice"><input type="radio" name="consentement" value="Non"><span class="box round"></span>Non, je préfère que ça reste entre nous</label>
-        </div>
-        <div class="qerr">Choisis une réponse</div>
-      </div>
 
       <div class="q">
-        <label class="lab">Partante pour que je te pose 2 ou 3 questions de plus en privé ? Laisse ton @ Instagram ou ton email <span class="opt">(facultatif)</span></label>
-        <span class="hint">Juste pour discuter pâtisserie, rien d'autre</span>
-        <input type="text" name="contact" placeholder="@toninsta ou ton@email.fr">
+        <label class="lab">Partante pour que je te pose 2 ou 3 questions de plus en privé ? Laisse ton @ Instagram ou ton numéro de téléphone <span class="opt">(facultatif)</span></label>
+        <input type="text" name="contact" placeholder="@toninsta ou 06 12 34 56 78">
       </div>
     </section>
 
@@ -222,8 +206,7 @@ const REQUIRED = [
   {name:'importance', type:'text'},
   {name:'pire_ratage', type:'text'},
   {name:'phrase_revee', type:'text'},
-  {name:'si_reussite', type:'text'},
-  {name:'consentement', type:'radio'}
+  {name:'si_reussite', type:'text'}
 ];
 function isFilled(f){
   if (f.type==='radio') return !!document.querySelector(`input[name="${f.name}"]:checked`);
@@ -245,7 +228,6 @@ function payload(){
     phrase_recue: val('phrase_recue') || null,
     si_reussite: val('si_reussite'),
     prenom: val('prenom') || null,
-    consentement: radioVal('consentement'),
     contact: val('contact') || null
   };
 }
