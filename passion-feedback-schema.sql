@@ -22,7 +22,7 @@ create table if not exists public.passion_feedback (
   pire_ratage   text,  -- le pire ratage + ce qu'elle s'est dit dans sa tête (or)
   phrase_revee  text,  -- LA phrase qu'elle rêve d'entendre (désir profond en scène) (or)
   phrase_recue  text,  -- la phrase de l'entourage restée en travers (facultatif)
-  si_reussite   text,  -- ce que « réussir à tous les coups » changerait (or)
+  si_reussite   text,  -- ce que la maîtrise totale changerait (or)
   prenom        text,  -- facultatif
   contact       text   -- @ Instagram ou téléphone si ok pour creuser en DM (facultatif)
 );

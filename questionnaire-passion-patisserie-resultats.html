@@ -236,7 +236,7 @@ function render(){
     ['pire_ratage','Le pire ratage + le verdict intérieur (l\'or de la douleur)'],
     ['phrase_revee','LA phrase qu\'ils rêvent d\'entendre (le désir profond en scène)'],
     ['phrase_recue','La phrase de l\'entourage restée en travers'],
-    ['si_reussite','Ce que « réussir à tous les coups » changerait (la transformation)']
+    ['si_reussite','Ce que la maîtrise totale changerait (la transformation)']
   ];
   document.getElementById('verbatims').innerHTML = VQ.map(([f,label])=>{
     const items = ROWS.map(r=>({id:r.id, txt:r[f], row:r})).filter(x=>x.txt && x.txt.trim());
