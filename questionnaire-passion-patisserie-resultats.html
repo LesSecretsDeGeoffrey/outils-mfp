@@ -70,6 +70,16 @@
   .contact-row .cval{font-size:14.5px}
   .cmain{display:flex; flex-direction:column; gap:4px; flex:1 1 320px; min-width:0}
   .cquote{font-size:12.5px; color:var(--muted); font-style:italic; line-height:1.45}
+  .cwrap{margin-bottom:10px}
+  .cwrap .contact-row{margin-bottom:0; cursor:pointer}
+  .cwrap.open .contact-row{border-radius:8px 8px 0 0}
+  .chev{display:inline-block; transition:transform .15s; color:var(--gris); margin-right:4px}
+  .cwrap.open .chev{transform:rotate(90deg)}
+  .cfull{border:1px solid var(--ligne); border-top:none; border-radius:0 0 8px 8px; background:#fff; padding:13px 16px}
+  .cf{font-size:13.5px; margin-bottom:9px; line-height:1.5; white-space:pre-wrap}
+  .cf:last-child{margin-bottom:0}
+  .cf b{color:var(--or-deep); font-weight:600}
+  @media (prefers-reduced-motion: reduce){.chev{transition:none}}
   .cbtns{display:flex; gap:7px; flex-wrap:wrap}
   .wabtn,.igbtn{flex:0 0 auto; font-size:12px; font-weight:700; text-decoration:none; padding:6px 12px; border-radius:5px; color:#fff; display:inline-flex; align-items:center; gap:5px}
   .wabtn{background:#25D366}
@@ -128,7 +138,7 @@
 
       <div class="block">
         <h2>À recontacter en DM</h2>
-        <p class="desc">Le message d'ouverture est déjà écrit sous chaque contact : il cite LEUR phrase la plus forte avec la relance adaptée. Le bouton WhatsApp l'insère directement dans la conversation, « Copier le msg » le met dans le presse-papier (pour Instagram). Ensuite, la grille : jamais « pourquoi », l'écho de leurs mots, « qu'est-ce que tu t'es dit à ce moment-là ? »</p>
+        <p class="desc">Le message d'ouverture est déjà écrit sous chaque contact : il cite LEUR phrase la plus forte avec la relance adaptée. Clique sur une ligne pour déplier toutes ses réponses avant d'envoyer. Le bouton WhatsApp insère le message directement dans la conversation, « Copier le msg » le met dans le presse-papier (pour Instagram). Ensuite, la grille : jamais « pourquoi », l'écho de leurs mots, « qu'est-ce que tu t'es dit à ce moment-là ? »</p>
         <div id="contacts"></div>
       </div>
 
@@ -286,23 +296,38 @@ function render(){
     <div class="kpi"><div class="num">${contacts.length}</div><div class="lab">À recontacter en DM</div></div>`;
 
   // contacts à recontacter
+  const CF = [
+    ['anciennete','Pâtisse depuis'],
+    ['importance','Pourquoi c\'est important'],
+    ['pire_ratage','Pire ratage + verdict'],
+    ['phrase_revee','Phrase rêvée'],
+    ['phrase_recue','Phrase reçue'],
+    ['si_reussite','Si elle maîtrisait tout']
+  ];
   document.getElementById('contacts').innerHTML = contacts.length ? contacts.map(r=>{
     const tel = phoneDigits(r.contact);
     const ig  = tel ? null : igHandle(r.contact);
     const msg = openerMsg(r);
     const enc = encodeURIComponent(msg);
+    const full = CF.map(([f,label])=>{
+      const v = (r[f]||'').trim();
+      return v ? `<div class="cf"><b>${label} :</b> ${esc(v)}</div>` : '';
+    }).join('');
     return `
-    <div class="contact-row">
-      <span class="cmain">
-        <span><span class="cwho">${esc(r.prenom || 'Sans prénom')}</span> · <span class="cval">${esc(r.contact)}</span></span>
-        <span class="cquote">${esc(msg)}</span>
-      </span>
-      <span class="cbtns">
-        ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${enc}">💬 WhatsApp</a>` : ''}
-        ${ig ? `<a class="igbtn" target="_blank" rel="noopener" href="https://www.instagram.com/${encodeURIComponent(ig)}/">📷 Instagram</a>` : ''}
-        <button class="copy" data-txt="${enc}">Copier le msg</button>
-        <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Contact</button>
-      </span>
+    <div class="cwrap">
+      <div class="contact-row">
+        <span class="cmain">
+          <span><span class="chev">▸</span><span class="cwho">${esc(r.prenom || 'Sans prénom')}</span> · <span class="cval">${esc(r.contact)}</span></span>
+          <span class="cquote">${esc(msg)}</span>
+        </span>
+        <span class="cbtns">
+          ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${enc}">💬 WhatsApp</a>` : ''}
+          ${ig ? `<a class="igbtn" target="_blank" rel="noopener" href="https://www.instagram.com/${encodeURIComponent(ig)}/">📷 Instagram</a>` : ''}
+          <button class="copy" data-txt="${enc}">Copier le msg</button>
+          <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Contact</button>
+        </span>
+      </div>
+      <div class="cfull" hidden>${full || '<div class="cf">Aucune réponse détaillée</div>'}</div>
     </div>`;
   }).join('') : '<p class="empty">Personne pour l\'instant</p>';
 
@@ -329,6 +354,17 @@ function render(){
       </div></details>`;
   }).join('');
 }
+
+// clic sur une ligne de contact = déplier ses réponses complètes (les boutons restent indépendants)
+document.addEventListener('click', e=>{
+  const row = e.target.closest('.contact-row'); if(!row) return;
+  if(e.target.closest('.cbtns')) return;
+  const wrap = row.closest('.cwrap'); if(!wrap) return;
+  const full = wrap.querySelector('.cfull'); if(!full) return;
+  const open = full.hidden;
+  full.hidden = !open;
+  wrap.classList.toggle('open', open);
+});
 
 // copy buttons (delegation)
 document.addEventListener('click', e=>{
