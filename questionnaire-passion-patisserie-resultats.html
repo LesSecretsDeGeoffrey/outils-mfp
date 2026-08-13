@@ -68,6 +68,12 @@
   .contact-row{display:flex; align-items:center; justify-content:space-between; gap:12px; background:#FCFAF6; border:1px solid var(--ligne); border-radius:8px; padding:13px 16px; margin-bottom:10px; flex-wrap:wrap}
   .contact-row .cwho{font-weight:700; color:var(--or-deep)}
   .contact-row .cval{font-size:14.5px}
+  .cbtns{display:flex; gap:7px; flex-wrap:wrap}
+  .wabtn,.igbtn{flex:0 0 auto; font-size:12px; font-weight:700; text-decoration:none; padding:6px 12px; border-radius:5px; color:#fff; display:inline-flex; align-items:center; gap:5px}
+  .wabtn{background:#25D366}
+  .wabtn:hover{background:#1EBE5A}
+  .igbtn{background:#E1306C}
+  .igbtn:hover{background:#C42A5E}
   /* verbatims */
   .vq{border:1px solid var(--ligne); border-radius:8px; margin-bottom:14px; overflow:hidden}
   .vq summary{cursor:pointer; padding:15px 18px; font-weight:600; font-size:15px; background:#FCFAF6; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px}
@@ -208,6 +214,22 @@ function whoLine(r){
   if(!r.prenom) return '';
   return `<span class="who">— ${esc(r.prenom)}</span>`;
 }
+// contact → numéro WhatsApp international (sans +), ou null si ce n'est pas un numéro
+function phoneDigits(raw){
+  const cleaned = String(raw).replace(/what'?s?\s?app|wathssap/gi,'').replace(/:/g,' ');
+  if (/[a-z@]/i.test(cleaned)) return null;
+  const d = cleaned.replace(/\D/g,'');
+  if (d.length < 9) return null;
+  if (d.startsWith('00')) return d.slice(2);
+  if (d.startsWith('0') && d.length === 10) return '33' + d.slice(1);
+  return d;
+}
+// contact → pseudo Instagram probable (un seul mot, pas un email), ou null
+function igHandle(raw){
+  const s = String(raw).trim().replace(/^@/,'');
+  if (!s || /\s/.test(s) || s.includes('@') || !/[a-z]/i.test(s)) return null;
+  return s;
+}
 
 function render(){
   document.getElementById('loading').style.display='none';
@@ -221,11 +243,20 @@ function render(){
     <div class="kpi"><div class="num">${contacts.length}</div><div class="lab">À recontacter en DM</div></div>`;
 
   // contacts à recontacter
-  document.getElementById('contacts').innerHTML = contacts.length ? contacts.map(r=>`
+  document.getElementById('contacts').innerHTML = contacts.length ? contacts.map(r=>{
+    const tel = phoneDigits(r.contact);
+    const ig  = tel ? null : igHandle(r.contact);
+    const msg = encodeURIComponent(`Hello${r.prenom ? ' ' + r.prenom : ''}, c'est Geoffrey 😊 Merci d'avoir répondu à mon questionnaire 🙏 Il y a une phrase dans ta réponse qui m'a marqué…`);
+    return `
     <div class="contact-row">
       <span><span class="cwho">${esc(r.prenom || 'Sans prénom')}</span> · <span class="cval">${esc(r.contact)}</span></span>
-      <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Copier</button>
-    </div>`).join('') : '<p class="empty">Personne pour l\'instant</p>';
+      <span class="cbtns">
+        ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${msg}">💬 WhatsApp</a>` : ''}
+        ${ig ? `<a class="igbtn" target="_blank" rel="noopener" href="https://www.instagram.com/${encodeURIComponent(ig)}/">📷 Instagram</a>` : ''}
+        <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Copier</button>
+      </span>
+    </div>`;
+  }).join('') : '<p class="empty">Personne pour l\'instant</p>';
 
   // bars
   bars(document.getElementById('ancBars'), countField('anciennete'), n);
