@@ -68,6 +68,8 @@
   .contact-row{display:flex; align-items:center; justify-content:space-between; gap:12px; background:#FCFAF6; border:1px solid var(--ligne); border-radius:8px; padding:13px 16px; margin-bottom:10px; flex-wrap:wrap}
   .contact-row .cwho{font-weight:700; color:var(--or-deep)}
   .contact-row .cval{font-size:14.5px}
+  .cmain{display:flex; flex-direction:column; gap:4px; flex:1 1 320px; min-width:0}
+  .cquote{font-size:12.5px; color:var(--muted); font-style:italic; line-height:1.45}
   .cbtns{display:flex; gap:7px; flex-wrap:wrap}
   .wabtn,.igbtn{flex:0 0 auto; font-size:12px; font-weight:700; text-decoration:none; padding:6px 12px; border-radius:5px; color:#fff; display:inline-flex; align-items:center; gap:5px}
   .wabtn{background:#25D366}
@@ -126,7 +128,7 @@
 
       <div class="block">
         <h2>À recontacter en DM</h2>
-        <p class="desc">Celles qui ont laissé un contact pour creuser. La grille de creusage : jamais « pourquoi », toujours « raconte-moi la dernière fois où... », l'écho de leurs mots, et « qu'est-ce que tu t'es dit à ce moment-là ? »</p>
+        <p class="desc">Le message d'ouverture est déjà écrit sous chaque contact : il cite LEUR phrase la plus forte avec la relance adaptée. Le bouton WhatsApp l'insère directement dans la conversation, « Copier le msg » le met dans le presse-papier (pour Instagram). Ensuite, la grille : jamais « pourquoi », l'écho de leurs mots, « qu'est-ce que tu t'es dit à ce moment-là ? »</p>
         <div id="contacts"></div>
       </div>
 
@@ -230,6 +232,47 @@ function igHandle(raw){
   if (!s || /\s/.test(s) || s.includes('@') || !/[a-z]/i.test(s)) return null;
   return s;
 }
+// ===== message d'ouverture personnalisé (creusage DM) =====
+// On cite LA phrase la plus forte de SA réponse : l'entourage d'abord, puis le
+// verdict intérieur du ratage, puis la transformation. Relance adaptée à la source.
+const GOLD = /nulle?s?\b|dou[ée]|capable|jamais|pas (faite? )?pour moi|bonne? [àa] rien|laisse[rz]? tomber|achet[ée]|honte|merde|abandonn|confiance|fiert|fi[èe]re|estime|m[ée]tier|gaspillage|silence|poubelle|cr[ée]er|r[êe]ve/i;
+// le verdict intérieur : la phrase qu'on cherche en priorité absolue
+const VERDICT = /nulle?s?\b|bonne? [àa] rien|pas (faite? )?pour moi|arriverai jamais|laisse[rz]? tomber|merde|honte|pas dou[ée]/i;
+// phrase_recue positive ou « rien à signaler » : ne pas la citer en ouverture
+const POSITIF = /brav|super|géni|meilleur|magnifique|félicit|encourag|confiance en toi|vraiment dou[ée]|t'?améliores|bienveillan|jamais eu|jamais !|aucune|pas de (phrase|mauvais)/i;
+const JUNK = /^(ras|rien|aucune?s?|jamais|non|oui|pas encore|hhh+|les 2|je|pas|n'ai|re[çc]u|ok|\.|…|-|\?)[\s!.…]*$/i;
+function pickSentence(txt){
+  const parts = txt.split(/[\n\/]+|[.!?]+\s+/).map(s=>s.trim()).filter(s=>s.length>=10);
+  if(!parts.length) return txt.replace(/\s+/g,' ').trim().slice(0,140);
+  let s = (parts.find(x=>GOLD.test(x)) || parts[0]).replace(/\s+/g,' ').trim();
+  if(s.length>140) s = s.slice(0,137)+'…';
+  return s;
+}
+function bestQuote(r){
+  const cands = [
+    ['phrase_recue', 7, "Raconte-moi : c'était quand, la dernière fois qu'on t'a dit ça ?"],
+    ['pire_ratage', 6, "Raconte-moi : qu'est-ce qui s'est passé ce jour-là ?"],
+    ['si_reussite', 3, "Dis-moi : qu'est-ce qui te manque le plus pour y arriver aujourd'hui ?"],
+    ['importance', 2, "Raconte-moi la dernière fois où tu as ressenti ça en pâtissant"]
+  ];
+  let best = null;
+  for(const [f, base, q] of cands){
+    const v = (r[f]||'').trim();
+    if(v.length<10 || JUNK.test(v)) continue;
+    if(f==='phrase_recue' && POSITIF.test(v)) continue;
+    let score = base;
+    if(f==='pire_ratage') score += VERDICT.test(v) ? 14 : (GOLD.test(v) ? 8 : 0);
+    else score += GOLD.test(v) ? 10 : 0;
+    if(!best || score>best.score) best = {score, quote: pickSentence(v), question: q};
+  }
+  return best;
+}
+function openerMsg(r){
+  const hello = `Hello${r.prenom ? ' ' + r.prenom : ''}, c'est Geoffrey 😊 Merci d'avoir répondu à mon questionnaire 🙏`;
+  const b = bestQuote(r);
+  if(!b) return `${hello} J'aimerais creuser un truc avec toi, t'as 2 minutes ?`;
+  return `${hello} Il y a une phrase de ta réponse qui m'a marqué : « ${b.quote} ». ${b.question}`;
+}
 
 function render(){
   document.getElementById('loading').style.display='none';
@@ -246,14 +289,19 @@ function render(){
   document.getElementById('contacts').innerHTML = contacts.length ? contacts.map(r=>{
     const tel = phoneDigits(r.contact);
     const ig  = tel ? null : igHandle(r.contact);
-    const msg = encodeURIComponent(`Hello${r.prenom ? ' ' + r.prenom : ''}, c'est Geoffrey 😊 Merci d'avoir répondu à mon questionnaire 🙏 Il y a une phrase dans ta réponse qui m'a marqué…`);
+    const msg = openerMsg(r);
+    const enc = encodeURIComponent(msg);
     return `
     <div class="contact-row">
-      <span><span class="cwho">${esc(r.prenom || 'Sans prénom')}</span> · <span class="cval">${esc(r.contact)}</span></span>
+      <span class="cmain">
+        <span><span class="cwho">${esc(r.prenom || 'Sans prénom')}</span> · <span class="cval">${esc(r.contact)}</span></span>
+        <span class="cquote">${esc(msg)}</span>
+      </span>
       <span class="cbtns">
-        ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${msg}">💬 WhatsApp</a>` : ''}
+        ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${enc}">💬 WhatsApp</a>` : ''}
         ${ig ? `<a class="igbtn" target="_blank" rel="noopener" href="https://www.instagram.com/${encodeURIComponent(ig)}/">📷 Instagram</a>` : ''}
-        <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Copier</button>
+        <button class="copy" data-txt="${enc}">Copier le msg</button>
+        <button class="copy" data-txt="${encodeURIComponent(r.contact)}">Contact</button>
       </span>
     </div>`;
   }).join('') : '<p class="empty">Personne pour l\'instant</p>';
