@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiches de démarrage · La Méthode Fondations Pro</title>
+<meta name="robots" content="noindex">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --creme:#FDF8F0; --encre:#1A1410; --or:#C8A04A; --or-deep:#8B6914;
+    --muted:#6B5C44; --ligne:rgba(26,20,16,0.12); --carte:#fff;
+    --vert:#3E8E5A; --rouge:#B23A2E; --gris:#B8A98C;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--creme); color:var(--encre); line-height:1.55}
+  .overline{font-family:'Courier New',monospace; font-size:10px; letter-spacing:2.5px; text-transform:uppercase; color:var(--or)}
+  #gate{min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--encre)}
+  #gate .card{background:var(--carte); border-radius:8px; padding:40px 34px; max-width:360px; width:100%; text-align:center; border-top:3px solid var(--or)}
+  #gate h1{font-family:Georgia,serif; font-weight:400; font-size:26px; margin:14px 0 8px}
+  #gate p{color:var(--muted); font-size:14px; margin-bottom:22px}
+  #gate input{width:100%; font-size:17px; padding:13px; border:1px solid var(--ligne); border-radius:6px; text-align:center; margin-bottom:14px}
+  #gate input:focus{outline:none; border-color:var(--or)}
+  #gate button{width:100%; font-family:inherit; font-size:16px; font-weight:700; color:var(--encre); border:none; padding:14px; border-radius:6px; cursor:pointer; background:linear-gradient(135deg,#E0BE6A,#C8A04A)}
+  #gateErr{color:var(--rouge); font-size:13px; margin-top:10px; display:none}
+  #app{display:none}
+  .top{background:var(--encre); color:var(--creme); padding:26px clamp(16px,5vw,40px); border-bottom:3px solid var(--or)}
+  .top .row{max-width:900px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px}
+  .top h1{font-family:Georgia,serif; font-weight:400; font-size:clamp(22px,4vw,30px)}
+  .top h1 .accent{color:var(--or); font-style:italic}
+  .top .actions{display:flex; gap:10px; flex-wrap:wrap}
+  .top button{font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:9px 15px; border-radius:6px; border:1px solid rgba(200,160,74,0.5); background:transparent; color:var(--or)}
+  .top button:hover{background:rgba(200,160,74,0.12)}
+  main{max-width:900px; margin:0 auto; padding:clamp(20px,4vw,40px) clamp(16px,5vw,40px) 100px}
+  .filters{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px}
+  .filters button{font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; padding:8px 14px; border-radius:20px; border:1px solid var(--ligne); background:#fff; color:var(--muted)}
+  .filters button.on{background:var(--or); border-color:var(--or); color:var(--encre)}
+  .fiche{background:var(--carte); border:1px solid var(--ligne); border-radius:8px; margin-bottom:14px; overflow:hidden}
+  .fiche.lu{opacity:.72}
+  .fiche summary{list-style:none; cursor:pointer; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#FCFAF6; border-left:4px solid var(--or)}
+  .fiche.lu summary{border-left-color:var(--gris)}
+  .fiche summary::-webkit-details-marker{display:none}
+  .who{display:flex; flex-direction:column; gap:3px; min-width:0}
+  .who .name{font-family:Georgia,serif; font-size:20px; color:var(--encre)}
+  .who .meta{font-size:12.5px; color:var(--muted)}
+  .tags{display:flex; gap:6px; flex-wrap:wrap; margin-top:6px}
+  .tag{font-size:11.5px; background:rgba(200,160,74,0.14); color:var(--or-deep); border-radius:20px; padding:2px 9px; white-space:nowrap}
+  .cbtns{display:flex; gap:7px; flex-wrap:wrap; align-items:center}
+  .wabtn{font-size:12px; font-weight:700; text-decoration:none; padding:7px 12px; border-radius:5px; color:#fff; background:#25D366; display:inline-flex; align-items:center; gap:5px}
+  .wabtn:hover{background:#1EBE5A}
+  .sbtn{font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--ligne); background:#fff; color:var(--muted); padding:6px 11px; border-radius:5px; white-space:nowrap}
+  .sbtn:hover{border-color:var(--or); color:var(--or-deep)}
+  .sbtn.done{background:var(--vert); color:#fff; border-color:var(--vert)}
+  .sbtn.del:hover{border-color:var(--rouge); color:var(--rouge)}
+  .sbtn.armed{background:var(--rouge); color:#fff; border-color:var(--rouge)}
+  .body{padding:8px 20px 22px; display:grid; grid-template-columns:1fr; gap:14px}
+  @media (min-width:700px){.body{grid-template-columns:1fr 1fr}}
+  .field{background:#FCFAF6; border-left:3px solid var(--or); border-radius:0 6px 6px 0; padding:11px 14px}
+  .field.wide{grid-column:1 / -1}
+  .field .k{font-family:'Courier New',monospace; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--or-deep); display:block; margin-bottom:4px}
+  .field .v{font-size:14.5px; white-space:pre-wrap; line-height:1.5}
+  .field .v.big{font-size:15.5px}
+  .empty{color:var(--gris); font-style:italic}
+  #loading{text-align:center; padding:80px 20px; color:var(--muted)}
+  .kpis{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:22px}
+  .kpi{flex:1 1 140px; background:var(--carte); border:1px solid var(--ligne); border-radius:8px; padding:16px; text-align:center}
+  .kpi .num{font-family:Georgia,serif; font-size:32px; line-height:1; color:var(--or-deep)}
+  .kpi .lab{font-size:11.5px; color:var(--muted); margin-top:6px; text-transform:uppercase; letter-spacing:1px}
+  @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="card">
+    <span class="overline">Lecture privée</span>
+    <h1>Fiches de démarrage</h1>
+    <p>Réservé à Geoffrey</p>
+    <input type="password" id="pw" placeholder="Mot de passe" autocomplete="off">
+    <button onclick="unlock()">Voir les fiches</button>
+    <div id="gateErr">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="top"><div class="row">
+    <h1>Fiches <span class="accent">de démarrage</span></h1>
+    <div class="actions">
+      <button onclick="loadData()">↻ Recharger</button>
+      <button onclick="exportCSV()">⬇ Export CSV</button>
+    </div>
+  </div></div>
+  <main>
+    <div id="loading">Chargement des fiches...</div>
+    <div id="content" style="display:none">
+      <div class="kpis" id="kpis"></div>
+      <div class="filters">
+        <button class="on" data-f="todo" onclick="setFilter(this)">À préparer</button>
+        <button data-f="lu" onclick="setFilter(this)">Traitées</button>
+        <button data-f="all" onclick="setFilter(this)">Toutes</button>
+      </div>
+      <div id="list"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://mxnrqnpvcxwdwykzzchk.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_f_MKNNQu-CG7LqW3Bs0sUA_TIU2fBUf';
+const TABLE = 'demarrage_mfp';
+const PASSWORD = '6688';
+const HD = { 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+SUPABASE_KEY, 'Content-Type':'application/json' };
+let ROWS = [];
+let FILTER = 'todo';
+
+function unlock(){
+  if (document.getElementById('pw').value === PASSWORD){
+    document.getElementById('gate').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else document.getElementById('gateErr').style.display='block';
+}
+document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+
+async function loadData(){
+  document.getElementById('loading').style.display='block';
+  document.getElementById('content').style.display='none';
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?select=*&order=created_at.desc`, { headers:HD });
+    if(res.status===404){
+      document.getElementById('loading').innerHTML = 'La table n\'existe pas encore.<br>Lance d\'abord <b>demarrage-mfp-schema.sql</b> dans Supabase &gt; SQL Editor, puis recharge.';
+      return;
+    }
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    ROWS = await res.json();
+    render();
+  }catch(err){
+    document.getElementById('loading').textContent = 'Erreur de chargement : '+err.message;
+  }
+}
+
+const esc = s => (s==null?'':String(s)).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmtDate = d => new Date(d).toLocaleString('fr-FR', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
+const list = a => Array.isArray(a) && a.length ? a.join(', ') : '';
+const telDigits = t => { let d=(t||'').replace(/\D/g,''); if(d.startsWith('0')) d='33'+d.slice(1); return d; };
+
+function field(k, v, opts={}){
+  const cls = 'field' + (opts.wide?' wide':'');
+  const val = v ? `<div class="v${opts.big?' big':''}">${esc(v)}</div>` : `<div class="v empty">non renseigné</div>`;
+  return `<div class="${cls}"><span class="k">${k}</span>${val}</div>`;
+}
+
+function setFilter(btn){
+  FILTER = btn.dataset.f;
+  document.querySelectorAll('.filters button').forEach(b=>b.classList.toggle('on', b===btn));
+  render();
+}
+
+function render(){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('content').style.display='block';
+  const todo = ROWS.filter(r=>!r.lu).length;
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="num">${ROWS.length}</div><div class="lab">fiches reçues</div></div>
+    <div class="kpi"><div class="num">${todo}</div><div class="lab">à préparer</div></div>
+    <div class="kpi"><div class="num">${ROWS.length-todo}</div><div class="lab">traitées</div></div>`;
+  const rows = ROWS.filter(r => FILTER==='all' ? true : FILTER==='lu' ? r.lu : !r.lu);
+  const el = document.getElementById('list');
+  if(!rows.length){ el.innerHTML = '<p class="empty" style="text-align:center;padding:40px 0">Aucune fiche ici</p>'; return; }
+  el.innerHTML = rows.map(r => {
+    const tel = telDigits(r.telephone);
+    const msg = encodeURIComponent(`Bonjour ${r.prenom||''}, j'ai bien reçu ton questionnaire de démarrage. J'ai lu tes réponses, on va regarder ensemble ${r.dernier_rate ? 'ce qui se passe sur ta dernière fournée' : 'tes ratés'} pendant notre appel. À très vite, Geoffrey`);
+    const tags = (r.rates||[]).slice(0,4).map(t=>`<span class="tag">${esc(t)}</span>`).join('') + ((r.rates||[]).length>4 ? `<span class="tag">+${r.rates.length-4}</span>` : '');
+    return `
+    <details class="fiche ${r.lu?'lu':''}" id="f-${r.id}">
+      <summary>
+        <div class="who">
+          <span class="name">${esc(r.prenom||'Sans prénom')}</span>
+          <span class="meta">${fmtDate(r.created_at)} · ${esc(r.anciennete||'')} · ${esc(r.frequence||'')} · ${esc(r.temps||'')} / semaine</span>
+          <div class="tags">${tags}</div>
+        </div>
+        <div class="cbtns" onclick="event.preventDefault(); event.stopPropagation();">
+          ${tel ? `<a class="wabtn" target="_blank" rel="noopener" href="https://wa.me/${tel}?text=${msg}">💬 WhatsApp</a>` : ''}
+          <button class="sbtn ${r.lu?'done':''}" onclick="toggleLu('${r.id}', ${!r.lu})">${r.lu ? '✓ Traitée' : 'Fiche traitée'}</button>
+          <button class="sbtn del" onclick="delRow(this, '${r.id}')">Supprimer</button>
+        </div>
+      </summary>
+      <div class="body">
+        ${field('Téléphone', r.telephone)}
+        ${field('Four', [r.four, r.four_marque].filter(Boolean).join(' · '))}
+        ${field('Ce qu\'il rate le plus souvent', list(r.rates), {wide:true})}
+        ${field('Dernier raté en détail', r.dernier_rate, {wide:true, big:true})}
+        ${field('Réussi une fois, jamais retrouvé', r.reussi_une_fois, {wide:true})}
+        ${field('Matériel possédé', list(r.materiel), {wide:true})}
+        ${field('Pense devoir acheter', r.materiel_manque)}
+        ${field('Quand', list(r.moments))}
+        ${field('Objectif à 12 semaines', r.objectif, {wide:true, big:true})}
+        ${field('Événement cible', r.evenement)}
+        ${field('Autre chose', r.autre)}
+      </div>
+    </details>`;
+  }).join('');
+}
+
+async function toggleLu(id, lu){
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, { method:'PATCH', headers:{...HD,'Prefer':'return=minimal'}, body: JSON.stringify({lu}) });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const r = ROWS.find(x=>x.id===id); if(r) r.lu = lu;
+    render();
+  }catch(err){ alert('Échec : '+err.message); }
+}
+
+async function delRow(btn, id){
+  if(!btn.classList.contains('armed')){
+    btn.classList.add('armed'); btn.textContent='Confirmer ?';
+    setTimeout(()=>{ btn.classList.remove('armed'); btn.textContent='Supprimer'; }, 3000);
+    return;
+  }
+  btn.disabled=true; btn.textContent='...';
+  try{
+    await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`, {method:'DELETE', headers:{...HD,'Prefer':'return=minimal'}});
+    const chk = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}&select=id`, {headers:HD});
+    const still = await chk.json();
+    if(still.length) throw new Error('la ligne est toujours là (policy DELETE manquante ?)');
+    ROWS = ROWS.filter(r=>r.id!==id); render();
+  }catch(err){ alert('Suppression échouée : '+err.message); btn.disabled=false; btn.textContent='Supprimer'; btn.classList.remove('armed'); }
+}
+
+function exportCSV(){
+  const cols = ['created_at','prenom','telephone','anciennete','frequence','rates','dernier_rate','reussi_une_fois','four','four_marque','materiel','materiel_manque','temps','moments','objectif','evenement','autre','lu'];
+  const cell = v => { const s = Array.isArray(v) ? v.join(' | ') : (v==null?'':String(v)); return '"'+s.replace(/"/g,'""')+'"'; };
+  const csv = [cols.join(';')].concat(ROWS.map(r => cols.map(c=>cell(r[c])).join(';'))).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'}));
+  a.download = 'fiches-demarrage-mfp.csv'; a.click();
+}
+</script>
+</body>
+</html>
