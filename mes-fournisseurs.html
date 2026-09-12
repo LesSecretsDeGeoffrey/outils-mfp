@@ -15,7 +15,7 @@
   h1 .accent{color:#C8A04A;font-style:italic}
   .intro{color:rgba(26,20,16,0.72);margin-bottom:34px;max-width:680px;font-size:clamp(15px,2vw,17px)}
   .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-  .cat{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:6px;padding:20px 18px}
+  .cat{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:6px;padding:20px 18px;min-width:0}
   .cat-label{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px}
   .cat-count{background:rgba(200,160,74,0.18);color:#9a7b1f;border-radius:20px;padding:1px 9px;font-size:10px}
   .items{display:flex;flex-direction:column;gap:8px}
@@ -23,14 +23,24 @@
   .item:hover,.item:focus-visible{border-color:#C8A04A;background:#fff;transform:translateX(3px);outline:none}
   .i-main{display:flex;flex-direction:column;gap:1px;min-width:0}
   .i-name{font-size:15.5px;line-height:1.3;font-weight:600}
-  .i-host{font-size:12px;color:rgba(26,20,16,0.5);font-family:'Courier New',monospace;letter-spacing:.3px}
+  .i-host{font-size:12px;color:rgba(26,20,16,0.5);font-family:'Courier New',monospace;letter-spacing:.3px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .item.has-promo{flex-direction:column;align-items:stretch;gap:11px}
-  .i-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .i-promo{display:flex;flex-direction:column;gap:4px;background:rgba(200,160,74,0.14);border:1px dashed rgba(200,160,74,0.65);border-radius:6px;padding:9px 12px}
+  .item.has-promo:hover{transform:none;background:#FDF8F0;border-color:rgba(26,20,16,0.1)}
+  .item.has-promo:focus-within{border-color:#C8A04A;background:#fff}
+  .i-top{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:#1A1410;border-radius:6px}
+  .i-top:hover .i-name,.i-top:focus-visible .i-name{color:#8B6914}
+  .i-top:hover .i-go,.i-top:focus-visible .i-go{opacity:1}
+  .i-promo{display:flex;flex-direction:column;gap:8px;background:rgba(200,160,74,0.14);border:1px dashed rgba(200,160,74,0.65);border-radius:6px;padding:10px 12px 12px}
   .i-promo-label{font-family:'Courier New',monospace;font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:#8B6914}
-  .i-promo-line{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-  .i-promo-code{font-family:'Courier New',monospace;font-size:17px;font-weight:700;letter-spacing:1.5px;color:#1A1410}
-  .i-promo-off{font-size:13.5px;font-weight:700;color:#8B6914;white-space:nowrap}
+  .i-promo-line{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .i-promo-code{font-family:'Courier New',monospace;font-size:18px;font-weight:700;letter-spacing:1.5px;color:#1A1410;-webkit-user-select:all;user-select:all}
+  .i-promo-off{font-size:13.5px;font-weight:700;color:#8B6914}
+  .copybtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 18px;border:none;border-radius:30px;background:#C8A04A;color:#1A1410;font-family:'Courier New',monospace;font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;transition:background .18s ease,transform .18s ease;-webkit-tap-highlight-color:transparent}
+  .copybtn:hover{transform:translateY(-1px);background:#d6ae59}
+  .copybtn:focus-visible{outline:2px solid #1A1410;outline-offset:2px}
+  .copybtn.is-copied{background:#1A1410;color:#C8A04A}
+  .copybtn .ico{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  @media (max-width:360px){.copybtn{padding:0 14px;letter-spacing:1px}}
   .i-go{font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:#C8A04A;white-space:nowrap;opacity:.8;flex-shrink:0}
   .item:hover .i-go,.item:focus-visible .i-go{opacity:1}
   footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
@@ -47,7 +57,7 @@
 
 <main>
   <h1>Mes <span class="accent">fournisseurs</span></h1>
-  <p class="intro">Les boutiques où je commande mon matériel et mes matières premières. Clique sur une enseigne, tu arrives direct sur son site. Quand j'ai négocié un code promo, il est affiché juste sous l'enseigne.</p>
+  <p class="intro">Les boutiques où je commande mon matériel et mes matières premières. Clique sur une enseigne, tu arrives direct sur son site. Quand j'ai négocié un code promo, il est affiché juste sous l'enseigne, avec un bouton pour le copier.</p>
 
   <div class="cats">
 
@@ -68,16 +78,20 @@
     <div class="cat">
       <h3 class="cat-label">Matériel & matières premières <span class="cat-count">6</span></h3>
       <div class="items">
-        <a class="item has-promo" href="https://www.deco-relief.fr/" target="_blank" rel="noopener nofollow">
-          <span class="i-top">
+        <div class="item has-promo">
+          <a class="i-top" href="https://www.deco-relief.fr/" target="_blank" rel="noopener nofollow">
             <span class="i-main"><span class="i-name">Deco Relief</span><span class="i-host">deco-relief.fr</span></span>
             <span class="i-go">Voir &rarr;</span>
-          </span>
-          <span class="i-promo">
+          </a>
+          <div class="i-promo">
             <span class="i-promo-label">Code promo</span>
-            <span class="i-promo-line"><span class="i-promo-code">LSDG15</span><span class="i-promo-off">&minus;15 % sur ta commande</span></span>
-          </span>
-        </a>
+            <div class="i-promo-line">
+              <span class="i-promo-code">LSDG15</span>
+              <button type="button" class="copybtn" data-code="LSDG15" aria-label="Copier le code promo LSDG15"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="txt">Copier</span></button>
+            </div>
+            <span class="i-promo-off">&minus;15 % sur ta commande</span>
+          </div>
+        </div>
         <a class="item" href="https://www.cerfdellier.com/" target="_blank" rel="noopener nofollow">
           <span class="i-main"><span class="i-name">Cerf Dellier</span><span class="i-host">cerfdellier.com</span></span>
           <span class="i-go">Voir &rarr;</span>
@@ -118,5 +132,60 @@
   <p class="brand">Les Secrets de Geoffrey</p>
   <p style="margin-top:8px">Méthode Fondations Pro — Les fournisseurs de ma communauté</p>
 </footer>
+<script>
+(function(){
+  function fallbackCopy(text){
+    var ta=document.createElement('textarea');
+    ta.value=text;
+    ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0,text.length);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function copyText(text){
+    if(navigator.clipboard&&window.isSecureContext){
+      return navigator.clipboard.writeText(text).then(function(){return true;}).catch(function(){return fallbackCopy(text);});
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+  function selectCode(btn){
+    var code=btn.parentNode.querySelector('.i-promo-code,.k-code');
+    if(!code||!window.getSelection||!document.createRange)return;
+    var r=document.createRange();
+    r.selectNodeContents(code);
+    var sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    var label=btn.querySelector('.txt');
+    var base=label.textContent;
+    var timer;
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      copyText(btn.getAttribute('data-code')).then(function(ok){
+        if(ok){
+          label.textContent='Copié';
+          btn.classList.add('is-copied');
+        }else{
+          label.textContent='Sélectionné';
+          selectCode(btn);
+        }
+        clearTimeout(timer);
+        timer=setTimeout(function(){
+          label.textContent=base;
+          btn.classList.remove('is-copied');
+        },2000);
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>

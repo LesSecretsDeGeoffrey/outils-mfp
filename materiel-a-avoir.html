@@ -44,8 +44,15 @@
   .k-desc{color:rgba(253,248,240,0.72);max-width:560px;font-size:15px}
   .k-promo{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:4px}
   .k-promo-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(253,248,240,0.6)}
-  .k-code{font-family:'Courier New',monospace;font-weight:700;letter-spacing:3px;color:#1A1410;background:#C8A04A;padding:7px 16px;border-radius:4px;font-size:15px}
+  .k-code{font-family:'Courier New',monospace;font-weight:700;letter-spacing:3px;color:#1A1410;background:#C8A04A;padding:7px 16px;border-radius:4px;font-size:15px;-webkit-user-select:all;user-select:all}
   .k-bonus{font-size:13.5px;color:#C8A04A}
+  .copybtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 18px;border:1px solid rgba(200,160,74,0.65);border-radius:30px;background:transparent;color:#C8A04A;font-family:'Courier New',monospace;font-size:11.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;transition:background .18s ease,color .18s ease,transform .18s ease;-webkit-tap-highlight-color:transparent}
+  .copybtn:hover{background:rgba(200,160,74,0.18);transform:translateY(-1px)}
+  .copybtn:focus-visible{outline:2px solid #C8A04A;outline-offset:2px}
+  .copybtn.is-copied{background:#C8A04A;color:#1A1410;border-color:#C8A04A}
+  .copybtn .ico{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+  @media (max-width:520px){.k-promo-label,.k-bonus{flex-basis:100%}}
+  @media (max-width:360px){.copybtn{padding:0 14px;letter-spacing:1px}}
   .k-btn{align-self:flex-start;margin-top:8px;background:#C8A04A;color:#1A1410;text-decoration:none;font-family:'Courier New',monospace;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;padding:14px 26px;border-radius:30px;transition:transform .18s ease,box-shadow .18s ease}
   .k-btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,160,74,0.3)}
   footer{background:#1A1410;color:rgba(253,248,240,0.5);padding:40px 20px;text-align:center;font-size:13px}
@@ -329,6 +336,7 @@
       <div class="k-promo">
         <span class="k-promo-label">Code promo</span>
         <span class="k-code">GEOFFREY</span>
+        <button type="button" class="copybtn" data-code="GEOFFREY" aria-label="Copier le code promo GEOFFREY"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path></svg><span class="txt">Copier</span></button>
         <span class="k-bonus">3 accessoires offerts &middot; valeur &asymp; 500&euro;</span>
       </div>
       <a class="k-btn" href="https://www.kenwoodworld.com/fr-fr/e/cookingchef-ambassadorprogram?utm_source=instagram&amp;utm_medium=kol&amp;utm_campaign=FR_KW_hq_kitchen-kitchen-machine_social_ig_Masson-Geoffrey_coupon_GEOFFREY" target="_blank" rel="noopener nofollow">Profiter de l'offre Kenwood &rarr;</a>
@@ -370,6 +378,61 @@
       else { g.style.display=hasVisibleCat?'':'none'; }
     });
     noresult.style.display=any?'none':'block';
+  });
+})();
+</script>
+<script>
+(function(){
+  function fallbackCopy(text){
+    var ta=document.createElement('textarea');
+    ta.value=text;
+    ta.setAttribute('readonly','');
+    ta.style.cssText='position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0,text.length);
+    var ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function copyText(text){
+    if(navigator.clipboard&&window.isSecureContext){
+      return navigator.clipboard.writeText(text).then(function(){return true;}).catch(function(){return fallbackCopy(text);});
+    }
+    return Promise.resolve(fallbackCopy(text));
+  }
+  function selectCode(btn){
+    var code=btn.parentNode.querySelector('.i-promo-code,.k-code');
+    if(!code||!window.getSelection||!document.createRange)return;
+    var r=document.createRange();
+    r.selectNodeContents(code);
+    var sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
+  document.querySelectorAll('.copybtn').forEach(function(btn){
+    var label=btn.querySelector('.txt');
+    var base=label.textContent;
+    var timer;
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      copyText(btn.getAttribute('data-code')).then(function(ok){
+        if(ok){
+          label.textContent='Copié';
+          btn.classList.add('is-copied');
+        }else{
+          label.textContent='Sélectionné';
+          selectCode(btn);
+        }
+        clearTimeout(timer);
+        timer=setTimeout(function(){
+          label.textContent=base;
+          btn.classList.remove('is-copied');
+        },2000);
+      });
+    });
   });
 })();
 </script>
