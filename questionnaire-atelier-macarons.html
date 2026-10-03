@@ -99,9 +99,14 @@
   .q.invalid .lab{color:var(--rouge)}
   .qerr{display:none; color:var(--rouge); font-size:13px; font-weight:600; margin-top:8px}
   .q.invalid .qerr{display:block}
-  /* bloc conditionnel (si Non) */
-  #blocNon{display:none}
-  #blocNon.show{display:block; animation:reveal .3s ease}
+  /* cases à cocher (plusieurs réponses possibles) : carré au lieu du rond */
+  .choice.case .box{border-radius:5px}
+  .choice.case input:checked ~ .box::after{content:"\2713"; background:none; width:auto; height:auto; color:var(--encre); font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; border-radius:0}
+  .autre-precise{margin-top:9px; display:none}
+  .autre-precise.show{display:block}
+  /* blocs conditionnels (si Oui / si Non) */
+  #blocNon, #blocOui{display:none}
+  #blocNon.show, #blocOui.show{display:block; animation:reveal .3s ease}
   @keyframes reveal{from{opacity:0} to{opacity:1}}
   .submit-wrap{margin-top:28px}
   .btn{
@@ -152,6 +157,15 @@
       </div>
 
       <div class="q">
+        <label class="lab">Tu étais encore là quand j'ai présenté la Méthode Fondations Pro ?</label>
+        <div class="choices" data-name="present_pitch">
+          <label class="choice"><input type="radio" name="present_pitch" value="Oui"><span class="box"></span>Oui</label>
+          <label class="choice"><input type="radio" name="present_pitch" value="Non, je suis parti(e) avant"><span class="box"></span>Non, je suis parti(e) avant</label>
+        </div>
+        <div class="qerr">Choisis une réponse</div>
+      </div>
+
+      <div class="q">
         <label class="lab">As-tu intégré la Méthode Fondations Pro ?</label>
         <div class="choices" data-name="a_rejoint" id="aRejointGroup">
           <label class="choice"><input type="radio" name="a_rejoint" value="Oui"><span class="box"></span>Oui</label>
@@ -160,18 +174,34 @@
         <div class="qerr">Choisis une réponse</div>
       </div>
 
+      <div id="blocOui">
+        <div class="q">
+          <label class="lab">Qu'est-ce qui t'a fait dire oui ?</label>
+          <span class="hint">Coche tout ce qui a compté</span>
+          <div class="choices" data-name="raisons_oui" data-cases="oui"></div>
+          <input type="text" class="autre-precise" data-autre="raisons_oui" placeholder="Précise (facultatif)">
+          <div class="qerr">Coche au moins une réponse</div>
+        </div>
+      </div>
+
       <div id="blocNon">
         <div class="q">
-          <label class="lab">Quelle est la raison qui t'a empêché de la rejoindre ?</label>
-          <span class="hint">Sois honnête, c'est ce qui m'aide le plus à m'améliorer</span>
-          <textarea name="raison_pas_rejoint" placeholder="..."></textarea>
-          <div class="qerr">Cette question est obligatoire</div>
+          <label class="lab">Qu'est-ce qui t'a empêché de la rejoindre ?</label>
+          <span class="hint">Sois honnête, c'est ce qui m'aide le plus à m'améliorer · coche tout ce qui a joué</span>
+          <div class="choices" data-name="raisons_non" data-cases="non"></div>
+          <div class="qerr">Coche au moins une réponse</div>
         </div>
 
         <div class="q">
-          <label class="lab">Quel est le prix qui t'aurait fait rejoindre la Méthode Fondations Pro ?</label>
-          <textarea name="prix_ideal" placeholder="..."></textarea>
-          <div class="qerr">Cette question est obligatoire</div>
+          <label class="lab">Dis-m'en plus <span class="opt">(facultatif)</span></label>
+          <textarea name="raison_pas_rejoint" placeholder="..."></textarea>
+        </div>
+
+        <div class="q">
+          <label class="lab">Qu'est-ce qui t'aurait fait rejoindre ce soir ?</label>
+          <span class="hint">Coche tout ce qui aurait fait la différence</span>
+          <div class="choices" data-name="aurait_rejoint" data-cases="aurait"></div>
+          <div class="qerr">Coche au moins une réponse</div>
         </div>
 
         <div class="q">
@@ -239,16 +269,52 @@ for (let i = 0; i <= 10; i++) {
   npsBox.appendChild(b);
 }
 
-// ---- branchement : les questions 4-5-6 n'apparaissent que si "Non" ----
+// ---- cases à cocher : libellés tirés des vraies réponses des lives de juillet-août ----
+const CASES = {
+  oui: ['Comprendre enfin le pourquoi de chaque geste', 'Les lives chaque semaine pour poser mes questions',
+    'Les vidéos et les recettes', 'Les bonus', 'Le paiement en 4 fois', 'Les résultats des autres élèves',
+    'Les 10 places seulement', "Ta façon d'expliquer", 'Autre'],
+  non: ["L'argent, ce n'est pas le moment", "Le temps, je n'en ai pas assez", 'Je pâtisse trop peu pour que ça vaille le coup',
+    "Peur de ne pas suivre jusqu'au bout", 'Je ne me sens pas au niveau', "Je n'ai pas bien compris ce qu'il y avait dedans",
+    "J'avais besoin d'y réfléchir", 'Déjà en formation ailleurs', 'Autre'],
+  aurait: ['Un prix plus bas', 'Payer en plus de fois', 'Une garantie satisfait ou remboursé',
+    'Voir des élèves comme moi qui ont réussi', "Savoir exactement ce qu'il y a dedans", 'Plus de temps pour réfléchir',
+    'Pouvoir te poser mes questions avant', "Rien, ce n'est pas pour moi en ce moment"],
+};
+document.querySelectorAll('[data-cases]').forEach(g => {
+  const nom = g.dataset.name;
+  CASES[g.dataset.cases].forEach(txt => {
+    const lab = document.createElement('label');
+    lab.className = 'choice case';
+    const inp = document.createElement('input');
+    inp.type = 'checkbox'; inp.name = nom; inp.value = txt;
+    const box = document.createElement('span'); box.className = 'box';
+    lab.append(inp, box, document.createTextNode(txt));
+    g.appendChild(lab);
+  });
+});
+// « Autre » coché sur « ce qui t'a fait dire oui » : petit champ pour préciser
+const autreOui = document.querySelector('[data-autre="raisons_oui"]');
+document.querySelector('[data-name="raisons_oui"]').addEventListener('change', () => {
+  const coche = !!document.querySelector('input[name="raisons_oui"][value="Autre"]:checked');
+  autreOui.classList.toggle('show', coche);
+  if (!coche) autreOui.value = '';
+});
+
+// ---- branchement : bloc « Oui » ou bloc « Non » selon la réponse ----
 const blocNon = document.getElementById('blocNon');
-document.getElementById('aRejointGroup').addEventListener('change', e => {
-  const v = document.querySelector('input[name=a_rejoint]:checked');
-  if (v && v.value === 'Non') {
-    blocNon.classList.add('show');
-  } else {
-    blocNon.classList.remove('show');
-    blocNon.querySelectorAll('textarea').forEach(t => t.value = ''); // vide si on rejoint
-  }
+const blocOui = document.getElementById('blocOui');
+const vider = bloc => {
+  bloc.querySelectorAll('textarea, input[type=text]').forEach(t => { t.value = ''; });
+  bloc.querySelectorAll('input[type=checkbox]').forEach(c => { c.checked = false; });
+  bloc.querySelectorAll('.autre-precise').forEach(a => a.classList.remove('show'));
+};
+document.getElementById('aRejointGroup').addEventListener('change', () => {
+  const v = radioVal('a_rejoint');
+  blocNon.classList.toggle('show', v === 'Non');
+  blocOui.classList.toggle('show', v === 'Oui');
+  if (v !== 'Non') vider(blocNon);
+  if (v !== 'Oui') vider(blocOui);
   document.getElementById('aRejointGroup').closest('.q').classList.remove('invalid');
 });
 
@@ -258,12 +324,14 @@ document.querySelectorAll('textarea, input[type=text]').forEach(el =>
 document.querySelectorAll('.choices').forEach(g =>
   g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
-// ---- validation : note + a_rejoint toujours obligatoires ;
-//      les 3 questions objection deviennent obligatoires si "Non" ----
-const REQUIRED = [{name:'note', type:'nps'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
-const REQUIRED_SI_NON = [{name:'raison_pas_rejoint', type:'text'}, {name:'prix_ideal', type:'text'}, {name:'oui_tout_de_suite', type:'text'}];
+// ---- validation : note, présence au pitch, a_rejoint, prénom, téléphone toujours obligatoires ;
+//      « ce qui t'a fait dire oui » si Oui ; freins + « aurait rejoint » + « oui tout de suite » si Non ----
+const REQUIRED = [{name:'note', type:'nps'}, {name:'present_pitch', type:'radio'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
+const REQUIRED_SI_OUI = [{name:'raisons_oui', type:'cases'}];
+const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases'}, {name:'aurait_rejoint', type:'cases'}, {name:'oui_tout_de_suite', type:'text'}];
 function requiredNow(){
-  return radioVal('a_rejoint') === 'Non' ? REQUIRED.concat(REQUIRED_SI_NON) : REQUIRED;
+  const v = radioVal('a_rejoint');
+  return REQUIRED.concat(v === 'Non' ? REQUIRED_SI_NON : v === 'Oui' ? REQUIRED_SI_OUI : []);
 }
 function isFilled(f){
   if (f.type==='nps') return npsVal!==null;
@@ -278,20 +346,54 @@ function anchorOf(f){
 
 function val(name){ const el=document.querySelector(`[name="${name}"]`); return el?el.value.trim():''; }
 function radioVal(name){ const el=document.querySelector(`input[name="${name}"]:checked`); return el?el.value:null; }
+function cases(name){
+  const liste = [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(c => c.value);
+  const autre = document.querySelector(`[data-autre="${name}"]`);
+  const precise = autre ? autre.value.trim() : '';
+  const finale = liste.map(v => (v === 'Autre' && precise ? `Autre : ${precise}` : v));
+  return finale.length ? finale : null;
+}
 function payload(){
-  const joined = radioVal('a_rejoint') === 'Oui';
+  const v = radioVal('a_rejoint');
+  const non = v === 'Non';
   return {
     note: npsVal,
     prefere: val('prefere') || null,
     amelioration: val('amelioration') || null,
-    a_rejoint: radioVal('a_rejoint'),
-    raison_pas_rejoint: joined ? null : (val('raison_pas_rejoint') || null),
-    prix_ideal: joined ? null : (val('prix_ideal') || null),
-    oui_tout_de_suite: joined ? null : (val('oui_tout_de_suite') || null),
+    present_pitch: radioVal('present_pitch'),
+    a_rejoint: v,
+    raisons_oui: v === 'Oui' ? cases('raisons_oui') : null,
+    raisons_non: non ? cases('raisons_non') : null,
+    raison_pas_rejoint: non ? (val('raison_pas_rejoint') || null) : null,   // « Dis-m'en plus »
+    aurait_rejoint: non ? cases('aurait_rejoint') : null,
+    oui_tout_de_suite: non ? (val('oui_tout_de_suite') || null) : null,
     blocage_patisserie: val('blocage_patisserie') || null,
     prenom: val('prenom') || null,
     telephone: val('telephone') || null
   };
+}
+// Repli tant que les nouvelles colonnes n'existent pas dans Supabase : les nouvelles réponses
+// partent dans les anciennes colonnes texte, avec une étiquette, pour ne JAMAIS perdre une réponse.
+function payloadAncien(p){
+  const etiquettes = [
+    p.present_pitch ? `Présent au pitch : ${p.present_pitch}` : null,
+    p.raisons_oui ? `A dit oui pour : ${p.raisons_oui.join(' · ')}` : null,
+    p.aurait_rejoint ? `Aurait rejoint si : ${p.aurait_rejoint.join(' · ')}` : null,
+  ].filter(Boolean).join(' | ');
+  return {
+    note: p.note, prefere: p.prefere, a_rejoint: p.a_rejoint,
+    amelioration: [p.amelioration, etiquettes ? `[${etiquettes}]` : null].filter(Boolean).join('\n') || null,
+    raison_pas_rejoint: p.raisons_non ? [p.raisons_non.join(' · '), p.raison_pas_rejoint].filter(Boolean).join(' · ') : p.raison_pas_rejoint,
+    prix_ideal: null, oui_tout_de_suite: p.oui_tout_de_suite, blocage_patisserie: p.blocage_patisserie,
+    prenom: p.prenom, telephone: p.telephone,
+  };
+}
+async function envoyer(corps){
+  return fetch(`${SUPABASE_URL}/rest/v1/atelier_feedback`, {
+    method:'POST',
+    headers:{ 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+SUPABASE_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+    body: JSON.stringify(corps)
+  });
 }
 
 const form = document.getElementById('qform');
@@ -326,11 +428,14 @@ form.addEventListener('submit', async (e) => {
 
   btn.disabled=true; btn.textContent='Envoi en cours...';
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/atelier_feedback`, {
-      method:'POST',
-      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':'Bearer '+SUPABASE_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
-      body: JSON.stringify(payload())
-    });
+    const p = payload();
+    let res = await envoyer(p);
+    if (!res.ok) {
+      const txt = await res.text();
+      // colonne inconnue (nouvelles colonnes pas encore créées) : on renvoie au format ancien
+      if (res.status === 400 && /PGRST204|column/i.test(txt)) res = await envoyer(payloadAncien(p));
+      else throw new Error('HTTP '+res.status+' '+txt);
+    }
     if (!res.ok) throw new Error('HTTP '+res.status+' '+(await res.text()));
     form.style.display='none';
     document.getElementById('merci').style.display='block';

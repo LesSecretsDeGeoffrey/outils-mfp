@@ -104,6 +104,9 @@
   .del-ans.armed{background:var(--rouge); color:#fff; border-color:var(--rouge)}
   .del-ans:disabled{opacity:.6; cursor:default}
   .empty{color:var(--gris); font-style:italic; font-size:14px}
+  .sous{font-family:Georgia,serif; font-weight:400; font-size:17px; margin:22px 0 12px}
+  .filtre{display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); margin:0 0 18px; cursor:pointer}
+  .filtre input{accent-color:var(--or); width:16px; height:16px}
   #loading{text-align:center; padding:80px 20px; color:var(--muted)}
   @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
@@ -145,6 +148,15 @@
         <h2>Ont-ils rejoint la Méthode ?</h2>
         <p class="desc">Ta conversion sur les répondants. Le « Non » = ta marge de progression sur le close.</p>
         <div class="split" id="conv"></div>
+        <p class="desc" id="pitchLigne" style="margin:16px 0 0"></p>
+      </div>
+
+      <label class="filtre"><input type="checkbox" id="filtrePitch"> Graphiques : seulement ceux qui étaient encore là quand j'ai présenté la Méthode</label>
+
+      <div class="block">
+        <h2>Ce qui les a fait dire oui <span style="font-size:14px;color:var(--muted)">(les arguments du pitch)</span></h2>
+        <p class="desc">Ce qui a déclenché l'achat chez ceux qui ont rejoint. Les premières barres = les arguments à mettre en avant dans le pitch et les slides.</p>
+        <div id="barsOui"></div>
       </div>
 
       <div class="block">
@@ -155,7 +167,13 @@
 
       <div class="block">
         <h2>Pourquoi ils n'ont pas rejoint <span style="font-size:14px;color:var(--muted)">(le plus important)</span></h2>
-        <p class="desc">Les freins et le prix idéal de ceux qui n'ont pas acheté. C'est l'or pour corriger ton close et ton offre. Clique pour déplier, copie ce qui claque.</p>
+        <p class="desc">Les freins de ceux qui n'ont pas acheté, puis ce qui les aurait fait rejoindre ce soir. C'est l'or pour corriger ton close et ton offre.</p>
+        <h3 class="sous">Ce qui les a empêchés de rejoindre</h3>
+        <div id="barsNon"></div>
+        <h3 class="sous">Ce qui les aurait fait rejoindre ce soir</h3>
+        <p class="desc">La garantie de 30 jours est annoncée au live : si beaucoup cochent « une garantie », c'est qu'ils ne l'ont pas entendue.</p>
+        <div id="barsAurait"></div>
+        <h3 class="sous">En toutes lettres</h3>
         <div id="verbObjections"></div>
       </div>
 
@@ -196,6 +214,7 @@ function unlock(){
   } else { document.getElementById('gateErr').style.display='block'; }
 }
 document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') unlock(); });
+document.getElementById('filtrePitch').addEventListener('change', () => render());
 
 async function loadData(){
   document.getElementById('loading').style.display='block';
@@ -237,6 +256,30 @@ function render(){
     `<div class="col"><span class="c">${c||''}</span><div class="b" style="height:${c/dmax*100}%"></div><span class="n">${i}</span></div>`
   ).join('');
 
+  // présence au moment du pitch (nouvelle question du 03/10)
+  const aRepPitch = ROWS.filter(r=>r.present_pitch);
+  const presents = aRepPitch.filter(r=>r.present_pitch==='Oui').length;
+  document.getElementById('pitchLigne').textContent = aRepPitch.length
+    ? `Présents quand j'ai présenté la Méthode : ${presents} sur ${aRepPitch.length} · partis avant : ${aRepPitch.length-presents}`
+    : 'Présence au moment du pitch : pas encore de réponse (nouvelle question du 03/10)';
+
+  // barres des cases à cocher (plusieurs réponses possibles : % des personnes qui ont répondu à la question)
+  const base = document.getElementById('filtrePitch').checked ? ROWS.filter(r=>r.present_pitch==='Oui') : ROWS;
+  const barres = (el, champ) => {
+    const c = {}; let nRep = 0;
+    base.forEach(r => { const v = r[champ]; if (Array.isArray(v) && v.length) { nRep++; v.forEach(x => { const k = String(x).startsWith('Autre') ? 'Autre' : x; c[k] = (c[k]||0)+1; }); } });
+    const cles = Object.keys(c).sort((a,b)=>c[b]-c[a]);
+    const autres = base.flatMap(r => (r[champ]||[]).filter(x => String(x).startsWith('Autre : ')).map(x => String(x).slice(8)));
+    document.getElementById(el).innerHTML = nRep
+      ? cles.map(k => `<div class="bar"><div class="bl"><span>${esc(k)}</span><span class="v">${c[k]} · ${Math.round(c[k]/nRep*100)} %</span></div><div class="track"><div class="fill" style="width:${c[k]/nRep*100}%"></div></div></div>`).join('')
+        + (autres.length ? `<p class="desc" style="margin:8px 0 0"><b>Autre :</b> ${autres.map(esc).join(' · ')}</p>` : '')
+        + `<p class="desc" style="margin:8px 0 0">${nRep} personne${nRep>1?'s':''} · plusieurs cases possibles, le total dépasse 100 %</p>`
+      : '<p class="empty">Pas encore de réponse à cette question (nouvelle question du 03/10)</p>';
+  };
+  barres('barsOui', 'raisons_oui');
+  barres('barsNon', 'raisons_non');
+  barres('barsAurait', 'aurait_rejoint');
+
   // conversion split
   document.getElementById('conv').innerHTML = `
     <div class="splitcard oui"><div class="n">${oui}</div><div class="l">Ont rejoint</div></div>
@@ -256,10 +299,15 @@ function render(){
       r.telephone?`<span class="lead-num">${esc(r.telephone)}</span>`:'',
       r.email?`<a href="mailto:${esc(r.email)}">✉ ${esc(r.email)}</a>`:''
     ].filter(Boolean).join('');
+    const liste = v => Array.isArray(v) && v.length ? v.join(' · ') : null;
     const ans = [
+      ['Présent au pitch', r.present_pitch],
+      ['A dit oui pour', liste(r.raisons_oui)],
       ['Ce qu\'il a préféré', r.prefere],
       ['À améliorer', r.amelioration],
-      ['Frein (pas rejoint)', r.raison_pas_rejoint],
+      ['Freins', liste(r.raisons_non)],
+      ['Dis-m\'en plus / frein', r.raison_pas_rejoint],
+      ['Aurait rejoint si', liste(r.aurait_rejoint)],
       ['Prix idéal', r.prix_ideal],
       ['Dirait « oui » si', r.oui_tout_de_suite],
       ['Le bloque en pâtisserie', r.blocage_patisserie]
@@ -288,8 +336,8 @@ function render(){
     }).join('');
   };
   renderVQ('verbObjections', [
-    ['raison_pas_rejoint','La raison qui les a empêchés de rejoindre'],
-    ['prix_ideal','Le prix qui les aurait fait rejoindre'],
+    ['raison_pas_rejoint','« Dis-m\'en plus » (avant le 03/10 : la raison qui les a empêchés de rejoindre)'],
+    ['prix_ideal','Le prix qui les aurait fait rejoindre (question retirée le 03/10, anciennes réponses)'],
     ['oui_tout_de_suite','Ce qui les ferait dire « oui » tout de suite']
   ]);
   renderVQ('verbAutres', [
@@ -327,7 +375,7 @@ document.addEventListener('click', async e=>{
 
 function exportCSV(){
   if(!ROWS.length) return;
-  const cols = ['created_at','note','prefere','amelioration','a_rejoint','raison_pas_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie','prenom','email','telephone'];
+  const cols = ['created_at','note','prefere','amelioration','present_pitch','a_rejoint','raisons_oui','raisons_non','raison_pas_rejoint','aurait_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie','prenom','email','telephone'];
   const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
   const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
   const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});

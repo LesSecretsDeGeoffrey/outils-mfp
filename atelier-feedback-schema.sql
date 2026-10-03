@@ -49,6 +49,14 @@ alter table public.atelier_feedback add column if not exists telephone text;
 -- inconnue). À lancer AVANT de rediffuser le lien.
 alter table public.atelier_feedback add column if not exists amelioration text;
 
+-- ⚠️ 03/10/2026 · nouvelles questions (cases à cocher). À lancer AVANT le message du lundi.
+-- Sans elles, le formulaire range les nouvelles réponses dans les anciennes colonnes texte
+-- (repli, rien n'est perdu), mais les graphiques de la page de résultats restent vides.
+alter table public.atelier_feedback add column if not exists present_pitch  text;    -- « Tu étais encore là quand j'ai présenté la Méthode ? »
+alter table public.atelier_feedback add column if not exists raisons_oui    text[];  -- (si Oui) ce qui l'a fait dire oui, plusieurs cases
+alter table public.atelier_feedback add column if not exists raisons_non    text[];  -- (si Non) ce qui l'a empêché, plusieurs cases (le texte « Dis-m'en plus » va dans raison_pas_rejoint)
+alter table public.atelier_feedback add column if not exists aurait_rejoint text[];  -- (si Non) ce qui l'aurait fait rejoindre ce soir (remplace prix_ideal, gardé pour l'historique)
+
 -- ===== Row Level Security =====
 alter table public.atelier_feedback enable row level security;
 
