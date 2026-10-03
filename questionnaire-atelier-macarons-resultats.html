@@ -167,12 +167,9 @@
 
       <div class="block">
         <h2>Pourquoi ils n'ont pas rejoint <span style="font-size:14px;color:var(--muted)">(le plus important)</span></h2>
-        <p class="desc">Les freins de ceux qui n'ont pas acheté, puis ce qui les aurait fait rejoindre ce soir. C'est l'or pour corriger ton close et ton offre.</p>
+        <p class="desc">Les freins de ceux qui n'ont pas acheté, puis, avec leurs mots, ce qui les aurait fait rejoindre ce soir : ce qu'il manque à la Méthode pour être irrésistible.</p>
         <h3 class="sous">Ce qui les a empêchés de rejoindre</h3>
         <div id="barsNon"></div>
-        <h3 class="sous">Ce qui les aurait fait rejoindre ce soir</h3>
-        <p class="desc">La garantie de 30 jours est annoncée au live : si beaucoup cochent « une garantie », c'est qu'ils ne l'ont pas entendue.</p>
-        <div id="barsAurait"></div>
         <h3 class="sous">En toutes lettres</h3>
         <div id="verbObjections"></div>
       </div>
@@ -278,7 +275,6 @@ function render(){
   };
   barres('barsOui', 'raisons_oui');
   barres('barsNon', 'raisons_non');
-  barres('barsAurait', 'aurait_rejoint');
 
   // conversion split
   document.getElementById('conv').innerHTML = `
@@ -307,9 +303,9 @@ function render(){
       ['À améliorer', r.amelioration],
       ['Freins', liste(r.raisons_non)],
       ['Dis-m\'en plus / frein', r.raison_pas_rejoint],
-      ['Aurait rejoint si', liste(r.aurait_rejoint)],
+
       ['Prix idéal', r.prix_ideal],
-      ['Dirait « oui » si', r.oui_tout_de_suite],
+      [new Date(r.created_at) >= new Date('2026-10-03') ? 'Aurait rejoint ce soir si' : 'Dirait « oui » si', r.oui_tout_de_suite],
       ['Le bloque en pâtisserie', r.blocage_patisserie]
     ].filter(([,v])=>v && String(v).trim())
      .map(([l,v])=>`<div class="pa-line"><b>${l} :</b> ${esc(v)}</div>`).join('');
@@ -338,7 +334,7 @@ function render(){
   renderVQ('verbObjections', [
     ['raison_pas_rejoint','« Dis-m\'en plus » (avant le 03/10 : la raison qui les a empêchés de rejoindre)'],
     ['prix_ideal','Le prix qui les aurait fait rejoindre (question retirée le 03/10, anciennes réponses)'],
-    ['oui_tout_de_suite','Ce qui les ferait dire « oui » tout de suite']
+    ['oui_tout_de_suite','Ce qui les aurait fait rejoindre ce soir, avec leurs mots (avant le 03/10 : « si le prix n\'était pas un frein, qu\'est-ce qui te ferait dire oui tout de suite ? »)']
   ]);
   renderVQ('verbAutres', [
     ['prefere','Ce qu\'ils ont préféré pendant la masterclass'],
@@ -375,7 +371,7 @@ document.addEventListener('click', async e=>{
 
 function exportCSV(){
   if(!ROWS.length) return;
-  const cols = ['created_at','note','prefere','amelioration','present_pitch','a_rejoint','raisons_oui','raisons_non','raison_pas_rejoint','aurait_rejoint','prix_ideal','oui_tout_de_suite','blocage_patisserie','prenom','email','telephone'];
+  const cols = ['created_at','note','prefere','amelioration','present_pitch','a_rejoint','raisons_oui','raisons_non','raison_pas_rejoint','oui_tout_de_suite','prix_ideal','blocage_patisserie','prenom','email','telephone'];
   const cell = v => { if(v==null) return ''; const s = Array.isArray(v)?v.join(' ; '):String(v); return '"'+s.replace(/"/g,'""')+'"'; };
   const csv = [cols.join(',')].concat(ROWS.map(r=>cols.map(c=>cell(r[c])).join(','))).join('\n');
   const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});

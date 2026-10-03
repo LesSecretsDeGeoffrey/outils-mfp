@@ -199,13 +199,7 @@
 
         <div class="q">
           <label class="lab">Qu'est-ce qui t'aurait fait rejoindre ce soir ?</label>
-          <span class="hint">Coche tout ce qui aurait fait la différence</span>
-          <div class="choices" data-name="aurait_rejoint" data-cases="aurait"></div>
-          <div class="qerr">Coche au moins une réponse</div>
-        </div>
-
-        <div class="q">
-          <label class="lab">Si le prix n'était pas un frein, qu'est-ce qui te ferait dire « oui » tout de suite ?</label>
+          <span class="hint">Réponds avec tes mots, même si ça te paraît un détail</span>
           <textarea name="oui_tout_de_suite" placeholder="..."></textarea>
           <div class="qerr">Cette question est obligatoire</div>
         </div>
@@ -277,9 +271,6 @@ const CASES = {
   non: ["L'argent, ce n'est pas le moment", "Le temps, je n'en ai pas assez", 'Je pâtisse trop peu pour que ça vaille le coup',
     "Peur de ne pas suivre jusqu'au bout", 'Je ne me sens pas au niveau', "Je n'ai pas bien compris ce qu'il y avait dedans",
     "J'avais besoin d'y réfléchir", 'Déjà en formation ailleurs', 'Autre'],
-  aurait: ['Un prix plus bas', 'Payer en plus de fois', 'Une garantie satisfait ou remboursé',
-    'Voir des élèves comme moi qui ont réussi', "Savoir exactement ce qu'il y a dedans", 'Plus de temps pour réfléchir',
-    'Pouvoir te poser mes questions avant', "Rien, ce n'est pas pour moi en ce moment"],
 };
 document.querySelectorAll('[data-cases]').forEach(g => {
   const nom = g.dataset.name;
@@ -325,10 +316,10 @@ document.querySelectorAll('.choices').forEach(g =>
   g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
 // ---- validation : note, présence au pitch, a_rejoint, prénom, téléphone toujours obligatoires ;
-//      « ce qui t'a fait dire oui » si Oui ; freins + « aurait rejoint » + « oui tout de suite » si Non ----
+//      « ce qui t'a fait dire oui » si Oui ; freins + « ce qui t'aurait fait rejoindre » (texte libre) si Non ----
 const REQUIRED = [{name:'note', type:'nps'}, {name:'present_pitch', type:'radio'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
 const REQUIRED_SI_OUI = [{name:'raisons_oui', type:'cases'}];
-const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases'}, {name:'aurait_rejoint', type:'cases'}, {name:'oui_tout_de_suite', type:'text'}];
+const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases'}, {name:'oui_tout_de_suite', type:'text'}];
 function requiredNow(){
   const v = radioVal('a_rejoint');
   return REQUIRED.concat(v === 'Non' ? REQUIRED_SI_NON : v === 'Oui' ? REQUIRED_SI_OUI : []);
@@ -365,8 +356,7 @@ function payload(){
     raisons_oui: v === 'Oui' ? cases('raisons_oui') : null,
     raisons_non: non ? cases('raisons_non') : null,
     raison_pas_rejoint: non ? (val('raison_pas_rejoint') || null) : null,   // « Dis-m'en plus »
-    aurait_rejoint: non ? cases('aurait_rejoint') : null,
-    oui_tout_de_suite: non ? (val('oui_tout_de_suite') || null) : null,
+    oui_tout_de_suite: non ? (val('oui_tout_de_suite') || null) : null,   // depuis le 03/10 : « Qu'est-ce qui t'aurait fait rejoindre ce soir ? », avec ses mots
     blocage_patisserie: val('blocage_patisserie') || null,
     prenom: val('prenom') || null,
     telephone: val('telephone') || null
@@ -378,7 +368,6 @@ function payloadAncien(p){
   const etiquettes = [
     p.present_pitch ? `Présent au pitch : ${p.present_pitch}` : null,
     p.raisons_oui ? `A dit oui pour : ${p.raisons_oui.join(' · ')}` : null,
-    p.aurait_rejoint ? `Aurait rejoint si : ${p.aurait_rejoint.join(' · ')}` : null,
   ].filter(Boolean).join(' | ');
   return {
     note: p.note, prefere: p.prefere, a_rejoint: p.a_rejoint,

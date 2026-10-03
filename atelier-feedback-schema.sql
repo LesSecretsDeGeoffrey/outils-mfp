@@ -55,7 +55,8 @@ alter table public.atelier_feedback add column if not exists amelioration text;
 alter table public.atelier_feedback add column if not exists present_pitch  text;    -- « Tu étais encore là quand j'ai présenté la Méthode ? »
 alter table public.atelier_feedback add column if not exists raisons_oui    text[];  -- (si Oui) ce qui l'a fait dire oui, plusieurs cases
 alter table public.atelier_feedback add column if not exists raisons_non    text[];  -- (si Non) ce qui l'a empêché, plusieurs cases (le texte « Dis-m'en plus » va dans raison_pas_rejoint)
-alter table public.atelier_feedback add column if not exists aurait_rejoint text[];  -- (si Non) ce qui l'aurait fait rejoindre ce soir (remplace prix_ideal, gardé pour l'historique)
+alter table public.atelier_feedback add column if not exists aurait_rejoint text[];  -- créée le 03/10 puis abandonnée le jour même (Geoffrey veut des réponses avec leurs mots) : reste vide
+-- « Qu'est-ce qui t'aurait fait rejoindre ce soir ? » (texte libre) est rangé dans oui_tout_de_suite (même idée, suite de l'historique)
 
 -- ===== Row Level Security =====
 alter table public.atelier_feedback enable row level security;
