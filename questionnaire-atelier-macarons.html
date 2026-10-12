@@ -187,9 +187,8 @@
       <div id="blocNon">
         <div class="q">
           <label class="lab">Qu'est-ce qui t'a empêché de la rejoindre ?</label>
-          <span class="hint">Coche au moins 3 réponses</span>
-          <div class="choices" data-name="raisons_non" data-cases="non" data-min="3"></div>
-          <div class="qerr">Coche au moins 3 réponses</div>
+          <div class="choices" data-name="raisons_non" data-cases="non"></div>
+          <div class="qerr">Coche au moins une réponse</div>
         </div>
 
         <div class="q">
@@ -198,7 +197,8 @@
         </div>
 
         <div class="q">
-          <label class="lab">Qu'est-ce qui t'aurait fait rejoindre ce soir ?</label>
+          <label class="lab">Si le budget n'était pas un problème, qu'est-ce qui t'aurait fait rejoindre la Méthode Fondations Pro ?</label>
+          <span class="hint">À part l'argent, qu'est-ce qui t'a manqué pour dire oui ?</span>
           <textarea name="oui_tout_de_suite" placeholder="..."></textarea>
           <div class="qerr">Cette question est obligatoire</div>
         </div>
@@ -311,18 +311,14 @@ document.getElementById('aRejointGroup').addEventListener('change', () => {
 // ---- nettoyage erreur quand on remplit ----
 document.querySelectorAll('textarea, input[type=text]').forEach(el =>
   el.addEventListener('input', () => el.closest('.q')?.classList.remove('invalid')));
-// (une question à minimum de cases reste en rouge tant que le minimum n'est pas atteint)
 document.querySelectorAll('.choices').forEach(g =>
-  g.addEventListener('change', () => {
-    const min = +(g.dataset.min || 1);
-    if (g.querySelectorAll('input:checked').length >= min) g.closest('.q')?.classList.remove('invalid');
-  }));
+  g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
 
 // ---- validation : note, présence au pitch, a_rejoint, prénom, téléphone toujours obligatoires ;
 //      « ce qui t'a fait dire oui » si Oui ; freins + « ce qui t'aurait fait rejoindre » (texte libre) si Non ----
 const REQUIRED = [{name:'note', type:'nps'}, {name:'present_pitch', type:'radio'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
 const REQUIRED_SI_OUI = [{name:'raisons_oui', type:'cases'}];
-const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases', min:3}, {name:'oui_tout_de_suite', type:'text'}];
+const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases'}, {name:'oui_tout_de_suite', type:'text'}];
 function requiredNow(){
   const v = radioVal('a_rejoint');
   return REQUIRED.concat(v === 'Non' ? REQUIRED_SI_NON : v === 'Oui' ? REQUIRED_SI_OUI : []);
@@ -330,7 +326,7 @@ function requiredNow(){
 function isFilled(f){
   if (f.type==='nps') return npsVal!==null;
   if (f.type==='text') return document.querySelector(`[name="${f.name}"]`).value.trim().length>0;
-  return document.querySelectorAll(`input[name="${f.name}"]:checked`).length >= (f.min || 1);
+  return !!document.querySelector(`input[name="${f.name}"]:checked`);
 }
 function anchorOf(f){
   if (f.type==='nps') return document.getElementById('nps').closest('.q');
@@ -359,7 +355,7 @@ function payload(){
     raisons_oui: v === 'Oui' ? cases('raisons_oui') : null,
     raisons_non: non ? cases('raisons_non') : null,
     raison_pas_rejoint: non ? (val('raison_pas_rejoint') || null) : null,   // « Dis-m'en plus »
-    oui_tout_de_suite: non ? (val('oui_tout_de_suite') || null) : null,   // depuis le 03/10 : « Qu'est-ce qui t'aurait fait rejoindre ce soir ? », avec ses mots
+    oui_tout_de_suite: non ? (val('oui_tout_de_suite') || null) : null,   // depuis le 12/10 : « Si le budget n'était pas un problème, qu'est-ce qui t'aurait fait rejoindre la MFP ? », avec ses mots
     blocage_patisserie: val('blocage_patisserie') || null,
     prenom: val('prenom') || null,
     telephone: val('telephone') || null
@@ -405,6 +401,21 @@ form.addEventListener('submit', async (e) => {
     anchorOf(missing[0]).scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
+
+  // « si le budget n'était pas un problème » : une réponse courte qui ne parle que d'argent est refusée
+  const sansBudget = document.querySelector('[name=oui_tout_de_suite]');
+  const rep = sansBudget.value.trim();
+  const ARGENT = /argent|\bprix\b|budget|moyens|\bch[eè]re?\b|co[uû]t|€|euros?\b|\bsous\b|financ|paiement|payer|\bfric\b|thune|pognon|salaire|abordable/i;
+  if (radioVal('a_rejoint') === 'Non' && ARGENT.test(rep) && rep.split(/\s+/).length <= 10){
+    const q = sansBudget.closest('.q');
+    q.classList.add('invalid');
+    q.querySelector('.qerr').textContent = "À part l'argent 🙏 qu'est-ce qui t'aurait fait dire oui ?";
+    errBox.textContent = "Sur cette question, mets l'argent de côté 🙏";
+    errBox.style.display='block';
+    q.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  sansBudget.closest('.q').querySelector('.qerr').textContent = 'Cette question est obligatoire';
 
   // numéro plausible (au moins 6 chiffres) — c'est par là que passe le cadeau + la relance
   const telD = val('telephone').replace(/\D/g,'');
