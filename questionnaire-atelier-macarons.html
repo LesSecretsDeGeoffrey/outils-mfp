@@ -187,8 +187,9 @@
       <div id="blocNon">
         <div class="q">
           <label class="lab">Qu'est-ce qui t'a empêché de la rejoindre ?</label>
-          <div class="choices" data-name="raisons_non" data-cases="non"></div>
-          <div class="qerr">Coche au moins une réponse</div>
+          <span class="hint">Coche au moins 3 réponses</span>
+          <div class="choices" data-name="raisons_non" data-cases="non" data-min="3"></div>
+          <div class="qerr">Coche au moins 3 réponses</div>
         </div>
 
         <div class="q">
@@ -310,14 +311,18 @@ document.getElementById('aRejointGroup').addEventListener('change', () => {
 // ---- nettoyage erreur quand on remplit ----
 document.querySelectorAll('textarea, input[type=text]').forEach(el =>
   el.addEventListener('input', () => el.closest('.q')?.classList.remove('invalid')));
+// (une question à minimum de cases reste en rouge tant que le minimum n'est pas atteint)
 document.querySelectorAll('.choices').forEach(g =>
-  g.addEventListener('change', () => g.closest('.q')?.classList.remove('invalid')));
+  g.addEventListener('change', () => {
+    const min = +(g.dataset.min || 1);
+    if (g.querySelectorAll('input:checked').length >= min) g.closest('.q')?.classList.remove('invalid');
+  }));
 
 // ---- validation : note, présence au pitch, a_rejoint, prénom, téléphone toujours obligatoires ;
 //      « ce qui t'a fait dire oui » si Oui ; freins + « ce qui t'aurait fait rejoindre » (texte libre) si Non ----
 const REQUIRED = [{name:'note', type:'nps'}, {name:'present_pitch', type:'radio'}, {name:'a_rejoint', type:'radio'}, {name:'prenom', type:'text'}, {name:'telephone', type:'text'}];
 const REQUIRED_SI_OUI = [{name:'raisons_oui', type:'cases'}];
-const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases'}, {name:'oui_tout_de_suite', type:'text'}];
+const REQUIRED_SI_NON = [{name:'raisons_non', type:'cases', min:3}, {name:'oui_tout_de_suite', type:'text'}];
 function requiredNow(){
   const v = radioVal('a_rejoint');
   return REQUIRED.concat(v === 'Non' ? REQUIRED_SI_NON : v === 'Oui' ? REQUIRED_SI_OUI : []);
@@ -325,7 +330,7 @@ function requiredNow(){
 function isFilled(f){
   if (f.type==='nps') return npsVal!==null;
   if (f.type==='text') return document.querySelector(`[name="${f.name}"]`).value.trim().length>0;
-  return !!document.querySelector(`input[name="${f.name}"]:checked`);
+  return document.querySelectorAll(`input[name="${f.name}"]:checked`).length >= (f.min || 1);
 }
 function anchorOf(f){
   if (f.type==='nps') return document.getElementById('nps').closest('.q');
