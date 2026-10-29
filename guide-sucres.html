@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide des sucres — Les Secrets De Geoffrey</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1100px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:40px;max-width:680px}
+  .intro a{color:#8B6914}
+  .mode-toggle{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+  .mode-btn{flex:1;min-width:180px;padding:14px 20px;border:1px solid rgba(26,20,16,0.15);background:#fff;color:#1A1410;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s}
+  .mode-btn.active{background:#1A1410;color:#C8A04A;border-color:#1A1410}
+  .mode-section{display:none}
+  .mode-section.active{display:block}
+
+  /* Mode 1 : fiches par sucre */
+  .sucre-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:32px}
+  .suc-btn{background:#fff;border:1px solid rgba(26,20,16,0.12);border-radius:4px;padding:18px 20px;cursor:pointer;text-align:left;transition:all 0.2s;font-family:inherit}
+  .suc-btn:hover{border-color:#C8A04A;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,20,16,0.06)}
+  .suc-btn.active{border-color:#C8A04A;background:rgba(200,160,74,0.08)}
+  .suc-name{font-family:Georgia,serif;font-size:18px;color:#1A1410;font-weight:600;margin-bottom:4px}
+  .suc-origin{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8B6914;margin-bottom:10px}
+  .suc-tag{display:inline-block;font-size:11px;color:rgba(26,20,16,0.65);padding:3px 8px;background:rgba(26,20,16,0.05);border-radius:2px;margin:2px 4px 2px 0}
+
+  .fiche{background:#fff;border:1px solid rgba(200,160,74,0.3);border-radius:4px;padding:clamp(24px,4vw,40px);margin-top:24px;display:none}
+  .fiche.visible{display:block}
+  .fiche-header{border-bottom:2px solid #C8A04A;padding-bottom:20px;margin-bottom:24px}
+  .fiche-header h2{font-family:Georgia,serif;font-size:clamp(24px,3vw,32px);font-weight:400;color:#1A1410;margin-bottom:4px}
+  .fiche-header .sub{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#8B6914}
+  .fiche-row{display:grid;grid-template-columns:180px 1fr;gap:20px;padding:14px 0;border-bottom:1px solid rgba(26,20,16,0.06)}
+  @media (max-width:600px){.fiche-row{grid-template-columns:1fr;gap:4px}}
+  .fiche-row:last-of-type{border-bottom:none}
+  .fiche-label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8B6914;padding-top:2px}
+  .fiche-value{font-size:14px;color:#1A1410;line-height:1.6}
+  .fiche-value strong{color:#1A1410;font-family:Georgia,serif}
+  .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:6px}
+  .spec-box{background:rgba(200,160,74,0.08);border:1px solid rgba(200,160,74,0.2);border-radius:3px;padding:10px 12px}
+  .spec-box .sp-label{font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#8B6914;margin-bottom:2px}
+  .spec-box .sp-value{font-family:Georgia,serif;font-size:16px;color:#1A1410;font-weight:600}
+  .spec-note{font-size:12px;color:rgba(26,20,16,0.55);margin-top:8px}
+  .usages-list{margin-top:20px}
+  .usage-item{display:flex;gap:14px;padding:12px 0;align-items:flex-start;border-bottom:1px solid rgba(26,20,16,0.06)}
+  .usage-item:last-child{border-bottom:none}
+  .usage-dot{width:6px;height:6px;background:#C8A04A;border-radius:50%;flex-shrink:0;margin-top:8px}
+  .usage-body{flex:1;font-size:14px}
+  .usage-body strong{display:block;margin-bottom:2px;color:#1A1410}
+  .usage-body span{color:rgba(26,20,16,0.7)}
+  .pitfall{background:#FEF3E2;border-left:3px solid #E8A33C;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#8B5A20}
+  .pitfall strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+  .remplace{background:rgba(200,160,74,0.08);border-left:3px solid #C8A04A;padding:14px 18px;margin-top:10px;border-radius:2px;font-size:13px;color:#1A1410}
+  .remplace strong{display:block;margin-bottom:4px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8B6914}
+  .remplace a{display:inline-block;margin-top:8px;color:#8B6914;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+
+  /* Mode 2 : assistant */
+  .quiz-section{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(24px,4vw,36px);margin-bottom:24px}
+  .quiz-section h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin-bottom:18px;color:#1A1410}
+  .choix-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .choix-card{display:flex;align-items:center;gap:10px;padding:14px 16px;border:1px solid rgba(26,20,16,0.15);border-radius:3px;cursor:pointer;background:#fff;transition:all 0.15s;user-select:none;font-size:14px}
+  .choix-card:hover{border-color:#C8A04A}
+  .choix-card.active{background:rgba(200,160,74,0.08);border-color:#C8A04A}
+  .choix-card input{accent-color:#C8A04A;width:16px;height:16px;flex-shrink:0}
+  .calculate-btn{background:#C8A04A;color:#fff;border:none;padding:16px 32px;font-size:15px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;transition:background 0.2s;margin-top:8px}
+  .calculate-btn:hover{background:#B08A3E}
+
+  .reco{background:#1A1410;color:#FDF8F0;border-radius:4px;padding:clamp(24px,4vw,36px);margin-top:24px;display:none;border-top:3px solid #C8A04A}
+  .reco.visible{display:block}
+  .reco .label{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:8px}
+  .reco h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,40px);color:#C8A04A;margin-bottom:16px;font-weight:400}
+  .reco .why{font-size:15px;color:rgba(253,248,240,0.85);margin-bottom:24px;line-height:1.65}
+  .reco-block{background:rgba(253,248,240,0.05);padding:18px 20px;border-radius:3px;margin-bottom:12px;border-left:3px solid #C8A04A}
+  .reco-block h4{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-bottom:6px}
+  .reco-block p{font-size:14px;color:#FDF8F0;line-height:1.55}
+  .alt-card{background:rgba(253,248,240,0.03);padding:14px 18px;border-radius:3px;margin-top:10px;font-size:13px;color:rgba(253,248,240,0.8)}
+  .alt-card strong{color:#C8A04A;display:block;margin-bottom:2px;font-family:Georgia,serif}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Guide des sucres</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>Semoule, glace, vergeoise, glucose. <span class="accent">Lequel pour quoi</span></h1>
+  <p class="intro">12 sucres, 12 comportements différents. Pas de glucose dans ton caramel et il masse. Du sucre blanc à la place de la vergeoise et tes cookies sortent secs. Consulte la fiche d'un sucre ou laisse-moi t'orienter selon ta recette. Pour remplacer un sucre par un autre au gramme près, passe par le <a href="calculateur-sucres.html">calculateur des sucres interchangeables</a></p>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('fiches')">Les fiches par sucre</button>
+    <button class="mode-btn" onclick="setMode('assistant')">Aide-moi à choisir</button>
+  </div>
+
+  <!-- Mode 1 : Fiches -->
+  <div class="mode-section active" id="mode-fiches">
+    <div class="sucre-grid" id="sucreGrid"></div>
+    <div class="fiche" id="fiche"></div>
+  </div>
+
+  <!-- Mode 2 : Assistant -->
+  <div class="mode-section" id="mode-assistant">
+    <div class="quiz-section">
+      <h3>1. Ta recette</h3>
+      <div class="choix-grid" id="appGrid">
+        <label class="choix-card active"><input type="radio" name="app" value="macaron" checked><span>Macarons</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="meringue"><span>Meringue</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="sucree"><span>Pâte sucrée ou sablée</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="cookie"><span>Cookies</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="moelleux"><span>Cake, financier, madeleine</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="ganache"><span>Ganache</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="caramel"><span>Caramel</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="miroir"><span>Glaçage miroir</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="fondant"><span>Glaçage d'éclairs</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="glace"><span>Glace ou sorbet</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="perle"><span>Chouquettes, brioche</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="epices"><span>Pain d'épices</span></label>
+        <label class="choix-card"><input type="radio" name="app" value="decor"><span>Décor en sucre</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>2. Ce que tu cherches</h3>
+      <div class="choix-grid">
+        <label class="choix-card active"><input type="radio" name="but" value="neutre" checked><span>Un goût neutre, une couleur claire</span></label>
+        <label class="choix-card"><input type="radio" name="but" value="gout"><span>Un goût de caramel ou de réglisse</span></label>
+        <label class="choix-card"><input type="radio" name="but" value="moelleux"><span>Un moelleux qui dure</span></label>
+        <label class="choix-card"><input type="radio" name="but" value="croquant"><span>Du croquant, du croustillant</span></label>
+        <label class="choix-card"><input type="radio" name="but" value="brillance"><span>Du brillant, une texture lisse</span></label>
+      </div>
+    </div>
+
+    <div class="quiz-section">
+      <h3>3. Tes contraintes</h3>
+      <div class="choix-grid">
+        <label class="choix-card"><input type="checkbox" id="supermarche"><span>Disponible en supermarché</span></label>
+        <label class="choix-card"><input type="checkbox" id="moinssucre"><span>Moins sucré</span></label>
+      </div>
+    </div>
+
+    <button class="calculate-btn" onclick="assistant()">Me recommander le sucre</button>
+
+    <div class="reco" id="reco">
+      <p class="label" id="recoLabel">Recommandation</p>
+      <h2 id="recoName">—</h2>
+      <p class="why" id="recoWhy">—</p>
+
+      <div class="reco-block">
+        <h4>Dosage et utilisation</h4>
+        <p id="recoDose">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>Pourquoi il marche pour ça</h4>
+        <p id="recoActivation">—</p>
+      </div>
+      <div class="reco-block">
+        <h4>À éviter</h4>
+        <p id="recoEviter">—</p>
+      </div>
+
+      <div id="recoAlternatives"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Pouvoir sucrant : sucre blanc = 100, mêmes valeurs que calculateur-sucres.html
+const sucres = {
+  'semoule': {
+    name: "Sucre semoule (sucre blanc)",
+    origin: "Saccharose raffiné, betterave ou canne",
+    tags: ["La référence","Supermarché","Goût neutre"],
+    pouvoir: "100",
+    humidite: "Moyenne",
+    couleur: "Moyenne",
+    anticristal: "Non",
+    textureType: "Cristaux blancs moyens, goût neutre. Il sucre sans rien imposer",
+    comportement: "C'est l'étalon : tous les autres sucres se mesurent par rapport à lui. Il fait tenir les meringues, apporte du croustillant aux biscuits et caramélise seul à la casserole. Son défaut : il recristallise facilement dans un sirop ou un caramel",
+    usages: [
+      {t:"Meringues française, suisse et italienne", d:"Il fait monter et tenir les blancs. Verse-le petit à petit une fois les blancs mousseux"},
+      {t:"Caramel à sec ou sirop", d:"Fond seul et caramélise : blond à 160 °C, ambré à 170 °C, brun à 180 °C"},
+      {t:"Crème pâtissière, crème anglaise", d:"Fouetté avec les jaunes pour les blanchir dès que tu les casses"},
+      {t:"Cakes, génoises, sablés", d:"Crémé avec le beurre ou monté avec les œufs, il donne la structure et des bords croustillants"}
+    ],
+    remplace: "Remplace la cassonade ou la vergeoise poids pour poids quand tu veux un goût neutre. Mixé très finement au blender, il dépanne en sucre glace dans une pâte",
+    pitfall: "Dans un caramel ou un sirop, un seul cristal resté sur la paroi peut faire masser tout le sucre : passe un pinceau mouillé sur les bords ou ajoute un peu de glucose. Dans une pâte sucrée, il laisse du grain et rend la pâte plus friable que le sucre glace",
+    score: {macaron:3, meringue:5, sucree:3, cookie:4, moelleux:4, ganache:1, caramel:4, miroir:3, fondant:0, glace:3, perle:0, epices:1, decor:2}
+  },
+  'glace': {
+    name: "Sucre glace",
+    origin: "Sucre blanc broyé en poudre très fine",
+    tags: ["Fond tout de suite","Supermarché","Macarons"],
+    pouvoir: "100",
+    humidite: "Faible",
+    couleur: "Moyenne",
+    anticristal: "Non",
+    textureType: "Poudre ultra fine qui fond tout de suite. Aucune sensation de grain en bouche",
+    comportement: "Il se dissout sans chauffer ni fouetter longtemps. Dans une pâte, il donne une texture fine et régulière. Il contient souvent un peu d'amidon qui l'empêche de faire des grumeaux dans le paquet",
+    usages: [
+      {t:"Coques de macarons", d:"Tamisé avec la poudre d'amande en tant pour tant (même poids des deux)"},
+      {t:"Pâte sucrée", d:"Donne une pâte fine et régulière, qui se fonce sans casser"},
+      {t:"Meringue française", d:"Moitié sucre semoule fouetté avec les blancs, moitié sucre glace incorporé à la fin à la maryse"},
+      {t:"Glace royale, glaçage à l'eau, finitions", d:"Mélangé à un blanc d'œuf, à un peu d'eau ou à quelques gouttes de jus de citron"}
+    ],
+    remplace: "Remplace le sucre semoule poids pour poids dans une pâte sucrée ou une chantilly. Ne le remplace pas dans un caramel ni dans un sirop",
+    pitfall: "Tamise-le toujours, il fait des grumeaux à l'humidité. Pour saupoudrer un dessert humide, prends du sucre glace décor (sucre neige), qui ne fond pas au contact de la crème",
+    score: {macaron:5, meringue:3, sucree:5, cookie:1, moelleux:2, ganache:0, caramel:0, miroir:0, fondant:1, glace:0, perle:0, epices:0, decor:0}
+  },
+  'cassonade': {
+    name: "Cassonade",
+    origin: "Sucre roux de canne en gros cristaux",
+    tags: ["Goût caramel léger","Supermarché","Croquant"],
+    pouvoir: "100",
+    humidite: "Moyenne",
+    couleur: "Forte",
+    anticristal: "Non",
+    textureType: "Gros cristaux dorés et secs, petit goût de rhum et de caramel. Ils croquent sous la dent s'ils ne fondent pas",
+    comportement: "Elle garde une fine couche de mélasse autour de chaque cristal : un peu plus de goût et de couleur que le sucre blanc. Ses gros cristaux fondent mal dans une pâte froide, d'où le croquant",
+    usages: [
+      {t:"Crème brûlée", d:"Saupoudrée en fine couche puis caramélisée au chalumeau"},
+      {t:"Crumble et streusel", d:"Avec le beurre, la farine et la poudre d'amande, pour un croustillant doré"},
+      {t:"Sablés rustiques, cookies", d:"À la place d'une partie du sucre blanc pour un goût plus chaud"},
+      {t:"Fruits caramélisés", d:"À la poêle avec un peu de beurre, sur des pommes, des bananes ou des ananas"}
+    ],
+    remplace: "Remplace le sucre blanc poids pour poids dans un biscuit, un crumble ou un cake, avec un goût plus caramel. Ne remplace pas la vergeoise dans un cookie moelleux : elle est beaucoup plus sèche",
+    pitfall: "Pas de cassonade dans une meringue ni dans une pâte à macarons : ses gros cristaux ne fondent pas et sa mélasse alourdit les blancs. Ne la confonds pas avec la vergeoise, beaucoup plus humide",
+    score: {macaron:0, meringue:0, sucree:2, cookie:3, moelleux:3, ganache:1, caramel:2, miroir:0, fondant:0, glace:1, perle:1, epices:2, decor:0}
+  },
+  'vergeoise': {
+    name: "Vergeoise blonde ou brune",
+    origin: "Sucre de betterave cuit avec son sirop",
+    tags: ["Très moelleuse","Goût caramel","Supermarché"],
+    pouvoir: "100",
+    humidite: "Élevée",
+    couleur: "Forte",
+    anticristal: "Un peu",
+    textureType: "Sucre mou et collant, goût de caramel (blonde) à presque réglissé (brune). Il fond très bien dans une pâte",
+    comportement: "Elle contient plus d'eau et un peu de sucre inverti : elle garde le moelleux, colore vite au four et donne un goût de caramel cuit. C'est le sucre du speculoos et de la tarte au sucre",
+    usages: [
+      {t:"Cookies moelleux", d:"Le secret du cœur fondant. Dans ma pâte de cookie cacahuète : 145 g de vergeoise pour 100 g de sucre blanc"},
+      {t:"Speculoos", d:"Vergeoise brune pour le goût et la couleur"},
+      {t:"Tarte au sucre, gaufres flamandes", d:"Les recettes du Nord, impossibles sans elle"},
+      {t:"Pain d'épices, financiers", d:"Une partie du sucre en vergeoise pour plus de goût et de moelleux"}
+    ],
+    remplace: "Remplace le muscovado poids pour poids, avec un goût un peu moins fort. Dépanne la cassonade dans un cookie, avec plus de moelleux. Ne remplace pas le sucre blanc dans une pâte qui doit rester claire ou croustillante",
+    pitfall: "Elle durcit à l'air : garde-la dans une boîte bien fermée (un morceau de pain dans la boîte la ramollit). Au four, surveille la couleur, elle dore beaucoup plus vite que le sucre blanc",
+    score: {macaron:0, meringue:0, sucree:1, cookie:5, moelleux:3, ganache:1, caramel:1, miroir:0, fondant:0, glace:1, perle:0, epices:4, decor:0}
+  },
+  'muscovado': {
+    name: "Muscovado",
+    origin: "Sucre complet de canne, non raffiné",
+    tags: ["Goût réglisse","Très humide","Magasin bio"],
+    pouvoir: "90 à 100",
+    humidite: "Très élevée",
+    couleur: "Très forte",
+    anticristal: "Un peu",
+    textureType: "Sable humide brun foncé, goût puissant de mélasse, de réglisse et de caramel brûlé",
+    comportement: "Il garde toute sa mélasse. Il apporte de l'humidité, une couleur très foncée et un goût qui passe devant le reste. Le plus moelleux des sucres en poudre",
+    usages: [
+      {t:"Cookies au chocolat", d:"Une partie du sucre en muscovado pour un goût profond et un cœur moelleux"},
+      {t:"Brownies", d:"Avec du chocolat noir, il renforce le côté fondant"},
+      {t:"Sauce caramel", d:"Pour un caramel au goût de toffee"},
+      {t:"Pain d'épices, carrot cake, gâteaux aux fruits secs", d:"Son goût tient face aux épices"}
+    ],
+    remplace: "Remplace la vergeoise brune poids pour poids, avec un goût plus fort. Remplacer tout le sucre blanc d'une recette change sa couleur et son goût : commence par le quart",
+    pitfall: "Jamais dans une meringue, une pâte à macarons ou une crème claire : il colore et alourdit. Il fait des mottes, émiette-le à la main avant de le peser",
+    score: {macaron:0, meringue:0, sucree:1, cookie:4, moelleux:2, ganache:1, caramel:2, miroir:0, fondant:0, glace:1, perle:0, epices:4, decor:0}
+  },
+  'perle': {
+    name: "Sucre perlé (sucre en grains)",
+    origin: "Sucre blanc compressé en grains",
+    tags: ["Ne fond pas au four","Décor","Supermarché"],
+    pouvoir: "100",
+    humidite: "Très faible",
+    couleur: "Aucune",
+    anticristal: "Non",
+    textureType: "Grains blancs, durs et compacts. Ils restent entiers et croquants après cuisson",
+    comportement: "Les grains sont tassés : ils tiennent la chaleur du four sans fondre ni dorer. C'est le croquant blanc des chouquettes",
+    usages: [
+      {t:"Chouquettes", d:"Parsemé généreusement sur les choux juste après la dorure, avant d'enfourner"},
+      {t:"Brioches et tresses", d:"Sur le dessus, après la dorure"},
+      {t:"Gaufres de Liège", d:"Mélangé à la pâte : les grains caramélisent dans le gaufrier"},
+      {t:"Pains au lait, sablés", d:"Une pincée avant cuisson pour le croquant"}
+    ],
+    remplace: "Rien ne le remplace vraiment. En dépannage, des morceaux de sucre concassés grossièrement",
+    pitfall: "Pose-le juste avant d'enfourner, sur une dorure encore humide pour qu'il accroche. Mélangé à une pâte qui cuit longtemps (hors gaufre de Liège), il fond et laisse des trous collants",
+    score: {macaron:0, meringue:0, sucree:0, cookie:1, moelleux:0, ganache:0, caramel:0, miroir:0, fondant:0, glace:0, perle:5, epices:0, decor:0}
+  },
+  'inverti': {
+    name: "Sucre inverti (trimoline)",
+    origin: "Sucre coupé en glucose et fructose, en pâte",
+    tags: ["Garde le moelleux","Anti-cristallisant","Pro et en ligne"],
+    pouvoir: "125",
+    humidite: "Maximale",
+    couleur: "Forte",
+    anticristal: "Oui",
+    textureType: "Pâte blanche, épaisse et collante. Goût neutre",
+    comportement: "Il attire et garde l'eau : un cake ou un financier reste moelleux plusieurs jours de plus. Il empêche le sucre de recristalliser et abaisse le point de congélation. Au four, il dore plus vite que le sucre blanc",
+    usages: [
+      {t:"Financiers, madeleines, cakes", d:"10 à 20 % du sucre en trimoline pour garder le moelleux plusieurs jours"},
+      {t:"Ganaches", d:"Un peu de trimoline rend la ganache plus souple et la garde plus longtemps"},
+      {t:"Glaces", d:"Limite les cristaux de glace et garde une texture souple"},
+      {t:"Guimauves", d:"Avec le glucose, il garde la guimauve souple"}
+    ],
+    remplace: "Remplace le miel sans son goût. En dépannage, un miel doux (acacia) le remplace dans un cake ou une ganache",
+    pitfall: "Pas plus du tiers du sucre d'une recette : au-delà, la pâte devient collante, colore trop vite et le biscuit ne croustille plus. Pèse-le au gramme près, quelques grammes changent beaucoup",
+    score: {macaron:0, meringue:0, sucree:1, cookie:2, moelleux:5, ganache:4, caramel:1, miroir:1, fondant:1, glace:4, perle:0, epices:2, decor:0}
+  },
+  'glucose': {
+    name: "Sirop de glucose",
+    origin: "Sirop tiré de l'amidon de maïs ou de blé",
+    tags: ["Anti-cristallisant","Brillance","Pro et en ligne"],
+    pouvoir: "50",
+    humidite: "Élevée",
+    couleur: "Faible",
+    anticristal: "Oui",
+    textureType: "Sirop épais, transparent, très collant. Il sucre très peu",
+    comportement: "Il se glisse entre les cristaux de sucre et les empêche de se reformer : caramel lisse, glaçage brillant, fondant souple. Il apporte du corps et de l'élasticité sans beaucoup sucrer",
+    usages: [
+      {t:"Caramel et sauce caramel", d:"Environ 20 % du poids du sucre : ton caramel ne masse plus"},
+      {t:"Glaçage miroir", d:"À parts égales avec le sucre, c'est lui qui donne la brillance et la tenue"},
+      {t:"Ganache", d:"Autour de 10 % du poids de la crème, pour une ganache souple et brillante"},
+      {t:"Nougat, guimauve, sucre cuit", d:"Il évite que le sucre cuit recristallise"}
+    ],
+    remplace: "Le sucre inverti fait le même travail anti-cristallisant, en plus sucré. Le glucose atomisé (en poudre) le remplace dans une glace ou une ganache : environ 80 g de poudre pour 100 g de sirop",
+    pitfall: "Pèse-le directement dans la casserole posée sur la balance, avec une cuillère mouillée : il colle partout. Le sirop de glucose n'est ni un sirop de sucre de canne ni un sirop d'agave",
+    score: {macaron:0, meringue:1, sucree:0, cookie:0, moelleux:1, ganache:4, caramel:5, miroir:5, fondant:2, glace:3, perle:0, epices:0, decor:3}
+  },
+  'dextrose': {
+    name: "Dextrose",
+    origin: "Glucose pur en poudre, tiré de l'amidon",
+    tags: ["Glaces et sorbets","Fraîcheur en bouche","Pro et en ligne"],
+    pouvoir: "70",
+    humidite: "Moyenne",
+    couleur: "Forte",
+    anticristal: "Un peu",
+    textureType: "Poudre blanche fine, sucre léger avec une sensation de fraîcheur en bouche",
+    comportement: "Il sucre moins que le sucre blanc mais abaisse presque deux fois plus le point de congélation. Une glace au dextrose reste souple à la sortie du congélateur. Au four, il dore vite",
+    usages: [
+      {t:"Glaces et sorbets", d:"20 à 30 % du sucre en dextrose : ta glace se sert à la cuillère dès la sortie du congélateur"},
+      {t:"Ganaches et crèmes moins sucrées", d:"Une partie du sucre en dextrose baisse le goût sucré sans changer la texture"}
+    ],
+    remplace: "Le glucose atomisé joue un rôle proche dans une glace, avec plus de corps et moins d'effet sur la congélation. Le sucre inverti aussi, en plus sucré",
+    pitfall: "Pas plus de 30 % du sucre d'une glace : au-delà, elle devient trop molle et fond tout de suite dans l'assiette. Ne le confonds pas avec le sirop de glucose : même famille, rôles différents",
+    score: {macaron:0, meringue:0, sucree:0, cookie:0, moelleux:1, ganache:2, caramel:0, miroir:0, fondant:0, glace:5, perle:0, epices:0, decor:0}
+  },
+  'miel': {
+    name: "Miel",
+    origin: "Sucre naturel, environ 18 % d'eau",
+    tags: ["Goût marqué","Garde le moelleux","Supermarché"],
+    pouvoir: "110",
+    humidite: "Maximale",
+    couleur: "Très forte",
+    anticristal: "Oui",
+    textureType: "Liquide ou crémeux selon le miel. Le goût change tout : acacia presque neutre, châtaigne puissant",
+    comportement: "Il agit comme un sucre inverti avec du goût en plus : il garde le moelleux, empêche le sucre de cristalliser et colore très vite au four. Il apporte aussi de l'eau à ta recette",
+    usages: [
+      {t:"Pain d'épices", d:"À parts égales avec la farine, c'est lui qui fait la texture et le goût"},
+      {t:"Madeleines et financiers", d:"10 à 20 % du sucre en miel pour le moelleux et le goût"},
+      {t:"Nougat", d:"Cuit avec le sucre et le glucose, puis versé sur les blancs montés"},
+      {t:"Ganaches", d:"Une cuillère de miel d'acacia rend la ganache plus souple"}
+    ],
+    remplace: "Remplace le sucre inverti s'il est doux (acacia). Pour remplacer du sucre blanc : environ 90 g de miel pour 100 g de sucre, et retire un peu de liquide de la recette (le miel contient de l'eau)",
+    pitfall: "Si tu remplaces une grosse partie du sucre, baisse ton four de 10 à 15 °C : sinon le dessus brunit avant que le cœur soit cuit. Un miel très parfumé (châtaigne, sapin) masque les autres saveurs",
+    score: {macaron:0, meringue:0, sucree:1, cookie:2, moelleux:4, ganache:3, caramel:1, miroir:0, fondant:0, glace:2, perle:0, epices:5, decor:0}
+  },
+  'isomalt': {
+    name: "Isomalt",
+    origin: "Sucre de remplacement tiré de la betterave",
+    tags: ["Décors en sucre","Ne jaunit pas","Pro et en ligne"],
+    pouvoir: "50",
+    humidite: "Très faible",
+    couleur: "Aucune",
+    anticristal: "Oui",
+    textureType: "Poudre ou perles blanches. Fondu, il devient un verre transparent qui ne colle pas",
+    comportement: "Il fond sans eau, reste transparent, jaunit à peine et craint beaucoup moins l'humidité que le sucre cuit. Tes décors restent brillants et ne collent pas, même plusieurs heures posés sur un dessert",
+    usages: [
+      {t:"Sucre coulé, bulles de sucre", d:"Fondu vers 170 °C, coloré, puis versé sur un tapis en silicone"},
+      {t:"Sucre tiré, rubans, pétales", d:"Il reste souple plus longtemps que le sucre cuit et se refond pour être retravaillé"},
+      {t:"Décors transparents", d:"Gouttes, éclats façon verre, sucettes, avec quelques gouttes de colorant"}
+    ],
+    remplace: "Remplace le sucre cuit au grand cassé (sucre + glucose) pour tous les décors. Ne remplace pas le sucre dans une recette : il sucre deux fois moins et ne fait pas de pâte",
+    pitfall: "Réservé aux décors : mangé en grande quantité, il peut avoir un effet laxatif. Il monte à 170 °C : gants, et un bol d'eau froide à côté, une brûlure au sucre est sévère",
+    score: {macaron:0, meringue:0, sucree:0, cookie:0, moelleux:0, ganache:0, caramel:0, miroir:0, fondant:0, glace:0, perle:0, epices:0, decor:5}
+  },
+  'fondant': {
+    name: "Fondant pâtissier",
+    origin: "Sucre et glucose cuits, travaillés en pâte",
+    tags: ["Glaçage des éclairs","Brillant","Pro et en ligne"],
+    pouvoir: "100",
+    humidite: "Moyenne",
+    couleur: "Aucune",
+    anticristal: "Non",
+    textureType: "Pâte blanche épaisse, lisse et brillante une fois tiédie",
+    comportement: "Du sucre et du glucose cuits, puis refroidis en les travaillant : les cristaux restent si fins qu'on ne les sent pas. Tiédi à la bonne température, il nappe et sèche en surface en restant brillant",
+    usages: [
+      {t:"Éclairs et religieuses", d:"Tiédi à 35-37 °C au bain-marie, détendu, coloré, puis le dessus des éclairs trempé dedans"},
+      {t:"Millefeuille", d:"Le dessus blanc, marbré de chocolat"},
+      {t:"Choux glacés, petits fours", d:"Un nappage fin et brillant qui tient au toucher"}
+    ],
+    remplace: "Un glaçage à l'eau (sucre glace + eau) dépanne, mais il reste mat et craquelle. Rien ne donne le brillant d'un vrai fondant",
+    pitfall: "Au-dessus de 37 °C, il perd son brillant et sèche mat. Ne le fais jamais bouillir. Trop épais : détends-le avec quelques gouttes de sirop ou d'eau, pas plus, sinon il coule sur les côtés",
+    score: {macaron:0, meringue:0, sucree:0, cookie:0, moelleux:0, ganache:0, caramel:0, miroir:0, fondant:5, glace:0, perle:0, epices:0, decor:0}
+  }
+};
+
+function setMode(m) {
+  document.querySelectorAll('.mode-btn').forEach((b,i) => {
+    b.classList.toggle('active', (m==='fiches' && i===0) || (m==='assistant' && i===1));
+  });
+  document.querySelectorAll('.mode-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('mode-'+m).classList.add('active');
+}
+
+// Grille des fiches
+const grid = document.getElementById('sucreGrid');
+Object.keys(sucres).forEach(key => {
+  const s = sucres[key];
+  const btn = document.createElement('button');
+  btn.className = 'suc-btn';
+  btn.onclick = () => showFiche(key);
+  btn.innerHTML =
+    '<div class="suc-name">'+s.name+'</div>' +
+    '<div class="suc-origin">'+s.origin+'</div>' +
+    '<div>'+s.tags.map(t => '<span class="suc-tag">'+t+'</span>').join('')+'</div>';
+  grid.appendChild(btn);
+});
+
+function showFiche(key, defiler) {
+  document.querySelectorAll('.suc-btn').forEach((b,i) => {
+    b.classList.toggle('active', Object.keys(sucres)[i] === key);
+  });
+  const s = sucres[key];
+  const specsHtml =
+    '<div class="specs-grid">' +
+      '<div class="spec-box"><div class="sp-label">Pouvoir sucrant</div><div class="sp-value">'+s.pouvoir+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Garde l\'humidité</div><div class="sp-value">'+s.humidite+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Coloration au four</div><div class="sp-value">'+s.couleur+'</div></div>' +
+      '<div class="spec-box"><div class="sp-label">Anti-cristallisant</div><div class="sp-value">'+s.anticristal+'</div></div>' +
+    '</div>' +
+    '<p class="spec-note">Pouvoir sucrant : le sucre blanc vaut 100. Au-dessus de 100 il sucre plus, en dessous il sucre moins</p>';
+
+  const html =
+    '<div class="fiche-header">' +
+      '<div class="sub">'+s.origin+'</div>' +
+      '<h2>'+s.name+'</h2>' +
+    '</div>' +
+    '<div class="fiche-row"><div class="fiche-label">Caractéristiques</div><div class="fiche-value">'+specsHtml+'</div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Texture et goût</div><div class="fiche-value"><strong>'+s.textureType+'</strong></div></div>' +
+    '<div class="fiche-row"><div class="fiche-label">Comportement</div><div class="fiche-value">'+s.comportement+'</div></div>' +
+    '<div class="usages-list">' +
+      '<h3 style="font-family:Georgia,serif;font-size:18px;margin:18px 0 12px;color:#1A1410">Usages recommandés</h3>' +
+      s.usages.map(u => '<div class="usage-item"><div class="usage-dot"></div><div class="usage-body"><strong>'+u.t+'</strong><span>'+u.d+'</span></div></div>').join('') +
+    '</div>' +
+    '<div class="remplace"><strong>Par quoi le remplacer</strong>'+s.remplace+'<br><a href="calculateur-sucres.html">Calculer le poids exact →</a></div>' +
+    '<div class="pitfall"><strong>Pièges à éviter</strong>'+s.pitfall+'</div>';
+
+  const fiche = document.getElementById('fiche');
+  fiche.innerHTML = html;
+  fiche.classList.add('visible');
+  if (defiler !== false) fiche.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Gestion visuelle quiz
+document.addEventListener('change', e => {
+  if (e.target.type === 'radio' || e.target.type === 'checkbox') {
+    if (e.target.type === 'radio') {
+      const name = e.target.name;
+      document.querySelectorAll('input[name="'+name+'"]').forEach(i => {
+        i.closest('.choix-card').classList.remove('active');
+      });
+    }
+    if (e.target.checked) {
+      e.target.closest('.choix-card').classList.add('active');
+    } else {
+      e.target.closest('.choix-card').classList.remove('active');
+    }
+  }
+});
+
+function assistant() {
+  const app = document.querySelector('input[name="app"]:checked').value;
+  const but = document.querySelector('input[name="but"]:checked').value;
+  const supermarche = document.getElementById('supermarche').checked;
+  const moinssucre = document.getElementById('moinssucre').checked;
+
+  // Score pour chaque sucre : seuls les sucres adaptés à la recette (score > 0) peuvent sortir
+  const scores = {};
+  Object.keys(sucres).forEach(k => {
+    const base = sucres[k].score[app] || 0;
+    let s = base;
+    if (base > 0) {
+      // Ce que tu cherches
+      if (but === 'neutre' && ['semoule','glace','inverti','glucose','dextrose','isomalt','fondant'].includes(k)) s += 1;
+      if (but === 'neutre' && ['vergeoise','muscovado'].includes(k)) s -= 2;
+      if (but === 'neutre' && k === 'miel') s -= 1;
+      if (but === 'gout' && ['vergeoise','muscovado','cassonade','miel'].includes(k)) s += 3;
+      if (but === 'moelleux' && ['inverti','miel','vergeoise'].includes(k)) s += 3;
+      if (but === 'moelleux' && k === 'muscovado') s += 1;
+      if (but === 'croquant' && ['semoule','cassonade','perle'].includes(k)) s += 2;
+      if (but === 'brillance' && ['glucose','fondant','isomalt'].includes(k)) s += 3;
+
+      // Contraintes
+      if (supermarche && ['inverti','glucose','dextrose','isomalt','fondant'].includes(k)) s -= 3;
+      if (supermarche && k === 'muscovado') s -= 1;
+      if (moinssucre && ['glucose','dextrose'].includes(k)) s += 2;
+      if (moinssucre && ['inverti','miel'].includes(k)) s -= 1;
+      s = Math.max(1, s);
+    }
+    scores[k] = s;
+  });
+
+  // Tri par score
+  const sorted = Object.entries(scores).sort((a,b) => b[1] - a[1]);
+  const winner = sorted[0][0];
+  const runnerUp = sorted.filter(([k,s]) => s > 0).slice(1, 3);
+
+  const s = sucres[winner];
+
+  // Dosage spécifique selon la recette
+  const dosages = {
+    macaron: "Pour 100 g de blancs (ma recette) : 130 g de sucre glace et 130 g de poudre d'amande tamisés ensemble, et 90 g de sucre semoule versé petit à petit dans les blancs",
+    meringue: "Française : 2 fois le poids des blancs en sucre (moitié semoule fouetté avec les blancs, moitié sucre glace à la maryse). Suisse : blancs et sucre chauffés vers 55 °C au bain-marie puis fouettés. Italienne : sirop cuit à 118-121 °C versé en filet sur les blancs mousseux",
+    sucree: "Sucre glace pour une pâte sucrée fine et régulière : environ 100 g pour 250 g de farine. Sucre semoule ou cassonade pour un sablé plus croquant et plus rustique",
+    cookie: "Mélange vergeoise (ou muscovado) et sucre blanc : la vergeoise pour le cœur moelleux et le goût, le sucre blanc pour les bords croustillants. Dans ma pâte cacahuète : 145 g de vergeoise pour 100 g de sucre",
+    moelleux: "Remplace 10 à 20 % du sucre par du sucre inverti ou un miel doux : ton cake ou tes financiers restent moelleux plusieurs jours de plus. Le calculateur des sucres interchangeables te donne le poids exact",
+    ganache: "Sirop de glucose ou sucre inverti : autour de 10 % du poids de la crème, ajouté dans la crème chaude. Ta ganache reste souple, brillante, et se garde plus longtemps",
+    caramel: "Sucre semoule + sirop de glucose : environ 20 % du poids du sucre (40 g pour 200 g de sucre). Blond à 160 °C, ambré à 170 °C, brun à 180 °C, jamais au-delà",
+    miroir: "Sucre et sirop de glucose à parts égales (par exemple 150 g de chaque), portés à 103 °C avec l'eau avant d'ajouter le reste",
+    fondant: "Fondant pâtissier tiédi à 35-37 °C au bain-marie, détendu avec quelques gouttes de sirop ou d'eau. Trempe le dessus des éclairs puis lisse le bord avec le doigt",
+    glace: "Remplace 20 à 30 % du sucre par du dextrose : ta glace reste souple à la sortie du congélateur. Ajoute un peu de glucose atomisé si tu veux plus de corps",
+    perle: "Sucre perlé parsemé généreusement juste après la dorure, avant d'enfourner. Penche la plaque au-dessus du paquet pour récupérer l'excès",
+    epices: "Miel à parts égales avec la farine (250 g de miel pour 250 g de farine). Une part de vergeoise ou de muscovado renforce le goût",
+    decor: "Isomalt fondu sans eau vers 170 °C, laissé redescendre quelques minutes avant de couler ou de tirer. Sans isomalt : sucre semoule avec un peu de glucose, cuit au grand cassé (146-155 °C), qui jaunit et craint davantage l'humidité. Gants et tapis en silicone obligatoires"
+  };
+  const dosage = dosages[app] || "Se référer à la fiche détaillée pour le dosage précis selon ta recette";
+
+  // Construction du "why"
+  const reasons = [];
+  if (app === 'macaron' && winner === 'glace') reasons.push("les coques demandent un sucre ultra fin qui se mélange à la poudre d'amande sans laisser de grain");
+  if (app === 'meringue' && winner === 'semoule') reasons.push("le sucre semoule fait monter et tenir les blancs, c'est la base de toutes les meringues");
+  if (app === 'sucree' && winner === 'glace') reasons.push("le sucre glace donne une pâte fine et régulière qui se fonce sans casser");
+  if (app === 'cookie' && ['vergeoise','muscovado'].includes(winner)) reasons.push("son humidité donne le cœur moelleux et son goût de caramel fait la différence");
+  if (app === 'moelleux' && ['inverti','miel'].includes(winner)) reasons.push("il retient l'eau et garde ton gâteau moelleux plusieurs jours");
+  if (app === 'ganache' && ['glucose','inverti'].includes(winner)) reasons.push("il lie la ganache, la garde souple et prolonge sa conservation");
+  if (app === 'caramel' && winner === 'glucose') reasons.push("il empêche le caramel de masser");
+  if (app === 'caramel' && winner === 'semoule') reasons.push("c'est le sucre qui caramélise le plus proprement, à condition d'y ajouter un peu de glucose");
+  if (app === 'miroir' && winner === 'glucose') reasons.push("c'est lui qui donne la brillance et l'élasticité du glaçage");
+  if (app === 'fondant' && winner === 'fondant') reasons.push("rien d'autre ne donne ce nappage lisse et brillant sur les éclairs");
+  if (app === 'glace' && winner === 'dextrose') reasons.push("il abaisse le point de congélation et garde ta glace souple");
+  if (app === 'perle' && winner === 'perle') reasons.push("ses grains ne fondent pas au four et restent croquants");
+  if (app === 'epices' && winner === 'miel') reasons.push("le miel fait la texture et le goût du pain d'épices");
+  if (app === 'decor' && winner === 'isomalt') reasons.push("il reste transparent, ne jaunit pas et craint peu l'humidité");
+  if (but === 'gout' && ['vergeoise','muscovado','cassonade','miel'].includes(winner)) reasons.push("tu cherches du goût, et ce sucre en apporte");
+  if (but === 'brillance' && ['glucose','fondant','isomalt'].includes(winner)) reasons.push("tu veux du brillant");
+  if (supermarche && sucres[winner].tags.includes('Supermarché')) reasons.push("tu le trouves en supermarché");
+
+  const why = reasons.length > 0 ? "C'est le meilleur choix parce que " + reasons.join(", ") + "." : "Meilleur équilibre entre ta recette, ce que tu cherches et tes contraintes.";
+
+  document.getElementById('recoName').textContent = s.name;
+  document.getElementById('recoWhy').textContent = why;
+  document.getElementById('recoDose').textContent = dosage;
+  document.getElementById('recoActivation').textContent = s.comportement;
+  document.getElementById('recoEviter').textContent = s.pitfall;
+
+  // Alternatives
+  const altDiv = document.getElementById('recoAlternatives');
+  if (runnerUp.length > 0) {
+    altDiv.innerHTML = '<h4 style="font-family:Courier New,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#C8A04A;margin-top:24px;margin-bottom:10px">Alternatives à considérer</h4>' +
+      runnerUp.map(([k,sc]) => {
+        const alt = sucres[k];
+        return '<div class="alt-card"><strong>'+alt.name+'</strong>'+alt.textureType+'</div>';
+      }).join('');
+  } else {
+    altDiv.innerHTML = '';
+  }
+
+  const reco = document.getElementById('reco');
+  reco.classList.add('visible');
+  reco.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// Ouvre la première fiche par défaut, sans faire défiler la page
+showFiche('semoule', false);
+</script>
+</body>
+</html>
