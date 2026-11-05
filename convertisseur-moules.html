@@ -36,6 +36,17 @@
   .dim-grid.cols-2{grid-template-columns:1fr 1fr}
   .dim-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
 
+  /* NOMBRE DE MOULES */
+  .count-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:18px;padding-top:16px;border-top:1px dashed rgba(26,20,16,0.12)}
+  .count-line label{margin:0}
+  .count-hint{display:block;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;letter-spacing:0;text-transform:none;font-weight:400;color:rgba(26,20,16,0.5);margin-top:3px}
+  .stepper{display:flex;align-items:center;flex-shrink:0;border:1px solid rgba(26,20,16,0.2);border-radius:3px;overflow:hidden;background:#fff}
+  .stepper button{width:44px;height:44px;border:none;background:#FDF8F0;color:#1A1410;font-size:22px;line-height:1;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent}
+  .stepper button:hover{background:rgba(200,160,74,0.15)}
+  .stepper button:disabled{opacity:.3;cursor:default;background:#FDF8F0}
+  .stepper input{width:54px;height:44px;border:none;border-left:1px solid rgba(26,20,16,0.12);border-right:1px solid rgba(26,20,16,0.12);border-radius:0;padding:0;text-align:center;font-size:17px;font-weight:700;-moz-appearance:textfield;appearance:textfield}
+  .stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
   .arrow{display:flex;align-items:center;justify-content:center;padding:0 8px}
   .arrow-badge{background:#C8A04A;color:#1A1410;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;padding:8px 14px;border-radius:30px;text-transform:uppercase;font-weight:700}
 
@@ -109,14 +120,14 @@
 
 <main>
   <h1>Change de moule sans <span class="accent">rater ta recette</span></h1>
-  <p class="intro">La recette est pour un 20 cm rond et toi t'as un 24 cm carré ? Choisis les 2 moules, l'outil calcule le ratio exact et convertit tes ingrédients. Colle ta recette ou dépose ton PDF, les lignes se remplissent toutes seules</p>
+  <p class="intro">La recette est pour un 20 cm rond et toi t'as un 24 cm carré ? Ou elle est prévue pour 6 tartelettes de 8 cm et tu veux une seule tarte de 20 cm ? Choisis tes moules et leur nombre, l'outil calcule le ratio exact et convertit tes ingrédients. Colle ta recette ou dépose ton PDF, les lignes se remplissent toutes seules</p>
 
   <!-- CHOIX MOULES -->
   <div class="molds">
     <!-- Moule origine -->
     <div class="mold">
-      <div class="mold-label">Ta recette est pour ce moule</div>
-      <div class="mold-title">Moule d'origine</div>
+      <div class="mold-label" id="label-a">Ta recette est pour ce moule</div>
+      <div class="mold-title" id="title-a">Moule d'origine</div>
       <div class="shapes" id="shapes-a"></div>
       <div id="dims-a"></div>
     </div>
@@ -125,8 +136,8 @@
 
     <!-- Moule destination -->
     <div class="mold">
-      <div class="mold-label">Tu veux la faire dans ce moule</div>
-      <div class="mold-title">Moule de destination</div>
+      <div class="mold-label" id="label-b">Tu veux la faire dans ce moule</div>
+      <div class="mold-title" id="title-b">Moule de destination</div>
       <div class="shapes" id="shapes-b"></div>
       <div id="dims-b"></div>
     </div>
@@ -432,14 +443,16 @@ function bake(ing,prep){
 function detectMold(raw){
   const text=normalizeText(raw);
   for(const line of text.split('\n')){
-    const m=line.match(/\b(cercle|moule|cadre|entremets?|tartelettes?|tartes?|g[âa]teau)\b[^\n]{0,40}?(\d{1,2}(?:[.,]5)?)\s*cm\b/i);
+    const m=line.match(/\b(cercles?|moules?|cadres?|entremets?|tartelettes?|tartes?|g[âa]teaux?|d[ôo]mes?|demi-sph[èe]res?)\b[^\n]{0,40}?(\d{1,2}(?:[.,]5)?)\s*cm\b/i);
     if(!m) continue;
-    // "Pour 6 cercles de 8 cm" = 6 pièces, pas un moule unique -> on ne touche à rien
-    const many=line.match(/\b(\d+)\s*(cercles|moules|entremets|tartelettes|tartes|g[âa]teaux|pi[èe]ces)\b/i);
-    if(many && +many[1]>1) continue;
+    // "Pour 6 cercles de 8 cm" = 6 moules de 8 cm
+    const many=line.match(/\b(\d+)\s*(?:petit(?:e)?s?\s+)?(cercles|moules|cadres|entremets|tartelettes|tartes|g[âa]teaux|pi[èe]ces|d[ôo]mes|demi-sph[èe]res)\b/i);
+    const count=(many && +many[1]>1 && +many[1]<=99) ? +many[1] : 1;
     const size=parseFloat(m[2].replace(',','.'));
-    if(size<10||size>40) continue;
-    return {shape:/\bcarr[ée]|\bcadre\b/i.test(line)?'carre':'rond', size};
+    // un moule seul sous 10 cm = souvent une hauteur ("moule de 4,5 cm de haut"), on ne le prend pas
+    if(size>40 || size<(count>1?3:10)) continue;
+    const shape=/d[ôo]me|demi-sph/i.test(line)?'dome':(/\bcarr[ée]|\bcadre\b/i.test(line)?'carre':'rond');
+    return {shape, size, count};
   }
   return null;
 }
@@ -458,8 +471,8 @@ const shapes = [
 ];
 
 const state = {
-  a: {shape:"rond", dims:{d:20, h:4.5}},
-  b: {shape:"rond", dims:{d:24, h:4.5}}
+  a: {shape:"rond", dims:{d:20, h:4.5}, count:1},
+  b: {shape:"rond", dims:{d:24, h:4.5}, count:1}
 };
 
 let ingredients = [
@@ -490,7 +503,43 @@ function renderDims(target) {
       <label>${d.label}</label>
       <input type="number" step="0.5" min="0" value="${state[target].dims[d.k] || d.val}" oninput="updateDim('${target}','${d.k}',this.value)">
     </div>
-  `).join('') + `</div>`;
+  `).join('') + `</div>
+    <div class="count-line">
+      <label for="count-${target}">Nombre de moules<span class="count-hint">${target === 'a' ? 'Ex : 6 pour 6 tartelettes' : 'Ex : 1 pour une seule tarte'}</span></label>
+      <div class="stepper">
+        <button type="button" id="minus-${target}" aria-label="Un moule de moins" onclick="stepCount('${target}',-1)" ${state[target].count <= 1 ? 'disabled' : ''}>−</button>
+        <input type="number" id="count-${target}" min="1" max="99" step="1" inputmode="numeric" value="${state[target].count}" oninput="updateCount('${target}',this.value)" onblur="this.value=state['${target}'].count">
+        <button type="button" aria-label="Un moule de plus" onclick="stepCount('${target}',1)">+</button>
+      </div>
+    </div>`;
+}
+
+function setCount(target, n) {
+  state[target].count = Math.min(99, Math.max(1, n));
+  document.getElementById('minus-' + target).disabled = state[target].count <= 1;
+  calculate();
+}
+
+function updateCount(target, val) {
+  // champ vide pendant la saisie : on calcule avec 1 sans réécrire le champ
+  setCount(target, Math.round(parseFloat(val)) || 1);
+}
+
+function stepCount(target, delta) {
+  setCount(target, state[target].count + delta);
+  document.getElementById('count-' + target).value = state[target].count;
+}
+
+// "6 moules ronds de 8 cm", "1 moule rectangulaire de 25 × 8 cm", "6 dômes de 7 cm"
+function describeMold(target) {
+  const s = state[target], n = s.count, pl = n > 1 ? 's' : '', d = s.dims;
+  const f = x => String(x || 0).replace('.', ',');
+  switch (s.shape) {
+    case 'carre': return `${n} moule${pl} carré${pl} de ${f(d.c)} cm`;
+    case 'rect':  return `${n} moule${pl} rectangulaire${pl} de ${f(d.l)} × ${f(d.w)} cm`;
+    case 'dome':  return `${n} dôme${pl} de ${f(d.d)} cm`;
+    default:      return `${n} moule${pl} rond${pl} de ${f(d.d)} cm`;
+  }
 }
 
 function selectShape(target, shapeId) {
@@ -528,8 +577,10 @@ function computeVolume(shape, dims) {
 }
 
 function calculate() {
-  const vA = computeVolume(state.a.shape, state.a.dims);
-  const vB = computeVolume(state.b.shape, state.b.dims);
+  const nA = state.a.count || 1, nB = state.b.count || 1;
+  const v1A = computeVolume(state.a.shape, state.a.dims);
+  const v1B = computeVolume(state.b.shape, state.b.dims);
+  const vA = v1A * nA, vB = v1B * nB; // volume TOTAL de chaque côté
   const ratio = vA > 0 ? vB / vA : 0;
 
   const fmt = (n) => n.toFixed(2).replace('.', ',');
@@ -537,11 +588,29 @@ function calculate() {
 
   document.getElementById('ratio-value').innerHTML = `× ${fmt(ratio)}<small>Ratio à appliquer</small>`;
 
+  // titres au pluriel quand il y a plusieurs moules
+  document.getElementById('label-a').textContent = nA > 1 ? 'Ta recette est pour ces moules' : 'Ta recette est pour ce moule';
+  document.getElementById('title-a').textContent = nA > 1 ? "Moules d'origine" : "Moule d'origine";
+  document.getElementById('label-b').textContent = nB > 1 ? 'Tu veux la faire dans ces moules' : 'Tu veux la faire dans ce moule';
+  document.getElementById('title-b').textContent = nB > 1 ? 'Moules de destination' : 'Moule de destination';
+
   const ratioText = document.getElementById('ratio-text');
   if (vA > 0 && vB > 0) {
-    const diff = ratio > 1 ? "plus grand" : "plus petit";
     const pct = Math.abs(Math.round((ratio - 1) * 100));
-    ratioText.innerHTML = `Ton moule de destination est ${pct}% ${diff} que l'original.<br><span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:1px;color:rgba(253,248,240,0.55)">${fmtInt(vA)} cm³ → ${fmtInt(vB)} cm³</span>`;
+    const multi = nA > 1 || nB > 1;
+    let line;
+    if (multi) {
+      const head = describeMold('a') + ' → ' + describeMold('b');
+      line = pct === 0
+        ? `${head} : garde les mêmes quantités.`
+        : `${head} : il te faut ${pct}% de recette en ${ratio > 1 ? 'plus' : 'moins'}.`;
+    } else {
+      line = pct === 0
+        ? `Tes 2 moules ont le même volume.`
+        : `Ton moule de destination est ${pct}% ${ratio > 1 ? 'plus grand' : 'plus petit'} que l'original.`;
+    }
+    const vol = (n, v1, v) => n > 1 ? `${n} × ${fmtInt(v1)} = ${fmtInt(v)} cm³` : `${fmtInt(v)} cm³`;
+    ratioText.innerHTML = `${esc(line)}<br><span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:1px;color:rgba(253,248,240,0.55)">${vol(nA, v1A, vA)} → ${vol(nB, v1B, vB)}</span>`;
   } else {
     ratioText.textContent = "Rentre les dimensions pour voir le calcul";
   }
@@ -724,11 +793,14 @@ function runImport(){
   const mold = window.RC.detectMold(raw);
   if(mold){
     state.a.shape = mold.shape;
-    state.a.dims = mold.shape === 'carre'
-      ? {c: mold.size, h: state.a.dims.h || 4.5}
+    state.a.dims = mold.shape === 'carre' ? {c: mold.size, h: state.a.dims.h || 4.5}
+      : mold.shape === 'dome' ? {d: mold.size}
       : {d: mold.size, h: state.a.dims.h || 4.5};
+    state.a.count = mold.count || 1;
     renderShapes('a'); renderDims('a');
-    moldMsg = ' Moule d\'origine détecté : ' + (mold.shape === 'carre' ? 'carré' : 'rond') + ' de ' + String(mold.size).replace('.', ',') + ' cm — corrige-le si ce n\'est pas le bon';
+    moldMsg = mold.count > 1
+      ? ' Moules d\'origine détectés : ' + describeMold('a') + '. Corrige si ce n\'est pas ça'
+      : ' Moule d\'origine détecté : ' + (mold.shape === 'carre' ? 'carré' : 'rond') + ' de ' + String(mold.size).replace('.', ',') + ' cm. Corrige-le si ce n\'est pas le bon';
   }
 
   calculate();
