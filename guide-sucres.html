@@ -91,7 +91,7 @@
 
 <main>
   <h1>Semoule, glace, vergeoise, glucose. <span class="accent">Lequel pour quoi</span></h1>
-  <p class="intro">12 sucres, 12 comportements différents. Pas de glucose dans ton caramel et il masse. Du sucre blanc à la place de la vergeoise et tes cookies sortent secs. Consulte la fiche d'un sucre ou laisse-moi t'orienter selon ta recette. Pour remplacer un sucre par un autre au gramme près, passe par le <a href="calculateur-sucres.html">calculateur des sucres interchangeables</a></p>
+  <p class="intro">13 sucres, 13 comportements différents. Pas de glucose dans ton caramel et il masse. Du sucre blanc à la place de la vergeoise et tes cookies sortent secs. Consulte la fiche d'un sucre ou laisse-moi t'orienter selon ta recette. Pour remplacer un sucre par un autre au gramme près, passe par le <a href="calculateur-sucres.html">calculateur des sucres interchangeables</a></p>
 
   <div class="mode-toggle">
     <button class="mode-btn active" onclick="setMode('fiches')">Les fiches par sucre</button>
@@ -388,6 +388,26 @@ const sucres = {
     remplace: "Remplace le sucre cuit au grand cassé (sucre + glucose) pour tous les décors. Ne remplace pas le sucre dans une recette : il sucre deux fois moins et ne fait pas de pâte",
     pitfall: "Réservé aux décors : mangé en grande quantité, il peut avoir un effet laxatif. Il monte à 170 °C : gants, et un bol d'eau froide à côté, une brûlure au sucre est sévère",
     score: {macaron:0, meringue:0, sucree:0, cookie:0, moelleux:0, ganache:0, caramel:0, miroir:0, fondant:0, glace:0, perle:0, epices:0, decor:5}
+  },
+  'xylitol': {
+    name: "Xylitol (sucre de bouleau)",
+    origin: "Sucre de remplacement tiré du bouleau ou du maïs",
+    tags: ["Moins de calories","Ne dore pas","Magasin bio"],
+    pouvoir: "100",
+    humidite: "Élevée",
+    couleur: "Aucune",
+    anticristal: "Non",
+    textureType: "Cristaux blancs qui ressemblent au sucre semoule. Goût sucré franc, avec une sensation de fraîcheur en bouche",
+    comportement: "Il sucre autant que le sucre blanc, avec environ 40 % de calories en moins et un index glycémique très bas. Dans une pâte, il fond comme du sucre. Au four, il ne dore pas : tes gâteaux sortent plus pâles. À la casserole, il ne caramélise pas. Il abaisse le point de congélation environ deux fois plus que le sucre blanc",
+    usages: [
+      {t:"Cakes et muffins", d:"À la place du sucre blanc, poids pour poids. Le gâteau reste moelleux et plus clair"},
+      {t:"Crème pâtissière, crémeux, mousses", d:"Il se dissout à chaud comme le sucre, et sa fraîcheur ne se sent presque plus"},
+      {t:"Glaces et sorbets", d:"Une partie du sucre seulement (30 % au plus) : il garde la glace souple et sa fraîcheur va bien avec les fruits"},
+      {t:"Compotes et coulis", d:"Poids pour poids, à la place du sucre blanc"}
+    ],
+    remplace: "Remplace le sucre blanc poids pour poids dans un gâteau ou une crème. Il ne remplace pas le sucre dans un caramel, une meringue ou des macarons",
+    pitfall: "Pas de caramel possible : chauffé, il fond et reste transparent. Dans une meringue ou des macarons, il sèche mal et reste collant. Mangé en grande quantité, il a un effet laxatif : la première fois, remplace seulement la moitié du sucre. Il est toxique pour les chiens, même à petite dose : ne laisse pas ton gâteau à leur portée",
+    score: {macaron:0, meringue:0, sucree:1, cookie:1, moelleux:2, ganache:1, caramel:0, miroir:0, fondant:0, glace:2, perle:0, epices:0, decor:0}
   },
   'fondant': {
     name: "Fondant pâtissier",

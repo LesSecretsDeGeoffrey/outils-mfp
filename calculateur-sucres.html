@@ -80,6 +80,7 @@
           <option value="erable">Sirop d'érable</option>
           <option value="dextrose">Dextrose</option>
           <option value="isomalt">Isomalt</option>
+          <option value="xylitol">Xylitol (sucre de bouleau)</option>
         </select>
       </div>
       <div>
@@ -107,6 +108,7 @@
         <option value="erable">Sirop d'érable</option>
         <option value="dextrose">Dextrose</option>
         <option value="isomalt">Isomalt</option>
+        <option value="xylitol">Xylitol (sucre de bouleau)</option>
       </select>
     </div>
     <div class="context-row">
@@ -231,6 +233,12 @@ const sugars = {
     ps: 50, hygro:1, couleur:0, conservation:5,
     role:"sucre de remplacement non hygroscopique. Idéal pour le sucre tiré/coulé et les décors qui ne fondent pas.",
     usage:{biscuit:"no", creme:"no", ganache:"no", glace:"no", sirop:"careful", meringue:"no", autre:"careful"}
+  },
+  xylitol: {
+    nom:"Xylitol",
+    ps: 100, hygro:3, couleur:0, conservation:3,
+    role:"sucre de remplacement tiré du bouleau ou du maïs. Sucre autant que le sucre blanc avec environ 40 % de calories en moins. Ne dore pas au four et ne caramélise pas.",
+    usage:{biscuit:"ok", creme:"ok", ganache:"careful", glace:"careful", sirop:"careful", meringue:"no", autre:"ok"}
   }
 };
 
@@ -273,7 +281,10 @@ function calculate() {
 
   // Compatibilité avec le contexte
   const compat = sTo.usage[context];
-  if (compat === 'no') {
+  if (to === 'xylitol' && context === 'sirop') {
+    // Un sirop d'imbibage marche, un caramel non : l'alerte générique dirait faux dans un des deux cas
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">ATTENTION</div><div class="alert-body"><strong>Oui pour un sirop, non pour un caramel</strong>Dans un sirop d\'imbibage, applique la conversion telle quelle. Pour un caramel, garde le sucre blanc : chauffé, le xylitol fond et reste transparent, il ne caramélise pas</div></div>';
+  } else if (compat === 'no') {
     alerts.innerHTML += '<div class="alert danger"><div class="alert-icon">STOP</div><div class="alert-body"><strong>Combinaison à éviter</strong>'+sTo.nom+' fonctionne mal dans '+contextLabel(context)+'. Choisis un autre sucre ou une autre application</div></div>';
   } else if (compat === 'careful') {
     alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">ATTENTION</div><div class="alert-body"><strong>Remplacement partiel recommandé</strong>'+sTo.nom+' peut perturber l\'équilibre de '+contextLabel(context)+'. Remplace maximum 30-40% du sucre total, pas la totalité</div></div>';
@@ -316,6 +327,15 @@ function calculate() {
     alerts.innerHTML += '<div class="alert info"><div class="alert-icon">NOTE</div><div class="alert-body"><strong>Isomalt = usage technique</strong>Sert au sucre tiré, coulé, soufflé. Ne pas consommer en grande quantité (effet laxatif). Non recommandé en substitution classique du saccharose dans les pâtisseries courantes</div></div>';
   }
 
+  // Xylitol spécifique
+  if (to === 'xylitol') {
+    if (context === 'biscuit' || context === 'autre') {
+      alerts.innerHTML += '<div class="alert info"><div class="alert-icon">TEINT</div><div class="alert-body"><strong>Il ne dore pas au four</strong>Ta pâte reste pâle : juge la cuisson au temps et au toucher</div></div>';
+    }
+    alerts.innerHTML += '<div class="alert info"><div class="alert-icon">NOTE</div><div class="alert-body"><strong>Une fraîcheur en bouche</strong>Elle se sent surtout quand le xylitol n\'est pas fondu (sablés, glaçage, sucre saupoudré). Dans une crème ou un cake, elle passe presque inaperçue</div></div>';
+    alerts.innerHTML += '<div class="alert warn"><div class="alert-icon">DOSE</div><div class="alert-body"><strong>À doser</strong>Mangé en grande quantité, le xylitol a un effet laxatif. Si c\'est ta première fois, remplace seulement la moitié du sucre pour voir comment tu le supportes. Il est toxique pour les chiens, même à petite dose : ne laisse pas ton gâteau à leur portée</div></div>';
+  }
+
   // Astuce générale selon la combinaison
   const tipDiv = document.getElementById('tip');
   tipDiv.innerHTML = '<strong>Le conseil de Geoffrey</strong>' + buildTip(from, to, context);
@@ -347,6 +367,11 @@ function buildTip(from, to, context) {
   if (to === 'miel' && context === 'ganache') return "Le miel dans une ganache donne un goût très marqué qui peut dominer le chocolat. Teste avec 10% du sucre total max, sauf si tu veux une ganache miel assumée.";
   if (to === 'cassonade' && context === 'biscuit') return "La cassonade apporte une note caramel-rhum très agréable dans les cookies, crumbles, pains d'épices. Remplacement 1:1 sans ajustement liquide. Couleur plus dorée.";
   if (to === 'muscovado' && context === 'biscuit') return "Muscovado = goût extrême, couleur foncée, texture hyper moelleuse. Parfait dans les brownies, cookies caramel, pains d'épices. Attention : domine vite.";
+  if (to === 'xylitol' && context === 'biscuit') return "Le xylitol remplace le sucre blanc poids pour poids dans un cake ou un muffin. Ton gâteau sort plus pâle, avec des bords moins croustillants : vérifie la cuisson à la lame du couteau.";
+  if (to === 'xylitol' && context === 'creme') return "Dans une crème, le xylitol se dissout à chaud comme le sucre et sa fraîcheur ne se sent presque plus. Remplacement poids pour poids.";
+  if (to === 'xylitol' && context === 'ganache') return "Dans une ganache, le xylitol sucre mais il ne fait pas le travail du glucose ou de la trimoline : il ne la garde pas souple. Remplace seulement le sucre en poudre de ta recette et garde le glucose.";
+  if (to === 'xylitol' && context === 'glace') return "Le xylitol abaisse le point de congélation environ deux fois plus que le sucre blanc. Si tu remplaces tout le sucre, ta glace reste molle : garde-le à 30 % du sucre au plus.";
+  if (to === 'xylitol' && context === 'meringue') return "Une meringue ou des macarons au xylitol sèchent mal et restent collants. Garde le sucre blanc pour tes blancs montés.";
 
   // Tip générique
   return "Conversion basée sur le pouvoir sucrant relatif (saccharose = 100). La quantité a été ajustée pour conserver la même intensité sucrée. Teste toujours sur une petite quantité avant d'adapter une recette signature.";
