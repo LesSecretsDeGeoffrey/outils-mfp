@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur de biscuits — Les Secrets De Geoffrey</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#FDF8F0;color:#1A1410;line-height:1.6}
+  .topbar{background:#1A1410;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:2px solid #C8A04A}
+  .topbar a{color:#C8A04A;text-decoration:none;font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap}
+  .topbar .brand{color:#FDF8F0;font-family:Georgia,serif;font-size:18px}
+  main{max-width:1000px;margin:0 auto;padding:clamp(30px,5vw,60px) clamp(20px,4vw,40px)}
+  h1{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px;letter-spacing:-0.5px;line-height:1.2}
+  h1 .accent{color:#C8A04A;font-style:italic}
+  .intro{color:rgba(26,20,16,0.7);margin-bottom:32px;max-width:680px}
+
+  .tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid rgba(26,20,16,0.1)}
+  .tab{flex:1;background:transparent;border:none;padding:14px 10px;cursor:pointer;font-family:'Courier New',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(26,20,16,0.55);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.2s}
+  .tab:hover{color:#1A1410}
+  .tab.active{color:#8B6914;border-bottom-color:#C8A04A;font-weight:700}
+
+  .bloc{background:#fff;border:1px solid rgba(26,20,16,0.1);border-radius:4px;padding:clamp(20px,4vw,30px);margin-bottom:18px}
+  .bloc h2{font-family:Georgia,serif;font-size:21px;font-weight:400;margin-bottom:4px}
+  .bloc .aide{color:rgba(26,20,16,0.6);font-size:14px;margin-bottom:16px}
+
+  label,.etiquette{display:block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#1A1410;margin:14px 0 6px;font-weight:600}
+  input,select{width:100%;padding:12px 14px;border:1px solid rgba(26,20,16,0.2);background:#fff;font-size:16px;font-family:inherit;color:#1A1410;border-radius:3px}
+  input:focus,select:focus{outline:none;border-color:#C8A04A}
+  .deux{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .deux>div{min-width:0}
+
+  .puces{display:flex;flex-wrap:wrap;gap:8px}
+  .puce{background:#FDF8F0;border:1px solid rgba(26,20,16,0.15);color:#1A1410;padding:10px 14px;min-height:44px;cursor:pointer;border-radius:3px;font-family:inherit;font-size:14px;transition:background 0.2s,border-color 0.2s}
+  .puce:hover{border-color:#C8A04A}
+  .puce.active{background:#1A1410;color:#FDF8F0;border-color:#C8A04A}
+  .puces.petites .puce{padding:8px 12px;min-height:40px;font-size:13px}
+  .cache{display:none}
+
+  .resultat{background:#fff;border:1px solid rgba(200,160,74,0.35);border-radius:4px;padding:clamp(20px,4vw,34px);margin-top:26px}
+  .grand{text-align:center;padding:26px 16px;background:rgba(200,160,74,0.08);border-radius:4px;margin-bottom:26px}
+  .grand .sur{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(26,20,16,0.6);margin-bottom:8px}
+  .grand .chiffre{font-family:Georgia,serif;font-size:clamp(34px,7vw,54px);color:#A8641C;line-height:1.1;margin-bottom:8px}
+  .grand .sous{font-size:15px;color:#1A1410}
+  .resultat h3{font-family:Georgia,serif;font-size:20px;font-weight:400;margin:0 0 12px}
+  .resultat h3+.aide{margin-top:-8px}
+  .aide-res{color:rgba(26,20,16,0.6);font-size:14px;margin:-6px 0 14px}
+
+  .ingredients{list-style:none;columns:2;column-gap:32px;margin-bottom:28px}
+  .ingredients li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed rgba(26,20,16,0.12);break-inside:avoid;font-size:15px}
+  .ingredients .g{font-family:Georgia,serif;color:#8B6914;font-weight:700;white-space:nowrap}
+
+  .solutions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+  .solutions.seule{grid-template-columns:1fr}
+  .carte{background:#1A1410;color:rgba(253,248,240,0.85);padding:22px;border-radius:4px;border-top:3px solid #C8A04A;min-width:0}
+  .carte .titre{font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,160,74,0.9);margin-bottom:6px}
+  .carte .quoi{font-family:Georgia,serif;font-size:19px;color:#FDF8F0;margin-bottom:4px;line-height:1.3}
+  .carte .poids{font-size:14px;margin-bottom:14px}
+  .carte .cuisson{font-family:Georgia,serif;font-size:clamp(22px,4.6vw,28px);color:#C8A04A;line-height:1.2;margin:6px 0 8px;font-variant-numeric:lining-nums}
+  .carte p{font-size:14px;line-height:1.55;margin-top:8px}
+  .badge{display:inline-block;font-family:'Courier New',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 9px;border-radius:20px;font-weight:700}
+  .badge.fiche{background:rgba(74,133,96,0.22);color:#9BD3AF}
+  .badge.estim{background:rgba(232,163,60,0.2);color:#F0BE74}
+
+  .alerte{display:flex;gap:12px;padding:14px 16px;margin:0 0 18px;border-radius:3px;font-size:14px;line-height:1.55;background:#FEF3E2;color:#8B5A20;border-left:3px solid #E8A33C}
+  .repere{font-size:13px;color:rgba(26,20,16,0.6);margin-top:18px;padding-top:14px;border-top:1px solid rgba(26,20,16,0.08)}
+  .vide{text-align:center;color:rgba(26,20,16,0.55);padding:20px 0;font-size:15px}
+  .astuce{background:rgba(200,160,74,0.08);padding:18px 20px;margin-top:24px;border-left:3px solid #C8A04A;font-size:14px;border-radius:2px}
+  .astuce strong{color:#8B6914;font-family:'Courier New',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:6px}
+
+  @media (max-width:640px){
+    .ingredients{columns:1}
+    .solutions{grid-template-columns:1fr}
+    .tab{font-size:10px;letter-spacing:1px;padding:14px 6px}
+    .topbar .brand{font-size:16px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="brand">Calculateur de biscuits</span>
+  <a href="index.html">← Retour</a>
+</div>
+
+<main>
+  <h1>La bonne quantité pour <span class="accent">la bonne hauteur</span></h1>
+  <p class="intro">Choisis ton biscuit, ton moule et la hauteur que tu veux : l'outil recalcule la recette de Geoffrey au gramme près et te donne la cuisson. Tu as déjà préparé ta recette ? Il te dit quelle épaisseur elle donnera dans ton moule</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tab-hauteur" role="tab" aria-selected="true" onclick="choisirOnglet('hauteur')">Je vise une hauteur</button>
+    <button class="tab" id="tab-recette" role="tab" aria-selected="false" onclick="choisirOnglet('recette')">J'ai déjà ma recette</button>
+  </div>
+
+  <div class="bloc">
+    <h2>1. Ton biscuit</h2>
+    <p class="aide">Les recettes du Grand Livre de Geoffrey</p>
+    <label for="biscuit">Biscuit</label>
+    <select id="biscuit" onchange="choisirBiscuit(this.value)"></select>
+    <span class="etiquette">Version</span>
+    <div class="puces" id="variantes"></div>
+  </div>
+
+  <div class="bloc">
+    <h2>2. Ton moule</h2>
+    <p class="aide">Les dimensions intérieures, en centimètres</p>
+    <div class="puces" id="formes">
+      <button class="puce active" data-forme="rond" onclick="choisirForme('rond')">Cercle</button>
+      <button class="puce" data-forme="carre" onclick="choisirForme('carre')">Carré</button>
+      <button class="puce" data-forme="rect" onclick="choisirForme('rect')">Plaque ou cadre</button>
+    </div>
+
+    <div id="dims-rond">
+      <label for="dim-d">Diamètre (cm)</label>
+      <input type="number" id="dim-d" inputmode="decimal" min="4" max="60" step="0.5" value="20" oninput="saisie()">
+      <div class="puces petites" style="margin-top:10px" id="puces-d"></div>
+    </div>
+    <div id="dims-carre" class="cache">
+      <label for="dim-c">Côté (cm)</label>
+      <input type="number" id="dim-c" inputmode="decimal" min="4" max="60" step="0.5" value="20" oninput="saisie()">
+      <div class="puces petites" style="margin-top:10px" id="puces-c"></div>
+    </div>
+    <div id="dims-rect" class="cache">
+      <div class="deux">
+        <div>
+          <label for="dim-L">Longueur (cm)</label>
+          <input type="number" id="dim-L" inputmode="decimal" min="4" max="80" step="0.5" value="40" oninput="saisie()">
+        </div>
+        <div>
+          <label for="dim-l">Largeur (cm)</label>
+          <input type="number" id="dim-l" inputmode="decimal" min="4" max="80" step="0.5" value="30" oninput="saisie()">
+        </div>
+      </div>
+      <div class="puces petites" style="margin-top:10px" id="puces-rect"></div>
+    </div>
+  </div>
+
+  <div class="bloc" id="bloc-hauteur">
+    <h2>3. La hauteur que tu veux</h2>
+    <p class="aide">La hauteur du biscuit une fois cuit</p>
+    <label for="hauteur">Hauteur (cm)</label>
+    <input type="number" id="hauteur" inputmode="decimal" min="0.5" max="20" step="0.5" value="4.5" oninput="saisie()">
+  </div>
+
+  <div class="bloc cache" id="bloc-recette">
+    <h2>3. Ce que tu as préparé</h2>
+    <p class="aide">Combien de fois la recette de Geoffrey, ou le poids de ton appareil</p>
+    <span class="etiquette">Nombre de recettes</span>
+    <div class="puces" id="puces-mult"></div>
+    <label for="poids">Ou le poids de ton appareil (g)</label>
+    <input type="number" id="poids" inputmode="decimal" min="0" step="10" placeholder="Exemple : 600" oninput="saisiePoids()">
+  </div>
+
+  <div class="resultat" id="resultat" aria-live="polite"></div>
+
+  <div class="astuce">
+    <strong>Astuce</strong>
+    Chaque four chauffe à sa façon. Quand l'outil affiche une estimation, commence à surveiller ton biscuit 5 minutes avant la fin et fais le test indiqué
+  </div>
+</main>
+
+<script>
+/* CALCUL:DEBUT */
+// ─────────────────────────────────────────────────────────────────────────────
+// DONNÉES : tout ce qui se corrige est ici
+//
+// ing      : la recette du Grand Livre de Geoffrey, en grammes
+// fiche    : SA cuisson. tapis = pour 1 cm d'épaisseur, moule = pour 2 cm
+// repere   : 1 recette (version nature) donne ce moule à cette hauteur, cuit
+//            (repères repris de l'outil « Quel moule pour ma recette »)
+// limite   : hauteur maximale conseillée pour UNE cuisson, en cm
+// feuille  : biscuit cuit en feuille fine sur tapis (pas de cuisson en moule haut)
+// ─────────────────────────────────────────────────────────────────────────────
+const LIB = {
+  'oeufs':"œufs", 'oeufs-entiers':"œufs entiers", 'jaunes':"jaunes d’œufs",
+  'blancs':"blancs d’œufs", 'blancs-1':"blancs d’œufs (1)", 'blancs-2':"blancs d’œufs (2)",
+  'sucre':"sucre", 'sucre-semoule':"sucre semoule", 'sucre-semoule-1':"sucre semoule (1)",
+  'sucre-semoule-2':"sucre semoule (2)", 'sucre-glace':"sucre glace",
+  'farine':"farine", 'farine-t55':"farine T55", 'fecule-mais':"fécule de maïs",
+  'cacao':"cacao en poudre", 'levure-chimique':"levure chimique",
+  'poudre-fruit-coque':"poudre de fruits à coque", 'poudre-amandes':"poudre d’amandes",
+  'pate-amandes':"pâte d’amandes", 'fruits-coque':"fruits à coque (au choix)",
+  'praline':"praliné", 'beurre':"beurre", 'beurre-doux':"beurre doux", 'huile':"huile",
+  'miel':"miel", 'lait':"lait", 'lait-entier':"lait entier", 'eau':"eau",
+  'fleur-sel':"fleur de sel", 'sel-fin':"sel fin",
+  'chocolat-noir':"chocolat noir", 'chocolat-lait':"chocolat au lait", 'chocolat-blanc':"chocolat blanc"
+};
+
+const BISCUITS = [
+  {id:'genoise', nom:"Génoise", piece:'biscuits', feuille:false, limite:5,
+   repere:{forme:'rond', d:20, h:4.5},
+   fiche:{tapis:{t:200, min:10}, moule:{t:170, min:20}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['oeufs',200],['sucre-semoule',100],['jaunes',75],['farine',80]]},
+     {id:'cacao', nom:"Cacao", ing:[['oeufs',200],['sucre-semoule',100],['jaunes',75],['farine',70],['cacao',10]]}
+   ]},
+  {id:'savoie', nom:"Biscuit de Savoie", piece:'biscuits', feuille:false, limite:5,
+   repere:{forme:'rond', d:20, h:4},
+   fiche:{tapis:{t:200, min:7}, moule:{t:170, min:20}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['oeufs',160],['sucre-semoule',145],['fecule-mais',55],['farine',100],['beurre-doux',80],['levure-chimique',5]]},
+     {id:'cacao', nom:"Cacao", ing:[['oeufs',160],['sucre-semoule',145],['fecule-mais',55],['farine',85],['beurre-doux',80],['levure-chimique',5],['cacao',15]]}
+   ]},
+  {id:'dacquoise', nom:"Dacquoise / Succès", piece:'disques', feuille:false, limite:1.5,
+   repere:{forme:'rond', d:20, h:3},
+   fiche:{tapis:{t:180, min:15}},
+   note:"La dacquoise se poche à la douille : la hauteur est celle d'un disque",
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['farine',40],['poudre-fruit-coque',115],['sucre-semoule-1',130],['blancs',190],['sucre-semoule-2',70]]},
+     {id:'cacao', nom:"Cacao", ing:[['farine',30],['cacao',10],['poudre-fruit-coque',115],['sucre-semoule-1',130],['blancs',190],['sucre-semoule-2',70]]}
+   ]},
+  {id:'financier', nom:"Biscuit Financier", piece:'biscuits', feuille:false, limite:3,
+   repere:{forme:'rond', d:20, h:2},
+   fiche:{tapis:{t:190, min:10}, moule:{t:175, min:15}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['beurre',110],['blancs',155],['sucre-glace',155],['poudre-fruit-coque',110],['farine',55],['fleur-sel',1.5]]},
+     {id:'cacao', nom:"Cacao", ing:[['beurre',110],['blancs',155],['sucre-glace',155],['cacao',10],['poudre-fruit-coque',110],['farine',50],['fleur-sel',1.5]]},
+     {id:'praline', nom:"Praliné", ing:[['beurre',110],['blancs',155],['sucre-glace',155],['praline',20],['poudre-fruit-coque',110],['farine',55],['fleur-sel',1.5]]}
+   ]},
+  {id:'madeleine', nom:"Biscuit Madeleine (en moule ou sur tapis)", piece:'biscuits', feuille:false, limite:3,
+   repere:{forme:'carre', c:22, h:2},
+   fiche:{moule:{t:175, min:20}},
+   note:"Pour des madeleines individuelles, la fiche de Geoffrey donne 190 °C, environ 10 min",
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['beurre',250],['miel',30],['oeufs',145],['lait-entier',60],['sucre',130],['farine-t55',200],['levure-chimique',11]]},
+     {id:'cacao', nom:"Cacao", ing:[['beurre',250],['miel',30],['oeufs',145],['lait-entier',60],['sucre',130],['farine-t55',180],['levure-chimique',11],['cacao',20]]},
+     {id:'praline', nom:"Praliné", ing:[['beurre',250],['miel',30],['oeufs',145],['lait-entier',60],['sucre',130],['farine-t55',200],['levure-chimique',11],['praline',60]]}
+   ]},
+  {id:'brownie', nom:"Brownie", piece:'biscuits', feuille:false, limite:3, test:'brownie',
+   repere:{forme:'carre', c:20, h:2.5},
+   fiche:{tapis:{t:180, min:10}, moule:{t:160, min:20, mot:'au moins'}},
+   variantes:[
+     {id:'noir', nom:"Chocolat noir", ing:[['beurre-doux',100],['chocolat-noir',120],['farine',40],['oeufs',100],['sucre-semoule',60],['fruits-coque',30]]},
+     {id:'lait', nom:"Chocolat au lait", ing:[['beurre-doux',90],['chocolat-lait',120],['farine',40],['oeufs',100],['sucre-semoule',50],['fruits-coque',30]]},
+     {id:'blanc', nom:"Chocolat blanc", ing:[['beurre-doux',85],['chocolat-blanc',120],['farine',40],['oeufs',100],['sucre-semoule',35],['fruits-coque',30]]}
+   ]},
+  {id:'sacher', nom:"Biscuit Sacher", piece:'feuilles', feuille:true, limite:1,
+   repere:{forme:'rond', d:20, h:3},
+   fiche:{tapis:{t:200, min:8}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['pate-amandes',110],['sucre-glace',40],['oeufs',70],['farine',70],['jaunes',70],['beurre-doux',30],['blancs',100],['sucre-semoule',40]]},
+     {id:'cacao', nom:"Cacao", ing:[['pate-amandes',110],['sucre-glace',40],['oeufs',40],['farine',35],['jaunes',70],['beurre-doux',30],['blancs',100],['sucre-semoule',40],['cacao',35]]}
+   ]},
+  {id:'joconde', nom:"Biscuit Joconde", piece:'feuilles', feuille:true, limite:1,
+   repere:{forme:'rect', L:40, l:30, h:0.8},
+   fiche:{tapis:{t:210, min:7}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['poudre-amandes',160],['sucre-glace',160],['sucre-semoule',30],['farine',40],['oeufs',190],['beurre-doux',30],['blancs',180]]},
+     {id:'cacao', nom:"Cacao", ing:[['poudre-amandes',160],['sucre-glace',160],['sucre-semoule',30],['farine',30],['oeufs',190],['beurre-doux',30],['blancs',180],['cacao',10]]}
+   ]},
+  {id:'pain-de-genes', nom:"Biscuit Pain de Gênes", piece:'biscuits', feuille:false, limite:3,
+   repere:{forme:'rond', d:16, h:3},
+   fiche:{tapis:{t:190, min:10}, moule:{t:160, min:17}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['pate-amandes',100],['oeufs',100],['farine',20],['beurre-doux',30],['levure-chimique',1.2]]},
+     {id:'cacao', nom:"Cacao", ing:[['pate-amandes',100],['oeufs',100],['farine',15],['beurre-doux',30],['levure-chimique',1.2],['cacao',5]]}
+   ]},
+  {id:'viennois', nom:"Biscuit Viennois", piece:'feuilles', feuille:true, limite:1,
+   repere:{forme:'rect', L:40, l:30, h:0.8},
+   fiche:{tapis:{t:230, min:4}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['jaunes',40],['oeufs-entiers',110],['sucre-semoule',115],['blancs',70],['farine',60]]},
+     {id:'cacao', nom:"Cacao", ing:[['jaunes',40],['oeufs-entiers',110],['sucre-semoule',115],['blancs',70],['farine',30],['cacao',30]]}
+   ]},
+  {id:'trocadero', nom:"Biscuit Trocadéro", piece:'biscuits', feuille:false, limite:3,
+   repere:{forme:'rond', d:18, h:2},
+   fiche:{tapis:{t:190, min:10}, moule:{t:165, min:22}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['beurre-doux',45],['poudre-fruit-coque',55],['jaunes',5],['blancs-1',30],['sucre-glace',35],['fecule-mais',5],['blancs-2',30],['sucre-semoule',20]]},
+     {id:'cacao', nom:"Cacao", ing:[['beurre-doux',45],['poudre-fruit-coque',55],['jaunes',5],['blancs-1',30],['sucre-glace',35],['cacao',5],['blancs-2',30],['sucre-semoule',20]]}
+   ]},
+  {id:'japonais', nom:"Biscuit Pâte à Choux / Japonais", piece:'feuilles', feuille:true, limite:1,
+   repere:{forme:'rect', L:40, l:30, h:1},
+   fiche:{tapis:{t:190, min:14}},
+   variantes:[
+     {id:'nature', nom:"Nature", ing:[['eau',75],['lait',75],['farine',70],['huile',50],['sucre-semoule-1',5],['sucre-semoule-2',80],['sel-fin',3],['beurre-doux',35],['oeufs',150],['blancs',150]]},
+     {id:'cacao', nom:"Cacao", ing:[['eau',75],['lait',75],['farine',60],['cacao',10],['huile',50],['sucre-semoule-1',5],['sucre-semoule-2',80],['sel-fin',3],['beurre-doux',35],['oeufs',150],['blancs',150]]}
+   ]}
+];
+
+// Règle de cuisson. Jusqu'à seuilTapis : la fiche tapis. Jusqu'à seuilMoule : la fiche moule.
+// Au-delà : ESTIMATION = durée de la fiche moule × (hauteur ÷ 2) puissance exposant,
+// et au-dessus de hautDes cm : moinsHaut °C de moins, durée × plusLong
+const REGLE = {seuilTapis:1.5, seuilMoule:2.5, exposant:0.65, hautDes:6, moinsHaut:10, plusLong:1.15, tempMin:150, marge:0.10, tropFin:0.5};
+
+function aire(m){
+  if (m.forme === 'rond') return Math.PI * m.d * m.d / 4;
+  if (m.forme === 'carre') return m.c * m.c;
+  return m.L * m.l;
+}
+function poidsRecette(v){ return v.ing.reduce((s, i) => s + i[1], 0); }
+function volumeRepere(b){ return aire(b.repere) * b.repere.h; }
+function multPourHauteur(b, moule, h){ return aire(moule) * h / volumeRepere(b); }
+function hauteurPourMult(b, moule, mult){ return mult * volumeRepere(b) / aire(moule); }
+function arrondiG(g){ return g >= 10 ? Math.round(g) : Math.round(g * 10) / 10; }
+function ingredients(v, mult){ return v.ing.map(([cle, g]) => ({cle, nom: LIB[cle], g: arrondiG(g * mult)})); }
+function maxUneCuisson(b){ return b.feuille ? b.limite * 1.5 : b.limite; }
+function nbCuissons(b, h){
+  if (h <= maxUneCuisson(b) + 1e-9) return 1;
+  return Math.ceil(h / (b.feuille ? b.limite * 1.25 : b.limite) - 1e-9);
+}
+function arrondi5(x){ return Math.round(x / 5) * 5; }
+// Rend {source:'fiche'|'estimation', support, t, min | minLo+minHi, mot}, ou null si aucun repère
+function cuisson(b, h){
+  const f = b.fiche;
+  if (f.tapis && h <= REGLE.seuilTapis + 1e-9)
+    return {source:'fiche', support:'tapis', t:f.tapis.t, min:f.tapis.min, mot:f.tapis.mot || 'environ'};
+  if (f.moule && h > REGLE.seuilTapis && h <= REGLE.seuilMoule + 1e-9)
+    return {source:'fiche', support:'moule', t:f.moule.t, min:f.moule.min, mot:f.moule.mot || 'environ'};
+  if (!f.moule) return null;
+  const haut = h > REGLE.hautDes;
+  const m = f.moule.min * Math.pow(h / 2, REGLE.exposant) * (haut ? REGLE.plusLong : 1);
+  const t = Math.max(REGLE.tempMin, f.moule.t - (haut ? REGLE.moinsHaut : 0));
+  let lo = Math.max(5, arrondi5(m * (1 - REGLE.marge)));
+  let hi = arrondi5(m * (1 + REGLE.marge));
+  if (hi <= lo) hi = lo + 5;
+  return {source:'estimation', support:'moule', t, minLo:lo, minHi:hi, base:f.moule};
+}
+/* CALCUL:FIN */
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AFFICHAGE
+// ─────────────────────────────────────────────────────────────────────────────
+const etat = {onglet:'hauteur', biscuit:'genoise', variante:'nature', forme:'rond', mult:1, parPoids:false};
+const $ = id => document.getElementById(id);
+const nb = (x, dec) => x.toLocaleString('fr-FR', {maximumFractionDigits: dec === undefined ? 0 : dec});
+const lire = id => { const v = parseFloat(String($(id).value).replace(',', '.')); return isFinite(v) ? v : 0; };
+const cm = x => nb(Math.round(x * 10) / 10, 1) + ' cm';
+
+function duree(min){
+  if (min < 60) return min + ' min';
+  const h = Math.floor(min / 60), r = min % 60;
+  return h + ' h' + (r ? ' ' + String(r).padStart(2, '0') : '');
+}
+function plage(lo, hi){ return hi < 60 ? lo + ' à ' + hi + ' min' : duree(lo) + ' à ' + duree(hi); }
+function multTexte(m){ return '× ' + nb(m, m < 1 ? 2 : 1); }
+
+function biscuitChoisi(){ return BISCUITS.find(b => b.id === etat.biscuit); }
+function varianteChoisie(){
+  const b = biscuitChoisi();
+  return b.variantes.find(v => v.id === etat.variante) || b.variantes[0];
+}
+function mouleSaisi(){
+  if (etat.forme === 'rond') return {forme:'rond', d:lire('dim-d')};
+  if (etat.forme === 'carre') return {forme:'carre', c:lire('dim-c')};
+  return {forme:'rect', L:lire('dim-L'), l:lire('dim-l')};
+}
+function mouleValide(m){
+  if (m.forme === 'rond') return m.d > 0;
+  if (m.forme === 'carre') return m.c > 0;
+  return m.L > 0 && m.l > 0;
+}
+function nomMoule(m, possessif){
+  if (m.forme === 'rond') return (possessif ? 'ton cercle' : 'un cercle') + ' de ' + nb(m.d, 1) + ' cm';
+  if (m.forme === 'carre') return (possessif ? 'ton cadre' : 'un cadre') + ' de ' + nb(m.c, 1) + ' × ' + nb(m.c, 1) + ' cm';
+  return (possessif ? 'ta plaque' : 'une plaque') + ' de ' + nb(m.L, 1) + ' × ' + nb(m.l, 1) + ' cm';
+}
+
+function choisirOnglet(o){
+  etat.onglet = o;
+  ['hauteur', 'recette'].forEach(x => {
+    $('tab-' + x).classList.toggle('active', x === o);
+    $('tab-' + x).setAttribute('aria-selected', x === o ? 'true' : 'false');
+    $('bloc-' + x).classList.toggle('cache', x !== o);
+  });
+  calcule();
+}
+function choisirBiscuit(id){
+  etat.biscuit = id;
+  etat.variante = biscuitChoisi().variantes[0].id;
+  afficheVariantes();
+  calcule();
+}
+function choisirVariante(id){ etat.variante = id; afficheVariantes(); calcule(); }
+function afficheVariantes(){
+  $('variantes').innerHTML = biscuitChoisi().variantes.map(v =>
+    `<button class="puce${v.id === etat.variante ? ' active' : ''}" onclick="choisirVariante('${v.id}')">${v.nom}</button>`).join('');
+}
+function choisirForme(f){
+  etat.forme = f;
+  document.querySelectorAll('#formes .puce').forEach(p => p.classList.toggle('active', p.dataset.forme === f));
+  ['rond', 'carre', 'rect'].forEach(x => $('dims-' + x).classList.toggle('cache', x !== f));
+  calcule();
+}
+function regle(id, v){ $(id).value = v; saisie(); }
+function reglePlaque(L, l){ $('dim-L').value = L; $('dim-l').value = l; saisie(); }
+function affichePuces(){
+  $('puces-d').innerHTML = [14, 16, 18, 20, 22, 24, 26].map(v =>
+    `<button class="puce" data-v="${v}" onclick="regle('dim-d',${v})">${v} cm</button>`).join('');
+  $('puces-c').innerHTML = [16, 18, 20, 22, 24].map(v =>
+    `<button class="puce" data-v="${v}" onclick="regle('dim-c',${v})">${v} cm</button>`).join('');
+  $('puces-rect').innerHTML = [[40, 30], [30, 20], [60, 40]].map(([L, l]) =>
+    `<button class="puce" data-v="${L}x${l}" onclick="reglePlaque(${L},${l})">${L} × ${l} cm</button>`).join('');
+  $('puces-mult').innerHTML = [0.5, 1, 1.5, 2, 3].map(v =>
+    `<button class="puce" data-v="${v}" onclick="choisirMult(${v})">× ${nb(v, 1)}</button>`).join('');
+}
+function marquePuces(){
+  const d = lire('dim-d'), c = lire('dim-c'), plaque = lire('dim-L') + 'x' + lire('dim-l');
+  document.querySelectorAll('#puces-d .puce').forEach(p => p.classList.toggle('active', +p.dataset.v === d));
+  document.querySelectorAll('#puces-c .puce').forEach(p => p.classList.toggle('active', +p.dataset.v === c));
+  document.querySelectorAll('#puces-rect .puce').forEach(p => p.classList.toggle('active', p.dataset.v === plaque));
+  document.querySelectorAll('#puces-mult .puce').forEach(p => p.classList.toggle('active', !etat.parPoids && +p.dataset.v === etat.mult));
+}
+function choisirMult(v){ etat.mult = v; etat.parPoids = false; $('poids').value = ''; calcule(); }
+function saisiePoids(){ etat.parPoids = lire('poids') > 0; calcule(); }
+function saisie(){ calcule(); }
+
+function texteTest(b, h){
+  if (b.test === 'brownie') return "Le test : le dessus est pris et craquelé, le centre reste fondant";
+  if (h <= REGLE.seuilTapis) return "Le test : le biscuit est doré et reprend sa forme quand tu appuies doucement dessus";
+  return "Le test : la lame d'un couteau plantée au centre ressort sèche, et le biscuit reprend sa forme quand tu appuies doucement dessus";
+}
+function blocCuisson(b, h){
+  const c = cuisson(b, h);
+  if (!c) return '';
+  if (c.source === 'fiche'){
+    const ou = c.support === 'tapis'
+      ? (b.fiche.moule || b.feuille ? "Sur tapis, pour 1 cm d'épaisseur" : "Poché sur tapis")
+      : "En moule, pour 2 cm d'épaisseur";
+    return `<span class="badge fiche">Fiche de Geoffrey</span>
+      <div class="cuisson">${c.t} °C · ${c.mot} ${c.min} min</div>
+      <p>${ou}. Four préchauffé</p>
+      <p>${texteTest(b, h)}</p>`;
+  }
+  return `<span class="badge estim">Estimation</span>
+    <div class="cuisson">${c.t} °C · ${plage(c.minLo, c.minHi)}</div>
+    <p>Calculée à partir de la fiche de Geoffrey (${c.base.t} °C, ${c.base.mot || 'environ'} ${c.base.min} min pour 2 cm). Four préchauffé</p>
+    <p>${texteTest(b, h)}</p>`;
+}
+
+function calcule(){
+  marquePuces();
+  const b = biscuitChoisi(), v = varianteChoisie(), moule = mouleSaisi();
+  const zone = $('resultat');
+  if (!mouleValide(moule)){ zone.innerHTML = '<p class="vide">Rentre les dimensions de ton moule pour voir le calcul</p>'; return; }
+
+  let mult, h;
+  if (etat.onglet === 'hauteur'){
+    h = lire('hauteur');
+    if (!(h > 0)){ zone.innerHTML = '<p class="vide">Rentre la hauteur que tu veux pour voir le calcul</p>'; return; }
+    mult = multPourHauteur(b, moule, h);
+  } else {
+    mult = etat.parPoids ? lire('poids') / poidsRecette(v) : etat.mult;
+    if (!(mult > 0)){ zone.innerHTML = '<p class="vide">Choisis un nombre de recettes ou rentre le poids de ton appareil</p>'; return; }
+    h = hauteurPourMult(b, moule, mult);
+  }
+
+  const poids = poidsRecette(v) * mult;
+  const n = nbCuissons(b, h);
+  let html = '';
+
+  if (etat.onglet === 'hauteur'){
+    html += `<div class="grand">
+      <div class="sur">À préparer</div>
+      <div class="chiffre">${multTexte(mult)} la recette</div>
+      <div class="sous">${nb(Math.round(poids))} g d'appareil pour ${nomMoule(moule, true)} sur ${cm(h)} de haut</div>
+    </div>`;
+  } else {
+    html += `<div class="grand">
+      <div class="sur">Épaisseur obtenue</div>
+      <div class="chiffre">${cm(h)}</div>
+      <div class="sous">${nb(Math.round(poids))} g d'appareil (${multTexte(mult)} la recette) dans ${nomMoule(moule, true)}</div>
+    </div>`;
+  }
+
+  if (h < REGLE.tropFin){
+    html += `<div class="alerte">C'est très fin : en dessous de ${nb(REGLE.tropFin, 1)} cm le biscuit sèche vite. Prends un moule plus petit ou augmente la quantité</div>`;
+  }
+
+  const telleQuelle = Math.abs(mult - 1) < 0.005;
+  const nomCourt = b.nom.replace(/ \(.*\)$/, '');
+  html += `<h3>${telleQuelle ? 'Ta recette' : 'Ta recette recalculée'}</h3>
+    <p class="aide-res">${nomCourt}, version ${v.nom.toLowerCase()}${telleQuelle ? ", telle qu'elle est dans le Grand Livre" : ''}</p>
+    <ul class="ingredients">${ingredients(v, telleQuelle ? 1 : mult).map(i =>
+      `<li><span>${i.nom}</span><span class="g">${nb(i.g, 1)} g</span></li>`).join('')}</ul>`;
+
+  html += '<h3>La cuisson</h3>';
+  if (n === 1){
+    const plusHaut = h > REGLE.seuilMoule && !b.feuille
+      ? `<p>Il te faut un moule d'au moins ${cm(Math.ceil(h * 2) / 2)} de haut</p>` : '';
+    html += `<div class="solutions seule"><div class="carte">
+      <div class="titre">En une seule cuisson</div>
+      <div class="quoi">${b.piece === 'feuilles' ? 'Une feuille' : b.piece === 'disques' ? 'Un disque' : 'Un biscuit'} de ${cm(h)}</div>
+      ${blocCuisson(b, h)}${plusHaut}
+    </div></div>`;
+  } else {
+    const hPiece = h / n, poidsPiece = poids / n;
+    const seulPossible = !!b.fiche.moule && !b.feuille;
+    html += `<p class="aide-res">${cm(h)}, c'est haut pour ce biscuit${seulPossible ? ' : tu as deux façons de faire' : ''}</p>`;
+    html += `<div class="solutions${seulPossible ? '' : ' seule'}">
+      <div class="carte">
+        <div class="titre">${seulPossible ? 'Solution 1 · ' : ''}En plusieurs cuissons</div>
+        <div class="quoi">${n} ${b.piece} de ${cm(hPiece)}</div>
+        <div class="poids">${nb(Math.round(poidsPiece))} g d'appareil par ${b.piece === 'feuilles' ? 'feuille' : b.piece === 'disques' ? 'disque' : 'moule'}</div>
+        ${blocCuisson(b, hPiece)}
+        <p>${seulPossible
+          ? "Le plus sûr : chaque biscuit cuit de façon régulière, tu les superposes au montage"
+          : b.feuille
+            ? "Ce biscuit se cuit en feuille fine : la fiche de Geoffrey s'arrête à 1 cm. Pour plus haut, superpose plusieurs feuilles"
+            : "Ce biscuit se poche en disques fins : pour plus haut, superpose plusieurs disques"}</p>
+      </div>`;
+    if (seulPossible){
+      html += `<div class="carte">
+        <div class="titre">Solution 2 · En une seule cuisson</div>
+        <div class="quoi">Un seul moule de ${cm(Math.ceil(h * 2) / 2)} de haut</div>
+        <div class="poids">${nb(Math.round(poids))} g d'appareil dans le moule</div>
+        ${blocCuisson(b, h)}
+        <p>Plus délicat : le cœur cuit lentement. Si le dessus colore trop vite, couvre-le d'une feuille d'aluminium</p>
+      </div>`;
+    }
+    html += '</div>';
+  }
+
+  if (b.note) html += `<p class="repere" style="border-top:none;padding-top:0;margin-top:14px">${b.note}</p>`;
+  html += `<p class="repere">Repère du calcul : 1 recette de Geoffrey (${nb(Math.round(poidsRecette(b.variantes[0])))} g) = ${nomMoule(b.repere, false)} sur ${cm(b.repere.h)} ${b.feuille ? "d'épaisseur" : 'de haut'}, une fois cuit</p>`;
+  zone.innerHTML = html;
+}
+
+if (typeof document !== 'undefined'){
+  $('biscuit').innerHTML = BISCUITS.map(b => `<option value="${b.id}">${b.nom}</option>`).join('');
+  affichePuces();
+  afficheVariantes();
+  calcule();
+}
+</script>
+</body>
+</html>
